@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 /***************************************************************************
  SpatialAnalysis
@@ -54,7 +52,7 @@ if cmd_folder not in sys.path:
     sys.path.insert(0, cmd_folder)
 
 
-class GestionAdressePlugin(object):
+class GestionAdressePlugin:
 
     def __init__(self, iface):
         self.iface = iface
