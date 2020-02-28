@@ -32,7 +32,7 @@ __revision__ = '$Format:%H$'
 
 from qgis.core import QgsProcessingProvider
 from qgis.utils import plugins
-from .algorithms.Layer_Upload_algorithm import LayerUploadAlgorithm
+from .algorithms.load_layers import LoadLayersAlgorithm
 
 
 class GestionAdresseProvider(QgsProcessingProvider):
@@ -41,7 +41,7 @@ class GestionAdresseProvider(QgsProcessingProvider):
         """
         Loads all algorithms belonging to this provider.
         """
-        self.addAlgorithm(LayerUploadAlgorithm())
+        self.addAlgorithm(LoadLayersAlgorithm())
 
     def id(self):
         """
@@ -49,7 +49,7 @@ class GestionAdresseProvider(QgsProcessingProvider):
         string should be a unique, short, character only string, eg "qgis" or
         "gdal". This string should not be localised.
         """
-        return 'GestionAdresseProvider'
+        return 'gestion_adresse'
 
     def name(self):
         """
@@ -58,7 +58,7 @@ class GestionAdresseProvider(QgsProcessingProvider):
 
         This string should be short (e.g. "Lastools") and localised.
         """
-        return self.tr('GestionAdresseProvider')
+        return self.tr('Gestion des adresses')
 
     def longName(self):
         """

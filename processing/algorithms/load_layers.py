@@ -39,18 +39,9 @@ import os
 from processing.tools.postgis import uri_from_name, GeoDB
 import processing
 
-class LayerUploadAlgorithm(QgsProcessingAlgorithm):
+class LoadLayersAlgorithm(QgsProcessingAlgorithm):
     """
-    This is an example algorithm that takes a vector layer and
-    creates a new identical one.
-
-    It is meant to be used as an example of how to create your own
-    algorithms and explain methods and variables used to do it. An
-    algorithm like this will be available in all elements, and there
-    is not need for additional work.
-
-    All Processing algorithms should extend the QgsProcessingAlgorithm
-    class.
+    Chargement des couches adresse depuis la base de données
     """
 
     # Constants used to refer to parameters and outputs. They will be
@@ -61,6 +52,37 @@ class LayerUploadAlgorithm(QgsProcessingAlgorithm):
     SCHEMA = 'SCHEMA'
     OUTPUT = 'OUTPUT'
     OUTPUT_MSG = 'OUTPUT MSG'
+    def name(self):
+        """
+        Returns the algorithm name, used for identifying the algorithm.
+        """
+        return 'adresse_chargement'
+
+    def displayName(self):
+        """
+        Returns the translated algorithm name, which should be used for any
+        user-visible display of the algorithm name.
+        """
+        return self.tr('Chargement des couches depuis la base')
+
+    def groupId(self):
+        """
+        Returns the unique ID of the group this algorithm belongs to.
+        """
+        return 'adresse_donnees'
+
+    def group(self):
+        """
+        Returns the name of the group this algorithm belongs to. This string
+        should be localised.
+        """
+        return self.tr('Données')
+
+    def tr(self, string):
+        return QCoreApplication.translate('Processing', string)
+
+    def createInstance(self):
+        return LoadLayersAlgorithm()
 
     def initAlgorithm(self, config):
         """
@@ -71,7 +93,7 @@ class LayerUploadAlgorithm(QgsProcessingAlgorithm):
         # INPUTS
         db_param = QgsProcessingParameterString(
             self.DATABASE,
-            self.tr('Database (connection name)'))
+            self.tr('Connexion à la base de données'))
         db_param.setMetadata({
             'widget_wrapper': {
                 'class': 'processing.gui.wrappers_postgis.ConnectionWidgetWrapper'}})
@@ -79,7 +101,7 @@ class LayerUploadAlgorithm(QgsProcessingAlgorithm):
 
         schema_param = QgsProcessingParameterString(
             self.SCHEMA,
-            self.tr('Schema (schema name)'), 'public', False, True)
+            self.tr('Schéma'), 'public', False, True)
         schema_param.setMetadata({
             'widget_wrapper': {
                 'class': 'processing.gui.wrappers_postgis.SchemaWidgetWrapper',
@@ -90,14 +112,14 @@ class LayerUploadAlgorithm(QgsProcessingAlgorithm):
         self.addOutput(
             QgsProcessingOutputMultipleLayers(
                 self.OUTPUT,
-                self.tr('Output layers')
+                self.tr('Couches de sortie')
             )
         )
 
         self.addOutput(
             QgsProcessingOutputString(
                 self.OUTPUT_MSG,
-                self.tr('Output layers')
+                self.tr('Message de sortie')
             )
         )
 
@@ -164,42 +186,3 @@ class LayerUploadAlgorithm(QgsProcessingAlgorithm):
         # or output names.
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
 
-    def name(self):
-        """
-        Returns the algorithm name, used for identifying the algorithm. This
-        string should be fixed for the algorithm, and must not be localised.
-        The name should be unique within each provider. Names should contain
-        lowercase alphanumeric characters only and no spaces or other
-        formatting characters.
-        """
-        return 'LayerIntersecterAlgo'
-
-    def displayName(self):
-        """
-        Returns the translated algorithm name, which should be used for any
-        user-visible display of the algorithm name.
-        """
-        return self.tr(self.name())
-
-    def group(self):
-        """
-        Returns the name of the group this algorithm belongs to. This string
-        should be localised.
-        """
-        return self.tr(self.groupId())
-
-    def groupId(self):
-        """
-        Returns the unique ID of the group this algorithm belongs to. This
-        string should be fixed for the algorithm, and must not be localised.
-        The group id should be unique within each provider. Group id should
-        contain lowercase alphanumeric characters only and no spaces or other
-        formatting characters.
-        """
-        return 'AdresseGroup'
-
-    def tr(self, string):
-        return QCoreApplication.translate('Processing', string)
-
-    def createInstance(self):
-        return LayerUploadAlgorithm()
