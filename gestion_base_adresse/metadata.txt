@@ -33,7 +33,7 @@ tags=python
 
 homepage=http://homepage
 category=Analysis
-icon=icon.png
+icon=resources/icons/icon.png
 # experimental flag
 experimental=False
 

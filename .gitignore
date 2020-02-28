@@ -44,3 +44,5 @@ nosetests.xml
 *.pyc
 *.DS_Store
 
+gestion_base_adresse/gestion_base_adresse.zip
+

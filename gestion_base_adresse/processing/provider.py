@@ -29,10 +29,13 @@ __copyright__ = '(C) 2019 by 3Liz'
 __revision__ = '$Format:%H$'
 
 from qgis.core import QgsProcessingProvider
-from qgis.utils import plugins
+from qgis.PyQt.QtGui import QIcon
+
 from .algorithms.create_database_structure import CreateDatabaseStructure
 from .algorithms.upgrade_database_structure import UpgradeDatabaseStructure
 from .algorithms.load_layers import LoadLayersAlgorithm
+
+from ..qgis_plugin_tools.tools.resources import resources_path
 
 
 class GestionAdresseProvider(QgsProcessingProvider):
@@ -52,6 +55,9 @@ class GestionAdresseProvider(QgsProcessingProvider):
         "gdal". This string should not be localised.
         """
         return 'gestion_adresse'
+
+    def icon(self):
+        return QIcon(resources_path('icons', 'icon.png'))
 
     def name(self):
         """
