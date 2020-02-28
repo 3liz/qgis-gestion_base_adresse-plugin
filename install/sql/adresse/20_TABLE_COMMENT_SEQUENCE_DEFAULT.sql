@@ -112,6 +112,44 @@ CREATE SEQUENCE adresse.document_id_doc_seq
 ALTER SEQUENCE adresse.document_id_doc_seq OWNED BY adresse.document.id_doc;
 
 
+-- metadata
+CREATE TABLE adresse.metadata (
+    id integer NOT NULL,
+    me_version text NOT NULL,
+    me_version_date date NOT NULL,
+    me_status smallint NOT NULL
+);
+
+
+-- metadata
+COMMENT ON TABLE adresse.metadata IS 'Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C''est utilisé pour les scripts de migration de la structure entre 2 versions.';
+
+
+-- metadata.id
+COMMENT ON COLUMN adresse.metadata.id IS 'Identifiant de la version';
+
+
+-- metadata.me_version
+COMMENT ON COLUMN adresse.metadata.me_version IS 'Version. Ex: 1.0.2';
+
+
+-- metadata.me_version_date
+COMMENT ON COLUMN adresse.metadata.me_version_date IS 'Date de la version. Ex: 2019-06-01';
+
+
+-- metadata_id_seq
+CREATE SEQUENCE adresse.metadata_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- metadata_id_seq
+ALTER SEQUENCE adresse.metadata_id_seq OWNED BY adresse.metadata.id;
+
+
 -- parcelle
 CREATE TABLE adresse.parcelle (
     fid integer NOT NULL,
@@ -231,6 +269,10 @@ ALTER TABLE ONLY adresse.commune_deleguee ALTER COLUMN id_com_del SET DEFAULT ne
 
 -- document id_doc
 ALTER TABLE ONLY adresse.document ALTER COLUMN id_doc SET DEFAULT nextval('adresse.document_id_doc_seq'::regclass);
+
+
+-- metadata id
+ALTER TABLE ONLY adresse.metadata ALTER COLUMN id SET DEFAULT nextval('adresse.metadata_id_seq'::regclass);
 
 
 -- parcelle fid

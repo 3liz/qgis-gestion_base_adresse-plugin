@@ -38,6 +38,16 @@ ALTER TABLE ONLY adresse.document
     ADD CONSTRAINT document_pkey PRIMARY KEY (id_doc);
 
 
+-- metadata metadata_me_version_key
+ALTER TABLE ONLY adresse.metadata
+    ADD CONSTRAINT metadata_me_version_key UNIQUE (me_version);
+
+
+-- metadata metadata_pkey
+ALTER TABLE ONLY adresse.metadata
+    ADD CONSTRAINT metadata_pkey PRIMARY KEY (id);
+
+
 -- parcelle parcelle_pkey
 ALTER TABLE ONLY adresse.parcelle
     ADD CONSTRAINT parcelle_pkey PRIMARY KEY (fid);
