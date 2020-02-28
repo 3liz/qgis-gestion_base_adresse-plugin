@@ -6,6 +6,16 @@ from db_manager.db_plugins.postgis.connector import PostGisDBConnector
 def tr(string):
     return QCoreApplication.translate('Processing', string)
 
+def getVersionInteger(f):
+    '''
+    Transform "0.1.2" into "000102"
+    Transform "10.9.12" into "100912"
+    to allow comparing versions
+    and sorting the upgrade files
+    '''
+    return ''.join([a.zfill(2) for a in f.strip().split('.')])
+
+
 def getUriFromConnectionName(connection_name, must_connect=True):
 
     # Otherwise check QGIS QGIS3.ini settings for connection name
