@@ -38,25 +38,24 @@ from .tools import *
 import configparser
 from db_manager.db_plugins import createDbPlugin
 
-class CreateDatabaseStructure(QgsProcessingAlgorithm):
+class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
     """
-    Création de la structure sur la base de données
+
     """
 
     # Constants used to refer to parameters and outputs. They will be
     # used when calling the algorithm from another algorithm, or when
     # calling from the QGIS console.
     CONNECTION_NAME = 'CONNECTION_NAME'
-    OVERRIDE = 'OVERRIDE'
-    ADDTESTDATA = 'ADDTESTDATA'
+    RUNIT = 'RUNIT'
     OUTPUT_STATUS = 'OUTPUT_STATUS'
     OUTPUT_STRING = 'OUTPUT_STRING'
 
     def name(self):
-        return 'create_database_structure'
+        return 'upgrade_database_structure'
 
     def displayName(self):
-        return self.tr('Installation de la structure sur la base de données')
+        return self.tr('Mise à jour de la structure de la base')
 
     def group(self):
         return self.tr('Structure')
@@ -95,20 +94,12 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
 
         self.addParameter(
             QgsProcessingParameterBoolean(
-                self.OVERRIDE,
-                self.tr('Écraser le schéma adresse ? ** ATTENTION ** Cela supprimera toutes les données !'),
+                self.RUNIT,
+                self.tr('Cocher cette option pour lancer la mise-à-jour.'),
                 defaultValue=False,
                 optional=False
             )
         )
-        #self.addParameter(
-        #    QgsProcessingParameterBoolean(
-        #        self.ADDTESTDATA,
-        #        self.tr('Ajouter des données de test ?'),
-        #        defaultValue=False,
-        #        optional=False
-        #    )
-        #)
         # OUTPUTS
         # Add output for status (integer) and message (string)
         self.addOutput(
@@ -126,105 +117,150 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
 
 
     def checkParameterValues(self, parameters, context):
+        # Check if runit is checked
+        runit = self.parameterAsBool(parameters, self.RUNIT, context)
+        if not runit:
+            msg = self.tr('Vous devez cocher cette case pour réaliser la mise à jour !')
+            ok = False
+            return ok, msg
+
         # Check database content
         ok, msg = self.checkSchema(parameters, context)
         if not ok:
             return False, msg
 
-        return super(CreateDatabaseStructure, self).checkParameterValues(parameters, context)
+        return super(UpgradeDatabaseStructure, self).checkParameterValues(parameters, context)
 
     def checkSchema(self, parameters, context):
-        connection_name = parameters[self.CONNECTION_NAME]
         sql = '''
             SELECT schema_name
             FROM information_schema.schemata
             WHERE schema_name = 'adresse';
         '''
+        connection_name = parameters[self.CONNECTION_NAME]
         [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
             connection_name,
             sql
         )
         if not ok:
             return ok, error_message
-        override = parameters[self.OVERRIDE]
-        msg = self.tr('Le schéma adresse n\'existe pas. On poursuit...')
+        ok = False
+        msg = self.tr("Le schéma adresse n'existe pas dans la base de données !")
         for a in data:
             schema = a[0]
-            if schema == 'adresse' and not override:
-                ok = False
-                msg = self.tr(
-                    " Le schéma existe déjà dans la base de données !"
-                    " Si vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) cocher la case **Écraser**"
-                )
+            if schema == 'adresse':
+                ok = True
+                msg = ''
         return ok, msg
 
     def processAlgorithm(self, parameters, context, feedback):
         """
         Here is where the processing itself takes place.
         """
-
         connection_name = parameters[self.CONNECTION_NAME]
 
         # Drop schema if needed
-        override = self.parameterAsBool(parameters, self.OVERRIDE, context)
-        if override:
-            feedback.pushInfo(self.tr("Essai de suppression du schéma adresse..."))
-            sql = 'DROP SCHEMA IF EXISTS adresse CASCADE;'
+        runit = self.parameterAsBool(parameters, self.RUNIT, context)
+        if not runit:
+            status = 0
+            msg = self.tr('Vous devez cocher cette case pour réaliser la mise à jour !')
+            # raise Exception(msg)
+            return {
+                self.OUTPUT_STATUS: status,
+                self.OUTPUT_STRING: msg
+            }
 
-            [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
-                connection_name,
-                sql
-            )
-            if ok:
-                feedback.pushInfo(self.tr("Le schéma adresse a été supprimé."))
-            else:
-                feedback.reportError(error_message)
-                status = 0
-                # raise Exception(msg)
-                return {
-                    self.OUTPUT_STATUS: status,
-                    self.OUTPUT_STRING: msg
-                }
+        # get database version
+        sql = '''
+            SELECT me_version
+            FROM adresse.metadata
+            WHERE me_status = 1
+            ORDER BY me_version_date DESC
+            LIMIT 1;
+        '''
+        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
+            connection_name,
+            sql
+        )
+        if not ok:
+            feedback.reportError(error_message)
+            status = 0
+            raise Exception(error_message)
+        db_version = None
+        for a in data:
+            db_version = a[0]
+        if not db_version:
+            error_message = self.tr('Aucune version trouvée dans la base de données !')
+            raise Exception(error_message)
+        feedback.pushInfo(self.tr('Version de la base de données') + ' = %s' % db_version)
 
-        # Create full structure
-        sql_files = [
-            '00_initialize_database.sql',
-            'adresse/10_FUNCTION.sql',
-            'adresse/20_TABLE_COMMENT_SEQUENCE_DEFAULT.sql',
-            'adresse/30_VIEW.sql',
-            'adresse/40_INDEX.sql',
-            'adresse/50_TRIGGER.sql',
-            'adresse/60_CONSTRAINT.sql',
-            #'adresse/90_GLOSSARY.sql',
-            '99_finalize_database.sql',
-        ]
-        # Add test data
-        #addtestdata = self.parameterAsBool(parameters, self.ADDTESTDATA, context)
-        #if addtestdata:
-        #    sql_files.append('99_test_data.sql')
-
-        msg = ''
+        # get plugin version
         alg_dir = os.path.dirname(__file__)
         plugin_dir = os.path.join(alg_dir, '../../')
+        config = configparser.ConfigParser()
+        config.read(os.path.join(plugin_dir, 'metadata.txt'))
+        plugin_version = config['general']['version']
+        feedback.pushInfo(self.tr('Version du plugin') + ' = %s' % plugin_version)
 
+        # Return if nothing to do
+        if db_version == plugin_version:
+            return {
+                self.OUTPUT_STATUS: 1,
+                self.OUTPUT_STRING: self.tr(
+                    ' La version de la base de données et du plugin sont les mêmes.'
+                    ' Aucune mise-à-jour n\'est nécessaire'
+                )
+            }
+
+        # Get all the upgrade SQL files between db versions and plugin version
+        upgrade_dir = os.path.join(plugin_dir, 'install/sql/upgrade/')
+        ff = {}
+        get_files = [
+            f for f in os.listdir(upgrade_dir)
+            if os.path.isfile(os.path.join(upgrade_dir, f))
+        ]
+        files = []
+        db_version_integer = getVersionInteger(db_version)
+        for f in get_files:
+            k = getVersionInteger(
+                f.replace('upgrade_to_', '').replace('.sql', '').strip()
+            )
+            if k > db_version_integer:
+                files.append(
+                    [k, f]
+                )
+        def getKey(item):
+            return item[0]
+        sfiles = sorted(files, key=getKey)
+        sql_files = [s[1] for s in sfiles]
+
+        msg = ''
         # Loop sql files and run SQL code
         for sf in sql_files:
-            feedback.pushInfo(sf)
-            sql_file = os.path.join(plugin_dir, 'install/sql/%s' % sf)
+            sql_file = os.path.join(plugin_dir, 'install/sql/upgrade/%s' % sf)
             with open(sql_file, 'r') as f:
                 sql = f.read()
                 if len(sql.strip()) == 0:
-                    feedback.pushInfo('  Skipped (empty file)')
+                    feedback.pushInfo('* ' + sf + ' -- NON TRAITÉ (FICHIER VIDE)')
                     continue
+
+                # Add SQL database version in adresse.metadata
+                new_db_version = sf.replace('upgrade_to_', '').replace('.sql', '').strip()
+                feedback.pushInfo('* NOUVELLE VERSION BDD' + new_db_version )
+                sql+= '''
+                    UPDATE adresse.metadata
+                    SET (me_version, me_version_date)
+                    = ( '%s', now()::timestamp(0) );
+                ''' % new_db_version
 
                 [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
                     connection_name,
                     sql
                 )
                 if ok:
-                    feedback.pushInfo('  Success !')
+                    feedback.pushInfo('* ' + sf + ' -- OK !')
                 else:
-                    feedback.reportError('* ' + error_message)
+                    feedback.reportError(error_message)
                     status = 0
                     raise Exception(error_message)
                     # return {
@@ -232,23 +268,7 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
                         # self.OUTPUT_STRING: error_message
                     # }
 
-        # Add version
-        config = configparser.ConfigParser()
-        config.read(str(os.path.join(plugin_dir, 'metadata.txt')))
-        version = config['general']['version']
-        sql = '''
-            INSERT INTO adresse.metadata
-            (me_version, me_version_date, me_status)
-            VALUES (
-                '%s', now()::timestamp(0), 1
-            )
-        ''' % version
-        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
-            connection_name,
-            sql
-        )
-
         return {
             self.OUTPUT_STATUS: 1,
-            self.OUTPUT_STRING: self.tr('*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE ***')
+            self.OUTPUT_STRING: self.tr('*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***')
         }

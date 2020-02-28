@@ -56,7 +56,7 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
         """
         Returns the algorithm name, used for identifying the algorithm.
         """
-        return 'adresse_chargement'
+        return 'load_layers'
 
     def displayName(self):
         """

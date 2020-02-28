@@ -33,6 +33,7 @@ __revision__ = '$Format:%H$'
 from qgis.core import QgsProcessingProvider
 from qgis.utils import plugins
 from .algorithms.create_database_structure import CreateDatabaseStructure
+from .algorithms.upgrade_database_structure import UpgradeDatabaseStructure
 from .algorithms.load_layers import LoadLayersAlgorithm
 
 
@@ -43,6 +44,7 @@ class GestionAdresseProvider(QgsProcessingProvider):
         Loads all algorithms belonging to this provider.
         """
         self.addAlgorithm(CreateDatabaseStructure())
+        self.addAlgorithm(UpgradeDatabaseStructure())
         self.addAlgorithm(LoadLayersAlgorithm())
 
     def id(self):
