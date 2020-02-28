@@ -2,7 +2,8 @@
 name=Gestion Adresse
 qgisMinimumVersion=3.0
 description=Create SQL intersect Table
-version=0.2.0
+
+version=0.2.1
 author=3Liz
 email=info@3liz.com
 
@@ -16,6 +17,14 @@ repository=http://repo
 
 # Uncomment the following line and add your changelog:
 changelog=
+  Version 0.2.1:
+  * Database - Rename 4 columns of point_adresse
+  * Tools - Add missing method getVersionInteger
+  * Install - Add test data
+  * Fix wrong import
+  * Move processing algorithms, review all headers
+  * Move source code into gestion_base_adresse folder
+  
   Version 0.2.0:
   * Doc - Upgrade database doc with new metadata table
   * Processing - Add alg to upgrade database structure

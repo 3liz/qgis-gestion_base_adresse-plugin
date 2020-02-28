@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+### 28/02/2020 Version 0.2.1
+
+* Database - Rename 4 columns of point_adresse
+* Tools - Add missing method getVersionInteger
+* Install - Add test data
+* Fix wrong import
+* Move processing algorithms, review all headers
+* Move source code into gestion_base_adresse folder
+
 ### 28/02/2020 Version 0.2.0
 
 * Doc - Upgrade database doc with new metadata table
