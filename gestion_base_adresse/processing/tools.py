@@ -2,13 +2,6 @@ from qgis.PyQt.QtCore import QCoreApplication
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
-import os
-
-from qgis.core import (
-    QgsApplication,
-    QgsProcessingException,
-    QgsDataSourceUri
-)
 
 def tr(string):
     return QCoreApplication.translate('Processing', string)

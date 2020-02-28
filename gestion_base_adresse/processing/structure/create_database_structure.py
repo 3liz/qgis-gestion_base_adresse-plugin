@@ -1,41 +1,25 @@
-
-"""
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- ***************************************************************************/
-"""
-
-__author__ = '3liz'
-__date__ = '2019-02-15'
-__copyright__ = '(C) 2019 by 3liz'
-
-# This will get replaced with a git SHA1 when you do a git archive
-
+__copyright__ = 'Copyright 2020, 3Liz'
+__license__ = 'GPL version 3'
+__email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
-from PyQt5.QtCore import QCoreApplication
+import configparser
+import os
+
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import (
-    QgsProcessing,
     QgsProcessingAlgorithm,
-    QgsProcessingUtils,
-    QgsProcessingException,
     QgsProcessingParameterString,
     QgsProcessingParameterBoolean,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
-    QgsExpressionContextUtils
+    QgsExpressionContextUtils,
 )
 
-import processing
-import os
-from .tools import *
-import configparser
-from db_manager.db_plugins import createDbPlugin
+from .tools import (
+    fetchDataFromSqlQuery,
+)
+
 
 class CreateDatabaseStructure(QgsProcessingAlgorithm):
     """
@@ -81,7 +65,7 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
         connection_name = QgsExpressionContextUtils.globalScope().variable('adresse_connection_name')
         db_param_a = QgsProcessingParameterString(
             self.CONNECTION_NAME,
-            tr('Connexion PostgreSQL vers la base de données'),
+            self.tr('Connexion PostgreSQL vers la base de données'),
             defaultValue=connection_name,
             optional=False
         )
@@ -182,7 +166,7 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
                 # raise Exception(msg)
                 return {
                     self.OUTPUT_STATUS: status,
-                    self.OUTPUT_STRING: msg
+                    self.OUTPUT_STRING: error_message
                 }
 
         # Create full structure
