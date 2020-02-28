@@ -32,7 +32,7 @@ __revision__ = '$Format:%H$'
 
 from qgis.core import QgsProcessingProvider
 from qgis.utils import plugins
-from .Layer_Upload_algorithm import LayerUploadAlgorithm
+from .algorithms.Layer_Upload_algorithm import LayerUploadAlgorithm
 
 
 class GestionAdresseProvider(QgsProcessingProvider):

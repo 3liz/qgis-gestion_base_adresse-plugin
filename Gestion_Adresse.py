@@ -36,16 +36,17 @@ import inspect
 # Import the PyQt and QGIS libraries
 from qgis.PyQt.QtCore import QFileInfo, QUrl, QFile, QDir, QSettings
 from qgis.PyQt.QtWidgets import (
-    QAction, QFileDialog, QMessageBox)
-
-from qgis.PyQt.QtGui import (QIcon,
-                         QDesktopServices,
-                         QStandardItemModel,
-                         QStandardItem
-                         )
+    QAction, QFileDialog, QMessageBox
+)
+from qgis.PyQt.QtGui import (
+    QIcon,
+    QDesktopServices,
+    QStandardItemModel,
+    QStandardItem
+)
 
 from qgis.core import QgsProcessingAlgorithm, QgsApplication
-from .Gestion_Adresse_provider import GestionAdresseProvider
+from .processing.provider import GestionAdresseProvider
 
 cmd_folder = os.path.split(inspect.getfile(inspect.currentframe()))[0]
 
