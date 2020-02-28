@@ -16,7 +16,7 @@ from qgis.core import (
     QgsExpressionContextUtils,
 )
 
-from ..tools import fetchDataFromSqlQuery
+from ..tools import fetchDataFromSqlQuery, getVersionInteger
 
 
 class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
@@ -187,8 +187,7 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
             return {
                 self.OUTPUT_STATUS: 1,
                 self.OUTPUT_STRING: self.tr(
-                    ' La version de la base de données et du plugin sont les mêmes.'
-                    ' Aucune mise-à-jour n\'est nécessaire'
+                    ' La version de la base de données et du plugin sont les mêmes. Aucune mise-à-jour n\'est nécessaire'
                 )
             }
 
