@@ -84,14 +84,15 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
                 optional=False
             )
         )
-        #self.addParameter(
-        #    QgsProcessingParameterBoolean(
-        #        self.ADDTESTDATA,
-        #        self.tr('Ajouter des données de test ?'),
-        #        defaultValue=False,
-        #        optional=False
-        #    )
-        #)
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.ADDTESTDATA,
+                self.tr('Ajouter des données de test ?'),
+                defaultValue=False,
+                optional=False
+            )
+        )
+
         # OUTPUTS
         # Add output for status (integer) and message (string)
         self.addOutput(
@@ -182,9 +183,9 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
             '99_finalize_database.sql',
         ]
         # Add test data
-        #addtestdata = self.parameterAsBool(parameters, self.ADDTESTDATA, context)
-        #if addtestdata:
-        #    sql_files.append('99_test_data.sql')
+        addtestdata = self.parameterAsBool(parameters, self.ADDTESTDATA, context)
+        if addtestdata:
+            sql_files.append('99_test_data.sql')
 
         msg = ''
         alg_dir = os.path.dirname(__file__)
