@@ -113,10 +113,10 @@
          <column autoUpdated="false" digits="0" id="4" name="code_postal" nullable="true" remarks="" size="5" type="bpchar"/>
          <column autoUpdated="false" digits="0" id="5" name="type_pos" nullable="true" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="achat_plaque_numero" nullable="true" remarks="" size="1" type="bool"/>
-         <column autoUpdated="false" digits="0" id="7" name="createur_point" nullable="true" remarks="" size="2147483647" type="text"/>
-         <column autoUpdated="false" defaultValue="now()" digits="0" id="8" name="date_creation_point" nullable="true" remarks="" size="13" type="date"/>
-         <column autoUpdated="false" digits="0" id="9" name="modificateur_point" nullable="true" remarks="" size="2147483647" type="text"/>
-         <column autoUpdated="false" digits="0" id="10" name="date_modif_point" nullable="true" remarks="" size="13" type="date"/>
+         <column autoUpdated="false" digits="0" id="7" name="createur" nullable="true" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="8" name="date_creation" nullable="true" remarks="" size="13" type="date"/>
+         <column autoUpdated="false" digits="0" id="9" name="modificateur" nullable="true" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="0" id="10" name="date_modif" nullable="true" remarks="" size="13" type="date"/>
          <column autoUpdated="false" defaultValue="false" digits="0" id="11" name="erreur" nullable="true" remarks="" size="1" type="bool"/>
          <column autoUpdated="false" digits="0" id="12" name="commentaire" nullable="true" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="0" id="13" name="geom" nullable="true" remarks="" size="2147483647" type="geometry"/>
