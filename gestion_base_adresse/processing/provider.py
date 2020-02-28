@@ -6,9 +6,9 @@ __revision__ = '$Format:%H$'
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
 
-from .algorithms.create_database_structure import CreateDatabaseStructure
-from .algorithms.upgrade_database_structure import UpgradeDatabaseStructure
-from .algorithms.load_layers import LoadLayersAlgorithm
+from .structure.create_database_structure import CreateDatabaseStructure
+from .structure.upgrade_database_structure import UpgradeDatabaseStructure
+from .data.load_layers import LoadLayersAlgorithm
 
 from ..qgis_plugin_tools.tools.resources import resources_path
 

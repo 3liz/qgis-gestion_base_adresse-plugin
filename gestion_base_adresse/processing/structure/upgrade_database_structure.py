@@ -16,7 +16,7 @@ from qgis.core import (
     QgsExpressionContextUtils,
 )
 
-from .tools import fetchDataFromSqlQuery
+from ..tools import fetchDataFromSqlQuery
 
 
 class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
