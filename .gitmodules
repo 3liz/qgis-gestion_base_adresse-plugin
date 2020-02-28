@@ -1,0 +1,3 @@
+[submodule "gestion_base_adresse/qgis_plugin_tools"]
+	path = gestion_base_adresse/qgis_plugin_tools
+	url = https://github.com/3liz/qgis_plugin_tools.git

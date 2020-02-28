@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### Version 0.2.0
+### 28/02/2020 Version 0.2.0
 
 * Doc - Upgrade database doc with new metadata table
 * Processing - Add alg to upgrade database structure
