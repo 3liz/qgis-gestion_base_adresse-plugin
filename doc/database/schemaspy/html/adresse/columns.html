@@ -106,6 +106,72 @@
 				</thead>
 				<tbody>
 					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>modificateur</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td>createur_point</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td>type_pos</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td>prefixe</td>
+					 <td>varchar</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>code_fantoir</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_parcelle</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
 					 <td>document</td>
 					 <td>Table</td>
 					 <td>date_doc</td>
@@ -119,19 +185,8 @@
 					<tr>
 					 <td>point_adresse</td>
 					 <td>Table</td>
-					 <td>code_postal</td>
-					 <td>bpchar</td>
-					 <td>5</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td>section</td>
-					 <td>varchar</td>
+					 <td>commentaire</td>
+					 <td>text</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
@@ -139,7 +194,117 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>commune_deleguee</td>
+					 <td>referencer_com</td>
+					 <td>Table</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com_deleguee</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td>suffixe</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>phase_fibre</td>
+					 <td>bpchar</td>
+					 <td>1</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>metadata</td>
+					 <td>Table</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id</td>
+					 <td>serial</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title='Automatically updated by the database'>√</td>
+					 <td>nextval(&#39;adresse.metadata_id_seq&#39;::regclass)</td>
+					 <td><p>Identifiant de la version</p></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>date_ban</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td>achat_plaque_numero</td>
+					 <td>bool</td>
+					 <td>1</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>false</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>document</td>
+					 <td>Table</td>
+					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_commune</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>mail_referent</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td>date_creation_point</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>now()</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>date_dgfip</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
 					 <td>Table</td>
 					 <td>geom</td>
 					 <td>geometry</td>
@@ -150,12 +315,12 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>referencer_com</td>
+					 <td>point_adresse</td>
 					 <td>Table</td>
-					 <td>date_action</td>
-					 <td>date</td>
-					 <td>13</td>
-					 <td title='nullable'>√</td>
+					 <td>numero</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title=''></td>
 					 <td title=''></td>
 					 <td>null</td>
 					 <td></td>
@@ -163,8 +328,19 @@
 					<tr>
 					 <td>parcelle</td>
 					 <td>Table</td>
+					 <td>arpente</td>
+					 <td>bool</td>
+					 <td>1</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
 					 <td>commune</td>
-					 <td>varchar</td>
+					 <td>Table</td>
+					 <td>fibre</td>
+					 <td>text</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
@@ -174,9 +350,9 @@
 					<tr>
 					 <td>voie</td>
 					 <td>Table</td>
-					 <td>date_modif</td>
-					 <td>date</td>
-					 <td>13</td>
+					 <td>nb_point</td>
+					 <td>int4</td>
+					 <td>10</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
@@ -194,122 +370,12 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>commune</td>
+					 <td>metadata</td>
 					 <td>Table</td>
-					 <td>diffusion_ban</td>
-					 <td>bpchar</td>
-					 <td>3</td>
-					 <td title='nullable'>√</td>
+					 <td>me_status</td>
+					 <td>int2</td>
+					 <td>5</td>
 					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>appartenir_com</td>
-					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_voie</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>achat_plaque_voie</td>
-					 <td>bool</td>
-					 <td>1</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>false</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>tel_referent</td>
-					 <td>bpchar</td>
-					 <td>10</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td>created</td>
-					 <td>date</td>
-					 <td>13</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>document</td>
-					 <td>Table</td>
-					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_commune</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>geom</td>
-					 <td>geometry</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td>id</td>
-					 <td>varchar</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>modificateur_point</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>adresse_complete</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>nom_complet</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
 					 <td></td>
@@ -326,9 +392,9 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>document</td>
+					 <td>point_adresse</td>
 					 <td>Table</td>
-					 <td>nom_doc</td>
+					 <td>modificateur_point</td>
 					 <td>text</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
@@ -339,151 +405,41 @@
 					<tr>
 					 <td>voie</td>
 					 <td>Table</td>
-					 <td>modificateur</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_voie</td>
 					 <td>serial</td>
 					 <td>10</td>
 					 <td title=''></td>
 					 <td title='Automatically updated by the database'>√</td>
-					 <td>nextval(&#39;adresse.commune_id_com_seq&#39;::regclass)</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_parcelle</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>diffusion_dgfip</td>
-					 <td>bpchar</td>
-					 <td>3</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>referencer_com</td>
-					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>intercom</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune_deleguee</td>
-					 <td>Table</td>
-					 <td>nom_referent_deleguee</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td>arpente</td>
-					 <td>bool</td>
-					 <td>1</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>geom</td>
-					 <td>geometry</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
+					 <td>nextval(&#39;adresse.voie_id_voie_seq&#39;::regclass)</td>
 					 <td></td>
 					</tr>
 					<tr>
 					 <td>voie</td>
 					 <td>Table</td>
-					 <td>statut_voie</td>
-					 <td>bool</td>
-					 <td>1</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>false</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td>contenance</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_voie</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>date_creation</td>
+					 <td>date_modif</td>
 					 <td>date</td>
 					 <td>13</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
-					 <td>now()</td>
+					 <td>null</td>
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>commune_deleguee</td>
+					 <td>commune</td>
 					 <td>Table</td>
-					 <td>commune_deleguee_nom</td>
+					 <td>nom_referent</td>
 					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td>section</td>
+					 <td>varchar</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
@@ -502,31 +458,20 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_point</td>
-					 <td>serial</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title='Automatically updated by the database'>√</td>
-					 <td>nextval(&#39;adresse.point_adresse_id_point_seq&#39;::regclass)</td>
-					 <td></td>
-					</tr>
-					<tr>
 					 <td>voie</td>
 					 <td>Table</td>
-					 <td>delib</td>
-					 <td>bool</td>
-					 <td>1</td>
+					 <td>date_creation</td>
+					 <td>date</td>
+					 <td>13</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
-					 <td>null</td>
+					 <td>now()</td>
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>point_adresse</td>
+					 <td>commune</td>
 					 <td>Table</td>
-					 <td>createur_point</td>
+					 <td>intercom</td>
 					 <td>text</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
@@ -535,11 +480,22 @@
 					 <td></td>
 					</tr>
 					<tr>
+					 <td>document</td>
+					 <td>Table</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_doc</td>
+					 <td>serial</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title='Automatically updated by the database'>√</td>
+					 <td>nextval(&#39;adresse.document_id_doc_seq&#39;::regclass)</td>
+					 <td></td>
+					</tr>
+					<tr>
 					 <td>commune</td>
 					 <td>Table</td>
-					 <td>actif</td>
-					 <td>bpchar</td>
-					 <td>3</td>
+					 <td>geom</td>
+					 <td>geometry</td>
+					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
@@ -548,42 +504,75 @@
 					<tr>
 					 <td>commune_deleguee</td>
 					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com_del</td>
-					 <td>serial</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title='Automatically updated by the database'>√</td>
-					 <td>nextval(&#39;adresse.commune_deleguee_id_com_del_seq&#39;::regclass)</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>appartenir_com</td>
-					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>insee_code</td>
-					 <td>bpchar</td>
-					 <td>5</td>
+					 <td>geom</td>
+					 <td>geometry</td>
+					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>voie</td>
+					 <td>point_adresse</td>
 					 <td>Table</td>
-					 <td>nb_point</td>
+					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_voie</td>
 					 <td>int4</td>
 					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_commune</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td>erreur</td>
+					 <td>bool</td>
+					 <td>1</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>false</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>nom_complet</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune_deleguee</td>
+					 <td>Table</td>
+					 <td>mail_referent_deleguee</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td>numero</td>
+					 <td>varchar</td>
+					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
@@ -592,7 +581,7 @@
 					<tr>
 					 <td>referencer_com</td>
 					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com_deleguee</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com</td>
 					 <td>int4</td>
 					 <td>10</td>
 					 <td title=''></td>
@@ -614,206 +603,8 @@
 					<tr>
 					 <td>commune</td>
 					 <td>Table</td>
-					 <td>situation</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>numero</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>date_creation_point</td>
-					 <td>date</td>
-					 <td>13</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>now()</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>commentaire</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td>prefixe</td>
-					 <td>varchar</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>date_dgfip</td>
-					 <td>date</td>
-					 <td>13</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>type_pos</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>nom</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>type_num</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>mail_referent</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>achat_plaque_numero</td>
-					 <td>bool</td>
-					 <td>1</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>false</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>statut_voie_num</td>
-					 <td>bool</td>
-					 <td>1</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>true</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>point_adresse</td>
-					 <td>Table</td>
-					 <td>date_modif_point</td>
-					 <td>date</td>
-					 <td>13</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>fibre</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>fid</td>
-					 <td>serial</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title='Automatically updated by the database'>√</td>
-					 <td>nextval(&#39;adresse.parcelle_fid_seq&#39;::regclass)</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>date_delib</td>
-					 <td>date</td>
-					 <td>13</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
 					 <td>commenter</td>
 					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>parcelle</td>
-					 <td>Table</td>
-					 <td>updated</td>
-					 <td>date</td>
-					 <td>13</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>geom</td>
-					 <td>geometry</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
@@ -832,44 +623,22 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>point_adresse</td>
+					 <td>voie</td>
 					 <td>Table</td>
-					 <td>erreur</td>
+					 <td>delib</td>
 					 <td>bool</td>
 					 <td>1</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
-					 <td>false</td>
+					 <td>null</td>
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>point_adresse</td>
+					 <td>parcelle</td>
 					 <td>Table</td>
-					 <td>suffixe</td>
-					 <td>text</td>
+					 <td>id</td>
+					 <td>varchar</td>
 					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>voie</td>
-					 <td>Table</td>
-					 <td>longueur</td>
-					 <td>int4</td>
-					 <td>10</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune</td>
-					 <td>Table</td>
-					 <td>phase_fibre</td>
-					 <td>bpchar</td>
-					 <td>1</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
@@ -887,11 +656,33 @@
 					 <td></td>
 					</tr>
 					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>fid</td>
+					 <td>serial</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title='Automatically updated by the database'>√</td>
+					 <td>nextval(&#39;adresse.parcelle_fid_seq&#39;::regclass)</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune_deleguee</td>
+					 <td>Table</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com_del</td>
+					 <td>serial</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title='Automatically updated by the database'>√</td>
+					 <td>nextval(&#39;adresse.commune_deleguee_id_com_del_seq&#39;::regclass)</td>
+					 <td></td>
+					</tr>
+					<tr>
 					 <td>commune</td>
 					 <td>Table</td>
-					 <td>date_ban</td>
-					 <td>date</td>
-					 <td>13</td>
+					 <td>diffusion_ban</td>
+					 <td>bpchar</td>
+					 <td>3</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
@@ -900,7 +691,205 @@
 					<tr>
 					 <td>commune</td>
 					 <td>Table</td>
-					 <td>nom_referent</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com</td>
+					 <td>serial</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title='Automatically updated by the database'>√</td>
+					 <td>nextval(&#39;adresse.commune_id_com_seq&#39;::regclass)</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>situation</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune_deleguee</td>
+					 <td>Table</td>
+					 <td>nom_referent_deleguee</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td>contenance</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>document</td>
+					 <td>Table</td>
+					 <td>type_document</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>actif</td>
+					 <td>bpchar</td>
+					 <td>3</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>metadata</td>
+					 <td>Table</td>
+					 <td>me_version_date</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title=''></td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td><p>Date de la version. Ex: 2019-06-01</p></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>statut_com</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>diffusion_dgfip</td>
+					 <td>bpchar</td>
+					 <td>3</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>statut_voie</td>
+					 <td>bool</td>
+					 <td>1</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>false</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>longueur</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>tel_referent</td>
+					 <td>bpchar</td>
+					 <td>10</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune</td>
+					 <td>Table</td>
+					 <td>insee_code</td>
+					 <td>bpchar</td>
+					 <td>5</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_point</td>
+					 <td>serial</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title='Automatically updated by the database'>√</td>
+					 <td>nextval(&#39;adresse.point_adresse_id_point_seq&#39;::regclass)</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td>updated</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>type_num</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>achat_plaque_voie</td>
+					 <td>bool</td>
+					 <td>1</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>false</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>point_adresse</td>
+					 <td>Table</td>
+					 <td>date_modif_point</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>voie</td>
+					 <td>Table</td>
+					 <td>nom</td>
 					 <td>text</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
@@ -911,20 +900,97 @@
 					<tr>
 					 <td>point_adresse</td>
 					 <td>Table</td>
-					 <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_commune</td>
-					 <td>int4</td>
-					 <td>10</td>
+					 <td>geom</td>
+					 <td>geometry</td>
+					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>voie</td>
+					 <td>appartenir_com</td>
 					 <td>Table</td>
-					 <td>code_fantoir</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_voie</td>
 					 <td>int4</td>
 					 <td>10</td>
+					 <td title=''></td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>referencer_com</td>
+					 <td>Table</td>
+					 <td>action</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>commune_deleguee</td>
+					 <td>Table</td>
+					 <td>commune_deleguee_nom</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>appartenir_com</td>
+					 <td>Table</td>
+					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_com</td>
+					 <td>int4</td>
+					 <td>10</td>
+					 <td title=''></td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td>created</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>document</td>
+					 <td>Table</td>
+					 <td>nom_doc</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title='nullable'>√</td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td></td>
+					</tr>
+					<tr>
+					 <td>metadata</td>
+					 <td>Table</td>
+					 <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i>me_version</td>
+					 <td>text</td>
+					 <td>2147483647</td>
+					 <td title=''></td>
+					 <td title=''></td>
+					 <td>null</td>
+					 <td><p>Version. Ex: 1.0.2</p></td>
+					</tr>
+					<tr>
+					 <td>parcelle</td>
+					 <td>Table</td>
+					 <td>commune</td>
+					 <td>varchar</td>
+					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
@@ -942,20 +1008,20 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>voie</td>
+					 <td>referencer_com</td>
 					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_voie</td>
-					 <td>serial</td>
-					 <td>10</td>
+					 <td>date_action</td>
+					 <td>date</td>
+					 <td>13</td>
+					 <td title='nullable'>√</td>
 					 <td title=''></td>
-					 <td title='Automatically updated by the database'>√</td>
-					 <td>nextval(&#39;adresse.voie_id_voie_seq&#39;::regclass)</td>
+					 <td>null</td>
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>document</td>
+					 <td>point_adresse</td>
 					 <td>Table</td>
-					 <td>type_document</td>
+					 <td>adresse_complete</td>
 					 <td>text</td>
 					 <td>2147483647</td>
 					 <td title='nullable'>√</td>
@@ -964,11 +1030,11 @@
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>referencer_com</td>
+					 <td>point_adresse</td>
 					 <td>Table</td>
-					 <td>action</td>
-					 <td>text</td>
-					 <td>2147483647</td>
+					 <td>code_postal</td>
+					 <td>bpchar</td>
+					 <td>5</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
@@ -977,45 +1043,23 @@
 					<tr>
 					 <td>commune</td>
 					 <td>Table</td>
-					 <td>statut_com</td>
-					 <td>text</td>
-					 <td>2147483647</td>
+					 <td>date_delib</td>
+					 <td>date</td>
+					 <td>13</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
 					 <td>null</td>
 					 <td></td>
 					</tr>
 					<tr>
-					 <td>parcelle</td>
+					 <td>voie</td>
 					 <td>Table</td>
-					 <td>numero</td>
-					 <td>varchar</td>
-					 <td>2147483647</td>
+					 <td>statut_voie_num</td>
+					 <td>bool</td>
+					 <td>1</td>
 					 <td title='nullable'>√</td>
 					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>commune_deleguee</td>
-					 <td>Table</td>
-					 <td>mail_referent_deleguee</td>
-					 <td>text</td>
-					 <td>2147483647</td>
-					 <td title='nullable'>√</td>
-					 <td title=''></td>
-					 <td>null</td>
-					 <td></td>
-					</tr>
-					<tr>
-					 <td>document</td>
-					 <td>Table</td>
-					 <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i>id_doc</td>
-					 <td>serial</td>
-					 <td>10</td>
-					 <td title=''></td>
-					 <td title='Automatically updated by the database'>√</td>
-					 <td>nextval(&#39;adresse.document_id_doc_seq&#39;::regclass)</td>
+					 <td>true</td>
 					 <td></td>
 					</tr>
 								</tbody>

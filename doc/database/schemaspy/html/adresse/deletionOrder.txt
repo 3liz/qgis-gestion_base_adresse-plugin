@@ -1,3 +1,4 @@
+metadata
 point_adresse
 referencer_com
 appartenir_com

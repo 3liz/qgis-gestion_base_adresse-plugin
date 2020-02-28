@@ -73,6 +73,19 @@
             <column ascending="true" name="id_doc"/>
          </index>
       </table>
+      <table name="metadata" remarks="Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C'est utilisé pour les scripts de migration de la structure entre 2 versions." schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.metadata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant de la version" size="10" type="serial"/>
+         <column autoUpdated="false" digits="0" id="1" name="me_version" nullable="false" remarks="Version. Ex: 1.0.2" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="0" id="2" name="me_version_date" nullable="false" remarks="Date de la version. Ex: 2019-06-01" size="13" type="date"/>
+         <column autoUpdated="false" digits="0" id="3" name="me_status" nullable="false" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="metadata_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="metadata_me_version_key" unique="true">
+            <column ascending="true" name="me_version"/>
+         </index>
+      </table>
       <table name="parcelle" remarks="" schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.parcelle_fid_seq'::regclass)" digits="0" id="0" name="fid" nullable="false" remarks="" size="10" type="serial">
             <child column="id_parcelle" foreignKey="point_adresse_id_parcelle_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
