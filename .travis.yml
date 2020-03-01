@@ -1,0 +1,40 @@
+services:
+  - docker
+
+sudo: false
+
+#env:
+#  global:
+#    - IMAGE=qgis/qgis
+#
+#  matrix:
+#    - QGIS_VERSION_TAG=release-3_4
+
+branches:
+  only:
+    - master
+    - dev
+
+# before_install:
+#   - docker pull ${IMAGE}:${QGIS_VERSION_TAG}
+
+install:
+  - echo ${TRAVIS_BUILD_DIR}
+  # - docker run -d --name qgis-testing-environment -v ${TRAVIS_BUILD_DIR}/lizmap:/lizmap -e DISPLAY=:99 ${IMAGE}:${QGIS_VERSION_TAG}
+  # - sleep 10
+  # - docker exec -it qgis-testing-environment sh -c "qgis_setup.sh lizmap"
+  - cd ${TRAVIS_BUILD_DIR}/docker
+  - docker-compose up -d --force-recreate
+  - sleep 10
+  - docker exec -it qgis rm -f  /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/gestion_base_adresse
+  # - docker exec -it qgis ln -s /gestion_base_adresse/ /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/gestion_base_adresse
+  - docker exec -it qgis sh -c "qgis_setup.sh gestion_base_adresse"
+  - docker cp postgis_connexions.ini qgis:/tmp
+  - docker exec qgis bash -c "cat /tmp/postgis_connexions.ini >> /root/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini"
+
+script:
+  - docker exec -it qgis sh -c "cd /gestion_base_adresse && qgis_testrunner.sh qgis_plugin_tools.infrastructure.test_runner.test_package"
+
+notifications:
+  email:
+    - etrimaille@3liz.com
