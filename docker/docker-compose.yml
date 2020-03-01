@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 
 services:
   db:
@@ -21,7 +21,8 @@ services:
     image: qgis/qgis:release-3_4
     container_name: qgis
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
+      # - /tmp/.X11-unix:/tmp/.X11-unix
       - ../gestion_base_adresse:/gestion_base_adresse
     environment:
-      - DISPLAY=unix$DISPLAY
+      # - DISPLAY=unix$DISPLAY
+      - DISPLAY=:99
