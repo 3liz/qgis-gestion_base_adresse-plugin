@@ -135,7 +135,6 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
         feedback.pushInfo('## CONNEXION A LA BASE DE DONNEES ##')
         uri = uri_from_name(connection)
 
-
         is_host = uri.host() != ''
         if is_host:
             feedback.pushInfo('Connexion établie via l\'hote')
@@ -146,26 +145,16 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
         feedback.pushInfo('')
         feedback.pushInfo('## CHARGEMENT DES COUCHES ##')
         for x in layers_name:
-<<<<<<< HEAD
-            if not context.project().mapLayersByName(x):
-                result = initLayer(schema, x, "geom", "")
-=======
             if not QgsProject.instance().mapLayersByName(x):
                 result = self.initLayer(context, uri, schema, x, "geom", "")
->>>>>>> new algo load style and connexion uri
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
                 else:
                     output_layers.append(result.id())
 
         for x in layers_name_none:
-<<<<<<< HEAD
-            if not context.project().mapLayersByName(x):
-                result = initLayer(schema, x, None, "")
-=======
             if not QgsProject.instance().mapLayersByName(x):
                 result = self.initLayer(context, uri, schema, x, None, "")
->>>>>>> new algo load style and connexion uri
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
 

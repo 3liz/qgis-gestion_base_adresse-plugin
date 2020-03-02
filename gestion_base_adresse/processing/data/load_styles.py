@@ -102,9 +102,6 @@ class LoadStylesAlgorithm(QgsProcessingAlgorithm):
         Here is where the processing itself takes place.
         """
 
-
-
-
         # Return the results of the algorithm. In this case our only result is
         # the feature sink which contains the processed features, but some
         # algorithms may return multiple feature sinks, calculated numeric
