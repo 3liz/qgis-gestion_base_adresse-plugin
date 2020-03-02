@@ -4,8 +4,6 @@ import psycopg2
 
 from qgis.core import (
     QgsApplication,
-    QgsVectorLayer,
-    QgsProcessingFeedback,
     QgsProcessingException,
 )
 from qgis.testing import unittest
@@ -18,43 +16,13 @@ except ImportError:
     import processing
 
 from ..processing.provider import GestionAdresseProvider
-from ..qgis_plugin_tools.tools.resources import plugin_test_data_path
+from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
 
 __copyright__ = 'Copyright 2019, 3Liz'
 __license__ = 'GPL version 3'
 __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
-
-class MyFeedBack(QgsProcessingFeedback):
-
-    def __init__(self):
-        super().__init__()
-        self.last = None
-
-    def setProgressText(self, text):
-        self.last = text
-        print(text)
-
-    def pushInfo(self, info):
-        self.last = info
-        print(info)
-
-    def pushCommandInfo(self, info):
-        self.last = info
-        print(info)
-
-    def pushDebugInfo(self, info):
-        self.last = info
-        print(info)
-
-    def pushConsoleInfo(self, info):
-        self.last = info
-        print(info)
-
-    def reportError(self, error, fatalError=False):
-        self.last = error
-        print(error)
 
 
 class TestProcessing(unittest.TestCase):
@@ -80,7 +48,7 @@ class TestProcessing(unittest.TestCase):
             'ADDTESTDATA': True,
         }
 
-        feedback = MyFeedBack()
+        feedback = LoggerProcessingFeedBack()
         processing.run('gestion_adresse:create_database_structure', params, feedback=feedback)
 
         self.cursor.execute('SELECT table_name FROM information_schema.tables WHERE table_schema = \'adresse\'')
@@ -92,14 +60,12 @@ class TestProcessing(unittest.TestCase):
         ]
         self.assertCountEqual(expected, result)
 
-        print('Relaunch the algorithm')
         # Relaunch the algorithm without override
         params = {
             'CONNECTION_NAME': 'test',
             'OVERRIDE': False,
         }
 
-        feedback = MyFeedBack()
         with self.assertRaises(QgsProcessingException):
             processing.run('gestion_adresse:create_database_structure', params, feedback=feedback)
 
