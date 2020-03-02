@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 02/03/2020 Version 0.2.2:
+
+* Database - Add spatial indexes
+* Install - Improve SQL generator for Pg 9.5 compatibility issue
+
 ### 28/02/2020 Version 0.2.1
 
 * Database - Rename 4 columns of point_adresse
