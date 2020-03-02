@@ -145,7 +145,7 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
         feedback.pushInfo('')
         feedback.pushInfo('## CHARGEMENT DES COUCHES ##')
         for x in layers_name:
-            if not QgsProject.instance().mapLayersByName(x):
+            if not context.project().mapLayersByName(x):
                 result = self.initLayer(context, uri, schema, x, "geom", "")
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
@@ -153,7 +153,7 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
                     output_layers.append(result.id())
 
         for x in layers_name_none:
-            if not QgsProject.instance().mapLayersByName(x):
+            if not context.project().mapLayersByName(x):
                 result = self.initLayer(context, uri, schema, x, None, "")
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
