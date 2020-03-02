@@ -174,11 +174,12 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
         sql_files = [
             '00_initialize_database.sql',
             'adresse/10_FUNCTION.sql',
-            'adresse/20_TABLE_COMMENT_SEQUENCE_DEFAULT.sql',
+            'adresse/20_TABLE_SEQUENCE_DEFAULT.sql',
             'adresse/30_VIEW.sql',
             'adresse/40_INDEX.sql',
             'adresse/50_TRIGGER.sql',
             'adresse/60_CONSTRAINT.sql',
+            'adresse/70_COMMENT.sql',
             #'adresse/90_GLOSSARY.sql',
             '99_finalize_database.sql',
         ]

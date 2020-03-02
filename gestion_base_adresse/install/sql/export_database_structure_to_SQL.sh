@@ -3,27 +3,36 @@
 # Explode PostgreSQL database dump into several files, one per type
 # LICENCE: GPL 2
 # AUTHOR: 3LIZ
+echo "# CHECK INPUT PARAMETERS service and schema"
 if [ -n "$1" ]; then
-  echo "Working on schema $1"
+  echo "# POSTGRESQL SERVICE: $1"
+  SERVICE=$1
 else
-  echo "No schema given as first parameter";
+  echo "ERROR: No PostgreSQL service given as second parameter";
   exit;
 fi
+if [ -n "$2" ]; then
+  echo "# GIVEN SCHEMA: $2"
+  SCHEMA=$2
+else
+  echo "# DEFAULT SCHEMA: test";
+  SCHEMA="adresse"
+fi
+echo ""
 
-SCHEMA=$1
 OUTDIR=$SCHEMA
 
 # Remove previous SQL files
-rm ./"$OUTDIR"/*.sql
+ls ./"$OUTDIR"/*.sql | xargs rm
 mkdir -p "$OUTDIR"
 
 # STRUCTURE
 # Dump database structure
-pg_dump service=adresse --schema-only -n $SCHEMA --no-acl --no-owner -Fc -f "$OUTDIR/dump"
+pg_dump service=$SERVICE --schema-only -n $SCHEMA --no-acl --no-owner -Fc -f "$OUTDIR/dump"
 
 # Loop through DB object types and extract SQL
 I=10
-for ITEM in FUNCTION "TABLE|COMMENT|SEQUENCE|DEFAULT" VIEW INDEX TRIGGER CONSTRAINT; do
+for ITEM in FUNCTION "TABLE|SEQUENCE|DEFAULT" VIEW INDEX TRIGGER CONSTRAINT COMMENT; do
     echo $ITEM
     # Extract list of objects for current item
     pg_restore --no-acl --no-owner -l $OUTDIR/dump | grep -E "$ITEM" > "$OUTDIR/$ITEM";
@@ -38,6 +47,8 @@ for ITEM in FUNCTION "TABLE|COMMENT|SEQUENCE|DEFAULT" VIEW INDEX TRIGGER CONSTRA
     then
         sed -i '/audit_trigger/d' "$OUTDIR"/"$I"_"$ITEM".sql;
     fi
+    # Remove SET function to remove some compatibility issues between PostgreSQL versions
+    sed -i "s#SET idle_in_transaction_session_timeout = 0;##g" "$OUTDIR"/"$I"_"$ITEM".sql;
     # Rename
     rename -f 's#\|#_#g' "$OUTDIR"/"$I"_"$ITEM".sql;
     # Increment I
