@@ -1,16 +1,16 @@
 [general]
 name=Gestion Adresse
-qgisMinimumVersion=3.0
-description=Create SQL intersect Table
+qgisMinimumVersion=3.4
+description=Gestion de la base adresse avec le module Lizmap
 
 version=0.2.2
 author=3Liz
 email=info@3liz.com
 
-about=Provide a brief description of the plugin and its purpose.
+about=Gestion de la base adresse avec le module Lizmap
 
-tracker=http://bugs
-repository=http://repo
+tracker=https://github.com/3liz/qgis-gestion_base_adresse-plugin
+repository=https://github.com/3liz/qgis-gestion_base_adresse-plugin
 # End of mandatory metadata
 
 # Recommended items:
@@ -30,9 +30,9 @@ changelog=
   * Move source code into gestion_base_adresse folder
 
 # Tags are comma separated with spaces allowed
-tags=python
+tags=adresse,france,french,address,lizmap
 
-homepage=http://homepage
+homepage=https://github.com/3liz/qgis-gestion_base_adresse-plugin
 category=Analysis
 icon=resources/icons/icon.png
 # experimental flag
