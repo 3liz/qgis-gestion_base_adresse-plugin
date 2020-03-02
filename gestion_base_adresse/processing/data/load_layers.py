@@ -81,7 +81,7 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
 
         schema_param = QgsProcessingParameterString(
             self.SCHEMA,
-            self.tr('Schéma'), 'public', False, True)
+            self.tr('Schéma'), 'adresse', False, True)
         schema_param.setMetadata({
             'widget_wrapper': {
                 'class': 'processing.gui.wrappers_postgis.SchemaWidgetWrapper',
@@ -144,15 +144,15 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
         # set host name, port, database name, username and password
         uri.setConnection(host, port, dbname, user, passw)
         for x in layers_name:
-            if not QgsProject.instance().mapLayersByName(x):
+            if not context.project().mapLayersByName(x):
                 result = initLayer(schema, x, "geom", "")
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
                 else:
-                    output_layers.append(result)
+                    output_layers.append(result.id())
 
         for x in layers_name_none:
-            if not QgsProject.instance().mapLayersByName(x):
+            if not context.project().mapLayersByName(x):
                 result = initLayer(schema, x, None, "")
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
