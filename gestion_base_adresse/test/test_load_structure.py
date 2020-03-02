@@ -5,14 +5,13 @@ import psycopg2
 from qgis.core import (
     QgsApplication,
     QgsProcessingException,
+    Qgis,
 )
 from qgis.testing import unittest
 
-try:
-    # QGIS >= 3.8
+if Qgis.QGIS_VERSION_INT >= 30800:
     from qgis import processing
-except ImportError:
-    # QGIS < 3.8
+else:
     import processing
 
 from ..processing.provider import GestionAdresseProvider
