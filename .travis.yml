@@ -1,25 +1,51 @@
+dist: bionic
+
+language: python
+
+python: 3.7
+
 services:
   - docker
 
-sudo: false
+jobs:
+  include:
+    - stage: Run tests
+      name: Docker-compose with PostGIS database
+      install:
+        - cd ${TRAVIS_BUILD_DIR}/docker
+        - docker-compose up -d --force-recreate
+        - sleep 10
+        - docker exec -it qgis rm -f  /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/gestion_base_adresse
+        - docker exec -it qgis sh -c "qgis_setup.sh gestion_base_adresse"
+        - docker cp postgis_connexions.ini qgis:/tmp
+        - docker exec qgis bash -c "cat /tmp/postgis_connexions.ini >> /root/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini"
+      script:
+        - docker exec -it qgis sh -c "cd /gestion_base_adresse && qgis_testrunner.sh qgis_plugin_tools.infrastructure.test_runner.test_package"
 
-branches:
-  only:
-    - master
-    - dev
+    - stage: Deploy
+      if: tag IS present
+      name: Create release
 
-install:
-  - cd ${TRAVIS_BUILD_DIR}/docker
-  - docker-compose up -d --force-recreate
-  - sleep 10
-  - docker exec -it qgis rm -f  /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/gestion_base_adresse
-  - docker exec -it qgis sh -c "qgis_setup.sh gestion_base_adresse"
-  - docker cp postgis_connexions.ini qgis:/tmp
-  - docker exec qgis bash -c "cat /tmp/postgis_connexions.ini >> /root/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini"
+      install:
+        - pip3 install qgis-plugin-ci
 
-script:
-  - docker exec -it qgis sh -c "cd /gestion_base_adresse && qgis_testrunner.sh qgis_plugin_tools.infrastructure.test_runner.test_package"
+      before_deploy:
+        - export RELEASE_TITLE="Release of $TRAVIS_TAG"
 
-notifications:
-  email:
-    - etrimaille@3liz.com
+      script:
+        - qgis-plugin-ci -v
+
+      deploy:
+
+        - provider: releases
+          edge: true
+          file: .
+          name: ${RELEASE_TITLE}
+          api_key: ${GH_TOKEN}
+          on:
+            tags: true
+
+        - provider: script
+          script: qgis-plugin-ci release ${TRAVIS_TAG} --github-token ${GH_TOKEN} --create-plugin-repo
+          on:
+            tags: true
