@@ -3,12 +3,10 @@ __license__ = 'GPL version 3'
 __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
-import configparser
 import os
+import configparser
 
-from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import (
-    QgsProcessingAlgorithm,
     QgsProcessingParameterString,
     QgsProcessingParameterBoolean,
     QgsProcessingOutputNumber,
@@ -17,16 +15,12 @@ from qgis.core import (
 )
 
 from ..tools import fetchDataFromSqlQuery, getVersionInteger
+from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.i18n import tr
 
 
-class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
-    """
+class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
 
-    """
-
-    # Constants used to refer to parameters and outputs. They will be
-    # used when calling the algorithm from another algorithm, or when
-    # calling from the QGIS console.
     CONNECTION_NAME = 'CONNECTION_NAME'
     RUNIT = 'RUNIT'
     OUTPUT_STATUS = 'OUTPUT_STATUS'
@@ -36,33 +30,23 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         return 'upgrade_database_structure'
 
     def displayName(self):
-        return self.tr('Mise à jour de la structure de la base')
+        return tr('Mise à jour de la structure de la base')
 
     def group(self):
-        return self.tr('Structure')
+        return tr('Structure')
 
     def groupId(self):
         return 'adresse_structure'
 
     def shortHelpString(self):
-        return ''
-
-    def tr(self, string):
-        return QCoreApplication.translate('Processing', string)
-
-    def createInstance(self):
-        return self.__class__()
+        return tr('Mise à jour de la base de données suite à une nouvelle version de l\'extension.')
 
     def initAlgorithm(self, config):
-        """
-        Here we define the inputs and output of the algorithm, along
-        with some other properties.
-        """
         # INPUTS
         connection_name = QgsExpressionContextUtils.globalScope().variable('adresse_connection_name')
         db_param_a = QgsProcessingParameterString(
             self.CONNECTION_NAME,
-            self.tr('Connexion PostgreSQL vers la base de données'),
+            tr('Connexion PostgreSQL vers la base de données'),
             defaultValue=connection_name,
             optional=False
         )
@@ -76,7 +60,7 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.RUNIT,
-                self.tr('Cocher cette option pour lancer la mise-à-jour.'),
+                tr('Cocher cette option pour lancer la mise-à-jour.'),
                 defaultValue=False,
                 optional=False
             )
@@ -86,13 +70,13 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         self.addOutput(
             QgsProcessingOutputNumber(
                 self.OUTPUT_STATUS,
-                self.tr('Output status')
+                tr('Output status')
             )
         )
         self.addOutput(
             QgsProcessingOutputString(
                 self.OUTPUT_STRING,
-                self.tr('Output message')
+                tr('Output message')
             )
         )
 
@@ -100,7 +84,7 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         # Check if runit is checked
         runit = self.parameterAsBool(parameters, self.RUNIT, context)
         if not runit:
-            msg = self.tr('Vous devez cocher cette case pour réaliser la mise à jour !')
+            msg = tr('Vous devez cocher cette case pour réaliser la mise à jour !')
             ok = False
             return ok, msg
 
@@ -125,7 +109,7 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         if not ok:
             return ok, error_message
         ok = False
-        msg = self.tr("Le schéma adresse n'existe pas dans la base de données !")
+        msg = tr("Le schéma adresse n'existe pas dans la base de données !")
         for a in data:
             schema = a[0]
             if schema == 'adresse':
@@ -143,7 +127,7 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         runit = self.parameterAsBool(parameters, self.RUNIT, context)
         if not runit:
             status = 0
-            msg = self.tr('Vous devez cocher cette case pour réaliser la mise à jour !')
+            msg = tr('Vous devez cocher cette case pour réaliser la mise à jour !')
             # raise Exception(msg)
             return {
                 self.OUTPUT_STATUS: status,
@@ -170,9 +154,9 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         for a in data:
             db_version = a[0]
         if not db_version:
-            error_message = self.tr('Aucune version trouvée dans la base de données !')
+            error_message = tr('Aucune version trouvée dans la base de données !')
             raise Exception(error_message)
-        feedback.pushInfo(self.tr('Version de la base de données') + ' = %s' % db_version)
+        feedback.pushInfo(tr('Version de la base de données') + ' = %s' % db_version)
 
         # get plugin version
         alg_dir = os.path.dirname(__file__)
@@ -180,13 +164,13 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
         config = configparser.ConfigParser()
         config.read(os.path.join(plugin_dir, 'metadata.txt'))
         plugin_version = config['general']['version']
-        feedback.pushInfo(self.tr('Version du plugin') + ' = %s' % plugin_version)
+        feedback.pushInfo(tr('Version du plugin') + ' = %s' % plugin_version)
 
         # Return if nothing to do
         if db_version == plugin_version:
             return {
                 self.OUTPUT_STATUS: 1,
-                self.OUTPUT_STRING: self.tr(
+                self.OUTPUT_STRING: tr(
                     ' La version de la base de données et du plugin sont les mêmes. Aucune mise-à-jour n\'est nécessaire'
                 )
             }
@@ -208,8 +192,10 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
                 files.append(
                     [k, f]
                 )
+
         def getKey(item):
             return item[0]
+
         sfiles = sorted(files, key=getKey)
         sql_files = [s[1] for s in sfiles]
 
@@ -249,5 +235,5 @@ class UpgradeDatabaseStructure(QgsProcessingAlgorithm):
 
         return {
             self.OUTPUT_STATUS: 1,
-            self.OUTPUT_STRING: self.tr('*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***')
+            self.OUTPUT_STRING: tr('*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***')
         }

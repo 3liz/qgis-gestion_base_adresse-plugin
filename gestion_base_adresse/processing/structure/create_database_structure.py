@@ -6,9 +6,7 @@ __revision__ = '$Format:%H$'
 import configparser
 import os
 
-from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import (
-    QgsProcessingAlgorithm,
     QgsProcessingParameterString,
     QgsProcessingParameterBoolean,
     QgsProcessingOutputNumber,
@@ -20,15 +18,15 @@ from ..tools import (
     fetchDataFromSqlQuery,
 )
 
+from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.i18n import tr
 
-class CreateDatabaseStructure(QgsProcessingAlgorithm):
+
+class CreateDatabaseStructure(BaseProcessingAlgorithm):
     """
     Création de la structure sur la base de données
     """
 
-    # Constants used to refer to parameters and outputs. They will be
-    # used when calling the algorithm from another algorithm, or when
-    # calling from the QGIS console.
     CONNECTION_NAME = 'CONNECTION_NAME'
     OVERRIDE = 'OVERRIDE'
     ADDTESTDATA = 'ADDTESTDATA'
@@ -39,33 +37,22 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
         return 'create_database_structure'
 
     def displayName(self):
-        return self.tr('Installation de la structure sur la base de données')
+        return tr('Installation de la structure sur la base de données')
 
     def group(self):
-        return self.tr('Structure')
+        return tr('Structure')
 
     def groupId(self):
         return 'adresse_structure'
 
     def shortHelpString(self):
-        return ''
-
-    def tr(self, string):
-        return QCoreApplication.translate('Processing', string)
-
-    def createInstance(self):
-        return self.__class__()
+        return tr('Création de la structure de la base données. Vous pouvez aussi charger des données de tests.')
 
     def initAlgorithm(self, config):
-        """
-        Here we define the inputs and output of the algorithm, along
-        with some other properties.
-        """
-        # INPUTS
         connection_name = QgsExpressionContextUtils.globalScope().variable('adresse_connection_name')
         db_param_a = QgsProcessingParameterString(
             self.CONNECTION_NAME,
-            self.tr('Connexion PostgreSQL vers la base de données'),
+            tr('Connexion PostgreSQL vers la base de données'),
             defaultValue=connection_name,
             optional=False
         )
@@ -79,7 +66,7 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.OVERRIDE,
-                self.tr('Écraser le schéma adresse ? ** ATTENTION ** Cela supprimera toutes les données !'),
+                tr('Écraser le schéma adresse ? ** ATTENTION ** Cela supprimera toutes les données !'),
                 defaultValue=False,
                 optional=False
             )
@@ -87,7 +74,7 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.ADDTESTDATA,
-                self.tr('Ajouter des données de test ?'),
+                tr('Ajouter des données de test ?'),
                 defaultValue=False,
                 optional=False
             )
@@ -98,13 +85,13 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
         self.addOutput(
             QgsProcessingOutputNumber(
                 self.OUTPUT_STATUS,
-                self.tr('Output status')
+                tr('Output status')
             )
         )
         self.addOutput(
             QgsProcessingOutputString(
                 self.OUTPUT_STRING,
-                self.tr('Output message')
+                tr('Output message')
             )
         )
 
@@ -131,28 +118,25 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
         if not ok:
             return ok, error_message
         override = parameters[self.OVERRIDE]
-        msg = self.tr('Le schéma adresse n\'existe pas. On poursuit...')
+        msg = tr('Le schéma adresse n\'existe pas. On poursuit...')
         for a in data:
             schema = a[0]
             if schema == 'adresse' and not override:
                 ok = False
-                msg = self.tr(
+                msg = tr(
                     " Le schéma existe déjà dans la base de données !"
                     " Si vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) cocher la case **Écraser**"
                 )
         return ok, msg
 
     def processAlgorithm(self, parameters, context, feedback):
-        """
-        Here is where the processing itself takes place.
-        """
 
         connection_name = parameters[self.CONNECTION_NAME]
 
         # Drop schema if needed
         override = self.parameterAsBool(parameters, self.OVERRIDE, context)
         if override:
-            feedback.pushInfo(self.tr("Essai de suppression du schéma adresse..."))
+            feedback.pushInfo(tr("Essai de suppression du schéma adresse..."))
             sql = 'DROP SCHEMA IF EXISTS adresse CASCADE;'
 
             [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
@@ -160,7 +144,7 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
                 sql
             )
             if ok:
-                feedback.pushInfo(self.tr("Le schéma adresse a été supprimé."))
+                feedback.pushInfo(tr("Le schéma adresse a été supprimé."))
             else:
                 feedback.reportError(error_message)
                 status = 0
@@ -235,5 +219,5 @@ class CreateDatabaseStructure(QgsProcessingAlgorithm):
 
         return {
             self.OUTPUT_STATUS: 1,
-            self.OUTPUT_STRING: self.tr('*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE ***')
+            self.OUTPUT_STRING: tr('*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE ***')
         }
