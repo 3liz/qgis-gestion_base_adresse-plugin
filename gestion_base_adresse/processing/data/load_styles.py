@@ -3,15 +3,19 @@ __license__ = 'GPL version 3'
 __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
-from qgis.PyQt.QtCore import *
-from qgis.PyQt.QtGui import *
-from qgis.PyQt.QtSql import *
-from qgis.core import *
-from qgis.gui import *
-import os
-import csv
+from qgis.PyQt.QtCore import QCoreApplication
+from qgis.core import (
+    QgsProcessingParameterString,
+    QgsProcessingOutputMultipleLayers,
+    QgsProcessingOutputString,
+    QgsProcessingAlgorithm,
+    QgsProject,
+    QgsDataSourceUri,
+    QgsProcessingContext,
+    QgsVectorLayer,
+    QgsProcessingParameterDefinition,
+)
 from processing.tools.postgis import uri_from_name, GeoDB
-import processing
 from ...qgis_plugin_tools.tools.resources import resources_path
 
 
@@ -66,12 +70,10 @@ class LoadStylesAlgorithm(QgsProcessingAlgorithm):
         """
 
         # INPUTS
-        self.addParameter(
-            QgsProcessingParameterString(
-                self.INPUT, self.tr('BlaBla'),
-                optional=True
-            )
-        )
+        parameter = QgsProcessingParameterString(
+            self.INPUT, 'Champ qui ne sert à rien !', optional=True)
+        parameter.setFlags(parameter.flags() | QgsProcessingParameterDefinition.FlagHidden)
+        self.addParameter(parameter)
 
         # OUTPUTS
         self.addOutput(
