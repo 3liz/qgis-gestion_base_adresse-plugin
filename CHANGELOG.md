@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 03/03/2020 Version 0.2.3:
+
+* Start testing the plugin with CI tools (Travis)
+* Add load styles algorithm
+* Code review
+
 ### 02/03/2020 Version 0.2.2:
 
 * Database - Add spatial indexes
