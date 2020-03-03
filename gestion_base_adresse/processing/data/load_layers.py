@@ -77,49 +77,50 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             )
         )
 
+    def initLayer(self, context, uri, schema, table, geom, sql):
+        uri.setDataSource(schema, table, geom, sql)
+        layer = QgsVectorLayer(uri.uri(), table, "postgres")
+        if not layer.isValid():
+            return False
+        context.temporaryLayerStore().addMapLayer(layer)
+        context.addLayerToLoadOnCompletion(
+            layer.id(),
+            QgsProcessingContext.LayerDetails(table,
+                context.project(),
+                self.OUTPUT
+            )
+        )
+        return layer
 
     def processAlgorithm(self, parameters, context, feedback):
-
+        msg=''
         output_layers = []
         layers_name = ['commune', 'voie', 'point_adresse', 'parcelle']
         layers_name_none = ['document', 'vue_comm']
 
-        def initLayer(schema, table, geom, sql):
-            uri.setDataSource(schema, table, geom, sql)
-            layer = QgsVectorLayer(uri.uri(), table, "postgres")
-            if not layer.isValid():
-                return False
-            context.temporaryLayerStore().addMapLayer(layer)
-            context.addLayerToLoadOnCompletion(
-                layer.id(),
-                QgsProcessingContext.LayerDetails(table,
-                    context.project(),
-                    self.OUTPUT
-                )
-            )
-            return layer
+
         """
         Here is where the processing itself takes place.
         """
 
         #override = self.parameterAsBool(parameters, self.OVERRIDE, context)
         connection = self.parameterAsString(parameters, self.DATABASE, context)
+
+        feedback.pushInfo('## CONNEXION A LA BASE DE DONNEES ##')
         uri = uri_from_name(connection)
-        host = uri.host()
-        dbname = uri.database()
-        user = uri.username()
-        passw = uri.password()
-        port = uri.port()
+
+        is_host = uri.host() != ''
+        if is_host:
+            feedback.pushInfo('Connexion établie via l\'hote')
+        else:
+            feedback.pushInfo('Connexion établie via le service')
 
         schema = self.parameterAsString(parameters, self.SCHEMA, context)
-
-        msg = 'Requête Exécutée avec succés'
-        uri = QgsDataSourceUri()
-        # set host name, port, database name, username and password
-        uri.setConnection(host, port, dbname, user, passw)
+        feedback.pushInfo('')
+        feedback.pushInfo('## CHARGEMENT DES COUCHES ##')
         for x in layers_name:
             if not context.project().mapLayersByName(x):
-                result = initLayer(schema, x, "geom", "")
+                result = self.initLayer(context, uri, schema, x, "geom", "")
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
                 else:
@@ -127,7 +128,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
         for x in layers_name_none:
             if not context.project().mapLayersByName(x):
-                result = initLayer(schema, x, None, "")
+                result = self.initLayer(context, uri, schema, x, None, "")
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
 
