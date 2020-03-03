@@ -3,13 +3,10 @@ __license__ = 'GPL version 3'
 __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
-from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import (
     QgsProcessingParameterString,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
-    QgsProcessingAlgorithm,
-    QgsProject,
     QgsDataSourceUri,
     QgsProcessingContext,
     QgsVectorLayer,
@@ -17,15 +14,14 @@ from qgis.core import (
 
 from processing.tools.postgis import uri_from_name, GeoDB
 
+from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.i18n import tr
 
-class LoadLayersAlgorithm(QgsProcessingAlgorithm):
+
+class LoadLayersAlgorithm(BaseProcessingAlgorithm):
     """
     Chargement des couches adresse depuis la base de données
     """
-
-    # Constants used to refer to parameters and outputs. They will be
-    # used when calling the algorithm from another algorithm, or when
-    # calling from the QGIS console.
 
     DATABASE = 'DATABASE'
     SCHEMA = 'SCHEMA'
@@ -33,47 +29,25 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
     OUTPUT_MSG = 'OUTPUT MSG'
 
     def name(self):
-        """
-        Returns the algorithm name, used for identifying the algorithm.
-        """
         return 'load_layers'
 
     def displayName(self):
-        """
-        Returns the translated algorithm name, which should be used for any
-        user-visible display of the algorithm name.
-        """
-        return self.tr('Chargement des couches depuis la base')
+        return tr('Chargement des couches depuis la base')
 
     def groupId(self):
-        """
-        Returns the unique ID of the group this algorithm belongs to.
-        """
         return 'adresse_donnees'
 
     def group(self):
-        """
-        Returns the name of the group this algorithm belongs to. This string
-        should be localised.
-        """
-        return self.tr('Données')
+        return tr('Données')
 
-    def tr(self, string):
-        return QCoreApplication.translate('Processing', string)
-
-    def createInstance(self):
-        return LoadLayersAlgorithm()
+    def shortHelpString(self):
+        return tr('Charger toutes les couches de la base de données.')
 
     def initAlgorithm(self, config):
-        """
-        Here we define the inputs and output of the algorithm, along
-        with some other properties.
-        """
-
         # INPUTS
         db_param = QgsProcessingParameterString(
             self.DATABASE,
-            self.tr('Connexion à la base de données'))
+            tr('Connexion à la base de données'))
         db_param.setMetadata({
             'widget_wrapper': {
                 'class': 'processing.gui.wrappers_postgis.ConnectionWidgetWrapper'}})
@@ -81,7 +55,7 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
 
         schema_param = QgsProcessingParameterString(
             self.SCHEMA,
-            self.tr('Schéma'), 'adresse', False, True)
+            tr('Schéma'), 'adresse', False, True)
         schema_param.setMetadata({
             'widget_wrapper': {
                 'class': 'processing.gui.wrappers_postgis.SchemaWidgetWrapper',
@@ -92,14 +66,14 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
         self.addOutput(
             QgsProcessingOutputMultipleLayers(
                 self.OUTPUT,
-                self.tr('Couches de sortie')
+                tr('Couches de sortie')
             )
         )
 
         self.addOutput(
             QgsProcessingOutputString(
                 self.OUTPUT_MSG,
-                self.tr('Message de sortie')
+                tr('Message de sortie')
             )
         )
 
@@ -157,12 +131,4 @@ class LoadLayersAlgorithm(QgsProcessingAlgorithm):
                 if not result:
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
 
-
-        # Return the results of the algorithm. In this case our only result is
-        # the feature sink which contains the processed features, but some
-        # algorithms may return multiple feature sinks, calculated numeric
-        # statistics, etc. These should all be included in the returned
-        # dictionary, with keys matching the feature corresponding parameter
-        # or output names.
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
-
