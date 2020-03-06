@@ -45,4 +45,7 @@ nosetests.xml
 *.DS_Store
 
 gestion_base_adresse/gestion_base_adresse.zip
-
+scripts/postgresql-*.jar
+scripts/schemaspy-*.jar
+scripts/postgresql-*.jar.*
+scripts/schemaspy-*.jar.*
