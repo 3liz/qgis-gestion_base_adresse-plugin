@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.16
--- Dumped by pg_dump version 9.6.16
+-- Dumped from database version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
+-- Dumped by pg_dump version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -179,7 +179,7 @@ CREATE TABLE adresse.point_adresse (
     createur text,
     date_creation date DEFAULT now(),
     modificateur text,
-    date_modif date,
+    date_modif date DEFAULT now(),
     erreur boolean DEFAULT false,
     commentaire text,
     geom public.geometry(Point,2154),
@@ -226,7 +226,7 @@ CREATE TABLE adresse.voie (
     createur text,
     date_creation date DEFAULT now(),
     modificateur text,
-    date_modif date,
+    date_modif date DEFAULT now(),
     longueur integer,
     code_fantoir integer,
     delib boolean,
