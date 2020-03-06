@@ -24,8 +24,15 @@ $BODY$;
 
 DROP TRIGGER IF EXISTS update_modif_create ON adresse.voie;
 CREATE TRIGGER update_modif_create
-    BEFORE INSERT
+    BEFORE UPDATE
     ON adresse.voie
+    FOR EACH ROW
+    EXECUTE PROCEDURE adresse.modif_update();
+
+DROP TRIGGER IF EXISTS update_modif_create ON adresse.point_adresse;
+CREATE TRIGGER update_modif_create
+    BEFORE UPDATE
+    ON adresse.point_adresse
     FOR EACH ROW
     EXECUTE PROCEDURE adresse.modif_update();
 
@@ -62,5 +69,41 @@ ALTER TABLE adresse.voie ALTER COLUMN typologie SET NOT NULL;
 ALTER TABLE adresse.voie ALTER COLUMN nom SET NOT NULL;
 ALTER TABLE adresse.point_adresse ALTER COLUMN achat_plaque_numero SET NOT NULL;
 ALTER TABLE adresse.point_adresse ALTER COLUMN erreur SET NOT NULL;
+
+-- trigger before insert to manage user
+
+CREATE OR REPLACE FUNCTION adresse.modif_createur()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+DECLARE
+BEGIN
+    IF NEW.createur IS NULL AND NEW.modificateur IS NOT NULL THEN
+        NEW.createur = NEW.modificateur;
+    ELSIF NEW.createur IS NOT NULL THEN
+        NEW.modificateur = NEW.createur;
+    END IF;
+    NEW.date_creation = NOW();
+    NEW.date_modif = NOW();
+
+    RETURN NEW;
+END;
+$BODY$;
+
+DROP TRIGGER IF EXISTS createur_insert ON adresse.voie;
+CREATE TRIGGER createur_insert
+    BEFORE INSERT
+    ON adresse.voie
+    FOR EACH ROW
+    EXECUTE PROCEDURE adresse.modif_createur();
+
+DROP TRIGGER IF EXISTS createur_insert ON adresse.point_adresse;
+CREATE TRIGGER createur_insert
+    BEFORE INSERT
+    ON adresse.point_adresse
+    FOR EACH ROW
+    EXECUTE PROCEDURE adresse.modif_createur();
 
 COMMIT;

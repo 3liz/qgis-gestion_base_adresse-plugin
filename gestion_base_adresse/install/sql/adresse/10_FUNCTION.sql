@@ -271,6 +271,25 @@ END;
 $$;
 
 
+-- modif_createur()
+CREATE FUNCTION adresse.modif_createur() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    IF NEW.createur IS NULL AND NEW.modificateur IS NOT NULL THEN
+        NEW.createur = NEW.modificateur;
+    ELSIF NEW.createur IS NOT NULL THEN
+        NEW.modificateur = NEW.createur;
+    END IF;
+    NEW.date_creation = NOW();
+    NEW.date_modif = NOW();
+
+    RETURN NEW;
+END;
+$$;
+
+
 -- modif_update()
 CREATE FUNCTION adresse.modif_update() RETURNS trigger
     LANGUAGE plpgsql
