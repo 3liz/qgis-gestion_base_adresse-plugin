@@ -258,6 +258,21 @@ END;
 $$;
 
 
+-- modif_update()
+CREATE FUNCTION adresse.modif_update() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    NEW.createur = OLD.createur;
+    NEW.date_creation = OLD.date_creation;
+    NEW.date_modif = NOW();
+
+    RETURN NEW;
+END;
+$$;
+
+
 -- trigger_point_adr()
 CREATE FUNCTION adresse.trigger_point_adr() RETURNS trigger
     LANGUAGE plpgsql

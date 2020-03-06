@@ -28,6 +28,10 @@ CREATE TRIGGER nom_complet BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PR
 CREATE TRIGGER trigger_point_adr BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.trigger_point_adr();
 
 
+-- voie update_modif_create
+CREATE TRIGGER update_modif_create BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
+
+
 --
 -- PostgreSQL database dump complete
 --
