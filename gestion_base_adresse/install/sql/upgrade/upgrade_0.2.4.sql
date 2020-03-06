@@ -26,3 +26,25 @@ CREATE TRIGGER update_modif_create
     ON adresse.voie
     FOR EACH ROW
     EXECUTE PROCEDURE adresse.modif_update();
+
+-- Trigger to calculate longueur in voie
+
+CREATE OR REPLACE FUNCTION adresse.longueur_voie()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+DECLARE
+BEGIN
+    NEW.longueur = ST_Length(NEW.geom);
+
+    RETURN NEW;
+END;
+$BODY$;
+
+CREATE TRIGGER trigger_longueur
+    BEFORE INSERT OR UPDATE
+    ON adresse.voie
+    FOR EACH ROW
+    EXECUTE PROCEDURE adresse.longueur_voie();

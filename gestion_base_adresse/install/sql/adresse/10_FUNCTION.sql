@@ -258,6 +258,19 @@ END;
 $$;
 
 
+-- longueur_voie()
+CREATE FUNCTION adresse.longueur_voie() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    NEW.longueur = ST_Length(NEW.geom);
+
+    RETURN NEW;
+END;
+$$;
+
+
 -- modif_update()
 CREATE FUNCTION adresse.modif_update() RETURNS trigger
     LANGUAGE plpgsql
