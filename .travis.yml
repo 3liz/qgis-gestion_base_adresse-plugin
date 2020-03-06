@@ -15,12 +15,11 @@ jobs:
         - cd ${TRAVIS_BUILD_DIR}/docker
         - docker-compose up -d --force-recreate
         - sleep 10
-        - docker exec -it qgis rm -f  /root/.local/share/QGIS/QGIS3/profiles/default/python/plugins/gestion_base_adresse
         - docker exec -it qgis sh -c "qgis_setup.sh gestion_base_adresse"
         - docker cp postgis_connexions.ini qgis:/tmp
         - docker exec qgis bash -c "cat /tmp/postgis_connexions.ini >> /root/.local/share/QGIS/QGIS3/profiles/default/QGIS/QGIS3.ini"
       script:
-        - docker exec -it qgis sh -c "cd /gestion_base_adresse && qgis_testrunner.sh qgis_plugin_tools.infrastructure.test_runner.test_package"
+        - docker exec -it qgis sh -c "cd /tests_directory/gestion_base_adresse && qgis_testrunner.sh qgis_plugin_tools.infrastructure.test_runner.test_package"
 
     - stage: Deploy
       if: tag IS present
