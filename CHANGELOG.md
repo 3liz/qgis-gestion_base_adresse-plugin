@@ -1,5 +1,15 @@
 ## CHANGELOG
 
+### 06/03/2020 Version 0.2.4:
+
+* Database - Table definition, add default value to date_modif: DEFAULT NOW()
+* Database - Trigger before update to manage user login between creator and modifier
+* Database - Trigger before insert and update to generate fiel "longueur" in table voie
+* Database - Table definition, add constraints NOT NULL
+* Database - Trigger before insert for creator info
+* rename ugrade sql file
+* Publish docs database on github pages
+
 ### 03/03/2020 Version 0.2.3:
 
 * Start testing the plugin with CI tools (Travis)
