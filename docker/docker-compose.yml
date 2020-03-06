@@ -22,7 +22,7 @@ services:
     container_name: qgis
     volumes:
       # - /tmp/.X11-unix:/tmp/.X11-unix
-      - ../gestion_base_adresse:/gestion_base_adresse
+      - ../gestion_base_adresse:/tests_directory/gestion_base_adresse
     environment:
       # - DISPLAY=unix$DISPLAY
       - DISPLAY=:99

@@ -59,7 +59,7 @@ class TestProcessing(unittest.TestCase):
         ]
         self.assertCountEqual(expected, result)
 
-        # Relaunch the algorithm without override
+        feedback.pushDebugInfo('Relaunch the algorithm without override')
         params = {
             'CONNECTION_NAME': 'test',
             'OVERRIDE': False,
@@ -70,3 +70,9 @@ class TestProcessing(unittest.TestCase):
 
         expected = 'Unable to execute algorithm\n Le schéma existe déjà dans la base de données ! Si vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) cocher la case **Écraser**'
         self.assertEqual(expected, feedback.last)
+
+        feedback.pushDebugInfo('Update the database')
+        params = {'CONNECTION_NAME': 'test', 'RUNIT': True}
+        results = processing.run('gestion_adresse:upgrade_database_structure', params, feedback=feedback)
+        self.assertEqual(1, results['OUTPUT_STATUS'], 1)
+        self.assertEqual(' La version de la base de données et du plugin sont les mêmes. Aucune mise-à-jour n\'est nécessaire', results['OUTPUT_STRING'])

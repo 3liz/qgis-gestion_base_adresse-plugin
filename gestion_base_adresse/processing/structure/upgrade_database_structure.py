@@ -233,7 +233,9 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                         # self.OUTPUT_STRING: error_message
                     # }
 
+        msg = tr('*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***')
+        feedback.pushInfo(msg)
         return {
             self.OUTPUT_STATUS: 1,
-            self.OUTPUT_STRING: tr('*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***')
+            self.OUTPUT_STRING: msg
         }
