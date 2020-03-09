@@ -17,22 +17,8 @@ o) OUTPUTDIR=${OPTARG};;
 esac
 done
 
-# Create HTML landing page with list of exported schemas
-echo "<h3>List of database schemas</h3>" > $OUTPUTDIR/index.html
+# Remove existing directory
+rm -rf $OUTPUTDIR
 
-# On boucle sur les schemas
-for SCHEMANAME in adresse; do
-
-    # Remove existing directory
-    rm -rf $OUTPUTDIR/$SCHEMANAME
-
-    # Create directory
-    mkdir -p $OUTPUTDIR/$SCHEMANAME
-
-    # Run SchemaSpy for current schema
-    java -jar schemaspy-6.1.0.jar -t pgsql-mat -dp postgresql-42.2.10.jar -host $DBHOST -port $DBPORT -db $DBNAME -u $DBUSER -pfp -s $SCHEMANAME -norows -o $OUTPUTDIR/$SCHEMANAME
-
-    # Add schema documentation file to index.html
-    echo "<li><a href=$SCHEMANAME/index.html>$SCHEMANAME</a></li>" >> $OUTPUTDIR/index.html
-
-done
+# Run SchemaSpy for current schema
+java -jar schemaspy-6.1.0.jar -t pgsql-mat -dp postgresql-42.2.10.jar -host $DBHOST -port $DBPORT -db $DBNAME -u $DBUSER -pfp -s adresse -norows -o $OUTPUTDIR
