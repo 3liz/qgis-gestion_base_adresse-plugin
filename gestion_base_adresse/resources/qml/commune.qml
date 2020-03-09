@@ -1,14 +1,14 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyDrawingTol="1" simplifyLocal="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" readOnly="0" minScale="1e+08" maxScale="0" labelsEnabled="0" simplifyAlgorithm="0" simplifyMaxScale="1" version="3.4.15-Madeira">
+<qgis readOnly="0" maxScale="0" simplifyMaxScale="1" version="3.4.15-Madeira" hasScaleBasedVisibilityFlag="0" minScale="1e+08" labelsEnabled="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyAlgorithm="0" styleCategories="AllStyleCategories" simplifyLocal="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 forceraster="0" enableorderby="0" symbollevels="0" type="singleSymbol">
+  <renderer-v2 symbollevels="0" forceraster="0" enableorderby="0" type="singleSymbol">
     <symbols>
-      <symbol name="0" alpha="1" clip_to_extent="1" force_rhr="0" type="fill">
-        <layer locked="0" enabled="1" pass="0" class="SimpleFill">
+      <symbol force_rhr="0" alpha="1" name="0" clip_to_extent="1" type="fill">
+        <layer class="SimpleFill" enabled="1" pass="0" locked="0">
           <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <prop k="color" v="125,139,143,255"/>
           <prop k="joinstyle" v="bevel"/>
@@ -34,7 +34,7 @@
     <sizescale/>
   </renderer-v2>
   <customproperties>
-    <property value="0" key="embeddedWidgets/count"/>
+    <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
@@ -42,12 +42,12 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory width="15" lineSizeType="MM" scaleBasedVisibility="0" minScaleDenominator="0" backgroundAlpha="255" scaleDependency="Area" opacity="1" backgroundColor="#ffffff" penColor="#000000" penWidth="0" maxScaleDenominator="1e+08" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" barWidth="5" diagramOrientation="Up" enabled="0" sizeType="MM" penAlpha="255" minimumSize="0" labelPlacementMethod="XHeight" sizeScale="3x:0,0,0,0,0,0" height="15">
-      <fontProperties style="" description="Ubuntu,11,-1,5,50,0,0,0,0,0"/>
-      <attribute field="" label="" color="#000000"/>
+    <DiagramCategory penWidth="0" scaleDependency="Area" sizeScale="3x:0,0,0,0,0,0" minScaleDenominator="0" width="15" lineSizeType="MM" height="15" maxScaleDenominator="1e+08" sizeType="MM" scaleBasedVisibility="0" backgroundAlpha="255" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" rotationOffset="270" labelPlacementMethod="XHeight" opacity="1" penColor="#000000" enabled="0" barWidth="5" minimumSize="0" diagramOrientation="Up" penAlpha="255">
+      <fontProperties description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
+      <attribute label="" color="#000000" field=""/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings showAll="1" zIndex="0" linePlacementFlags="18" dist="0" priority="0" obstacle="0" placement="1">
+  <DiagramLayerSettings priority="0" placement="1" obstacle="0" dist="0" linePlacementFlags="18" zIndex="0" showAll="1">
     <properties>
       <Option type="Map">
         <Option name="name" value="" type="QString"/>
@@ -56,7 +56,7 @@
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -264,66 +264,66 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="id" index="0" field="id_com"/>
-    <alias name="Nom de la commune" index="1" field="commune_nom"/>
-    <alias name="Code INSEE" index="2" field="insee_code"/>
-    <alias name="" index="3" field="statut_com"/>
-    <alias name="Intercommunalité" index="4" field="intercom"/>
-    <alias name="Situation de la fibre" index="5" field="fibre"/>
-    <alias name="Phase" index="6" field="phase_fibre"/>
-    <alias name="la couche est active dans la démarche ?" index="7" field="actif"/>
-    <alias name="Nom du référant " index="8" field="nom_referent"/>
-    <alias name="N° de téléphone" index="9" field="tel_referent"/>
-    <alias name="Mail du référent" index="10" field="mail_referent"/>
-    <alias name="Situation du projet" index="11" field="situation"/>
-    <alias name="Commentaire" index="12" field="commenter"/>
-    <alias name="Date de la délibération" index="13" field="date_delib"/>
-    <alias name="Diffusion à la dgfip ? " index="14" field="diffusion_dgfip"/>
-    <alias name="Date de diffusion à la DGFIP" index="15" field="date_dgfip"/>
-    <alias name="Diffusion dans la BAN ?" index="16" field="diffusion_ban"/>
-    <alias name="Date de diffusion dans la BAN" index="17" field="date_ban"/>
+    <alias field="id_com" name="id" index="0"/>
+    <alias field="commune_nom" name="Nom de la commune" index="1"/>
+    <alias field="insee_code" name="Code INSEE" index="2"/>
+    <alias field="statut_com" name="" index="3"/>
+    <alias field="intercom" name="Intercommunalité" index="4"/>
+    <alias field="fibre" name="Situation de la fibre" index="5"/>
+    <alias field="phase_fibre" name="Phase" index="6"/>
+    <alias field="actif" name="la couche est active dans la démarche ?" index="7"/>
+    <alias field="nom_referent" name="Nom du référant " index="8"/>
+    <alias field="tel_referent" name="N° de téléphone" index="9"/>
+    <alias field="mail_referent" name="Mail du référent" index="10"/>
+    <alias field="situation" name="Situation du projet" index="11"/>
+    <alias field="commenter" name="Commentaire" index="12"/>
+    <alias field="date_delib" name="Date de la délibération" index="13"/>
+    <alias field="diffusion_dgfip" name="Diffusion à la dgfip ? " index="14"/>
+    <alias field="date_dgfip" name="Date de diffusion à la DGFIP" index="15"/>
+    <alias field="diffusion_ban" name="Diffusion dans la BAN ?" index="16"/>
+    <alias field="date_ban" name="Date de diffusion dans la BAN" index="17"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" expression="" field="id_com"/>
-    <default applyOnUpdate="0" expression="" field="commune_nom"/>
-    <default applyOnUpdate="0" expression="" field="insee_code"/>
-    <default applyOnUpdate="0" expression="" field="statut_com"/>
-    <default applyOnUpdate="0" expression="" field="intercom"/>
-    <default applyOnUpdate="0" expression="" field="fibre"/>
-    <default applyOnUpdate="0" expression="" field="phase_fibre"/>
-    <default applyOnUpdate="0" expression="" field="actif"/>
-    <default applyOnUpdate="0" expression="" field="nom_referent"/>
-    <default applyOnUpdate="0" expression="" field="tel_referent"/>
-    <default applyOnUpdate="0" expression="" field="mail_referent"/>
-    <default applyOnUpdate="0" expression="" field="situation"/>
-    <default applyOnUpdate="0" expression="" field="commenter"/>
-    <default applyOnUpdate="0" expression="" field="date_delib"/>
-    <default applyOnUpdate="0" expression="" field="diffusion_dgfip"/>
-    <default applyOnUpdate="0" expression="" field="date_dgfip"/>
-    <default applyOnUpdate="0" expression="" field="diffusion_ban"/>
-    <default applyOnUpdate="0" expression="" field="date_ban"/>
+    <default field="id_com" applyOnUpdate="0" expression=""/>
+    <default field="commune_nom" applyOnUpdate="0" expression=""/>
+    <default field="insee_code" applyOnUpdate="0" expression=""/>
+    <default field="statut_com" applyOnUpdate="0" expression=""/>
+    <default field="intercom" applyOnUpdate="0" expression=""/>
+    <default field="fibre" applyOnUpdate="0" expression=""/>
+    <default field="phase_fibre" applyOnUpdate="0" expression=""/>
+    <default field="actif" applyOnUpdate="0" expression=""/>
+    <default field="nom_referent" applyOnUpdate="0" expression=""/>
+    <default field="tel_referent" applyOnUpdate="0" expression=""/>
+    <default field="mail_referent" applyOnUpdate="0" expression=""/>
+    <default field="situation" applyOnUpdate="0" expression=""/>
+    <default field="commenter" applyOnUpdate="0" expression=""/>
+    <default field="date_delib" applyOnUpdate="0" expression=""/>
+    <default field="diffusion_dgfip" applyOnUpdate="0" expression=""/>
+    <default field="date_dgfip" applyOnUpdate="0" expression=""/>
+    <default field="diffusion_ban" applyOnUpdate="0" expression=""/>
+    <default field="date_ban" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" unique_strength="1" constraints="3" field="id_com" notnull_strength="1"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="commune_nom" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="insee_code" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="statut_com" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="intercom" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="fibre" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="phase_fibre" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="actif" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="nom_referent" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="tel_referent" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="mail_referent" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="situation" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="commenter" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="date_delib" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="diffusion_dgfip" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="date_dgfip" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="diffusion_ban" notnull_strength="0"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" field="date_ban" notnull_strength="0"/>
+    <constraint notnull_strength="1" unique_strength="1" field="id_com" constraints="3" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="commune_nom" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="insee_code" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="statut_com" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="intercom" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="fibre" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="phase_fibre" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="actif" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="nom_referent" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="tel_referent" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="mail_referent" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="situation" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="commenter" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="date_delib" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="diffusion_dgfip" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="date_dgfip" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="diffusion_ban" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="date_ban" constraints="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
     <constraint exp="" desc="" field="id_com"/>
@@ -347,28 +347,28 @@
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
   <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column name="id_com" hidden="0" width="-1" type="field"/>
-      <column name="commune_nom" hidden="0" width="-1" type="field"/>
-      <column name="insee_code" hidden="0" width="-1" type="field"/>
-      <column name="statut_com" hidden="0" width="-1" type="field"/>
-      <column name="intercom" hidden="0" width="-1" type="field"/>
-      <column name="fibre" hidden="0" width="-1" type="field"/>
-      <column name="phase_fibre" hidden="0" width="-1" type="field"/>
-      <column name="actif" hidden="0" width="-1" type="field"/>
-      <column name="nom_referent" hidden="0" width="-1" type="field"/>
-      <column name="tel_referent" hidden="0" width="-1" type="field"/>
-      <column name="mail_referent" hidden="0" width="-1" type="field"/>
-      <column name="situation" hidden="0" width="-1" type="field"/>
-      <column name="commenter" hidden="0" width="-1" type="field"/>
-      <column name="date_delib" hidden="0" width="-1" type="field"/>
-      <column name="diffusion_dgfip" hidden="0" width="-1" type="field"/>
-      <column name="date_dgfip" hidden="0" width="-1" type="field"/>
-      <column name="diffusion_ban" hidden="0" width="-1" type="field"/>
-      <column name="date_ban" hidden="0" width="-1" type="field"/>
+      <column hidden="0" width="-1" name="id_com" type="field"/>
+      <column hidden="0" width="-1" name="commune_nom" type="field"/>
+      <column hidden="0" width="-1" name="insee_code" type="field"/>
+      <column hidden="0" width="-1" name="statut_com" type="field"/>
+      <column hidden="0" width="-1" name="intercom" type="field"/>
+      <column hidden="0" width="-1" name="fibre" type="field"/>
+      <column hidden="0" width="-1" name="phase_fibre" type="field"/>
+      <column hidden="0" width="-1" name="actif" type="field"/>
+      <column hidden="0" width="-1" name="nom_referent" type="field"/>
+      <column hidden="0" width="-1" name="tel_referent" type="field"/>
+      <column hidden="0" width="-1" name="mail_referent" type="field"/>
+      <column hidden="0" width="-1" name="situation" type="field"/>
+      <column hidden="0" width="-1" name="commenter" type="field"/>
+      <column hidden="0" width="-1" name="date_delib" type="field"/>
+      <column hidden="0" width="-1" name="diffusion_dgfip" type="field"/>
+      <column hidden="0" width="-1" name="date_dgfip" type="field"/>
+      <column hidden="0" width="-1" name="diffusion_ban" type="field"/>
+      <column hidden="0" width="-1" name="date_ban" type="field"/>
       <column hidden="1" width="-1" type="actions"/>
     </columns>
   </attributetableconfig>
@@ -399,32 +399,32 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorContainer name="Commune" visibilityExpressionEnabled="0" groupBox="0" columnCount="1" showLabel="1" visibilityExpression="">
-      <attributeEditorContainer name="Informations" visibilityExpressionEnabled="0" groupBox="1" columnCount="1" showLabel="1" visibilityExpression="">
-        <attributeEditorField name="id_com" index="0" showLabel="1"/>
-        <attributeEditorField name="commune_nom" index="1" showLabel="1"/>
-        <attributeEditorField name="insee_code" index="2" showLabel="1"/>
-        <attributeEditorField name="statut_com" index="3" showLabel="1"/>
-        <attributeEditorField name="intercom" index="4" showLabel="1"/>
+    <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Commune" showLabel="1" groupBox="0">
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Informations" showLabel="1" groupBox="1">
+        <attributeEditorField name="id_com" showLabel="1" index="0"/>
+        <attributeEditorField name="commune_nom" showLabel="1" index="1"/>
+        <attributeEditorField name="insee_code" showLabel="1" index="2"/>
+        <attributeEditorField name="statut_com" showLabel="1" index="3"/>
+        <attributeEditorField name="intercom" showLabel="1" index="4"/>
       </attributeEditorContainer>
-      <attributeEditorContainer name="Fibre" visibilityExpressionEnabled="0" groupBox="1" columnCount="1" showLabel="1" visibilityExpression="">
-        <attributeEditorField name="fibre" index="5" showLabel="1"/>
-        <attributeEditorField name="phase_fibre" index="6" showLabel="1"/>
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Fibre" showLabel="1" groupBox="1">
+        <attributeEditorField name="fibre" showLabel="1" index="5"/>
+        <attributeEditorField name="phase_fibre" showLabel="1" index="6"/>
       </attributeEditorContainer>
-      <attributeEditorContainer name="Contact" visibilityExpressionEnabled="0" groupBox="1" columnCount="1" showLabel="1" visibilityExpression="">
-        <attributeEditorField name="actif" index="7" showLabel="1"/>
-        <attributeEditorField name="nom_referent" index="8" showLabel="1"/>
-        <attributeEditorField name="tel_referent" index="9" showLabel="1"/>
-        <attributeEditorField name="mail_referent" index="10" showLabel="1"/>
-        <attributeEditorField name="situation" index="11" showLabel="1"/>
-        <attributeEditorField name="commenter" index="12" showLabel="1"/>
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Contact" showLabel="1" groupBox="1">
+        <attributeEditorField name="actif" showLabel="1" index="7"/>
+        <attributeEditorField name="nom_referent" showLabel="1" index="8"/>
+        <attributeEditorField name="tel_referent" showLabel="1" index="9"/>
+        <attributeEditorField name="mail_referent" showLabel="1" index="10"/>
+        <attributeEditorField name="situation" showLabel="1" index="11"/>
+        <attributeEditorField name="commenter" showLabel="1" index="12"/>
       </attributeEditorContainer>
-      <attributeEditorContainer name="" visibilityExpressionEnabled="0" groupBox="1" columnCount="1" showLabel="1" visibilityExpression="">
-        <attributeEditorField name="date_delib" index="13" showLabel="1"/>
-        <attributeEditorField name="diffusion_dgfip" index="14" showLabel="1"/>
-        <attributeEditorField name="date_dgfip" index="15" showLabel="1"/>
-        <attributeEditorField name="diffusion_ban" index="16" showLabel="1"/>
-        <attributeEditorField name="date_ban" index="17" showLabel="1"/>
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="" showLabel="1" groupBox="1">
+        <attributeEditorField name="date_delib" showLabel="1" index="13"/>
+        <attributeEditorField name="diffusion_dgfip" showLabel="1" index="14"/>
+        <attributeEditorField name="date_dgfip" showLabel="1" index="15"/>
+        <attributeEditorField name="diffusion_ban" showLabel="1" index="16"/>
+        <attributeEditorField name="date_ban" showLabel="1" index="17"/>
       </attributeEditorContainer>
     </attributeEditorContainer>
   </attributeEditorForm>
@@ -449,24 +449,24 @@ def my_form_open(dialog, layer, feature):
     <field name="tel_referent" editable="1"/>
   </editable>
   <labelOnTop>
-    <field name="actif" labelOnTop="0"/>
-    <field name="commenter" labelOnTop="0"/>
-    <field name="commune_nom" labelOnTop="0"/>
-    <field name="date_ban" labelOnTop="0"/>
-    <field name="date_delib" labelOnTop="0"/>
-    <field name="date_dgfip" labelOnTop="0"/>
-    <field name="diffusion_ban" labelOnTop="0"/>
-    <field name="diffusion_dgfip" labelOnTop="0"/>
-    <field name="fibre" labelOnTop="0"/>
-    <field name="id_com" labelOnTop="0"/>
-    <field name="insee_code" labelOnTop="0"/>
-    <field name="intercom" labelOnTop="0"/>
-    <field name="mail_referent" labelOnTop="0"/>
-    <field name="nom_referent" labelOnTop="0"/>
-    <field name="phase_fibre" labelOnTop="0"/>
-    <field name="situation" labelOnTop="0"/>
-    <field name="statut_com" labelOnTop="0"/>
-    <field name="tel_referent" labelOnTop="0"/>
+    <field labelOnTop="0" name="actif"/>
+    <field labelOnTop="0" name="commenter"/>
+    <field labelOnTop="0" name="commune_nom"/>
+    <field labelOnTop="0" name="date_ban"/>
+    <field labelOnTop="0" name="date_delib"/>
+    <field labelOnTop="0" name="date_dgfip"/>
+    <field labelOnTop="0" name="diffusion_ban"/>
+    <field labelOnTop="0" name="diffusion_dgfip"/>
+    <field labelOnTop="0" name="fibre"/>
+    <field labelOnTop="0" name="id_com"/>
+    <field labelOnTop="0" name="insee_code"/>
+    <field labelOnTop="0" name="intercom"/>
+    <field labelOnTop="0" name="mail_referent"/>
+    <field labelOnTop="0" name="nom_referent"/>
+    <field labelOnTop="0" name="phase_fibre"/>
+    <field labelOnTop="0" name="situation"/>
+    <field labelOnTop="0" name="statut_com"/>
+    <field labelOnTop="0" name="tel_referent"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>id_com</previewExpression>

@@ -1,14 +1,14 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis maxScale="0" labelsEnabled="0" simplifyMaxScale="1" simplifyDrawingHints="0" readOnly="0" version="3.4.15-Madeira" simplifyLocal="0" hasScaleBasedVisibilityFlag="0" simplifyAlgorithm="0" styleCategories="AllStyleCategories" simplifyDrawingTol="1" minScale="1e+08">
+<qgis readOnly="0" maxScale="0" simplifyMaxScale="1" version="3.4.15-Madeira" hasScaleBasedVisibilityFlag="0" minScale="1e+08" labelsEnabled="0" simplifyDrawingHints="0" simplifyDrawingTol="1" simplifyAlgorithm="0" styleCategories="AllStyleCategories" simplifyLocal="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 type="singleSymbol" enableorderby="0" symbollevels="0" forceraster="0">
+  <renderer-v2 symbollevels="0" forceraster="0" enableorderby="0" type="singleSymbol">
     <symbols>
-      <symbol type="marker" clip_to_extent="1" name="0" force_rhr="0" alpha="1">
-        <layer locked="0" class="SimpleMarker" pass="0" enabled="1">
+      <symbol force_rhr="0" alpha="1" name="0" clip_to_extent="1" type="marker">
+        <layer class="SimpleMarker" enabled="1" pass="0" locked="0">
           <prop k="angle" v="0"/>
           <prop k="color" v="190,178,151,255"/>
           <prop k="horizontal_anchor_point" v="1"/>
@@ -29,9 +29,9 @@
           <prop k="vertical_anchor_point" v="1"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option name="name" value="" type="QString"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option name="type" value="collection" type="QString"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -50,21 +50,21 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory width="15" sizeType="MM" scaleBasedVisibility="0" penAlpha="255" rotationOffset="270" labelPlacementMethod="XHeight" lineSizeType="MM" backgroundColor="#ffffff" minScaleDenominator="0" penColor="#000000" scaleDependency="Area" penWidth="0" sizeScale="3x:0,0,0,0,0,0" height="15" maxScaleDenominator="1e+08" lineSizeScale="3x:0,0,0,0,0,0" diagramOrientation="Up" enabled="0" backgroundAlpha="255" barWidth="5" opacity="1" minimumSize="0">
+    <DiagramCategory penWidth="0" scaleDependency="Area" sizeScale="3x:0,0,0,0,0,0" minScaleDenominator="0" width="15" lineSizeType="MM" height="15" maxScaleDenominator="1e+08" sizeType="MM" scaleBasedVisibility="0" backgroundAlpha="255" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" rotationOffset="270" labelPlacementMethod="XHeight" opacity="1" penColor="#000000" enabled="0" barWidth="5" minimumSize="0" diagramOrientation="Up" penAlpha="255">
       <fontProperties description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
-      <attribute field="" color="#000000" label=""/>
+      <attribute label="" color="#000000" field=""/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings obstacle="0" placement="0" zIndex="0" dist="0" showAll="1" linePlacementFlags="18" priority="0">
+  <DiagramLayerSettings priority="0" placement="0" obstacle="0" dist="0" linePlacementFlags="18" zIndex="0" showAll="1">
     <properties>
       <Option type="Map">
-        <Option type="QString" name="name" value=""/>
+        <Option name="name" value="" type="QString"/>
         <Option name="properties"/>
-        <Option type="QString" name="type" value="collection"/>
+        <Option name="type" value="collection" type="QString"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -73,8 +73,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -83,12 +83,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option type="bool" name="AllowNull" value="true"/>
-            <Option type="int" name="Max" value="2147483647"/>
-            <Option type="int" name="Min" value="-2147483648"/>
-            <Option type="int" name="Precision" value="0"/>
-            <Option type="int" name="Step" value="1"/>
-            <Option type="QString" name="Style" value="SpinBox"/>
+            <Option name="AllowNull" value="true" type="bool"/>
+            <Option name="Max" value="2147483647" type="int"/>
+            <Option name="Min" value="-2147483648" type="int"/>
+            <Option name="Precision" value="0" type="int"/>
+            <Option name="Step" value="1" type="int"/>
+            <Option name="Style" value="SpinBox" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -97,8 +97,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -107,8 +107,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -117,8 +117,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -127,8 +127,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -137,8 +137,8 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option type="QString" name="CheckedState" value=""/>
-            <Option type="QString" name="UncheckedState" value=""/>
+            <Option name="CheckedState" value="" type="QString"/>
+            <Option name="UncheckedState" value="" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -147,18 +147,21 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
     </field>
     <field name="date_creation">
-      <editWidget type="TextEdit">
+      <editWidget type="DateTime">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="allow_null" value="true" type="bool"/>
+            <Option name="calendar_popup" value="true" type="bool"/>
+            <Option name="display_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_iso_format" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -167,8 +170,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -177,11 +180,11 @@
       <editWidget type="DateTime">
         <config>
           <Option type="Map">
-            <Option type="bool" name="allow_null" value="true"/>
-            <Option type="bool" name="calendar_popup" value="true"/>
-            <Option type="QString" name="display_format" value="yyyy-MM-dd"/>
-            <Option type="QString" name="field_format" value="yyyy-MM-dd"/>
-            <Option type="bool" name="field_iso_format" value="false"/>
+            <Option name="allow_null" value="true" type="bool"/>
+            <Option name="calendar_popup" value="true" type="bool"/>
+            <Option name="display_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_iso_format" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -190,8 +193,8 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option type="QString" name="CheckedState" value=""/>
-            <Option type="QString" name="UncheckedState" value=""/>
+            <Option name="CheckedState" value="" type="QString"/>
+            <Option name="UncheckedState" value="" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -200,8 +203,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -210,14 +213,14 @@
       <editWidget type="RelationReference">
         <config>
           <Option type="Map">
-            <Option type="bool" name="AllowAddFeatures" value="false"/>
-            <Option type="bool" name="AllowNULL" value="false"/>
-            <Option type="bool" name="MapIdentification" value="false"/>
-            <Option type="bool" name="OrderByValue" value="false"/>
-            <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="point_adre_id_voie_voie_61bde_id_voie"/>
-            <Option type="bool" name="ShowForm" value="false"/>
-            <Option type="bool" name="ShowOpenFormButton" value="true"/>
+            <Option name="AllowAddFeatures" value="false" type="bool"/>
+            <Option name="AllowNULL" value="false" type="bool"/>
+            <Option name="MapIdentification" value="false" type="bool"/>
+            <Option name="OrderByValue" value="false" type="bool"/>
+            <Option name="ReadOnly" value="false" type="bool"/>
+            <Option name="Relation" value="point_adre_id_voie_voie_61bde_id_voie" type="QString"/>
+            <Option name="ShowForm" value="false" type="bool"/>
+            <Option name="ShowOpenFormButton" value="true" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -226,12 +229,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option type="bool" name="AllowNull" value="true"/>
-            <Option type="int" name="Max" value="2147483647"/>
-            <Option type="int" name="Min" value="-2147483648"/>
-            <Option type="int" name="Precision" value="0"/>
-            <Option type="int" name="Step" value="1"/>
-            <Option type="QString" name="Style" value="SpinBox"/>
+            <Option name="AllowNull" value="true" type="bool"/>
+            <Option name="Max" value="2147483647" type="int"/>
+            <Option name="Min" value="-2147483648" type="int"/>
+            <Option name="Precision" value="0" type="int"/>
+            <Option name="Step" value="1" type="int"/>
+            <Option name="Style" value="SpinBox" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -265,58 +268,58 @@
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" expression="" field="id_point"/>
-    <default applyOnUpdate="0" expression="" field="numero"/>
-    <default applyOnUpdate="0" expression="" field="suffixe"/>
-    <default applyOnUpdate="0" expression="" field="adresse_complete"/>
-    <default applyOnUpdate="0" expression="" field="code_postal"/>
-    <default applyOnUpdate="0" expression="" field="type_pos"/>
-    <default applyOnUpdate="0" expression="" field="achat_plaque_numero"/>
-    <default applyOnUpdate="0" expression="" field="createur"/>
-    <default applyOnUpdate="0" expression="" field="date_creation"/>
-    <default applyOnUpdate="0" expression="" field="modificateur"/>
-    <default applyOnUpdate="0" expression="" field="date_modif"/>
-    <default applyOnUpdate="0" expression="" field="erreur"/>
-    <default applyOnUpdate="0" expression="" field="commentaire"/>
-    <default applyOnUpdate="0" expression="" field="id_voie"/>
-    <default applyOnUpdate="0" expression="" field="id_commune"/>
-    <default applyOnUpdate="0" expression="" field="id_parcelle"/>
+    <default field="id_point" applyOnUpdate="0" expression=""/>
+    <default field="numero" applyOnUpdate="0" expression=""/>
+    <default field="suffixe" applyOnUpdate="0" expression=""/>
+    <default field="adresse_complete" applyOnUpdate="0" expression=""/>
+    <default field="code_postal" applyOnUpdate="0" expression=""/>
+    <default field="type_pos" applyOnUpdate="0" expression=""/>
+    <default field="achat_plaque_numero" applyOnUpdate="0" expression=""/>
+    <default field="createur" applyOnUpdate="0" expression=""/>
+    <default field="date_creation" applyOnUpdate="0" expression=""/>
+    <default field="modificateur" applyOnUpdate="0" expression=""/>
+    <default field="date_modif" applyOnUpdate="0" expression=""/>
+    <default field="erreur" applyOnUpdate="0" expression=""/>
+    <default field="commentaire" applyOnUpdate="0" expression=""/>
+    <default field="id_voie" applyOnUpdate="0" expression=""/>
+    <default field="id_commune" applyOnUpdate="0" expression=""/>
+    <default field="id_parcelle" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" constraints="3" unique_strength="1" field="id_point" notnull_strength="1"/>
-    <constraint exp_strength="0" constraints="1" unique_strength="0" field="numero" notnull_strength="1"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="suffixe" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="adresse_complete" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="code_postal" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="type_pos" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="achat_plaque_numero" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="createur" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="date_creation" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="modificateur" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="date_modif" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="erreur" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="commentaire" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="id_voie" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="id_commune" notnull_strength="0"/>
-    <constraint exp_strength="0" constraints="0" unique_strength="0" field="id_parcelle" notnull_strength="0"/>
+    <constraint notnull_strength="1" unique_strength="1" field="id_point" constraints="3" exp_strength="0"/>
+    <constraint notnull_strength="1" unique_strength="0" field="numero" constraints="1" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="suffixe" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="adresse_complete" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="code_postal" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="type_pos" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="achat_plaque_numero" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="createur" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="date_creation" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="modificateur" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="date_modif" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="erreur" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="commentaire" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="id_voie" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="id_commune" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="id_parcelle" constraints="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" field="id_point" exp=""/>
-    <constraint desc="" field="numero" exp=""/>
-    <constraint desc="" field="suffixe" exp=""/>
-    <constraint desc="" field="adresse_complete" exp=""/>
-    <constraint desc="" field="code_postal" exp=""/>
-    <constraint desc="" field="type_pos" exp=""/>
-    <constraint desc="" field="achat_plaque_numero" exp=""/>
-    <constraint desc="" field="createur" exp=""/>
-    <constraint desc="" field="date_creation" exp=""/>
-    <constraint desc="" field="modificateur" exp=""/>
-    <constraint desc="" field="date_modif" exp=""/>
-    <constraint desc="" field="erreur" exp=""/>
-    <constraint desc="" field="commentaire" exp=""/>
-    <constraint desc="" field="id_voie" exp=""/>
-    <constraint desc="" field="id_commune" exp=""/>
-    <constraint desc="" field="id_parcelle" exp=""/>
+    <constraint exp="" desc="" field="id_point"/>
+    <constraint exp="" desc="" field="numero"/>
+    <constraint exp="" desc="" field="suffixe"/>
+    <constraint exp="" desc="" field="adresse_complete"/>
+    <constraint exp="" desc="" field="code_postal"/>
+    <constraint exp="" desc="" field="type_pos"/>
+    <constraint exp="" desc="" field="achat_plaque_numero"/>
+    <constraint exp="" desc="" field="createur"/>
+    <constraint exp="" desc="" field="date_creation"/>
+    <constraint exp="" desc="" field="modificateur"/>
+    <constraint exp="" desc="" field="date_modif"/>
+    <constraint exp="" desc="" field="erreur"/>
+    <constraint exp="" desc="" field="commentaire"/>
+    <constraint exp="" desc="" field="id_voie"/>
+    <constraint exp="" desc="" field="id_commune"/>
+    <constraint exp="" desc="" field="id_parcelle"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
@@ -324,23 +327,23 @@
   </attributeactions>
   <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column type="field" hidden="0" width="-1" name="id_point"/>
-      <column type="field" hidden="0" width="-1" name="numero"/>
-      <column type="field" hidden="0" width="-1" name="suffixe"/>
-      <column type="field" hidden="0" width="-1" name="adresse_complete"/>
-      <column type="field" hidden="0" width="-1" name="code_postal"/>
-      <column type="field" hidden="0" width="-1" name="type_pos"/>
-      <column type="field" hidden="0" width="-1" name="achat_plaque_numero"/>
-      <column type="field" hidden="0" width="-1" name="erreur"/>
-      <column type="field" hidden="0" width="-1" name="commentaire"/>
-      <column type="field" hidden="0" width="220" name="id_voie"/>
-      <column type="field" hidden="0" width="-1" name="id_commune"/>
-      <column type="actions" hidden="1" width="-1"/>
-      <column type="field" hidden="0" width="-1" name="id_parcelle"/>
-      <column type="field" hidden="0" width="-1" name="createur"/>
-      <column type="field" hidden="0" width="-1" name="date_creation"/>
-      <column type="field" hidden="0" width="-1" name="modificateur"/>
-      <column type="field" hidden="0" width="-1" name="date_modif"/>
+      <column hidden="0" width="-1" name="id_point" type="field"/>
+      <column hidden="0" width="-1" name="numero" type="field"/>
+      <column hidden="0" width="-1" name="suffixe" type="field"/>
+      <column hidden="0" width="-1" name="adresse_complete" type="field"/>
+      <column hidden="0" width="-1" name="code_postal" type="field"/>
+      <column hidden="0" width="-1" name="type_pos" type="field"/>
+      <column hidden="0" width="-1" name="achat_plaque_numero" type="field"/>
+      <column hidden="0" width="-1" name="erreur" type="field"/>
+      <column hidden="0" width="-1" name="commentaire" type="field"/>
+      <column hidden="0" width="220" name="id_voie" type="field"/>
+      <column hidden="0" width="-1" name="id_commune" type="field"/>
+      <column hidden="1" width="-1" type="actions"/>
+      <column hidden="0" width="-1" name="id_parcelle" type="field"/>
+      <column hidden="0" width="-1" name="createur" type="field"/>
+      <column hidden="0" width="-1" name="date_creation" type="field"/>
+      <column hidden="0" width="-1" name="modificateur" type="field"/>
+      <column hidden="0" width="-1" name="date_modif" type="field"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -370,8 +373,8 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorContainer visibilityExpressionEnabled="0" groupBox="0" visibilityExpression="" columnCount="1" name="Point d'adresse" showLabel="1">
-      <attributeEditorContainer visibilityExpressionEnabled="0" groupBox="1" visibilityExpression="" columnCount="1" name="Création du point" showLabel="1">
+    <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Point d'adresse" showLabel="1" groupBox="0">
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Création du point" showLabel="1" groupBox="1">
         <attributeEditorField name="id_point" showLabel="1" index="0"/>
         <attributeEditorField name="numero" showLabel="1" index="1"/>
         <attributeEditorField name="suffixe" showLabel="1" index="2"/>
@@ -380,66 +383,66 @@ def my_form_open(dialog, layer, feature):
         <attributeEditorField name="type_pos" showLabel="1" index="5"/>
         <attributeEditorField name="achat_plaque_numero" showLabel="1" index="6"/>
       </attributeEditorContainer>
-      <attributeEditorContainer visibilityExpressionEnabled="0" groupBox="1" visibilityExpression="" columnCount="1" name="Commune" showLabel="1">
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Commune" showLabel="1" groupBox="1">
         <attributeEditorField name="code_postal" showLabel="1" index="4"/>
       </attributeEditorContainer>
-      <attributeEditorContainer visibilityExpressionEnabled="0" groupBox="1" visibilityExpression="" columnCount="1" name="Utilisateur" showLabel="1">
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Utilisateur" showLabel="1" groupBox="1">
         <attributeEditorField name="createur" showLabel="1" index="7"/>
         <attributeEditorField name="date_creation" showLabel="1" index="8"/>
         <attributeEditorField name="modificateur" showLabel="1" index="9"/>
         <attributeEditorField name="date_modif" showLabel="1" index="10"/>
       </attributeEditorContainer>
-      <attributeEditorContainer visibilityExpressionEnabled="0" groupBox="1" visibilityExpression="" columnCount="1" name="Erreur" showLabel="1">
+      <attributeEditorContainer visibilityExpressionEnabled="0" columnCount="1" visibilityExpression="" name="Erreur" showLabel="1" groupBox="1">
         <attributeEditorField name="erreur" showLabel="1" index="11"/>
         <attributeEditorField name="commentaire" showLabel="1" index="12"/>
       </attributeEditorContainer>
     </attributeEditorContainer>
   </attributeEditorForm>
   <editable>
-    <field editable="1" name="achat_plaque_numero"/>
-    <field editable="1" name="adresse_complete"/>
-    <field editable="1" name="code_postal"/>
-    <field editable="1" name="commentaire"/>
-    <field editable="1" name="createur"/>
-    <field editable="1" name="createur_point"/>
-    <field editable="1" name="date_creation"/>
-    <field editable="0" name="date_creation_point"/>
-    <field editable="1" name="date_modif"/>
-    <field editable="0" name="date_modif_point"/>
-    <field editable="1" name="erreur"/>
-    <field editable="1" name="id_commune"/>
-    <field editable="1" name="id_parcelle"/>
-    <field editable="0" name="id_point"/>
-    <field editable="0" name="id_voie"/>
-    <field editable="1" name="modificateur"/>
-    <field editable="1" name="modificateur_point"/>
-    <field editable="1" name="numero"/>
-    <field editable="1" name="suffixe"/>
-    <field editable="1" name="type_pos"/>
-    <field editable="0" name="voie_nom_complet"/>
+    <field name="achat_plaque_numero" editable="1"/>
+    <field name="adresse_complete" editable="1"/>
+    <field name="code_postal" editable="1"/>
+    <field name="commentaire" editable="1"/>
+    <field name="createur" editable="1"/>
+    <field name="createur_point" editable="1"/>
+    <field name="date_creation" editable="0"/>
+    <field name="date_creation_point" editable="0"/>
+    <field name="date_modif" editable="0"/>
+    <field name="date_modif_point" editable="0"/>
+    <field name="erreur" editable="1"/>
+    <field name="id_commune" editable="1"/>
+    <field name="id_parcelle" editable="1"/>
+    <field name="id_point" editable="0"/>
+    <field name="id_voie" editable="0"/>
+    <field name="modificateur" editable="1"/>
+    <field name="modificateur_point" editable="1"/>
+    <field name="numero" editable="1"/>
+    <field name="suffixe" editable="1"/>
+    <field name="type_pos" editable="1"/>
+    <field name="voie_nom_complet" editable="0"/>
   </editable>
   <labelOnTop>
-    <field name="achat_plaque_numero" labelOnTop="0"/>
-    <field name="adresse_complete" labelOnTop="0"/>
-    <field name="code_postal" labelOnTop="0"/>
-    <field name="commentaire" labelOnTop="0"/>
-    <field name="createur" labelOnTop="0"/>
-    <field name="createur_point" labelOnTop="0"/>
-    <field name="date_creation" labelOnTop="0"/>
-    <field name="date_creation_point" labelOnTop="0"/>
-    <field name="date_modif" labelOnTop="0"/>
-    <field name="date_modif_point" labelOnTop="0"/>
-    <field name="erreur" labelOnTop="0"/>
-    <field name="id_commune" labelOnTop="0"/>
-    <field name="id_parcelle" labelOnTop="0"/>
-    <field name="id_point" labelOnTop="0"/>
-    <field name="id_voie" labelOnTop="0"/>
-    <field name="modificateur" labelOnTop="0"/>
-    <field name="modificateur_point" labelOnTop="0"/>
-    <field name="numero" labelOnTop="0"/>
-    <field name="suffixe" labelOnTop="0"/>
-    <field name="type_pos" labelOnTop="0"/>
-    <field name="voie_nom_complet" labelOnTop="0"/>
+    <field labelOnTop="0" name="achat_plaque_numero"/>
+    <field labelOnTop="0" name="adresse_complete"/>
+    <field labelOnTop="0" name="code_postal"/>
+    <field labelOnTop="0" name="commentaire"/>
+    <field labelOnTop="0" name="createur"/>
+    <field labelOnTop="0" name="createur_point"/>
+    <field labelOnTop="0" name="date_creation"/>
+    <field labelOnTop="0" name="date_creation_point"/>
+    <field labelOnTop="0" name="date_modif"/>
+    <field labelOnTop="0" name="date_modif_point"/>
+    <field labelOnTop="0" name="erreur"/>
+    <field labelOnTop="0" name="id_commune"/>
+    <field labelOnTop="0" name="id_parcelle"/>
+    <field labelOnTop="0" name="id_point"/>
+    <field labelOnTop="0" name="id_voie"/>
+    <field labelOnTop="0" name="modificateur"/>
+    <field labelOnTop="0" name="modificateur_point"/>
+    <field labelOnTop="0" name="numero"/>
+    <field labelOnTop="0" name="suffixe"/>
+    <field labelOnTop="0" name="type_pos"/>
+    <field labelOnTop="0" name="voie_nom_complet"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>id_point</previewExpression>

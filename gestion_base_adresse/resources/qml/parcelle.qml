@@ -1,30 +1,30 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyDrawingHints="1" labelsEnabled="0" simplifyMaxScale="1" maxScale="0" hasScaleBasedVisibilityFlag="0" simplifyLocal="0" minScale="1e+08" readOnly="0" simplifyDrawingTol="1" version="3.4.15-Madeira" styleCategories="AllStyleCategories" simplifyAlgorithm="0">
+<qgis readOnly="0" maxScale="0" simplifyMaxScale="1" version="3.4.15-Madeira" hasScaleBasedVisibilityFlag="0" minScale="1e+08" labelsEnabled="0" simplifyDrawingHints="1" simplifyDrawingTol="1" simplifyAlgorithm="0" styleCategories="AllStyleCategories" simplifyLocal="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" type="singleSymbol" forceraster="0" enableorderby="0">
+  <renderer-v2 symbollevels="0" forceraster="0" enableorderby="0" type="singleSymbol">
     <symbols>
-      <symbol alpha="1" clip_to_extent="1" force_rhr="0" type="fill" name="0">
-        <layer pass="0" enabled="1" class="SimpleFill" locked="0">
-          <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
-          <prop v="231,113,72,255" k="color"/>
-          <prop v="bevel" k="joinstyle"/>
-          <prop v="0,0" k="offset"/>
-          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
-          <prop v="MM" k="offset_unit"/>
-          <prop v="35,35,35,255" k="outline_color"/>
-          <prop v="solid" k="outline_style"/>
-          <prop v="0.26" k="outline_width"/>
-          <prop v="MM" k="outline_width_unit"/>
-          <prop v="no" k="style"/>
+      <symbol force_rhr="0" alpha="1" name="0" clip_to_extent="1" type="fill">
+        <layer class="SimpleFill" enabled="1" pass="0" locked="0">
+          <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="color" v="231,113,72,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="35,35,35,255"/>
+          <prop k="outline_style" v="solid"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="no"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option name="name" value="" type="QString"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option name="type" value="collection" type="QString"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -42,21 +42,21 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory maxScaleDenominator="1e+08" lineSizeScale="3x:0,0,0,0,0,0" penWidth="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" backgroundColor="#ffffff" scaleDependency="Area" minScaleDenominator="0" penColor="#000000" diagramOrientation="Up" enabled="0" barWidth="5" rotationOffset="270" height="15" lineSizeType="MM" sizeType="MM" opacity="1" width="15" labelPlacementMethod="XHeight" penAlpha="255" backgroundAlpha="255">
+    <DiagramCategory penWidth="0" scaleDependency="Area" sizeScale="3x:0,0,0,0,0,0" minScaleDenominator="0" width="15" lineSizeType="MM" height="15" maxScaleDenominator="1e+08" sizeType="MM" scaleBasedVisibility="0" backgroundAlpha="255" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" rotationOffset="270" labelPlacementMethod="XHeight" opacity="1" penColor="#000000" enabled="0" barWidth="5" minimumSize="0" diagramOrientation="Up" penAlpha="255">
       <fontProperties description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
-      <attribute color="#000000" label="" field=""/>
+      <attribute label="" color="#000000" field=""/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings priority="0" obstacle="0" dist="0" showAll="1" placement="1" linePlacementFlags="18" zIndex="0">
+  <DiagramLayerSettings priority="0" placement="1" obstacle="0" dist="0" linePlacementFlags="18" zIndex="0" showAll="1">
     <properties>
       <Option type="Map">
-        <Option type="QString" name="name" value=""/>
+        <Option name="name" value="" type="QString"/>
         <Option name="properties"/>
-        <Option type="QString" name="type" value="collection"/>
+        <Option name="type" value="collection" type="QString"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -133,72 +133,72 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias index="0" name="" field="fid"/>
-    <alias index="1" name="" field="id"/>
-    <alias index="2" name="" field="commune"/>
-    <alias index="3" name="" field="prefixe"/>
-    <alias index="4" name="" field="section"/>
-    <alias index="5" name="" field="numero"/>
-    <alias index="6" name="" field="contenance"/>
-    <alias index="7" name="" field="arpente"/>
-    <alias index="8" name="" field="created"/>
-    <alias index="9" name="" field="updated"/>
+    <alias field="fid" name="" index="0"/>
+    <alias field="id" name="" index="1"/>
+    <alias field="commune" name="" index="2"/>
+    <alias field="prefixe" name="" index="3"/>
+    <alias field="section" name="" index="4"/>
+    <alias field="numero" name="" index="5"/>
+    <alias field="contenance" name="" index="6"/>
+    <alias field="arpente" name="" index="7"/>
+    <alias field="created" name="" index="8"/>
+    <alias field="updated" name="" index="9"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default expression="" field="fid" applyOnUpdate="0"/>
-    <default expression="" field="id" applyOnUpdate="0"/>
-    <default expression="" field="commune" applyOnUpdate="0"/>
-    <default expression="" field="prefixe" applyOnUpdate="0"/>
-    <default expression="" field="section" applyOnUpdate="0"/>
-    <default expression="" field="numero" applyOnUpdate="0"/>
-    <default expression="" field="contenance" applyOnUpdate="0"/>
-    <default expression="" field="arpente" applyOnUpdate="0"/>
-    <default expression="" field="created" applyOnUpdate="0"/>
-    <default expression="" field="updated" applyOnUpdate="0"/>
+    <default field="fid" applyOnUpdate="0" expression=""/>
+    <default field="id" applyOnUpdate="0" expression=""/>
+    <default field="commune" applyOnUpdate="0" expression=""/>
+    <default field="prefixe" applyOnUpdate="0" expression=""/>
+    <default field="section" applyOnUpdate="0" expression=""/>
+    <default field="numero" applyOnUpdate="0" expression=""/>
+    <default field="contenance" applyOnUpdate="0" expression=""/>
+    <default field="arpente" applyOnUpdate="0" expression=""/>
+    <default field="created" applyOnUpdate="0" expression=""/>
+    <default field="updated" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="1" constraints="3" field="fid" exp_strength="0" unique_strength="1"/>
-    <constraint notnull_strength="0" constraints="0" field="id" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="commune" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="prefixe" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="section" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="numero" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="contenance" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="arpente" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="created" exp_strength="0" unique_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" field="updated" exp_strength="0" unique_strength="0"/>
+    <constraint notnull_strength="1" unique_strength="1" field="fid" constraints="3" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="id" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="commune" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="prefixe" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="section" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="numero" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="contenance" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="arpente" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="created" constraints="0" exp_strength="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="updated" constraints="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="fid" exp="" desc=""/>
-    <constraint field="id" exp="" desc=""/>
-    <constraint field="commune" exp="" desc=""/>
-    <constraint field="prefixe" exp="" desc=""/>
-    <constraint field="section" exp="" desc=""/>
-    <constraint field="numero" exp="" desc=""/>
-    <constraint field="contenance" exp="" desc=""/>
-    <constraint field="arpente" exp="" desc=""/>
-    <constraint field="created" exp="" desc=""/>
-    <constraint field="updated" exp="" desc=""/>
+    <constraint exp="" desc="" field="fid"/>
+    <constraint exp="" desc="" field="id"/>
+    <constraint exp="" desc="" field="commune"/>
+    <constraint exp="" desc="" field="prefixe"/>
+    <constraint exp="" desc="" field="section"/>
+    <constraint exp="" desc="" field="numero"/>
+    <constraint exp="" desc="" field="contenance"/>
+    <constraint exp="" desc="" field="arpente"/>
+    <constraint exp="" desc="" field="created"/>
+    <constraint exp="" desc="" field="updated"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
+  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column width="-1" type="field" name="fid" hidden="0"/>
-      <column width="-1" type="field" name="id" hidden="0"/>
-      <column width="-1" type="field" name="commune" hidden="0"/>
-      <column width="-1" type="field" name="prefixe" hidden="0"/>
-      <column width="-1" type="field" name="section" hidden="0"/>
-      <column width="-1" type="field" name="numero" hidden="0"/>
-      <column width="-1" type="field" name="contenance" hidden="0"/>
-      <column width="-1" type="field" name="arpente" hidden="0"/>
-      <column width="-1" type="field" name="created" hidden="0"/>
-      <column width="-1" type="field" name="updated" hidden="0"/>
-      <column width="-1" type="actions" hidden="1"/>
+      <column hidden="0" width="-1" name="fid" type="field"/>
+      <column hidden="0" width="-1" name="id" type="field"/>
+      <column hidden="0" width="-1" name="commune" type="field"/>
+      <column hidden="0" width="-1" name="prefixe" type="field"/>
+      <column hidden="0" width="-1" name="section" type="field"/>
+      <column hidden="0" width="-1" name="numero" type="field"/>
+      <column hidden="0" width="-1" name="contenance" type="field"/>
+      <column hidden="0" width="-1" name="arpente" type="field"/>
+      <column hidden="0" width="-1" name="created" type="field"/>
+      <column hidden="0" width="-1" name="updated" type="field"/>
+      <column hidden="1" width="-1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -228,28 +228,28 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field editable="1" name="arpente"/>
-    <field editable="1" name="commune"/>
-    <field editable="1" name="contenance"/>
-    <field editable="1" name="created"/>
-    <field editable="1" name="fid"/>
-    <field editable="1" name="id"/>
-    <field editable="1" name="numero"/>
-    <field editable="1" name="prefixe"/>
-    <field editable="1" name="section"/>
-    <field editable="1" name="updated"/>
+    <field name="arpente" editable="1"/>
+    <field name="commune" editable="1"/>
+    <field name="contenance" editable="1"/>
+    <field name="created" editable="1"/>
+    <field name="fid" editable="1"/>
+    <field name="id" editable="1"/>
+    <field name="numero" editable="1"/>
+    <field name="prefixe" editable="1"/>
+    <field name="section" editable="1"/>
+    <field name="updated" editable="1"/>
   </editable>
   <labelOnTop>
-    <field name="arpente" labelOnTop="0"/>
-    <field name="commune" labelOnTop="0"/>
-    <field name="contenance" labelOnTop="0"/>
-    <field name="created" labelOnTop="0"/>
-    <field name="fid" labelOnTop="0"/>
-    <field name="id" labelOnTop="0"/>
-    <field name="numero" labelOnTop="0"/>
-    <field name="prefixe" labelOnTop="0"/>
-    <field name="section" labelOnTop="0"/>
-    <field name="updated" labelOnTop="0"/>
+    <field labelOnTop="0" name="arpente"/>
+    <field labelOnTop="0" name="commune"/>
+    <field labelOnTop="0" name="contenance"/>
+    <field labelOnTop="0" name="created"/>
+    <field labelOnTop="0" name="fid"/>
+    <field labelOnTop="0" name="id"/>
+    <field labelOnTop="0" name="numero"/>
+    <field labelOnTop="0" name="prefixe"/>
+    <field labelOnTop="0" name="section"/>
+    <field labelOnTop="0" name="updated"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>fid</previewExpression>
