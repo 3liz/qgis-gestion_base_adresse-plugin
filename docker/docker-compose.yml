@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: kartoza/postgis:12.0
+    image: kartoza/postgis:9.5-2.2
     hostname: db
     container_name: postgis
     environment:
