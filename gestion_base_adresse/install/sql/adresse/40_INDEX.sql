@@ -26,6 +26,34 @@ CREATE INDEX commune_deleguee_geom_idx ON adresse.commune_deleguee USING gist (g
 CREATE INDEX commune_geom_idx ON adresse.commune USING gist (geom);
 
 
+-- index_com_adr
+CREATE INDEX index_com_adr ON adresse.point_adresse USING btree (id_commune);
+
+
+-- index_com_comdel
+CREATE INDEX index_com_comdel ON adresse.referencer_com USING btree (id_com);
+
+
+-- index_com_voie
+CREATE INDEX index_com_voie ON adresse.appartenir_com USING btree (id_com);
+
+
+-- index_comdel_com
+CREATE INDEX index_comdel_com ON adresse.referencer_com USING btree (id_com_deleguee);
+
+
+-- index_parcelle_adr
+CREATE INDEX index_parcelle_adr ON adresse.point_adresse USING btree (id_parcelle);
+
+
+-- index_voie_adr
+CREATE INDEX index_voie_adr ON adresse.point_adresse USING btree (id_voie);
+
+
+-- index_voie_com
+CREATE INDEX index_voie_com ON adresse.appartenir_com USING btree (id_voie);
+
+
 -- parcelle_geom_idx
 CREATE INDEX parcelle_geom_idx ON adresse.parcelle USING gist (geom);
 

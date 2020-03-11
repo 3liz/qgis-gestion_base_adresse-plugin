@@ -185,7 +185,8 @@ CREATE TABLE adresse.point_adresse (
     geom public.geometry(Point,2154),
     id_voie integer,
     id_commune integer,
-    id_parcelle integer
+    id_parcelle integer,
+    validation boolean DEFAULT false
 );
 
 
