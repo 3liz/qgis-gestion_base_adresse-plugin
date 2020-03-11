@@ -64,4 +64,51 @@ CREATE INDEX if not exists index_voie_com ON adresse.appartenir_com(id_voie);
 CREATE INDEX if not exists index_com_comdel ON adresse.referencer_com(id_com);
 CREATE INDEX if not exists index_comdel_com ON adresse.referencer_com(id_com_deleguee);
 
+CREATE OR REPLACE FUNCTION adresse.update_full_name()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+    IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
+        NEW.nom_complet:= CONCAT(NEW.typologie, ' ', NEW.nom);
+    END IF;
+
+    RETURN NEW;
+END;
+$BODY$;
+
+DROP TRIGGER trigger_update_name ON adresse.voie;
+CREATE TRIGGER trigger_update_name
+    BEFORE UPDATE
+    ON adresse.voie
+    FOR EACH ROW
+    EXECUTE PROCEDURE adresse.update_full_name();
+
+
+CREATE OR REPLACE FUNCTION adresse.update_adr_complete()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+    IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
+        UPDATE adresse.point_adresse
+        SET adresse_complete = CONCAT(numero, ' ', NEW.typologie, ' ', NEW.nom)
+        WHERE id_voie = OLD.id_voie;
+    END IF;
+
+    RETURN NULL;
+END;
+$BODY$;
+
+DROP TRIGGER trigger_update_adr_complete ON adresse.voie;
+CREATE TRIGGER trigger_update_adr_complete
+    AFTER UPDATE
+    ON adresse.voie
+    FOR EACH ROW
+    EXECUTE PROCEDURE adresse.update_adr_complete();
+
 COMMIT;

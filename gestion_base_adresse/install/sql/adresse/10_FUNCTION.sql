@@ -334,6 +334,37 @@ END;
 $$;
 
 
+-- update_adr_complete()
+CREATE FUNCTION adresse.update_adr_complete() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
+        UPDATE adresse.point_adresse
+        SET adresse_complete = CONCAT(numero, ' ', NEW.typologie, ' ', NEW.nom)
+        WHERE id_voie = OLD.id_voie;
+    END IF;
+
+    RETURN NULL;
+END;
+$$;
+
+
+-- update_full_name()
+CREATE FUNCTION adresse.update_full_name() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
+        NEW.nom_complet:= CONCAT(NEW.typologie, ' ', NEW.nom);
+        RAISE NOTICE 'Nouveau nom complet %', NEW.nom_complet;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+
 -- voie_nom_complet()
 CREATE FUNCTION adresse.voie_nom_complet() RETURNS trigger
     LANGUAGE plpgsql

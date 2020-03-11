@@ -40,6 +40,14 @@ CREATE TRIGGER trigger_longueur BEFORE INSERT OR UPDATE ON adresse.voie FOR EACH
 CREATE TRIGGER trigger_point_adr BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.trigger_point_adr();
 
 
+-- voie trigger_update_adr_complete
+CREATE TRIGGER trigger_update_adr_complete AFTER UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_adr_complete();
+
+
+-- voie trigger_update_name
+CREATE TRIGGER trigger_update_name BEFORE UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_full_name();
+
+
 -- point_adresse update_modif_create
 CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
 
