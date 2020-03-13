@@ -10,6 +10,7 @@ from qgis.core import (
     QgsExpressionContextUtils,
 )
 
+from ...definitions.variables import GESTION_ADRESSE_POINT_ADRESSE, GESTION_ADRESSE_VOIE
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 
 
@@ -42,7 +43,6 @@ class ConfigProject(BaseProcessingAlgorithm):
                 self.ADDRESS_LAYER,
                 'Voirie',
                 [QgsProcessing.TypeVectorLine],
-                defaultValue='voie'
             )
         )
         self.addParameter(
@@ -57,6 +57,6 @@ class ConfigProject(BaseProcessingAlgorithm):
         street_layer = self.parameterAsString(parameters, self.STREET_LAYER, context)
         address_layer = self.parameterAsString(parameters, self.ADDRESS_LAYER, context)
 
-        QgsExpressionContextUtils.setProjectVariable(context.project(), 'gestion_adresse_voie', street_layer)
-        QgsExpressionContextUtils.setProjectVariable(context.project(), 'gesiotion_adresse_point_adresse', address_layer)
+        QgsExpressionContextUtils.setProjectVariable(context.project(), GESTION_ADRESSE_VOIE, street_layer)
+        QgsExpressionContextUtils.setProjectVariable(context.project(), GESTION_ADRESSE_POINT_ADRESSE, address_layer)
         return {}
