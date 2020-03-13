@@ -14,7 +14,7 @@ from qgis.core import (
     QgsExpressionContextUtils,
 )
 
-from ..tools import (
+from ..processing_tools import (
     fetchDataFromSqlQuery,
 )
 
