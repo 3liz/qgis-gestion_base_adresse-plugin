@@ -212,7 +212,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
 
                 # Add SQL database version in adresse.metadata
                 new_db_version = sf.replace('upgrade_to_', '').replace('.sql', '').strip()
-                feedback.pushInfo('* NOUVELLE VERSION BDD' + new_db_version )
+                feedback.pushInfo('* NOUVELLE VERSION BDD ' + new_db_version )
                 sql+= '''
                     UPDATE adresse.metadata
                     SET (me_version, me_version_date)

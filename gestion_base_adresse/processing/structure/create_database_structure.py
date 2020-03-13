@@ -20,6 +20,7 @@ from ..processing_tools import (
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
+from ...qgis_plugin_tools.tools.resources import plugin_test_data_path
 
 
 class CreateDatabaseStructure(BaseProcessingAlgorithm):
@@ -172,9 +173,20 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         if addtestdata:
             sql_files.append('99_test_data.sql')
 
-        msg = ''
         alg_dir = os.path.dirname(__file__)
         plugin_dir = os.path.join(alg_dir, '../../')
+
+        config = configparser.ConfigParser()
+        config.read(str(os.path.join(plugin_dir, 'metadata.txt')))
+        version = config['general']['version']
+
+        run_migration = os.environ.get('DATABASE_RUN_MIGRATION')
+        if run_migration:
+            plugin_dir = plugin_test_data_path()
+            feedback.reportError(
+                'Be careful, running migrations on an empty database using {} instead of {}'.format(
+                    run_migration, version))
+            version = run_migration
 
         # Loop sql files and run SQL code
         for sf in sql_files:
@@ -202,9 +214,6 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
                     # }
 
         # Add version
-        config = configparser.ConfigParser()
-        config.read(str(os.path.join(plugin_dir, 'metadata.txt')))
-        version = config['general']['version']
         sql = '''
             INSERT INTO adresse.metadata
             (me_version, me_version_date, me_status)
@@ -217,7 +226,9 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             sql
         )
 
+        feedback.pushInfo('Version de la base de données \'{}\'.'.format(version))
+
         return {
             self.OUTPUT_STATUS: 1,
-            self.OUTPUT_STRING: tr('*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE ***')
+            self.OUTPUT_STRING: tr('*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE \'{}\'***'.format(version))
         }

@@ -1,5 +1,6 @@
 """Tests for Processing algorithms."""
 
+import os
 import psycopg2
 
 from qgis.core import (
@@ -16,6 +17,7 @@ else:
 
 from ..processing.provider import GestionAdresseProvider
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
+from ..qgis_plugin_tools.tools.resources import metadata_config
 
 __copyright__ = 'Copyright 2019, 3Liz'
 __license__ = 'GPL version 3'
@@ -36,8 +38,69 @@ class TestProcessing(unittest.TestCase):
         )
         self.cursor = self.connection.cursor()
 
-    def test_load_structure(self):
-        """Test we can load the PostGIS structure."""
+    def test_load_structure_with_migration(self):
+        """Test we can load the PostGIS structure with migrations."""
+        VERSION = '0.2.3'
+        provider = GestionAdresseProvider()
+        QgsApplication.processingRegistry().addProvider(provider)
+
+        feedback = LoggerProcessingFeedBack()
+        params = {
+            'CONNECTION_NAME': 'test',
+            'OVERRIDE': True,
+            'ADDTESTDATA': True,
+        }
+
+        os.environ['DATABASE_RUN_MIGRATION'] = VERSION
+        try:
+            processing_output = processing.run('gestion_adresse:create_database_structure', params, feedback=feedback)
+        except QgsProcessingException as e:
+            self.assertTrue(False, e)
+        del os.environ['DATABASE_RUN_MIGRATION']
+
+        self.cursor.execute('SELECT table_name FROM information_schema.tables WHERE table_schema = \'adresse\'')
+        records = self.cursor.fetchall()
+        result = [r[0] for r in records]
+        expected = [
+            'appartenir_com', 'commune', 'document', 'metadata', 'point_adresse',
+            'voie', 'parcelle', 'commune_deleguee', 'referencer_com',
+        ]
+        self.assertCountEqual(expected, result)
+        expected = '*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE \'{}\'***'.format(VERSION)
+        self.assertEqual(expected, processing_output['OUTPUT_STRING'])
+
+        sql = '''
+            SELECT me_version
+            FROM adresse.metadata
+            WHERE me_status = 1
+            ORDER BY me_version_date DESC
+            LIMIT 1;
+        '''
+        self.cursor.execute(sql)
+        record = self.cursor.fetchone()
+        self.assertEqual(VERSION, record[0])
+
+        feedback.pushDebugInfo('Update the database')
+        params = {'CONNECTION_NAME': 'test', 'RUNIT': True}
+        results = processing.run('gestion_adresse:upgrade_database_structure', params, feedback=feedback)
+        self.assertEqual(1, results['OUTPUT_STATUS'], 1)
+        self.assertEqual('*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***', results['OUTPUT_STRING'])
+
+        sql = '''
+            SELECT me_version
+            FROM adresse.metadata
+            WHERE me_status = 1
+            ORDER BY me_version_date DESC
+            LIMIT 1;
+        '''
+        self.cursor.execute(sql)
+        record = self.cursor.fetchone()
+        metadata = metadata_config()
+        version = metadata['general']['version']
+        self.assertEqual(version, record[0])
+
+    def test_load_structure_without_migrations(self):
+        """Test we can load the PostGIS structure without migrations."""
         provider = GestionAdresseProvider()
         QgsApplication.processingRegistry().addProvider(provider)
 
@@ -52,7 +115,7 @@ class TestProcessing(unittest.TestCase):
 
         params = {
             'CONNECTION_NAME': 'test',
-            'OVERRIDE': True,
+            'OVERRIDE': True,  # Must be true, for the time in the test.
             'ADDTESTDATA': True,
         }
 
