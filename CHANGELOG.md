@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+### 13/03/2020 Version 0.2.5:
+
+* Update schemaspy : https://3liz.github.io/qgis-gestion_base_adresse-plugin/
+* Update QML files
+* Add comment, index and validation field
+* Add trigger on voie to update nom_complet and adresse_complete
+* Add project variables for two layers
+* Improve unittest infrastructure
+
 ### 06/03/2020 Version 0.2.4:
 
 * Database - Table definition, add default value to date_modif: DEFAULT NOW()
