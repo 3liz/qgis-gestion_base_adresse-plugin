@@ -1,32 +1,32 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyDrawingHints="0" simplifyLocal="0" styleCategories="AllStyleCategories" hasScaleBasedVisibilityFlag="0" minScale="1e+08" labelsEnabled="0" readOnly="0" maxScale="0" version="3.4.15-Madeira" simplifyMaxScale="1" simplifyDrawingTol="1" simplifyAlgorithm="0">
+<qgis minScale="1e+08" readOnly="0" maxScale="0" hasScaleBasedVisibilityFlag="0" simplifyMaxScale="1" styleCategories="AllStyleCategories" simplifyLocal="0" labelsEnabled="0" version="3.4.15-Madeira" simplifyDrawingTol="1" simplifyAlgorithm="0" simplifyDrawingHints="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" forceraster="0" enableorderby="0" type="singleSymbol">
+  <renderer-v2 forceraster="0" symbollevels="0" enableorderby="0" type="singleSymbol">
     <symbols>
-      <symbol name="0" clip_to_extent="1" type="marker" alpha="1" force_rhr="0">
-        <layer enabled="1" class="SimpleMarker" locked="0" pass="0">
-          <prop v="0" k="angle"/>
-          <prop v="190,178,151,255" k="color"/>
-          <prop v="1" k="horizontal_anchor_point"/>
-          <prop v="bevel" k="joinstyle"/>
-          <prop v="circle" k="name"/>
-          <prop v="0,0" k="offset"/>
-          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
-          <prop v="MM" k="offset_unit"/>
-          <prop v="35,35,35,255" k="outline_color"/>
-          <prop v="solid" k="outline_style"/>
-          <prop v="0" k="outline_width"/>
-          <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
-          <prop v="MM" k="outline_width_unit"/>
-          <prop v="diameter" k="scale_method"/>
-          <prop v="2" k="size"/>
-          <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
-          <prop v="MM" k="size_unit"/>
-          <prop v="1" k="vertical_anchor_point"/>
+      <symbol alpha="1" force_rhr="0" clip_to_extent="1" name="0" type="marker">
+        <layer enabled="1" pass="0" locked="0" class="SimpleMarker">
+          <prop k="angle" v="0"/>
+          <prop k="color" v="190,178,151,255"/>
+          <prop k="horizontal_anchor_point" v="1"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="name" v="circle"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="35,35,35,255"/>
+          <prop k="outline_style" v="solid"/>
+          <prop k="outline_width" v="0"/>
+          <prop k="outline_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="scale_method" v="diameter"/>
+          <prop k="size" v="2"/>
+          <prop k="size_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="size_unit" v="MM"/>
+          <prop k="vertical_anchor_point" v="1"/>
           <data_defined_properties>
             <Option type="Map">
               <Option name="name" type="QString" value=""/>
@@ -41,21 +41,21 @@
     <sizescale/>
   </renderer-v2>
   <customproperties>
-    <property value="id_point" key="dualview/previewExpressions"/>
-    <property value="0" key="embeddedWidgets/count"/>
+    <property key="dualview/previewExpressions" value="id_point"/>
+    <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
-  <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
-    <DiagramCategory lineSizeType="MM" maxScaleDenominator="1e+08" opacity="1" width="15" diagramOrientation="Up" minScaleDenominator="0" scaleDependency="Area" backgroundColor="#ffffff" lineSizeScale="3x:0,0,0,0,0,0" minimumSize="0" height="15" enabled="0" penColor="#000000" barWidth="5" sizeType="MM" rotationOffset="270" labelPlacementMethod="XHeight" penWidth="0" scaleBasedVisibility="0" penAlpha="255" sizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255">
+  <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+    <DiagramCategory scaleDependency="Area" labelPlacementMethod="XHeight" penAlpha="255" lineSizeType="MM" barWidth="5" sizeScale="3x:0,0,0,0,0,0" diagramOrientation="Up" enabled="0" height="15" scaleBasedVisibility="0" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255" penWidth="0" minimumSize="0" sizeType="MM" maxScaleDenominator="1e+08" opacity="1" backgroundColor="#ffffff" minScaleDenominator="0" penColor="#000000" width="15">
       <fontProperties style="" description="Ubuntu,11,-1,5,50,0,0,0,0,0"/>
-      <attribute color="#000000" label="" field=""/>
+      <attribute color="#000000" field="" label=""/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings dist="0" zIndex="0" placement="0" obstacle="0" linePlacementFlags="18" priority="0" showAll="1">
+  <DiagramLayerSettings placement="0" showAll="1" dist="0" linePlacementFlags="18" priority="0" obstacle="0" zIndex="0">
     <properties>
       <Option type="Map">
         <Option name="name" type="QString" value=""/>
@@ -64,7 +64,7 @@
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -99,31 +99,31 @@
           <Option type="Map">
             <Option name="map" type="List">
               <Option type="Map">
-                <Option name="a" type="QString" value="a"/>
+                <Option name="BIS" type="QString" value="bis"/>
               </Option>
               <Option type="Map">
-                <Option name="b" type="QString" value="b"/>
+                <Option name="TER" type="QString" value="ter"/>
               </Option>
               <Option type="Map">
-                <Option name="bis" type="QString" value="bis"/>
+                <Option name="QUARTER" type="QString" value="qua"/>
               </Option>
               <Option type="Map">
-                <Option name="c" type="QString" value="c"/>
+                <Option name="QUINQUIENS" type="QString" value="qui"/>
               </Option>
               <Option type="Map">
-                <Option name="d" type="QString" value="d"/>
+                <Option name="A" type="QString" value="a"/>
               </Option>
               <Option type="Map">
-                <Option name="e" type="QString" value="e"/>
+                <Option name="B" type="QString" value="b"/>
               </Option>
               <Option type="Map">
-                <Option name="quater" type="QString" value="quater"/>
+                <Option name="C" type="QString" value="c"/>
               </Option>
               <Option type="Map">
-                <Option name="quinquies" type="QString" value="quinquies"/>
+                <Option name="D" type="QString" value="d"/>
               </Option>
               <Option type="Map">
-                <Option name="ter" type="QString" value="ter"/>
+                <Option name="E" type="QString" value="e"/>
               </Option>
             </Option>
           </Option>
@@ -282,107 +282,107 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="Identifiant" index="0" field="id_point"/>
-    <alias name="Numéro du point" index="1" field="numero"/>
-    <alias name="Suffixe" index="2" field="suffixe"/>
-    <alias name="Adresse complète" index="3" field="adresse_complete"/>
-    <alias name="Code Postal" index="4" field="code_postal"/>
-    <alias name="Positionnement" index="5" field="type_pos"/>
-    <alias name="La plaque est à acheter ?" index="6" field="achat_plaque_numero"/>
-    <alias name="Créateur du point" index="7" field="createur"/>
-    <alias name="Date de création du point" index="8" field="date_creation"/>
-    <alias name="Modificateur du point" index="9" field="modificateur"/>
-    <alias name="Date de modification du point" index="10" field="date_modif"/>
-    <alias name="Une erreur a été constatée ?" index="11" field="erreur"/>
-    <alias name="Commentaire" index="12" field="commentaire"/>
-    <alias name="Voie" index="13" field="id_voie"/>
-    <alias name="" index="14" field="id_commune"/>
-    <alias name="" index="15" field="id_parcelle"/>
-    <alias name="" index="16" field="validation"/>
+    <alias index="0" name="Identifiant" field="id_point"/>
+    <alias index="1" name="Numéro du point" field="numero"/>
+    <alias index="2" name="Suffixe" field="suffixe"/>
+    <alias index="3" name="Adresse complète" field="adresse_complete"/>
+    <alias index="4" name="Code Postal" field="code_postal"/>
+    <alias index="5" name="Positionnement" field="type_pos"/>
+    <alias index="6" name="La plaque est à acheter ?" field="achat_plaque_numero"/>
+    <alias index="7" name="Créateur du point" field="createur"/>
+    <alias index="8" name="Date de création du point" field="date_creation"/>
+    <alias index="9" name="Modificateur du point" field="modificateur"/>
+    <alias index="10" name="Date de modification du point" field="date_modif"/>
+    <alias index="11" name="Une erreur a été constatée ?" field="erreur"/>
+    <alias index="12" name="Commentaire" field="commentaire"/>
+    <alias index="13" name="Voie" field="id_voie"/>
+    <alias index="14" name="" field="id_commune"/>
+    <alias index="15" name="" field="id_parcelle"/>
+    <alias index="16" name="" field="validation"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default expression="" applyOnUpdate="0" field="id_point"/>
-    <default expression="" applyOnUpdate="0" field="numero"/>
-    <default expression="" applyOnUpdate="0" field="suffixe"/>
-    <default expression="" applyOnUpdate="0" field="adresse_complete"/>
-    <default expression="" applyOnUpdate="0" field="code_postal"/>
-    <default expression="" applyOnUpdate="0" field="type_pos"/>
-    <default expression="" applyOnUpdate="0" field="achat_plaque_numero"/>
-    <default expression="" applyOnUpdate="0" field="createur"/>
-    <default expression="" applyOnUpdate="0" field="date_creation"/>
-    <default expression="" applyOnUpdate="0" field="modificateur"/>
-    <default expression="" applyOnUpdate="0" field="date_modif"/>
-    <default expression="" applyOnUpdate="0" field="erreur"/>
-    <default expression="" applyOnUpdate="0" field="commentaire"/>
-    <default expression="" applyOnUpdate="0" field="id_voie"/>
-    <default expression="" applyOnUpdate="0" field="id_commune"/>
-    <default expression="" applyOnUpdate="0" field="id_parcelle"/>
-    <default expression="" applyOnUpdate="0" field="validation"/>
+    <default applyOnUpdate="0" expression="" field="id_point"/>
+    <default applyOnUpdate="0" expression="" field="numero"/>
+    <default applyOnUpdate="0" expression="" field="suffixe"/>
+    <default applyOnUpdate="0" expression="" field="adresse_complete"/>
+    <default applyOnUpdate="0" expression="" field="code_postal"/>
+    <default applyOnUpdate="0" expression="" field="type_pos"/>
+    <default applyOnUpdate="0" expression="" field="achat_plaque_numero"/>
+    <default applyOnUpdate="0" expression="" field="createur"/>
+    <default applyOnUpdate="0" expression="" field="date_creation"/>
+    <default applyOnUpdate="0" expression="" field="modificateur"/>
+    <default applyOnUpdate="0" expression="" field="date_modif"/>
+    <default applyOnUpdate="0" expression="" field="erreur"/>
+    <default applyOnUpdate="0" expression="" field="commentaire"/>
+    <default applyOnUpdate="0" expression="" field="id_voie"/>
+    <default applyOnUpdate="0" expression="" field="id_commune"/>
+    <default applyOnUpdate="0" expression="" field="id_parcelle"/>
+    <default applyOnUpdate="0" expression="" field="validation"/>
   </defaults>
   <constraints>
-    <constraint unique_strength="1" notnull_strength="1" constraints="3" exp_strength="0" field="id_point"/>
-    <constraint unique_strength="0" notnull_strength="1" constraints="1" exp_strength="0" field="numero"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="suffixe"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="adresse_complete"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="code_postal"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="type_pos"/>
-    <constraint unique_strength="0" notnull_strength="1" constraints="1" exp_strength="0" field="achat_plaque_numero"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="createur"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="date_creation"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="modificateur"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="date_modif"/>
-    <constraint unique_strength="0" notnull_strength="1" constraints="1" exp_strength="0" field="erreur"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="commentaire"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="id_voie"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="id_commune"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="id_parcelle"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="validation"/>
+    <constraint notnull_strength="1" unique_strength="1" field="id_point" exp_strength="0" constraints="3"/>
+    <constraint notnull_strength="1" unique_strength="0" field="numero" exp_strength="0" constraints="1"/>
+    <constraint notnull_strength="0" unique_strength="0" field="suffixe" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="adresse_complete" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="code_postal" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="type_pos" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="1" unique_strength="0" field="achat_plaque_numero" exp_strength="0" constraints="1"/>
+    <constraint notnull_strength="0" unique_strength="0" field="createur" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="date_creation" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="modificateur" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="date_modif" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="1" unique_strength="0" field="erreur" exp_strength="0" constraints="1"/>
+    <constraint notnull_strength="0" unique_strength="0" field="commentaire" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="id_voie" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="id_commune" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="id_parcelle" exp_strength="0" constraints="0"/>
+    <constraint notnull_strength="0" unique_strength="0" field="validation" exp_strength="0" constraints="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" desc="" field="id_point"/>
-    <constraint exp="" desc="" field="numero"/>
-    <constraint exp="" desc="" field="suffixe"/>
-    <constraint exp="" desc="" field="adresse_complete"/>
-    <constraint exp="" desc="" field="code_postal"/>
-    <constraint exp="" desc="" field="type_pos"/>
-    <constraint exp="" desc="" field="achat_plaque_numero"/>
-    <constraint exp="" desc="" field="createur"/>
-    <constraint exp="" desc="" field="date_creation"/>
-    <constraint exp="" desc="" field="modificateur"/>
-    <constraint exp="" desc="" field="date_modif"/>
-    <constraint exp="" desc="" field="erreur"/>
-    <constraint exp="" desc="" field="commentaire"/>
-    <constraint exp="" desc="" field="id_voie"/>
-    <constraint exp="" desc="" field="id_commune"/>
-    <constraint exp="" desc="" field="id_parcelle"/>
-    <constraint exp="" desc="" field="validation"/>
+    <constraint exp="" field="id_point" desc=""/>
+    <constraint exp="" field="numero" desc=""/>
+    <constraint exp="" field="suffixe" desc=""/>
+    <constraint exp="" field="adresse_complete" desc=""/>
+    <constraint exp="" field="code_postal" desc=""/>
+    <constraint exp="" field="type_pos" desc=""/>
+    <constraint exp="" field="achat_plaque_numero" desc=""/>
+    <constraint exp="" field="createur" desc=""/>
+    <constraint exp="" field="date_creation" desc=""/>
+    <constraint exp="" field="modificateur" desc=""/>
+    <constraint exp="" field="date_modif" desc=""/>
+    <constraint exp="" field="erreur" desc=""/>
+    <constraint exp="" field="commentaire" desc=""/>
+    <constraint exp="" field="id_voie" desc=""/>
+    <constraint exp="" field="id_commune" desc=""/>
+    <constraint exp="" field="id_parcelle" desc=""/>
+    <constraint exp="" field="validation" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column width="-1" hidden="0" name="id_point" type="field"/>
-      <column width="-1" hidden="0" name="numero" type="field"/>
-      <column width="-1" hidden="0" name="suffixe" type="field"/>
-      <column width="-1" hidden="0" name="adresse_complete" type="field"/>
-      <column width="-1" hidden="0" name="code_postal" type="field"/>
-      <column width="-1" hidden="0" name="type_pos" type="field"/>
-      <column width="-1" hidden="0" name="achat_plaque_numero" type="field"/>
-      <column width="-1" hidden="0" name="erreur" type="field"/>
-      <column width="-1" hidden="0" name="commentaire" type="field"/>
-      <column width="220" hidden="0" name="id_voie" type="field"/>
-      <column width="-1" hidden="0" name="id_commune" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" hidden="0" name="id_parcelle" type="field"/>
-      <column width="-1" hidden="0" name="createur" type="field"/>
-      <column width="-1" hidden="0" name="date_creation" type="field"/>
-      <column width="-1" hidden="0" name="modificateur" type="field"/>
-      <column width="-1" hidden="0" name="date_modif" type="field"/>
-      <column width="-1" hidden="0" name="validation" type="field"/>
+      <column hidden="0" name="id_point" type="field" width="-1"/>
+      <column hidden="0" name="numero" type="field" width="-1"/>
+      <column hidden="0" name="suffixe" type="field" width="-1"/>
+      <column hidden="0" name="adresse_complete" type="field" width="-1"/>
+      <column hidden="0" name="code_postal" type="field" width="-1"/>
+      <column hidden="0" name="type_pos" type="field" width="-1"/>
+      <column hidden="0" name="achat_plaque_numero" type="field" width="-1"/>
+      <column hidden="0" name="erreur" type="field" width="-1"/>
+      <column hidden="0" name="commentaire" type="field" width="-1"/>
+      <column hidden="0" name="id_voie" type="field" width="220"/>
+      <column hidden="0" name="id_commune" type="field" width="-1"/>
+      <column hidden="1" type="actions" width="-1"/>
+      <column hidden="0" name="id_parcelle" type="field" width="-1"/>
+      <column hidden="0" name="createur" type="field" width="-1"/>
+      <column hidden="0" name="date_creation" type="field" width="-1"/>
+      <column hidden="0" name="modificateur" type="field" width="-1"/>
+      <column hidden="0" name="date_modif" type="field" width="-1"/>
+      <column hidden="0" name="validation" type="field" width="-1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -412,28 +412,28 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorContainer name="Point d'adresse" columnCount="1" groupBox="0" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
-      <attributeEditorContainer name="Création du point" columnCount="1" groupBox="1" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
-        <attributeEditorField name="id_point" index="0" showLabel="1"/>
-        <attributeEditorField name="numero" index="1" showLabel="1"/>
-        <attributeEditorField name="suffixe" index="2" showLabel="1"/>
-        <attributeEditorField name="id_voie" index="13" showLabel="1"/>
-        <attributeEditorField name="adresse_complete" index="3" showLabel="1"/>
-        <attributeEditorField name="type_pos" index="5" showLabel="1"/>
-        <attributeEditorField name="achat_plaque_numero" index="6" showLabel="1"/>
+    <attributeEditorContainer name="Point d'adresse" showLabel="1" groupBox="0" visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1">
+      <attributeEditorContainer name="Création du point" showLabel="1" groupBox="1" visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1">
+        <attributeEditorField index="0" name="id_point" showLabel="1"/>
+        <attributeEditorField index="1" name="numero" showLabel="1"/>
+        <attributeEditorField index="2" name="suffixe" showLabel="1"/>
+        <attributeEditorField index="13" name="id_voie" showLabel="1"/>
+        <attributeEditorField index="3" name="adresse_complete" showLabel="1"/>
+        <attributeEditorField index="5" name="type_pos" showLabel="1"/>
+        <attributeEditorField index="6" name="achat_plaque_numero" showLabel="1"/>
       </attributeEditorContainer>
-      <attributeEditorContainer name="Commune" columnCount="1" groupBox="1" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
-        <attributeEditorField name="code_postal" index="4" showLabel="1"/>
+      <attributeEditorContainer name="Commune" showLabel="1" groupBox="1" visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1">
+        <attributeEditorField index="4" name="code_postal" showLabel="1"/>
       </attributeEditorContainer>
-      <attributeEditorContainer name="Utilisateur" columnCount="1" groupBox="1" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
-        <attributeEditorField name="createur" index="7" showLabel="1"/>
-        <attributeEditorField name="date_creation" index="8" showLabel="1"/>
-        <attributeEditorField name="modificateur" index="9" showLabel="1"/>
-        <attributeEditorField name="date_modif" index="10" showLabel="1"/>
+      <attributeEditorContainer name="Utilisateur" showLabel="1" groupBox="1" visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1">
+        <attributeEditorField index="7" name="createur" showLabel="1"/>
+        <attributeEditorField index="8" name="date_creation" showLabel="1"/>
+        <attributeEditorField index="9" name="modificateur" showLabel="1"/>
+        <attributeEditorField index="10" name="date_modif" showLabel="1"/>
       </attributeEditorContainer>
-      <attributeEditorContainer name="Erreur" columnCount="1" groupBox="1" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
-        <attributeEditorField name="erreur" index="11" showLabel="1"/>
-        <attributeEditorField name="commentaire" index="12" showLabel="1"/>
+      <attributeEditorContainer name="Erreur" showLabel="1" groupBox="1" visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1">
+        <attributeEditorField index="11" name="erreur" showLabel="1"/>
+        <attributeEditorField index="12" name="commentaire" showLabel="1"/>
       </attributeEditorContainer>
     </attributeEditorContainer>
   </attributeEditorForm>
