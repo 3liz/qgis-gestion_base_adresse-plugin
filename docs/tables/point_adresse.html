@@ -117,7 +117,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Identifiant unique du point adresse</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="numero">numero</span></td>
@@ -134,7 +134,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Numéro de l’adresse</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="suffixe">suffixe</span></td>
@@ -151,7 +151,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Extension du numéro (bis, ter, A, B&hellip;)</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="adresse_complete">adresse_complete</span></td>
@@ -168,7 +168,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Concaténation du numéro, de l’extension, de la typologie et du nom de la voie</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="code_postal">code_postal</span></td>
@@ -185,7 +185,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Code postal auquel appartient de point adresse</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="type_pos">type_pos</span></td>
@@ -202,13 +202,13 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Type de positionnement du point adresse</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="achat_plaque_numero">achat_plaque_numero</span></td>
                                     <td>bool</td>
                                     <td>1</td>
-                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
                                     <td title=''></td>
                                     <td>false</td>
                                     <td>
@@ -219,7 +219,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Achat de la plaque nécessaire ou non ?</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="createur">createur</span></td>
@@ -236,7 +236,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Nom de l’utilisateur qui a créé le point</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="date_creation">date_creation</span></td>
@@ -253,7 +253,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Date et heure à laquelle le point adresse a été créé</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="modificateur">modificateur</span></td>
@@ -270,7 +270,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Nom de l’utilisateur qui a effectué la dernière modification</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="date_modif">date_modif</span></td>
@@ -287,13 +287,13 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Date et heure à laquelle la dernière modification sur la fiche du point a été apportée</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="erreur">erreur</span></td>
                                     <td>bool</td>
                                     <td>1</td>
-                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
                                     <td title=''></td>
                                     <td>false</td>
                                     <td>
@@ -304,7 +304,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Présence d’une erreur ou non</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="commentaire">commentaire</span></td>
@@ -321,7 +321,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Commentaire</p></td>
                                 </tr>
                                 <tr>
                                     <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="geom">geom</span></td>
@@ -338,7 +338,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Géométrie de l’objet</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_voie">id_voie</span></td>
@@ -359,7 +359,7 @@
                                             </tr>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Indentifiant de la voie à la qu&rsquo;elle appartient le point adresse</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_commune">id_commune</span></td>
@@ -380,7 +380,7 @@
                                             </tr>
                                         </table>
                                     </td>
-                                    <td></td>
+                                    <td><p>Indentifiant de la commune à la qu&rsquo;elle appartient le point adresse</p></td>
                                 </tr>
                                 <tr>
                                     <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_parcelle">id_parcelle</span></td>
@@ -399,6 +399,23 @@
                                                 <td title="point_adresse.id_parcelle references parcelle.fid via point_adresse_id_parcelle_fkey"><a href='parcelle.html'>parcelle</a><span class='relatedKey'>.fid</span></td>
                                                 <td class="constraint detail">point_adresse_id_parcelle_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
+                                        </table>
+                                    </td>
+                                    <td><p>Indentifiant de la parcelle à la qu&rsquo;elle appartient le point adresse</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="validation">validation</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>false</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
                                     <td></td>
@@ -434,6 +451,24 @@
                                     <td>id_point</td>
                                 </tr>
                                 <tr>
+                                    <td title='Indexed'>index_com_adr</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>id_commune</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>index_parcelle_adr</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>id_parcelle</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>index_voie_adr</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>id_voie</td>
+                                </tr>
+                                <tr>
                                     <td title='Indexed'>point_adresse_geom_idx</td>
                                     <td>Performance</td>
                                     <td><span title='Ascending'>Asc</span></td>
@@ -462,7 +497,7 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="263,5,671,573">
+<area shape="rect" id="node1" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="263,5,671,603">
 <area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="21,448,203,595">
 <area shape="rect" id="node3" href="parcelle.html" target="_top" title="parcelle" alt="" coords="35,612,189,759">
 <area shape="rect" id="node4" href="voie.html" target="_top" title="voie" alt="" coords="5,284,219,431">
@@ -475,7 +510,7 @@
 <area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="21,161,203,308">
 <area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,504,219,651">
 <area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="391,5,542,93">
-<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="263,321,671,889">
+<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="263,321,671,919">
 <area shape="rect" id="node6" href="parcelle.html" target="_top" title="parcelle" alt="" coords="35,793,189,940">
 <area shape="rect" id="node7" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="371,111,562,199">
 </map>

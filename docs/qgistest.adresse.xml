@@ -23,32 +23,38 @@
             <column ascending="true" name="id_voie"/>
             <column ascending="true" name="id_com"/>
          </index>
+         <index name="index_com_voie" unique="false">
+            <column ascending="true" name="id_com"/>
+         </index>
+         <index name="index_voie_com" unique="false">
+            <column ascending="true" name="id_voie"/>
+         </index>
       </table>
       <table name="commune" remarks="" schema="adresse" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('adresse.commune_id_com_seq'::regclass)" digits="0" id="0" name="id_com" nullable="false" remarks="" size="10" type="serial" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('adresse.commune_id_com_seq'::regclass)" digits="0" id="0" name="id_com" nullable="false" remarks="Identifiant unique de la commune" size="10" type="serial" typeCode="4">
             <child column="id_com" foreignKey="appartenir_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="appartenir_com"/>
             <child column="id_commune" foreignKey="document_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="document"/>
             <child column="id_commune" foreignKey="point_adresse_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
             <child column="id_com" foreignKey="referencer_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="referencer_com"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="insee_code" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_nom" nullable="true" remarks="Nom de la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="insee_code" nullable="true" remarks="Code INSEE de la commune" size="5" type="bpchar" typeCode="1"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="statut_com" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="intercom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="fibre" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="phase_fibre" nullable="true" remarks="" size="1" type="bpchar" typeCode="1"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="actif" nullable="true" remarks="" size="3" type="bpchar" typeCode="1"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="nom_referent" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="tel_referent" nullable="true" remarks="" size="10" type="bpchar" typeCode="1"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="mail_referent" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="situation" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commenter" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="date_delib" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diffusion_dgfip" nullable="true" remarks="" size="3" type="bpchar" typeCode="1"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="date_dgfip" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diffusion_ban" nullable="true" remarks="" size="3" type="bpchar" typeCode="1"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="date_ban" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="intercom" nullable="true" remarks="Intercommunalité dans laquelle la commune se trouve" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="fibre" nullable="true" remarks="Situation de la commune dans le déploiement de la fibre" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="phase_fibre" nullable="true" remarks="Numéro de phase du déploiement de la fibre sur la commune" size="1" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="actif" nullable="true" remarks="Si la commune se fait accompagner par le département" size="3" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="nom_referent" nullable="true" remarks="Nom et Prénom de la personne référente sur le projet d’adressage dans la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="tel_referent" nullable="true" remarks="Numéro de téléphone de la personne référente sur le projet d’adressage dans la commune" size="10" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="mail_referent" nullable="true" remarks="Adresse mail de la personne référente sur le projet d’adressage dans la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="situation" nullable="true" remarks="État d’avancement du projet d’adressage de la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commenter" nullable="true" remarks="Commentaires généraux sur le projet de la commune, l’avancement, le dernier contact, le prochain rendez-vous" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="date_delib" nullable="true" remarks="Date à laquelle la délibération sur les dénominations des voies a été prise." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diffusion_dgfip" nullable="true" remarks="Les adresses ont-elles été envoyées à la DGFIP ?" size="3" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="date_dgfip" nullable="true" remarks="Date d’envoi des données à la DGFIP." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diffusion_ban" nullable="true" remarks="Les adresses ont-elles été remontées dans la Base Adresse Nationale ?" size="3" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="date_ban" nullable="true" remarks="Date d’envoi des données dans la BAN." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="geom" nullable="true" remarks="Geometrie de l'objet" size="2147483647" type="geometry" typeCode="1111"/>
          <primaryKey column="id_com" sequenceNumberInPK="1"/>
          <index name="commune_pkey" unique="true">
             <column ascending="true" name="id_com"/>
@@ -124,32 +130,42 @@
          </index>
       </table>
       <table name="point_adresse" remarks="" schema="adresse" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('adresse.point_adresse_id_point_seq'::regclass)" digits="0" id="0" name="id_point" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="suffixe" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="adresse_complete" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="code_postal" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="type_pos" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="achat_plaque_numero" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="createur" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="now()" digits="0" id="8" name="date_creation" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="modificateur" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="now()" digits="0" id="10" name="date_modif" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="11" name="erreur" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commentaire" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="id_voie" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('adresse.point_adresse_id_point_seq'::regclass)" digits="0" id="0" name="id_point" nullable="false" remarks="Identifiant unique du point adresse" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero" nullable="false" remarks="Numéro de l’adresse" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="suffixe" nullable="true" remarks="Extension du numéro (bis, ter, A, B...)" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="adresse_complete" nullable="true" remarks="Concaténation du numéro, de l’extension, de la typologie et du nom de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="code_postal" nullable="true" remarks="Code postal auquel appartient de point adresse" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="type_pos" nullable="true" remarks="Type de positionnement du point adresse" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="achat_plaque_numero" nullable="false" remarks="Achat de la plaque nécessaire ou non ?" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="createur" nullable="true" remarks="Nom de l’utilisateur qui a créé le point" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="8" name="date_creation" nullable="true" remarks="Date et heure à laquelle le point adresse a été créé" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="modificateur" nullable="true" remarks="Nom de l’utilisateur qui a effectué la dernière modification" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="10" name="date_modif" nullable="true" remarks="Date et heure à laquelle la dernière modification sur la fiche du point a été apportée" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="11" name="erreur" nullable="false" remarks="Présence d’une erreur ou non" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commentaire" nullable="true" remarks="Commentaire" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="geom" nullable="true" remarks="Géométrie de l’objet" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="id_voie" nullable="true" remarks="Indentifiant de la voie à la qu'elle appartient le point adresse" size="10" type="int4" typeCode="4">
             <parent column="id_voie" foreignKey="point_adresse_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="voie"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="id_commune" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="id_commune" nullable="true" remarks="Indentifiant de la commune à la qu'elle appartient le point adresse" size="10" type="int4" typeCode="4">
             <parent column="id_com" foreignKey="point_adresse_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="id_parcelle" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="id_parcelle" nullable="true" remarks="Indentifiant de la parcelle à la qu'elle appartient le point adresse" size="10" type="int4" typeCode="4">
             <parent column="fid" foreignKey="point_adresse_id_parcelle_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="parcelle"/>
          </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="17" name="validation" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
          <primaryKey column="id_point" sequenceNumberInPK="1"/>
          <index name="point_adresse_pkey" unique="true">
             <column ascending="true" name="id_point"/>
+         </index>
+         <index name="index_com_adr" unique="false">
+            <column ascending="true" name="id_commune"/>
+         </index>
+         <index name="index_parcelle_adr" unique="false">
+            <column ascending="true" name="id_parcelle"/>
+         </index>
+         <index name="index_voie_adr" unique="false">
+            <column ascending="true" name="id_voie"/>
          </index>
          <index name="point_adresse_geom_idx" unique="false">
             <column ascending="true" name="geom"/>
@@ -170,29 +186,35 @@
             <column ascending="true" name="id_com"/>
             <column ascending="true" name="id_com_deleguee"/>
          </index>
+         <index name="index_com_comdel" unique="false">
+            <column ascending="true" name="id_com"/>
+         </index>
+         <index name="index_comdel_com" unique="false">
+            <column ascending="true" name="id_com_deleguee"/>
+         </index>
       </table>
       <table name="voie" remarks="" schema="adresse" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('adresse.voie_id_voie_seq'::regclass)" digits="0" id="0" name="id_voie" nullable="false" remarks="" size="10" type="serial" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('adresse.voie_id_voie_seq'::regclass)" digits="0" id="0" name="id_voie" nullable="false" remarks="Identifiant unique de la voie" size="10" type="serial" typeCode="4">
             <child column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="appartenir_com"/>
             <child column="id_voie" foreignKey="point_adresse_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="typologie" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_complet" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="type_num" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="true" digits="0" id="5" name="statut_voie_num" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="statut_voie" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="sens" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="achat_plaque_voie" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="nb_point" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="createur" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="now()" digits="0" id="11" name="date_creation" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="modificateur" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="now()" digits="0" id="13" name="date_modif" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="longueur" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="code_fantoir" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="delib" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="typologie" nullable="false" remarks="Typologie de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom" nullable="false" remarks="Nom de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_complet" nullable="true" remarks="Concaténation de la typologie et du nom de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="type_num" nullable="true" remarks="Type de numérotation de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="5" name="statut_voie_num" nullable="false" remarks="Statut accordé à la voie permettant son verrouillage ou son déverrouillage pour la saisie d’une adresse" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="statut_voie" nullable="false" remarks="Statut accordé à la voie au niveau du plan d’adressage" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="sens" nullable="false" remarks="Stocke l’information si la voie à été changé de sens" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="achat_plaque_voie" nullable="false" remarks="Achat de la plaque nécessaire ou non ?" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="nb_point" nullable="true" remarks="Nombre de points adresses rattachés à cette voie" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="createur" nullable="true" remarks="Nom de l’utilisateur qui a créé la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="11" name="date_creation" nullable="true" remarks="Date et heure à laquelle la voie a été créée" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="modificateur" nullable="true" remarks="Nom de l’utilisateur qui a effectué la dernière modification" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="13" name="date_modif" nullable="true" remarks="Date et heure à laquelle la dernière modification sur la fiche de la voie a été apportéee" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="longueur" nullable="true" remarks="Longueur de la voie en mètres" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="code_fantoir" nullable="true" remarks="Code fantoir pour de la DGFIP" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="delib" nullable="true" remarks="Spécifie si la commune souhaite délibérer sur la voie" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="geom" nullable="true" remarks="Géométrie de l’objet" size="2147483647" type="geometry" typeCode="1111"/>
          <primaryKey column="id_voie" sequenceNumberInPK="1"/>
          <index name="voie_pkey" unique="true">
             <column ascending="true" name="id_voie"/>
