@@ -79,7 +79,7 @@ BEGIN
 END;
 $BODY$;
 
-DROP TRIGGER trigger_update_name ON adresse.voie;
+DROP TRIGGER IF EXISTS trigger_update_name ON adresse.voie;
 CREATE TRIGGER trigger_update_name
     BEFORE UPDATE
     ON adresse.voie
@@ -104,7 +104,7 @@ BEGIN
 END;
 $BODY$;
 
-DROP TRIGGER trigger_update_adr_complete ON adresse.voie;
+DROP TRIGGER IF EXISTS trigger_update_adr_complete ON adresse.voie;
 CREATE TRIGGER trigger_update_adr_complete
     AFTER UPDATE
     ON adresse.voie
