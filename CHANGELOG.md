@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 13/03/2020 Version 0.2.6:
+
+* Fix migration from 0.2.5
+* Add tests about migration from 0.2.3
+
 ### 13/03/2020 Version 0.2.5:
 
 * Update schemaspy : https://3liz.github.io/qgis-gestion_base_adresse-plugin/

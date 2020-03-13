@@ -1,6 +1,7 @@
 """Base class for tests using a database with data."""
 
 import psycopg2
+import time
 
 from qgis.core import (
     QgsApplication,
@@ -56,3 +57,8 @@ class DatabaseTestCase(unittest.TestCase):
         processing.run('gestion_adresse:upgrade_database_structure', params, feedback=None)
 
         super().setUp()
+
+    def tearDown(self) -> None:
+        del self.cursor
+        del self.connection
+        time.sleep(1)

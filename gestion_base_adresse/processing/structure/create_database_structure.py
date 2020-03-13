@@ -12,6 +12,7 @@ from qgis.core import (
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
     QgsExpressionContextUtils,
+    QgsProcessingException,
 )
 
 from ..processing_tools import (
@@ -148,12 +149,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
                 feedback.pushInfo(tr("Le schéma adresse a été supprimé."))
             else:
                 feedback.reportError(error_message)
-                status = 0
-                # raise Exception(msg)
-                return {
-                    self.OUTPUT_STATUS: status,
-                    self.OUTPUT_STRING: error_message
-                }
+                raise QgsProcessingException(error_message)
 
         # Create full structure
         sql_files = [
