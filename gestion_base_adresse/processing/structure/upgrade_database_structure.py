@@ -14,9 +14,10 @@ from qgis.core import (
     QgsExpressionContextUtils,
 )
 
-from ..tools import fetchDataFromSqlQuery, getVersionInteger
+from ..processing_tools import fetchDataFromSqlQuery
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
+from ...qgis_plugin_tools.tools.version import format_version_integer
 
 
 class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
@@ -183,9 +184,9 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             if os.path.isfile(os.path.join(upgrade_dir, f))
         ]
         files = []
-        db_version_integer = getVersionInteger(db_version)
+        db_version_integer = format_version_integer(db_version)
         for f in get_files:
-            k = getVersionInteger(
+            k = format_version_integer(
                 f.replace('upgrade_to_', '').replace('.sql', '').strip()
             )
             if k > db_version_integer:

@@ -41,13 +41,21 @@ class TestProcessing(unittest.TestCase):
         provider = GestionAdresseProvider()
         QgsApplication.processingRegistry().addProvider(provider)
 
+        feedback = LoggerProcessingFeedBack()
+        self.cursor.execute('SELECT version();')
+        record = self.cursor.fetchone()
+        feedback.pushInfo('PostgreSQL version : {}'.format(record[0]))
+
+        self.cursor.execute('SELECT PostGIS_Version();')
+        record = self.cursor.fetchone()
+        feedback.pushInfo('PostGIS version : {}'.format(record[0]))
+
         params = {
             'CONNECTION_NAME': 'test',
             'OVERRIDE': True,
             'ADDTESTDATA': True,
         }
 
-        feedback = LoggerProcessingFeedBack()
         processing.run('gestion_adresse:create_database_structure', params, feedback=feedback)
 
         self.cursor.execute('SELECT table_name FROM information_schema.tables WHERE table_schema = \'adresse\'')

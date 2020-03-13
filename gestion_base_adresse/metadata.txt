@@ -3,7 +3,7 @@ name=Gestion Adresse
 qgisMinimumVersion=3.4
 description=Gestion de la base adresse avec le module Lizmap
 
-version=0.2.4
+version=0.2.5
 author=3Liz
 email=info@3liz.com
 
@@ -17,6 +17,14 @@ repository=https://github.com/3liz/qgis-gestion_base_adresse-plugin
 
 # Uncomment the following line and add your changelog:
 changelog=
+  Version 0.2.5:
+  * Update schemaspy : https://3liz.github.io/qgis-gestion_base_adresse-plugin/
+  * Update QML files
+  * Add comment, index and validation field
+  * Add trigger on voie to update nom_complet and adresse_complete
+  * Add project variables for two layers
+  * Improve unittest infrastructure
+
   Version 0.2.4:
   * Database - Table definition, add default value to date_modif: DEFAULT NOW()
   * Database - Trigger before update to manage user login between creator and modifier

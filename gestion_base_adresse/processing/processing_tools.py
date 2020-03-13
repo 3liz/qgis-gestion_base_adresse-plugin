@@ -1,10 +1,8 @@
-from qgis.PyQt.QtCore import QCoreApplication
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
+from ..qgis_plugin_tools.tools.i18n import tr
 
-def tr(string):
-    return QCoreApplication.translate('Processing', string)
 
 def getVersionInteger(f):
     '''

@@ -7,13 +7,14 @@ from qgis.core import (
     QgsProcessingParameterString,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
-    QgsDataSourceUri,
     QgsProcessingContext,
     QgsVectorLayer,
+    QgsExpressionContextUtils,
 )
 
 from processing.tools.postgis import uri_from_name, GeoDB
 
+from ...definitions.variables import GESTION_ADRESSE_POINT_ADRESSE, GESTION_ADRESSE_VOIE
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
 
@@ -98,11 +99,6 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         layers_name = ['commune', 'voie', 'point_adresse', 'parcelle']
         layers_name_none = ['document', 'vue_comm']
 
-
-        """
-        Here is where the processing itself takes place.
-        """
-
         #override = self.parameterAsBool(parameters, self.OVERRIDE, context)
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
@@ -125,6 +121,10 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                     feedback.pushInfo('La couche '+x+' ne peut pas être chargée')
                 else:
                     output_layers.append(result.id())
+                    if x == 'voie':
+                        QgsExpressionContextUtils.setProjectVariable(context.project(), GESTION_ADRESSE_VOIE, result.id())
+                    elif x == 'point_adresse':
+                        QgsExpressionContextUtils.setProjectVariable(context.project(), GESTION_ADRESSE_POINT_ADRESSE, result.id())
 
         for x in layers_name_none:
             if not context.project().mapLayersByName(x):
