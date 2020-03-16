@@ -4,9 +4,9 @@ __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
 import os
-import configparser
 
 from qgis.core import (
+    QgsProcessingException,
     QgsProcessingParameterString,
     QgsProcessingParameterBoolean,
     QgsProcessingOutputNumber,
@@ -17,6 +17,7 @@ from qgis.core import (
 from ..processing_tools import fetchDataFromSqlQuery
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
+from ...qgis_plugin_tools.tools.resources import metadata_config, plugin_path
 from ...qgis_plugin_tools.tools.version import format_version_integer
 
 
@@ -103,7 +104,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             WHERE schema_name = 'adresse';
         '''
         connection_name = parameters[self.CONNECTION_NAME]
-        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
+        _, data, _, ok, error_message = fetchDataFromSqlQuery(
             connection_name,
             sql
         )
@@ -143,28 +144,25 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             ORDER BY me_version_date DESC
             LIMIT 1;
         '''
-        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
+        _, data, _, ok, error_message = fetchDataFromSqlQuery(
             connection_name,
             sql
         )
         if not ok:
             feedback.reportError(error_message)
-            status = 0
-            raise Exception(error_message)
+            raise QgsProcessingException(error_message)
+
         db_version = None
         for a in data:
             db_version = a[0]
         if not db_version:
             error_message = tr('Aucune version trouvée dans la base de données !')
-            raise Exception(error_message)
+            raise QgsProcessingException(error_message)
+
         feedback.pushInfo(tr('Version de la base de données') + ' = %s' % db_version)
 
         # get plugin version
-        alg_dir = os.path.dirname(__file__)
-        plugin_dir = os.path.join(alg_dir, '../../')
-        config = configparser.ConfigParser()
-        config.read(os.path.join(plugin_dir, 'metadata.txt'))
-        plugin_version = config['general']['version']
+        plugin_version = metadata_config()['general']['version']
         feedback.pushInfo(tr('Version du plugin') + ' = %s' % plugin_version)
 
         # Return if nothing to do
@@ -177,8 +175,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             }
 
         # Get all the upgrade SQL files between db versions and plugin version
-        upgrade_dir = os.path.join(plugin_dir, 'install/sql/upgrade/')
-        ff = {}
+        upgrade_dir = os.path.join(plugin_path(), 'install/sql/upgrade/')
         get_files = [
             f for f in os.listdir(upgrade_dir)
             if os.path.isfile(os.path.join(upgrade_dir, f))
@@ -200,10 +197,9 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         sfiles = sorted(files, key=getKey)
         sql_files = [s[1] for s in sfiles]
 
-        msg = ''
         # Loop sql files and run SQL code
         for sf in sql_files:
-            sql_file = os.path.join(plugin_dir, 'install/sql/upgrade/%s' % sf)
+            sql_file = os.path.join(plugin_path(), 'install/sql/upgrade/%s' % sf)
             with open(sql_file, 'r') as f:
                 sql = f.read()
                 if len(sql.strip()) == 0:
@@ -213,29 +209,40 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                 # Add SQL database version in adresse.metadata
                 new_db_version = sf.replace('upgrade_to_', '').replace('.sql', '').strip()
                 feedback.pushInfo('* NOUVELLE VERSION BDD ' + new_db_version )
-                sql+= '''
+                sql += '''
                     UPDATE adresse.metadata
                     SET (me_version, me_version_date)
                     = ( '%s', now()::timestamp(0) );
                 ''' % new_db_version
 
-                [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
+                _, _, _, ok, error_message = fetchDataFromSqlQuery(
                     connection_name,
                     sql
                 )
-                if ok:
-                    feedback.pushInfo('* ' + sf + ' -- OK !')
-                else:
+                if not ok:
                     feedback.reportError(error_message)
-                    status = 0
-                    raise Exception(error_message)
-                    # return {
-                        # self.OUTPUT_STATUS: status,
-                        # self.OUTPUT_STRING: error_message
-                    # }
+                    raise QgsProcessingException(error_message)
+
+                feedback.pushInfo('* ' + sf + ' -- OK !')
+
+        # Everything is fine, we now update to the plugin version
+        sql = '''
+            UPDATE adresse.metadata
+            SET (me_version, me_version_date)
+            = ( '{}', now()::timestamp(0) );
+        '''.format(plugin_version)
+
+        _, _, _, ok, error_message = fetchDataFromSqlQuery(
+            connection_name,
+            sql
+        )
+        if not ok:
+            feedback.reportError(error_message)
+            raise QgsProcessingException(error_message)
 
         msg = tr('*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***')
         feedback.pushInfo(msg)
+
         return {
             self.OUTPUT_STATUS: 1,
             self.OUTPUT_STRING: msg

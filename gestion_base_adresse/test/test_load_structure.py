@@ -106,7 +106,7 @@ class TestProcessing(unittest.TestCase):
         record = self.cursor.fetchone()
         metadata = metadata_config()
         version = metadata['general']['version']
-        # self.assertEqual(version, record[0])  # FIXME test
+        self.assertEqual(version, record[0])
 
     def test_load_structure_without_migrations(self):
         """Test we can load the PostGIS structure without migrations."""
