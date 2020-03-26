@@ -56,7 +56,7 @@ BEGIN
         adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, p1.geom), p1.geom)
     ORDER BY dist LIMIT 1) AS a;
 
-    suff = ARRAY ['bis', 'ter'];
+    suff = ARRAY ['bis', 'ter', 'qua', 'qui', 'a', 'b', 'c', 'd', 'e'];
 
     SELECT numero into numb
     FROM(
@@ -115,8 +115,7 @@ $$;
 -- calcul_num_metrique(public.geometry)
 CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
     LANGUAGE plpgsql
-    AS $$
-DECLARE
+    AS $$DECLARE
     num integer;
     idvoie integer;
     numc integer;
@@ -143,7 +142,7 @@ BEGIN
     FROM adresse.voie v
     WHERE id_voie = idvoie;
 
-    suff = ARRAY ['bis', 'ter'];
+    suff = ARRAY ['bis', 'ter', 'qua', 'qui', 'a', 'b', 'c', 'd', 'e'];
 
     IF isleft AND num%2 = 0 AND NOT sens THEN
         num = num +1;
@@ -357,7 +356,6 @@ CREATE FUNCTION adresse.update_full_name() RETURNS trigger
 BEGIN
     IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
         NEW.nom_complet:= CONCAT(NEW.typologie, ' ', NEW.nom);
-        RAISE NOTICE 'Nouveau nom complet %', NEW.nom_complet;
     END IF;
 
     RETURN NEW;
