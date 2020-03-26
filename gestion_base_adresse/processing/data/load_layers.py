@@ -12,7 +12,7 @@ from qgis.core import (
     QgsExpressionContextUtils,
 )
 
-from processing.tools.postgis import uri_from_name, GeoDB
+from processing.tools.postgis import uri_from_name
 
 from ...definitions.variables import GESTION_ADRESSE_POINT_ADRESSE, GESTION_ADRESSE_VOIE
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -72,13 +72,9 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         self.addParameter(schema_param)
 
         # OUTPUTS
-        self.addOutput(
-            QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
-        )
+        self.addOutput(QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie")))
 
-        self.addOutput(
-            QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
-        )
+        self.addOutput(QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie")))
 
     def initLayer(self, context, uri, schema, table, geom, sql):
         uri.setDataSource(schema, table, geom, sql)
@@ -87,8 +83,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             return False
         context.temporaryLayerStore().addMapLayer(layer)
         context.addLayerToLoadOnCompletion(
-            layer.id(),
-            QgsProcessingContext.LayerDetails(table, context.project(), self.OUTPUT),
+            layer.id(), QgsProcessingContext.LayerDetails(table, context.project(), self.OUTPUT),
         )
         return layer
 
@@ -126,9 +121,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                         )
                     elif x == "point_adresse":
                         QgsExpressionContextUtils.setProjectVariable(
-                            context.project(),
-                            GESTION_ADRESSE_POINT_ADRESSE,
-                            result.id(),
+                            context.project(), GESTION_ADRESSE_POINT_ADRESSE, result.id(),
                         )
 
         for x in layers_name_none:

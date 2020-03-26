@@ -43,17 +43,13 @@ class DatabaseTestCase(unittest.TestCase):
             "OVERRIDE": True,
             "ADDTESTDATA": True,
         }
-        processing.run(
-            "gestion_adresse:create_database_structure", params, feedback=None
-        )
+        processing.run("gestion_adresse:create_database_structure", params, feedback=None)
 
         params = {
             "CONNECTION_NAME": "test",
             "RUNIT": True,
         }
-        processing.run(
-            "gestion_adresse:upgrade_database_structure", params, feedback=None
-        )
+        processing.run("gestion_adresse:upgrade_database_structure", params, feedback=None)
 
         super().setUp()
 

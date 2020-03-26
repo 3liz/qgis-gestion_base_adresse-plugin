@@ -35,7 +35,9 @@ class ConfigProject(BaseProcessingAlgorithm):
         return "tools"
 
     def shortHelpString(self):
-        return "La configuration ajoute les variables concernant le nom des couches dans le projet."
+        return (
+            "La configuration ajoute les variables concernant le nom des couches dans le projet."
+        )
 
     def initAlgorithm(self, config):
         self.addParameter(

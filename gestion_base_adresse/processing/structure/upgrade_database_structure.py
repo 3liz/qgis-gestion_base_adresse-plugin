@@ -41,9 +41,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         return "adresse_structure"
 
     def shortHelpString(self):
-        return tr(
-            "Mise à jour de la base de données suite à une nouvelle version de l'extension."
-        )
+        return tr("Mise à jour de la base de données suite à une nouvelle version de l'extension.")
 
     def initAlgorithm(self, config):
         # INPUTS
@@ -75,12 +73,8 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         )
         # OUTPUTS
         # Add output for status (integer) and message (string)
-        self.addOutput(
-            QgsProcessingOutputNumber(self.OUTPUT_STATUS, tr("Output status"))
-        )
-        self.addOutput(
-            QgsProcessingOutputString(self.OUTPUT_STRING, tr("Output message"))
-        )
+        self.addOutput(QgsProcessingOutputNumber(self.OUTPUT_STATUS, tr("Output status")))
+        self.addOutput(QgsProcessingOutputString(self.OUTPUT_STRING, tr("Output message")))
 
     def checkParameterValues(self, parameters, context):
         # Check if runit is checked
@@ -95,9 +89,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         if not ok:
             return False, msg
 
-        return super(UpgradeDatabaseStructure, self).checkParameterValues(
-            parameters, context
-        )
+        return super(UpgradeDatabaseStructure, self).checkParameterValues(parameters, context)
 
     def checkSchema(self, parameters, context):
         sql = """
@@ -163,23 +155,20 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             return {
                 self.OUTPUT_STATUS: 1,
                 self.OUTPUT_STRING: tr(
-                    " La version de la base de données et du plugin sont les mêmes. Aucune mise-à-jour n'est nécessaire"
+                    " La version de la base de données et du plugin sont les mêmes. "
+                    "Aucune mise-à-jour n'est nécessaire"
                 ),
             }
 
         # Get all the upgrade SQL files between db versions and plugin version
         upgrade_dir = os.path.join(plugin_path(), "install/sql/upgrade/")
         get_files = [
-            f
-            for f in os.listdir(upgrade_dir)
-            if os.path.isfile(os.path.join(upgrade_dir, f))
+            f for f in os.listdir(upgrade_dir) if os.path.isfile(os.path.join(upgrade_dir, f))
         ]
         files = []
         db_version_integer = format_version_integer(db_version)
         for f in get_files:
-            k = format_version_integer(
-                f.replace("upgrade_to_", "").replace(".sql", "").strip()
-            )
+            k = format_version_integer(f.replace("upgrade_to_", "").replace(".sql", "").strip())
             if k > db_version_integer:
                 files.append([k, f])
 
@@ -199,9 +188,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                     continue
 
                 # Add SQL database version in adresse.metadata
-                new_db_version = (
-                    sf.replace("upgrade_to_", "").replace(".sql", "").strip()
-                )
+                new_db_version = sf.replace("upgrade_to_", "").replace(".sql", "").strip()
                 feedback.pushInfo("* NOUVELLE VERSION BDD " + new_db_version)
                 sql += (
                     """

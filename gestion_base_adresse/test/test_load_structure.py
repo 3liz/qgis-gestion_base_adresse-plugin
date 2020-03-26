@@ -135,9 +135,7 @@ class TestProcessing(unittest.TestCase):
             "ADDTESTDATA": True,
         }
 
-        processing.run(
-            "gestion_adresse:create_database_structure", params, feedback=feedback
-        )
+        processing.run("gestion_adresse:create_database_structure", params, feedback=feedback)
 
         self.cursor.execute(
             "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
@@ -164,11 +162,13 @@ class TestProcessing(unittest.TestCase):
         }
 
         with self.assertRaises(QgsProcessingException):
-            processing.run(
-                "gestion_adresse:create_database_structure", params, feedback=feedback
-            )
+            processing.run("gestion_adresse:create_database_structure", params, feedback=feedback)
 
-        expected = "Unable to execute algorithm\n Le schéma existe déjà dans la base de données ! Si vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) cocher la case **Écraser**"
+        expected = (
+            "Unable to execute algorithm\n Le schéma existe déjà dans la base de données ! Si "
+            "vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) "
+            "cocher la case **Écraser**"
+        )
         self.assertEqual(expected, feedback.last)
 
         feedback.pushDebugInfo("Update the database")
@@ -178,6 +178,7 @@ class TestProcessing(unittest.TestCase):
         )
         self.assertEqual(1, results["OUTPUT_STATUS"], 1)
         self.assertEqual(
-            " La version de la base de données et du plugin sont les mêmes. Aucune mise-à-jour n'est nécessaire",
+            " La version de la base de données et du plugin sont les mêmes. Aucune mise-à-jour "
+            "n'est nécessaire",
             results["OUTPUT_STRING"],
         )

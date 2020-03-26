@@ -47,7 +47,8 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
 
     def shortHelpString(self):
         return tr(
-            "Création de la structure de la base données. Vous pouvez aussi charger des données de tests."
+            "Création de la structure de la base données. "
+            "Vous pouvez aussi charger des données de tests."
         )
 
     def initAlgorithm(self, config):
@@ -73,7 +74,8 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             QgsProcessingParameterBoolean(
                 self.OVERRIDE,
                 tr(
-                    "Écraser le schéma adresse ? ** ATTENTION ** Cela supprimera toutes les données !"
+                    "Écraser le schéma adresse ? ** ATTENTION ** "
+                    "Cela supprimera toutes les données !"
                 ),
                 defaultValue=False,
                 optional=False,
@@ -90,12 +92,8 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
 
         # OUTPUTS
         # Add output for status (integer) and message (string)
-        self.addOutput(
-            QgsProcessingOutputNumber(self.OUTPUT_STATUS, tr("Output status"))
-        )
-        self.addOutput(
-            QgsProcessingOutputString(self.OUTPUT_STRING, tr("Output message"))
-        )
+        self.addOutput(QgsProcessingOutputNumber(self.OUTPUT_STATUS, tr("Output status")))
+        self.addOutput(QgsProcessingOutputString(self.OUTPUT_STRING, tr("Output message")))
 
     def checkParameterValues(self, parameters, context):
         # Check database content
@@ -103,9 +101,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         if not ok:
             return False, msg
 
-        return super(CreateDatabaseStructure, self).checkParameterValues(
-            parameters, context
-        )
+        return super(CreateDatabaseStructure, self).checkParameterValues(parameters, context)
 
     def checkSchema(self, parameters, context):
         connection_name = parameters[self.CONNECTION_NAME]
@@ -114,9 +110,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             FROM information_schema.schemata
             WHERE schema_name = 'adresse';
         """
-        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
-            connection_name, sql
-        )
+        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(connection_name, sql)
         if not ok:
             return ok, error_message
         override = parameters[self.OVERRIDE]
@@ -126,8 +120,9 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             if schema == "adresse" and not override:
                 ok = False
                 msg = tr(
-                    " Le schéma existe déjà dans la base de données !"
-                    " Si vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) cocher la case **Écraser**"
+                    "Le schéma existe déjà dans la base de données ! "
+                    "Si vous voulez VRAIMENT supprimer et recréer le schéma "
+                    "(et supprimer les données) cocher la case **Écraser**"
                 )
         return ok, msg
 
@@ -160,7 +155,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             "adresse/50_TRIGGER.sql",
             "adresse/60_CONSTRAINT.sql",
             "adresse/70_COMMENT.sql",
-            #'adresse/90_GLOSSARY.sql',
+            # 'adresse/90_GLOSSARY.sql',
             "99_finalize_database.sql",
         ]
         # Add test data
@@ -179,9 +174,8 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         if run_migration:
             plugin_dir = plugin_test_data_path()
             feedback.reportError(
-                "Be careful, running migrations on an empty database using {} instead of {}".format(
-                    run_migration, version
-                )
+                "Be careful, running migrations on an empty database using {} "
+                "instead of {}".format(run_migration, version)
             )
             version = run_migration
 
@@ -202,12 +196,11 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
                     feedback.pushInfo("  Success !")
                 else:
                     feedback.reportError("* " + error_message)
-                    status = 0
-                    raise Exception(error_message)
                     # return {
-                    # self.OUTPUT_STATUS: status,
+                    # self.OUTPUT_STATUS: 0,
                     # self.OUTPUT_STRING: error_message
                     # }
+                    raise Exception(error_message)
 
         # Add version
         sql = (
@@ -220,9 +213,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         """
             % version
         )
-        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(
-            connection_name, sql
-        )
+        [header, data, rowCount, ok, error_message] = fetchDataFromSqlQuery(connection_name, sql)
 
         feedback.pushInfo("Version de la base de données '{}'.".format(version))
 

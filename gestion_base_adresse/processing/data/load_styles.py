@@ -41,15 +41,11 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         parameter = QgsProcessingParameterString(
             self.INPUT, "Champ qui ne sert à rien !", optional=True
         )
-        parameter.setFlags(
-            parameter.flags() | QgsProcessingParameterDefinition.FlagHidden
-        )
+        parameter.setFlags(parameter.flags() | QgsProcessingParameterDefinition.FlagHidden)
         self.addParameter(parameter)
 
         # OUTPUTS
-        self.addOutput(
-            QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
-        )
+        self.addOutput(QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie")))
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
