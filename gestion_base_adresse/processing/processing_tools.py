@@ -5,13 +5,13 @@ from ..qgis_plugin_tools.tools.i18n import tr
 
 
 def getVersionInteger(f):
-    '''
+    """
     Transform "0.1.2" into "000102"
     Transform "10.9.12" into "100912"
     to allow comparing versions
     and sorting the upgrade files
-    '''
-    return ''.join([a.zfill(2) for a in f.strip().split('.')])
+    """
+    return "".join([a.zfill(2) for a in f.strip().split(".")])
 
 
 def getUriFromConnectionName(connection_name, must_connect=True):
@@ -19,17 +19,17 @@ def getUriFromConnectionName(connection_name, must_connect=True):
     # Otherwise check QGIS QGIS3.ini settings for connection name
     status = True
     uri = None
-    error_message = ''
+    error_message = ""
     connection = None
     try:
-        dbpluginclass = createDbPlugin( 'postgis', connection_name )
+        dbpluginclass = createDbPlugin("postgis", connection_name)
         connection = dbpluginclass.connect()
     except BaseError as e:
         status = False
         error_message = e.msg
     except:
         status = False
-        error_message = tr('Cannot connect to database with') + ' %s' % connection_name
+        error_message = tr("Cannot connect to database with") + " %s" % connection_name
 
     if not connection and must_connect:
         return status, uri, error_message
@@ -37,11 +37,12 @@ def getUriFromConnectionName(connection_name, must_connect=True):
     db = dbpluginclass.database()
     if not db:
         status = False
-        error_message = tr('Unable to get database from connection')
+        error_message = tr("Unable to get database from connection")
         return status, uri, error_message
 
     uri = db.uri()
-    return status, uri, ''
+    return status, uri, ""
+
 
 def fetchDataFromSqlQuery(connection_name, sql):
 
@@ -62,15 +63,15 @@ def fetchDataFromSqlQuery(connection_name, sql):
     try:
         connector = PostGisDBConnector(uri)
     except:
-        error_message = tr('Cannot connect to database')
+        error_message = tr("Cannot connect to database")
         ok = False
         return header, data, rowCount, ok, error_message
 
     c = None
     ok = True
-    #print "run query"
+    # print "run query"
     try:
-        c = connector._execute(None,str(sql))
+        c = connector._execute(None, str(sql))
         data = []
         header = connector._get_cursor_columns(c)
         if header == None:
@@ -92,7 +93,7 @@ def fetchDataFromSqlQuery(connection_name, sql):
 
     # Log errors
     if not ok:
-        error_message = tr('Unknown error occured while fetching data')
+        error_message = tr("Unknown error occured while fetching data")
         return header, data, rowCount, ok, error_message
         print(error_message)
         print(sql)

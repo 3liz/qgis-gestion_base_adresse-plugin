@@ -17,11 +17,10 @@ else:
 from ..processing.provider import GestionAdresseProvider
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
 
-__copyright__ = 'Copyright 2019, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
-__revision__ = '$Format:%H$'
-
+__copyright__ = "Copyright 2019, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+__revision__ = "$Format:%H$"
 
 
 class DatabaseTestCase(unittest.TestCase):
@@ -30,11 +29,7 @@ class DatabaseTestCase(unittest.TestCase):
 
     def setUp(self) -> None:
         self.connection = psycopg2.connect(
-            user='docker',
-            password='docker',
-            host='db',
-            port='5432',
-            database='gis'
+            user="docker", password="docker", host="db", port="5432", database="gis"
         )
         self.cursor = self.connection.cursor()
 
@@ -44,17 +39,21 @@ class DatabaseTestCase(unittest.TestCase):
         self.feedback = LoggerProcessingFeedBack()
 
         params = {
-            'CONNECTION_NAME': 'test',
-            'OVERRIDE': True,
-            'ADDTESTDATA': True,
+            "CONNECTION_NAME": "test",
+            "OVERRIDE": True,
+            "ADDTESTDATA": True,
         }
-        processing.run('gestion_adresse:create_database_structure', params, feedback=None)
+        processing.run(
+            "gestion_adresse:create_database_structure", params, feedback=None
+        )
 
         params = {
-            'CONNECTION_NAME': 'test',
-            'RUNIT': True,
+            "CONNECTION_NAME": "test",
+            "RUNIT": True,
         }
-        processing.run('gestion_adresse:upgrade_database_structure', params, feedback=None)
+        processing.run(
+            "gestion_adresse:upgrade_database_structure", params, feedback=None
+        )
 
         super().setUp()
 

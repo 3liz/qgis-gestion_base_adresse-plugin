@@ -1,7 +1,7 @@
-__copyright__ = 'Copyright 2020, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
-__revision__ = '$Format:%H$'
+__copyright__ = "Copyright 2020, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+__revision__ = "$Format:%H$"
 
 from qgis.core import (
     QgsProcessingParameterString,
@@ -18,51 +18,50 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
     Chargement des couches adresse depuis la base de données
     """
 
-    INPUT = 'INPUT'
-    OUTPUT_MSG = 'OUTPUT MSG'
+    INPUT = "INPUT"
+    OUTPUT_MSG = "OUTPUT MSG"
 
     def name(self):
-        return 'load_styles'
+        return "load_styles"
 
     def displayName(self):
-        return tr('Chargement des styles depuis le dossier resources')
+        return tr("Chargement des styles depuis le dossier resources")
 
     def groupId(self):
-        return 'adresse_donnees'
+        return "adresse_donnees"
 
     def group(self):
-        return tr('Données')
+        return tr("Données")
 
     def shortHelpString(self):
-        return tr('Charger les styles pour les différentes couches.')
+        return tr("Charger les styles pour les différentes couches.")
 
     def initAlgorithm(self, config):
         # INPUTS
         parameter = QgsProcessingParameterString(
-            self.INPUT, 'Champ qui ne sert à rien !', optional=True)
-        parameter.setFlags(parameter.flags() | QgsProcessingParameterDefinition.FlagHidden)
+            self.INPUT, "Champ qui ne sert à rien !", optional=True
+        )
+        parameter.setFlags(
+            parameter.flags() | QgsProcessingParameterDefinition.FlagHidden
+        )
         self.addParameter(parameter)
 
         # OUTPUTS
         self.addOutput(
-            QgsProcessingOutputString(
-                self.OUTPUT_MSG,
-                tr('Message de sortie')
-            )
+            QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-
     def processAlgorithm(self, parameters, context, feedback):
-        msg = ''
-        layers_name = ['commune', 'voie', 'point_adresse', 'parcelle']
+        msg = ""
+        layers_name = ["commune", "voie", "point_adresse", "parcelle"]
 
         for x in layers_name:
             layer = context.project().mapLayersByName(x)
             if layer:
                 for l in layer:
-                    feedback.pushInfo(l.name() + ', qml loaded')
-                    l.loadNamedStyle(resources_path('qml', x + '.qml'))
-                    feedback.pushInfo('Style for ' + x + ' successfully loaded')
-                    msg = msg + ' // Style for ' + x + ' successfully loaded'
+                    feedback.pushInfo(l.name() + ", qml loaded")
+                    l.loadNamedStyle(resources_path("qml", x + ".qml"))
+                    feedback.pushInfo("Style for " + x + " successfully loaded")
+                    msg = msg + " // Style for " + x + " successfully loaded"
 
         return {self.OUTPUT_MSG: msg}
