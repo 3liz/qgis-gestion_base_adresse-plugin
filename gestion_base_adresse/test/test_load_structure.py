@@ -165,7 +165,7 @@ class TestProcessing(unittest.TestCase):
             processing.run("gestion_adresse:create_database_structure", params, feedback=feedback)
 
         expected = (
-            "Unable to execute algorithm\n Le schéma existe déjà dans la base de données ! Si "
+            "Unable to execute algorithm\nLe schéma existe déjà dans la base de données ! Si "
             "vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) "
             "cocher la case **Écraser**"
         )
