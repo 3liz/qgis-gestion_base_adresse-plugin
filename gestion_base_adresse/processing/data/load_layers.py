@@ -76,8 +76,11 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
         self.addOutput(QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie")))
 
-    def initLayer(self, context, uri, schema, table, geom, sql):
-        uri.setDataSource(schema, table, geom, sql)
+    def initLayer(self, context, uri, schema, table, geom, sql, pk = None):
+        if pk:
+            uri.setDataSource(schema, table, geom, sql, pk)
+        else:
+            uri.setDataSource(schema, table, geom, sql)
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
         if not layer.isValid():
             return False
@@ -91,7 +94,9 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         msg = ""
         output_layers = []
         layers_name = ["commune", "voie", "point_adresse", "parcelle"]
-        layers_name_none = ["document", "vue_com"]
+        layers_name_none = {}
+        layers_name_none["document"] = ''
+        layers_name_none["vue_com"] = 'insee_code'
 
         # override = self.parameterAsBool(parameters, self.OVERRIDE, context)
         connection = self.parameterAsString(parameters, self.DATABASE, context)
@@ -126,7 +131,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
         for x in layers_name_none:
             if not context.project().mapLayersByName(x):
-                result = self.initLayer(context, uri, schema, x, None, "")
+                result = self.initLayer(context, uri, schema, x, None, "", layers_name_none[x])
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
 
