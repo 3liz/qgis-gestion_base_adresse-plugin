@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 31/03/2020 Version 0.2.7:
+
+* Add test about structure bdd
+* Add 2 view for export export BAL
+* Update 2 functions to calcul num adresse, adding full array suffixe
+* Update qml point_adresse
+
 ### 13/03/2020 Version 0.2.6:
 
 * Fix migration from 0.2.5

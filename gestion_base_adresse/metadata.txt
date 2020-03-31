@@ -3,7 +3,7 @@ name=Gestion Adresse
 qgisMinimumVersion=3.4
 description=Gestion de la base adresse avec le module Lizmap
 
-version=0.2.7-beta
+version=0.2.7
 author=3Liz
 email=info@3liz.com
 
@@ -17,6 +17,12 @@ repository=https://github.com/3liz/qgis-gestion_base_adresse-plugin
 
 # Uncomment the following line and add your changelog:
 changelog=
+  Version 0.2.7:
+  * Add test about structure bdd
+  * Add 2 view for export export BAL
+  * Update 2 functions to calcul num adresse, adding full array suffixe
+  * Update qml point_adresse
+
   Version 0.2.6:
   * Fix migration from 0.2.5
   * Add tests about migration from 0.2.3
@@ -37,7 +43,7 @@ changelog=
   * Database - Trigger before insert for creator info
   * rename ugrade sql file
   * Publish docs database on github pages
-  
+
   Version 0.2.3:
   * Start testing the plugin with CI tools (Travis)
   * Add load styles algorith
