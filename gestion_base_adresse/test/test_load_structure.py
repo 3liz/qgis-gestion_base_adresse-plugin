@@ -75,6 +75,8 @@ class TestProcessing(unittest.TestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
+            "vue_com",
+            "export_bal",
         ]
         self.assertCountEqual(expected, result)
         expected = "*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE '{}'***".format(VERSION)
@@ -152,6 +154,8 @@ class TestProcessing(unittest.TestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
+            "vue_com",
+            "export_bal",
         ]
         self.assertCountEqual(expected, result)
 

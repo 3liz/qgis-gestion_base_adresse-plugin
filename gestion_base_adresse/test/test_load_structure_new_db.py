@@ -31,5 +31,7 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
+            "vue_com",
+            "export_bal",
         ]
         self.assertCountEqual(expected, result)
