@@ -31,5 +31,25 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
+            "vue_com",
+            "export_bal",
         ]
         self.assertCountEqual(expected, result)
+
+    def test_calcul_num_adr(self):
+        """Test calcul numero adresse"""
+        sql = "select adresse.calcul_num_adr(ST_geomfromtext('POINT(429155.362707719 6921958.66174973)', 2154))"
+        self.cursor.execute(
+            sql
+        )
+        records = self.cursor.fetchall()
+        self.assertTupleEqual(('(4,bis)',), records[0])
+
+    def test_calcul_num_metrique(self):
+        """Test calcul numero adresse métrique"""
+        sql = "select adresse.calcul_num_metrique(ST_geomfromtext('POINT(429155.362707719 6921958.66174973)', 2154))"
+        self.cursor.execute(
+            sql
+        )
+        records = self.cursor.fetchall()
+        self.assertTupleEqual(('(547,)',), records[0])

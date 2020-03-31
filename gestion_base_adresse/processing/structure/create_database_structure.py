@@ -169,6 +169,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         config = configparser.ConfigParser()
         config.read(str(os.path.join(plugin_dir, "metadata.txt")))
         version = config["general"]["version"]
+        version = version.replace("-beta", "")
 
         run_migration = os.environ.get("DATABASE_RUN_MIGRATION")
         if run_migration:
