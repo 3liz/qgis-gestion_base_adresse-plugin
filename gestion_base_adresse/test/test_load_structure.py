@@ -65,6 +65,8 @@ class TestProcessing(unittest.TestCase):
         )
         records = self.cursor.fetchall()
         result = [r[0] for r in records]
+        # Expected tables in the specific version written above at the beginning of the test.
+        # DO NOT CHANGE HERE, change below at the end of the test.
         expected = [
             "appartenir_com",
             "commune",
@@ -75,8 +77,6 @@ class TestProcessing(unittest.TestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
-            "vue_com",
-            "export_bal",
         ]
         self.assertCountEqual(expected, result)
         expected = "*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE '{}'***".format(VERSION)
@@ -115,7 +115,28 @@ class TestProcessing(unittest.TestCase):
         record = self.cursor.fetchone()
         metadata = metadata_config()
         version = metadata["general"]["version"]
+        version = version.replace("-beta", "")
         self.assertEqual(version, record[0])
+
+        self.cursor.execute(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
+        )
+        records = self.cursor.fetchall()
+        result = [r[0] for r in records]
+        expected = [
+            "appartenir_com",
+            "commune",
+            "document",
+            "metadata",
+            "point_adresse",
+            "voie",
+            "parcelle",
+            "commune_deleguee",
+            "referencer_com",
+            "vue_com",
+            "export_bal",
+        ]
+        self.assertCountEqual(expected, result)
 
     def test_load_structure_without_migrations(self):
         """Test we can load the PostGIS structure without migrations."""

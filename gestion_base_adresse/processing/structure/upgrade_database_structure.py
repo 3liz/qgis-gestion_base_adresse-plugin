@@ -144,11 +144,12 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             error_message = tr("Aucune version trouvée dans la base de données !")
             raise QgsProcessingException(error_message)
 
-        feedback.pushInfo(tr("Version de la base de données") + " = %s" % db_version)
+        feedback.pushInfo(tr("Version de la base de données") + " = {}".format(db_version))
 
         # get plugin version
         plugin_version = metadata_config()["general"]["version"]
-        feedback.pushInfo(tr("Version du plugin") + " = %s" % plugin_version)
+        plugin_version = plugin_version.replace("-beta", "")
+        feedback.pushInfo(tr("Version du plugin") + " = {}".format(plugin_version))
 
         # Return if nothing to do
         if db_version == plugin_version:

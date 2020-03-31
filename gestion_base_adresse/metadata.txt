@@ -3,7 +3,7 @@ name=Gestion Adresse
 qgisMinimumVersion=3.4
 description=Gestion de la base adresse avec le module Lizmap
 
-version=0.2.6
+version=0.2.7-beta
 author=3Liz
 email=info@3liz.com
 
