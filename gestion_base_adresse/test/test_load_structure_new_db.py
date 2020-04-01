@@ -1,6 +1,6 @@
 """Tests for load structure with an empty database."""
 
-from .database_test import DatabaseTestCase
+from .base_test_database import DatabaseTestCase
 
 __copyright__ = "Copyright 2019, 3Liz"
 __license__ = "GPL version 3"
@@ -38,18 +38,18 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
 
     def test_calcul_num_adr(self):
         """Test calcul numero adresse"""
-        sql = "select adresse.calcul_num_adr(ST_geomfromtext('POINT(429155.362707719 6921958.66174973)', 2154))"
-        self.cursor.execute(
-            sql
+        sql = (
+            "select adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(429155.362707719 6921958.66174973)', 2154))"
         )
-        records = self.cursor.fetchall()
-        self.assertTupleEqual(('(4,bis)',), records[0])
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("(4,bis)",), self.cursor.fetchone())
 
     def test_calcul_num_metrique(self):
         """Test calcul numero adresse métrique"""
-        sql = "select adresse.calcul_num_metrique(ST_geomfromtext('POINT(429155.362707719 6921958.66174973)', 2154))"
-        self.cursor.execute(
-            sql
+        sql = (
+            "select adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(429155.362707719 6921958.66174973)', 2154))"
         )
-        records = self.cursor.fetchall()
-        self.assertTupleEqual(('(547,)',), records[0])
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("(547,)",), self.cursor.fetchone())

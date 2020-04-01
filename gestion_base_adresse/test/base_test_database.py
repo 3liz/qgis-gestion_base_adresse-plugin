@@ -14,10 +14,10 @@ if Qgis.QGIS_VERSION_INT >= 30800:
 else:
     import processing
 
-from ..processing.provider import GestionAdresseProvider
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
+from ..processing.provider import GestionAdresseProvider as ProcessingProvider
 
-__copyright__ = "Copyright 2019, 3Liz"
+__copyright__ = "Copyright 2020, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
@@ -33,7 +33,7 @@ class DatabaseTestCase(unittest.TestCase):
         )
         self.cursor = self.connection.cursor()
 
-        self.provider = GestionAdresseProvider()
+        self.provider = ProcessingProvider()
         QgsApplication.processingRegistry().addProvider(self.provider)
 
         self.feedback = LoggerProcessingFeedBack()
@@ -43,13 +43,17 @@ class DatabaseTestCase(unittest.TestCase):
             "OVERRIDE": True,
             "ADDTESTDATA": True,
         }
-        processing.run("gestion_adresse:create_database_structure", params, feedback=None)
+        processing.run(
+            "{}:create_database_structure".format(self.provider.id()), params, feedback=None
+        )
 
         params = {
             "CONNECTION_NAME": "test",
             "RUNIT": True,
         }
-        processing.run("gestion_adresse:upgrade_database_structure", params, feedback=None)
+        processing.run(
+            "{}:upgrade_database_structure".format(self.provider.id()), params, feedback=None
+        )
 
         super().setUp()
 
