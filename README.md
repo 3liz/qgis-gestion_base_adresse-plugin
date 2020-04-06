@@ -1,4 +1,4 @@
-## Gestion d'adresse
+## Gestion des adresses
 
 * Dépôt plugin QGIS : https://github.com/3liz/qgis-gestion_base_adresse-plugin/releases/latest/download/plugins.xml
 * Documentation de la base de données : https://3liz.github.io/qgis-gestion_base_adresse-plugin/

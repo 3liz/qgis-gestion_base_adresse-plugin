@@ -12,7 +12,7 @@ jobs:
     - stage: Run tests
       name: Docker-compose with PostGIS database
       install:
-        - cd ${TRAVIS_BUILD_DIR}/docker
+        - cd .docker
         - ./start.sh
       script:
         - ./exec.sh
@@ -20,18 +20,13 @@ jobs:
     - stage: Deploy
       if: tag IS present
       name: Create release
-
       install:
-        - pip3 install qgis-plugin-ci
-
+        - pip3 install git+https://github.com/Gustry/qgis-plugin-ci.git
       before_deploy:
         - export RELEASE_TITLE="Release of $TRAVIS_TAG"
-
       script:
         - qgis-plugin-ci -v
-
       deploy:
-
         - provider: releases
           edge: true
           file: .
