@@ -185,7 +185,7 @@ COMMENT ON COLUMN adresse.voie.statut_voie IS 'Statut accordé à la voie au niv
 
 
 -- voie.sens
-COMMENT ON COLUMN adresse.voie.sens IS 'Stocke l’information si la voie à été changé de sens';
+COMMENT ON COLUMN adresse.voie.sens IS 'Défini si le sens de numérotation a changé par rapport à la géométrie  ';
 
 
 -- voie.achat_plaque_voie

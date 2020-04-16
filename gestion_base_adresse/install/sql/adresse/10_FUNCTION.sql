@@ -71,7 +71,9 @@ BEGIN
 
     IF numa IS NOT NULL AND numb IS NOT NULL THEN
         test = false;
-        WHILE NOT test OR numa <= numb LOOP
+        IF numb - numa > 2 THEN
+         numc = numa+2;
+        ELSE
             FOREACH rec IN ARRAY suff LOOP
                 IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numa AND p.suffixe = rec) IS NULL AND NOT test THEN
                     test = true;
@@ -79,8 +81,7 @@ BEGIN
                     s = rec;
                 END IF;
             END LOOP;
-            numa = numa+2;
-        END LOOP;
+        END IF;
     ELSIF numa IS NOT NULL AND numb IS NULL THEN
         numc = numa+2;
     ELSIF numa IS NULL AND numb IS NOT NULL THEN
