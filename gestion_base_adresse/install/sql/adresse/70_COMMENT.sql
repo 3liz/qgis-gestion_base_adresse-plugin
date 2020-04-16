@@ -185,7 +185,7 @@ COMMENT ON COLUMN adresse.voie.statut_voie IS 'Statut accordé à la voie au niv
 
 
 -- voie.sens
-COMMENT ON COLUMN adresse.voie.sens IS 'Défini si le sens de numérotation a changé par rapport à la géométrie  ';
+COMMENT ON COLUMN adresse.voie.sens IS 'Défini si la numérotation pair est à droite du sens de la géométrie de la voie';
 
 
 -- voie.achat_plaque_voie
@@ -247,4 +247,3 @@ COMMENT ON COLUMN adresse.metadata.me_version_date IS 'Date de la version. Ex: 2
 --
 -- PostgreSQL database dump complete
 --
-
