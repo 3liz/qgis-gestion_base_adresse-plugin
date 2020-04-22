@@ -88,6 +88,7 @@ BEGIN
         IF numb - 2 >0 THEN
             numc =  numb - 2;
         ELSIF numb - 2 <= 0 THEN
+            test = false;
             FOREACH rec IN ARRAY suff LOOP
                 IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numb AND p.suffixe = rec) IS NULL AND NOT test THEN
                     test = true;
