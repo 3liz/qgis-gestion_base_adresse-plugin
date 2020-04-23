@@ -48,15 +48,15 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
         #Premier point, test d'égalité à 1
         sql = (
             "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
-            "'POINT(428310.70370692277 6922058.531181184)', 2154))"
+            "'POINT(428310 6922058)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((1,None), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428310.70370692277 6922058.531181184)', 2154) "
-            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428310.70370692277 6922058.531181184)', 2154))"
+            "ST_geomfromtext('POINT(428310 6922058)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428310 6922058)', 2154))"
         )
         self.cursor.execute(sql)
 
@@ -64,30 +64,30 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
         #Deuxième point placé après le premier, test d'égalité à 3
         sql = (
             "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
-            "'POINT(428106.09004837374 6922255.081019576)', 2154))"
+            "'POINT(428106 6922255)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((3,None), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428106.09004837374 6922255.081019576)', 2154) "
-            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428106.09004837374 6922255.081019576)', 2154))"
+            "ST_geomfromtext('POINT(428106 6922255)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428106 6922255)', 2154))"
         )
         self.cursor.execute(sql)
 
         #Troisième point placé entre les deux premiers, test d'égalité à 1bis
         sql = (
             "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
-            "'POINT(428198.26787811174 6922157.2860289095)', 2154))"
+            "'POINT(428198 6922157)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((1,'bis'), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428198.26787811174 6922157.2860289095)', 2154) "
-            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428198.26787811174 6922157.2860289095)', 2154))"
+            "ST_geomfromtext('POINT(428198 6922157)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428198 6922157)', 2154))"
         )
         self.cursor.execute(sql)
 
@@ -96,45 +96,45 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
         #Premier point, test d'égalité à 2
         sql = (
             "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
-            "'POINT(428226.8122813868 6922001.779449942)', 2154))"
+            "'POINT(428226 6922001)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((2,None), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428226.8122813868 6922001.779449942)', 2154) "
-            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428226.8122813868 6922001.779449942)', 2154))"
+            "ST_geomfromtext('POINT(428226 6922001)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428226 6922001)', 2154))"
         )
         self.cursor.execute(sql)
 
         #Deuxième point placé après le premier, test d'égalité à 4
         sql = (
             "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
-            "'POINT(427937.1260948194 6922173.154354719)', 2154))"
+            "'POINT(427937 6922173)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((4,None), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(427937.1260948194 6922173.154354719)', 2154) "
-            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(427937.1260948194 6922173.154354719)', 2154))"
+            "ST_geomfromtext('POINT(427937 6922173)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(427937 6922173)', 2154))"
         )
         self.cursor.execute(sql)
 
         #Troisième point entre les deux autres, test d'égalité à 2bis
         sql = (
             "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
-            "'POINT(428035.6821912417 6922078.166801699)', 2154))"
+            "'POINT(428035 6922078)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((2,'bis'), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428035.6821912417 6922078.166801699)', 2154) "
-            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428035.6821912417 6922078.166801699)', 2154))"
+            "ST_geomfromtext('POINT(428035 6922078)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428035 6922078)', 2154))"
         )
         self.cursor.execute(sql)
 
@@ -148,15 +148,15 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
         #Premier point, test d'égalité à 1473
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
-            "'POINT(428310.70370692277 6922058.531181184)', 2154))"
+            "'POINT(428310 6922058)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((1473,None), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428310.70370692277 6922058.531181184)', 2154) "
-            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428310.70370692277 6922058.531181184)', 2154))"
+            "ST_geomfromtext('POINT(428310 6922058)', 2154) "
+            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428310. 6922058.)', 2154))"
         )
         self.cursor.execute(sql)
 
@@ -164,15 +164,15 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
         #Deuxième point placé sur le même que le premier, test d'égalité à 1473bis
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
-            "'POINT(428310.70370692277 6922058.531181184)', 2154))"
+            "'POINT(428310. 6922058.)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((1473,'bis'), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428310.70370692277 6922058.531181184)', 2154) "
-            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428310.70370692277 6922058.531181184)', 2154))"
+            "ST_geomfromtext('POINT(428310 6922058)', 2154) "
+            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428310 6922058)', 2154))"
         )
         self.cursor.execute(sql)
 
@@ -180,29 +180,29 @@ class TestLoadStructureEmptyDatabase(DatabaseTestCase):
         #Premier point, test d'égalité à 1504
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
-            "'POINT(428226.8122813868 6922001.779449942)', 2154))"
+            "'POINT(428226 6922001)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((1504,None), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428226.8122813868 6922001.779449942)', 2154) "
-            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428226.8122813868 6922001.779449942)', 2154))"
+            "ST_geomfromtext('POINT(428226 6922001)', 2154) "
+            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428226 6922001)', 2154))"
         )
         self.cursor.execute(sql)
 
         #Deuxième point placé sur le même que le premier, test d'égalité à 1504bis
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
-            "'POINT(428226.8122813868 6922001.779449942)', 2154))"
+            "'POINT(428226 6922001)', 2154))"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((1504,'bis'), self.cursor.fetchone())
         #Insertion du point
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428226.8122813868 6922001.779449942)', 2154) "
-            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428226.8122813868 6922001.779449942)', 2154))"
+            "ST_geomfromtext('POINT(428226 6922001)', 2154) "
+            "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428226 6922001)', 2154))"
         )
         self.cursor.execute(sql)
