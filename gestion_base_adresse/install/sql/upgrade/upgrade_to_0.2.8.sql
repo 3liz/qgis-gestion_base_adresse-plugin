@@ -1,5 +1,7 @@
 BEGIN;
 
+ALTER TABLE adresse.point_adresse ADD COLUMN a_valider boolean DEFAULT false;
+
 CREATE OR REPLACE FUNCTION adresse.calcul_num_adr(
 	pgeom geometry)
     RETURNS TABLE(num integer, suffixe text)
