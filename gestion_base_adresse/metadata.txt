@@ -17,48 +17,4 @@ category=Analysis
 icon=resources/icons/icon.png
 experimental=False
 deprecated=False
-
-changelog=
-  Version 0.2.7:
-  * Add test about structure bdd
-  * Add 2 view for export export BAL
-  * Update 2 functions to calcul num adresse, adding full array suffixe
-  * Update qml point_adresse
-
-  Version 0.2.6:
-  * Fix migration from 0.2.5
-  * Add tests about migration from 0.2.3
-
-  Version 0.2.5:
-  * Update schemaspy : https://3liz.github.io/qgis-gestion_base_adresse-plugin/
-  * Update QML files
-  * Add comment, index and validation field
-  * Add trigger on voie to update nom_complet and adresse_complete
-  * Add project variables for two layers
-  * Improve unittest infrastructure
-
-  Version 0.2.4:
-  * Database - Table definition, add default value to date_modif: DEFAULT NOW()
-  * Database - Trigger before update to manage user login between creator and modifier
-  * Database - Trigger before insert and update to generate fiel "longueur" in table voie
-  * Database - Table definition, add constraints NOT NULL
-  * Database - Trigger before insert for creator info
-  * rename ugrade sql file
-  * Publish docs database on github pages
-
-  Version 0.2.3:
-  * Start testing the plugin with CI tools (Travis)
-  * Add load styles algorith
-  * Code review
-
-  Version 0.2.2:
-  * Database - Add spatial indexes
-  * Install - Improve SQL generator for Pg 9.5 compatibility issue
-
-  Version 0.2.1:
-  * Database - Rename 4 columns of point_adresse
-  * Tools - Add missing method getVersionInteger
-  * Install - Add test data
-  * Fix wrong import
-  * Move processing algorithms, review all headers
-  * Move source code into gestion_base_adresse folder
+changelog=changelog

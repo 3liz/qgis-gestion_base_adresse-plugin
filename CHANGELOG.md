@@ -1,18 +1,18 @@
 ## CHANGELOG
 
-### 31/03/2020 Version 0.2.7:
+### 0.2.7 - 31/03/2020
 
 * Add test about structure bdd
 * Add 2 view for export export BAL
 * Update 2 functions to calcul num adresse, adding full array suffixe
 * Update qml point_adresse
 
-### 13/03/2020 Version 0.2.6:
+### 0.2.6 - 13/03/2020
 
 * Fix migration from 0.2.5
 * Add tests about migration from 0.2.3
 
-### 13/03/2020 Version 0.2.5:
+### 0.2.5 - 13/03/2020
 
 * Update schemaspy : https://3liz.github.io/qgis-gestion_base_adresse-plugin/
 * Update QML files
@@ -21,7 +21,7 @@
 * Add project variables for two layers
 * Improve unittest infrastructure
 
-### 06/03/2020 Version 0.2.4:
+### 0.2.4 - 06/03/2020
 
 * Database - Table definition, add default value to date_modif: DEFAULT NOW()
 * Database - Trigger before update to manage user login between creator and modifier
@@ -31,18 +31,18 @@
 * rename ugrade sql file
 * Publish docs database on github pages
 
-### 03/03/2020 Version 0.2.3:
+### 0.2.3 - 03/03/2020
 
 * Start testing the plugin with CI tools (Travis)
 * Add load styles algorithm
 * Code review
 
-### 02/03/2020 Version 0.2.2:
+### 0.2.2 - 02/03/2020
 
 * Database - Add spatial indexes
 * Install - Improve SQL generator for Pg 9.5 compatibility issue
 
-### 28/02/2020 Version 0.2.1
+### 0.2.1 - 28/02/2020
 
 * Database - Rename 4 columns of point_adresse
 * Tools - Add missing method getVersionInteger
@@ -51,7 +51,7 @@
 * Move processing algorithms, review all headers
 * Move source code into gestion_base_adresse folder
 
-### 28/02/2020 Version 0.2.0
+### 0.2.0 - 28/02/2020
 
 * Doc - Upgrade database doc with new metadata table
 * Processing - Add alg to upgrade database structure
