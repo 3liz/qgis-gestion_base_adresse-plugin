@@ -48,6 +48,10 @@ CREATE TRIGGER trigger_update_adr_complete AFTER UPDATE ON adresse.voie FOR EACH
 CREATE TRIGGER trigger_update_name BEFORE UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_full_name();
 
 
+-- point_adresse update_adr_complete
+CREATE TRIGGER update_adr_complete BEFORE UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.update_adr_complete();
+
+
 -- point_adresse update_modif_create
 CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
 

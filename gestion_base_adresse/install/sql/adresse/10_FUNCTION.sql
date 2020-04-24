@@ -339,13 +339,27 @@ $$;
 CREATE FUNCTION adresse.update_adr_complete() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
+DECLARE
+    adrvoie text;
 BEGIN
-    IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
-        UPDATE adresse.point_adresse
-        SET adresse_complete = CONCAT(numero, ' ', NEW.typologie, ' ', NEW.nom)
-        WHERE id_voie = OLD.id_voie;
+    IF (TG_TABLE_NAME = 'voie') THEN
+        IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
+            UPDATE adresse.point_adresse
+            SET adresse_complete = CONCAT(numero, ' ', NEW.typologie, ' ', NEW.nom)
+            WHERE id_voie = OLD.id_voie;
+        END IF;
+        RETURN NEW;
+    ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
+        IF NEW.numero != OLD.numero OR NEW.suffixe != OLD.suffixe THEN
+            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = OLD.id_voie;
+            IF NEW.suffixe IS NOT NULL THEN
+                NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
+            ELSE
+                NEW.adresse_complete = CONCAT(NEW.numero, ' ', adrvoie);
+            END IF;
+        END IF;
+        RETURN NEW;
     END IF;
-
     RETURN NULL;
 END;
 $$;
