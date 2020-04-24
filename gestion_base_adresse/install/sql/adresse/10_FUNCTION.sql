@@ -140,7 +140,8 @@ BEGIN
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
-    SELECT ST_Length(ST_MakeLine(ST_StartPoint(v.geom), ST_ClosestPoint(v.geom, pgeom)))::integer into num
+   
+    SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
     WHERE id_voie = idvoie;
 

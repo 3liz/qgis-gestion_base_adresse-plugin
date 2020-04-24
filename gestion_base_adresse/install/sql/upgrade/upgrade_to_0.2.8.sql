@@ -104,6 +104,75 @@ BEGIN
 END;
 $BODY$;
 
+CREATE OR REPLACE FUNCTION adresse.calcul_num_metrique(
+	pgeom geometry)
+    RETURNS TABLE(num integer, suffixe text)
+    LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE
+    ROWS 1000
+AS $BODY$DECLARE
+    num integer;
+    idvoie integer;
+    numc integer;
+    sens boolean;
+    res text;
+    rec text;
+    isleft boolean;
+    test boolean;
+    suff text[];
+BEGIN
+    SELECT id_voie into idvoie FROM(
+    SELECT id_voie, ST_Distance(pgeom, geom) as dist
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+
+    SELECT v.sens into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
+
+    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom) into isleft
+    FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+
+
+    SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
+    FROM adresse.voie v
+    WHERE id_voie = idvoie;
+
+    suff = ARRAY ['bis', 'ter', 'qua', 'qui', 'a', 'b', 'c', 'd', 'e'];
+
+    IF isleft AND num%2 = 0 AND NOT sens THEN
+        num = num +1;
+    ELSIF NOT isleft AND num%2 != 0 AND NOT sens THEN
+        num = num + 1;
+    ELSIF isleft AND num%2 != 0 AND sens THEN
+        num = num +1;
+    ELSIF NOT isleft AND num%2 = 0 AND sens THEN
+        num = num + 1;
+    END IF;
+
+    test = false;
+    WHILE NOT test LOOP
+        IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND numero = num) IS NULL THEN
+            test = true;
+            numc = num;
+        ELSE
+            FOREACH rec IN ARRAY suff LOOP
+                IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = num AND p.suffixe = rec) IS NULL AND NOT test THEN
+                    test = true;
+                    numc = num;
+                    res = rec;
+                END IF;
+            END LOOP;
+        END IF;
+        num = num +2;
+    END LOOP;
+
+   RETURN query SELECT numc, res;
+END;
+$BODY$;
+
 
 CREATE OR REPLACE FUNCTION adresse.update_adr_complete()
     RETURNS trigger
