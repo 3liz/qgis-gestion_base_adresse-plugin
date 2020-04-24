@@ -1,6 +1,7 @@
 BEGIN;
 
-ALTER TABLE adresse.point_adresse ADD COLUMN a_valider boolean DEFAULT false;
+ALTER TABLE adresse.point_adresse RENAME COLUMN validation TO a_valider;
+ALTER TABLE adresse.voie RENAME COLUMN sens TO sens_numerotation;
 
 CREATE OR REPLACE FUNCTION adresse.calcul_num_adr(
 	pgeom geometry)
