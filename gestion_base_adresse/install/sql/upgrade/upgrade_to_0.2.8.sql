@@ -1,6 +1,6 @@
 BEGIN;
 
-ALTER TABLE adresse.point_adresse RENAME COLUMN validation TO a_valider;
+ALTER TABLE adresse.point_adresse ADD COLUMN a_valider boolean DEFAULT false;
 ALTER TABLE adresse.voie RENAME COLUMN sens TO sens_numerotation;
 COMMENT ON COLUMN adresse.point_adresse.a_valider IS 'savoir si le point d''adresse est à valdier ou non';
 COMMENT ON COLUMN adresse.voie.sens_numerotation IS 'savoir si les nombres pairs sont à droites ou à gauche de la voie par rapport au sens de dessin';

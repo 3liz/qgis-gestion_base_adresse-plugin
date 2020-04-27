@@ -42,7 +42,7 @@ BEGIN
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
-    SELECT v.sens into sens
+    SELECT v.sens_numerotation into sens
     FROM adresse.voie v WHERE v.id_voie = idvoie;
 
     SELECT numero into numa
@@ -133,7 +133,7 @@ BEGIN
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
-    SELECT v.sens into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
+    SELECT v.sens_numerotation into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
 
     SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom) into isleft
     FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
