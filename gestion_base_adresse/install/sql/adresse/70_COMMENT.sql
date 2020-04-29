@@ -145,11 +145,11 @@ COMMENT ON COLUMN adresse.point_adresse.geom IS 'Géométrie de l’objet';
 
 
 -- point_adresse.id_voie
-COMMENT ON COLUMN adresse.point_adresse.id_voie IS 'Indentifiant de la voie à la qu''elle appartient le point adresse';
+COMMENT ON COLUMN adresse.point_adresse.id_voie IS 'Identifiant de la voie à laquelle appartient le point adresse';
 
 
 -- point_adresse.id_commune
-COMMENT ON COLUMN adresse.point_adresse.id_commune IS 'Indentifiant de la commune à la qu''elle appartient le point adresse';
+COMMENT ON COLUMN adresse.point_adresse.id_commune IS 'Identifiant de la commune à laquelle appartient le point adresse';
 
 
 -- point_adresse.id_parcelle
