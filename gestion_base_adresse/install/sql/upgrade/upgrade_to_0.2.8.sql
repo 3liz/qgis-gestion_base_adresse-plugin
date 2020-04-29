@@ -1,25 +1,20 @@
---
--- PostgreSQL database dump
---
+BEGIN;
 
--- Dumped from database version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
--- Dumped by pg_dump version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
+ALTER TABLE adresse.point_adresse ADD COLUMN a_valider boolean DEFAULT false;
+ALTER TABLE adresse.voie RENAME COLUMN sens TO sens_numerotation;
+COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcelle à laquelle appartient le point adresse';
+COMMENT ON COLUMN adresse.point_adresse.a_valider IS 'Si le point d''adresse est à valider ou non';
+COMMENT ON COLUMN adresse.voie.sens_numerotation IS 'Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin';
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
+CREATE OR REPLACE FUNCTION adresse.calcul_num_adr(
+	pgeom geometry)
+    RETURNS TABLE(num integer, suffixe text)
+    LANGUAGE 'plpgsql'
 
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
--- calcul_num_adr(public.geometry)
-CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
-    LANGUAGE plpgsql
-    AS $$DECLARE
+    COST 100
+    VOLATILE
+    ROWS 1000
+AS $BODY$DECLARE
     numa integer;
     numb integer;
     numc integer;
@@ -88,7 +83,7 @@ BEGIN
         IF numb - 2 >0 THEN
             numc =  numb - 2;
         ELSIF numb - 2 <= 0 THEN
-            test = false;
+						test = false;
             FOREACH rec IN ARRAY suff LOOP
                 IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numb AND p.suffixe = rec) IS NULL AND NOT test THEN
                     test = true;
@@ -111,13 +106,17 @@ BEGIN
 
     return query SELECT numc, s;
 END;
-$$;
+$BODY$;
 
+CREATE OR REPLACE FUNCTION adresse.calcul_num_metrique(
+	pgeom geometry)
+    RETURNS TABLE(num integer, suffixe text)
+    LANGUAGE 'plpgsql'
 
--- calcul_num_metrique(public.geometry)
-CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
-    LANGUAGE plpgsql
-    AS $$DECLARE
+    COST 100
+    VOLATILE
+    ROWS 1000
+AS $BODY$DECLARE
     num integer;
     idvoie integer;
     numc integer;
@@ -140,7 +139,7 @@ BEGIN
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
-   
+
     SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
     WHERE id_voie = idvoie;
@@ -176,170 +175,15 @@ BEGIN
 
    RETURN query SELECT numc, res;
 END;
-$$;
+$BODY$;
 
 
--- calcul_point_position(public.geometry, public.geometry)
-CREATE FUNCTION adresse.calcul_point_position(seg public.geometry, pointc public.geometry) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    a geometry;
-    b geometry;
-BEGIN
-   a = ST_StartPoint(seg);
-   b = ST_EndPoint(seg);
-   RETURN (ST_X(b) - St_X(a))*(ST_Y(pointc) - ST_Y(a))
-    - (ST_Y(b) - ST_Y(a))*(ST_X(pointc) - St_X(a))
-    > 0;
-END;
-$$;
-
-
--- calcul_point_voie()
-CREATE FUNCTION adresse.calcul_point_voie() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    nb integer;
-BEGIN
-    SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
-    UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
-
-    RETURN NEW;
-END;
-$$;
-
-
--- calcul_segment_proche(public.geometry, public.geometry)
-CREATE FUNCTION adresse.calcul_segment_proche(ligne public.geometry, pointc public.geometry) RETURNS public.geometry
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    lageom geometry;
-BEGIN
-   SELECT endgeom into lageom
-   FROM ( SELECT ST_Distance(ST_MakeLine(St_PointN(ligne, n), St_PointN(ligne, n+1)), pointc) as dist,
-   ST_MakeLine(St_PointN(ligne, n), St_PointN(ligne, n+1)) as endgeom
-   FROM (SELECT generate_series(1, ST_NumPoints(ligne)-1) AS n) AS serie
-   ORDER BY dist LIMIT 1) as finalgeom;
-
-   RETURN lageom;
-END;
-$$;
-
-
--- check_num_exist(integer, text, integer)
-CREATE FUNCTION adresse.check_num_exist(num integer, suff text, idvoie integer) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    IF (SELECT numero FROM adresse.point_adresse WHERE numero = num AND suffixe = suff AND id_voie = idvoie) IS NULL THEN
-        RETURN TRUE;
-    ELSE
-        RETURN FALSE;
-    END IF;
-END;
-$$;
-
-
--- get_id_voie(public.geometry)
-CREATE FUNCTION adresse.get_id_voie(pgeom public.geometry) RETURNS integer
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-    idvoie integer;
-BEGIN
-    SELECT leid into idvoie FROM(
-    SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist
-    FROM adresse.voie  v
-    WHERE v.statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
-
-    RETURN idvoie;
-END;
-$$;
-
-
--- longueur_voie()
-CREATE FUNCTION adresse.longueur_voie() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-BEGIN
-    NEW.longueur = ST_Length(NEW.geom);
-
-    RETURN NEW;
-END;
-$$;
-
-
--- modif_createur()
-CREATE FUNCTION adresse.modif_createur() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-BEGIN
-    IF NEW.createur IS NULL AND NEW.modificateur IS NOT NULL THEN
-        NEW.createur = NEW.modificateur;
-    ELSIF NEW.createur IS NOT NULL THEN
-        NEW.modificateur = NEW.createur;
-    END IF;
-    NEW.date_creation = NOW();
-    NEW.date_modif = NOW();
-
-    RETURN NEW;
-END;
-$$;
-
-
--- modif_update()
-CREATE FUNCTION adresse.modif_update() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-BEGIN
-    NEW.createur = OLD.createur;
-    NEW.date_creation = OLD.date_creation;
-    NEW.date_modif = NOW();
-
-    RETURN NEW;
-END;
-$$;
-
-
--- trigger_point_adr()
-CREATE FUNCTION adresse.trigger_point_adr() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$DECLARE
-    idvoie integer;
-    adrvoie text;
-BEGIN
-    SELECT adresse.get_id_voie(NEW.geom) into idvoie;
-
-    IF idvoie IS NOT NULL THEN
-        IF (SELECT adresse.check_num_exist(NEW.numero, NEW.suffixe, idvoie)) THEN
-            NEW.id_voie = idvoie;
-            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = idvoie;
-            IF NEW.suffixe IS NOT NULL THEN
-                NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
-            ELSE
-                NEW.adresse_complete = CONCAT(NEW.numero, ' ', adrvoie);
-            END IF;
-            RETURN NEW;
-        ELSE
-            RETURN NULL;
-        END IF;
-    ELSE
-        RETURN NULL;
-    END IF;
-END;
-$$;
-
-
--- update_adr_complete()
-CREATE FUNCTION adresse.update_adr_complete() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
+CREATE OR REPLACE FUNCTION adresse.update_adr_complete()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
 DECLARE
     adrvoie text;
 BEGIN
@@ -363,38 +207,12 @@ BEGIN
     END IF;
     RETURN NULL;
 END;
-$$;
+$BODY$;
 
+CREATE TRIGGER update_adr_complete
+    BEFORE UPDATE
+    ON adresse.point_adresse
+    FOR EACH ROW
+    EXECUTE PROCEDURE adresse.update_adr_complete();
 
--- update_full_name()
-CREATE FUNCTION adresse.update_full_name() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
-        NEW.nom_complet:= CONCAT(NEW.typologie, ' ', NEW.nom);
-    END IF;
-
-    RETURN NEW;
-END;
-$$;
-
-
--- voie_nom_complet()
-CREATE FUNCTION adresse.voie_nom_complet() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-
-BEGIN
-    NEW.nom_complet = Concat(NEW.typologie, ' ', NEW.nom);
-
-    RETURN NEW;
-END;
-$$;
-
-
---
--- PostgreSQL database dump complete
---
-
+COMMIT;

@@ -131,7 +131,7 @@ CREATE TABLE adresse.point_adresse (
     id_voie integer,
     id_commune integer,
     id_parcelle integer,
-    validation boolean DEFAULT false
+    a_valider boolean DEFAULT false
 );
 
 
@@ -144,7 +144,7 @@ CREATE TABLE adresse.voie (
     type_num text,
     statut_voie_num boolean DEFAULT true NOT NULL,
     statut_voie boolean DEFAULT false NOT NULL,
-    sens boolean DEFAULT false NOT NULL,
+    sens_numerotation boolean DEFAULT false NOT NULL,
     achat_plaque_voie boolean DEFAULT false NOT NULL,
     nb_point integer,
     createur text,

@@ -153,7 +153,11 @@ COMMENT ON COLUMN adresse.point_adresse.id_commune IS 'Indentifiant de la commun
 
 
 -- point_adresse.id_parcelle
-COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Indentifiant de la parcelle à la qu''elle appartient le point adresse';
+COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcelle à laquelle appartient le point adresse';
+
+
+-- point_adresse.a_valider
+COMMENT ON COLUMN adresse.point_adresse.a_valider IS 'Si le point d''adresse est à valider ou non';
 
 
 -- voie.id_voie
@@ -184,8 +188,8 @@ COMMENT ON COLUMN adresse.voie.statut_voie_num IS 'Statut accordé à la voie pe
 COMMENT ON COLUMN adresse.voie.statut_voie IS 'Statut accordé à la voie au niveau du plan d’adressage';
 
 
--- voie.sens
-COMMENT ON COLUMN adresse.voie.sens IS 'Stocke l’information si la voie à été changé de sens';
+-- voie.sens_numerotation
+COMMENT ON COLUMN adresse.voie.sens_numerotation IS 'Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin';
 
 
 -- voie.achat_plaque_voie
@@ -247,4 +251,3 @@ COMMENT ON COLUMN adresse.metadata.me_version_date IS 'Date de la version. Ex: 2
 --
 -- PostgreSQL database dump complete
 --
-
