@@ -2,8 +2,9 @@ BEGIN;
 
 ALTER TABLE adresse.point_adresse ADD COLUMN a_valider boolean DEFAULT false;
 ALTER TABLE adresse.voie RENAME COLUMN sens TO sens_numerotation;
-COMMENT ON COLUMN adresse.point_adresse.a_valider IS 'savoir si le point d''adresse est à valdier ou non';
-COMMENT ON COLUMN adresse.voie.sens_numerotation IS 'savoir si les nombres pairs sont à droites ou à gauche de la voie par rapport au sens de dessin';
+COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcelle à laquelle appartient le point adresse';
+COMMENT ON COLUMN adresse.point_adresse.a_valider IS 'Si le point d''adresse est à valider ou non';
+COMMENT ON COLUMN adresse.voie.sens_numerotation IS 'Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin';
 
 CREATE OR REPLACE FUNCTION adresse.calcul_num_adr(
 	pgeom geometry)
