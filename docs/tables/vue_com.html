@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>appartenir_com - qgistest Database</title>
+        <title>vue_com - qgistest Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>appartenir_com</h1><br />
+                    <h1>vue_com</h1><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -103,10 +103,10 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_voie">id_voie</span></td>
+                                    <td><span id="insee_code">insee_code</span></td>
                                     <td>int4</td>
                                     <td>10</td>
-                                    <td title=''></td>
+                                    <td title='nullable'>√</td>
                                     <td title=''></td>
                                     <td>null</td>
                                     <td>
@@ -115,19 +115,15 @@
                                     </td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="appartenir_com.id_voie references voie.id_voie via appartenir_com_id_voie_fkey"><a href='voie.html'>voie</a><span class='relatedKey'>.id_voie</span></td>
-                                                <td class="constraint detail">appartenir_com_id_voie_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
                                         </table>
                                     </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_com">id_com</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title=''></td>
+                                    <td><span id="commune_nom">commune_nom</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
                                     <td title=''></td>
                                     <td>null</td>
                                     <td>
@@ -136,10 +132,6 @@
                                     </td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="appartenir_com.id_com references commune.id_com via appartenir_com_id_com_fkey"><a href='commune.html'>commune</a><span class='relatedKey'>.id_com</span></td>
-                                                <td class="constraint detail">appartenir_com_id_com_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
                                         </table>
                                     </td>
                                     <td></td>
@@ -150,83 +142,27 @@
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <i class="fa fa-sitemap"></i>
-                            <h3 id="Indexes" class="box-title">Indexes</h3>
+                            <i class="fa fa-file-code-o"></i>
+                            <h3 id="ViewDefinition" class="box-title">View Definition</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                                 <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
-                                <thead>
-                                <tr>
-                                    <th>Constraint Name</th>
-                                    <th>Type</th>
-                                    <th>Sort</th>
-                                    <th>Column(s)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> appartenir_com_pkey</td>
-                                    <td>Primary key</td>
-                                    <td><span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span></td>
-                                    <td>id_voie + id_com</td>
-                                </tr>
-                                <tr>
-                                    <td title='Indexed'>index_com_voie</td>
-                                    <td>Performance</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>id_com</td>
-                                </tr>
-                                <tr>
-                                    <td title='Indexed'>index_voie_com</td>
-                                    <td>Performance</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>id_voie</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div><!-- /.box-body -->
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <i class="fa fa-code-fork"></i>
-                            <h3 id="Relationships" class="box-title">Relationships</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
-                                <h5>Close relationships within degrees of separation</h5>
-                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
-                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
-                                    <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
-                                </ul>
-                                <div class="tab-content no-padding">
-                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="271,71,521,199">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="25,169,207,316">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,5,227,152">
-</map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/appartenir_com.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="271,216,521,344">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="25,131,207,277">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,337,227,484">
-<area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="321,5,471,93">
-<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="306,361,486,449">
-<area shape="rect" id="node6" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="301,111,491,199">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/appartenir_com.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
-                                    </div>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT (c.insee_code)::integer AS insee_code,&#10;    c.commune_nom&#10;   FROM adresse.commune c;</textarea>
+                            <div style="padding-top: 5px;"><hr></div>
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-puzzle-piece"></i>
+                                    <h3 class="box-title">Possibly Referenced Tables/Views</h3>
                                 </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <ul class="list-unstyled">
+                                        <li><a href="commune.html">commune</a></li>
+                                    </ul>
+                                </div><!-- /.box-body -->
                             </div>
                         </div><!-- /.box-body -->
                     </div>

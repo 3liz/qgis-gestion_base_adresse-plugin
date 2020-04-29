@@ -94,6 +94,25 @@
             <column ascending="true" name="id_doc"/>
          </index>
       </table>
+      <table name="export_bal" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT p.id_point,&#10;        CASE&#10;            WHEN (p.suffixe IS NOT NULL) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)&#10;            ELSE concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text))&#10;        END AS cle_interop,&#10;    ''::text AS uid_adresse,&#10;    v.nom AS voie_nom,&#10;    p.numero,&#10;    p.suffixe,&#10;    c.commune_nom,&#10;    'parcelle'::text AS &quot;position&quot;,&#10;    st_x(p.geom) AS x,&#10;    st_y(p.geom) AS y,&#10;    st_x(st_transform(p.geom, 4326)) AS long,&#10;    st_y(st_transform(p.geom, 4326)) AS lat,&#10;    ''::text AS source,&#10;    p.date_modif AS date_derniere_maj,&#10;    c.insee_code AS code_insee&#10;   FROM adresse.commune c,&#10;    adresse.point_adresse p,&#10;    adresse.voie v&#10;  WHERE ((p.id_commune = c.id_com) AND (p.id_voie = v.id_voie));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_point" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_point" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cle_interop" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="uid_adresse" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="voie_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="numero" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="suffixe" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="position" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="8" name="x" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="9" name="y" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="10" name="long" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="11" name="lat" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="source" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="date_derniere_maj" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="code_insee" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+      </table>
       <table name="metadata" remarks="Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C'est utilisé pour les scripts de migration de la structure entre 2 versions." schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.metadata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant de la version" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="me_version" nullable="false" remarks="Version. Ex: 1.0.2" size="2147483647" type="text" typeCode="12"/>
@@ -130,7 +149,9 @@
          </index>
       </table>
       <table name="point_adresse" remarks="" schema="adresse" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('adresse.point_adresse_id_point_seq'::regclass)" digits="0" id="0" name="id_point" nullable="false" remarks="Identifiant unique du point adresse" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('adresse.point_adresse_id_point_seq'::regclass)" digits="0" id="0" name="id_point" nullable="false" remarks="Identifiant unique du point adresse" size="10" type="serial" typeCode="4">
+            <child column="id_point" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="export_bal"/>
+         </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero" nullable="false" remarks="Numéro de l’adresse" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="suffixe" nullable="true" remarks="Extension du numéro (bis, ter, A, B...)" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="adresse_complete" nullable="true" remarks="Concaténation du numéro, de l’extension, de la typologie et du nom de la voie" size="2147483647" type="text" typeCode="12"/>
@@ -144,16 +165,16 @@
          <column autoUpdated="false" defaultValue="false" digits="0" id="11" name="erreur" nullable="false" remarks="Présence d’une erreur ou non" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commentaire" nullable="true" remarks="Commentaire" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="geom" nullable="true" remarks="Géométrie de l’objet" size="2147483647" type="geometry" typeCode="1111"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="id_voie" nullable="true" remarks="Indentifiant de la voie à la qu'elle appartient le point adresse" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="id_voie" nullable="true" remarks="Identifiant de la voie à laquelle appartient le point adresse" size="10" type="int4" typeCode="4">
             <parent column="id_voie" foreignKey="point_adresse_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="voie"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="id_commune" nullable="true" remarks="Indentifiant de la commune à la qu'elle appartient le point adresse" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="id_commune" nullable="true" remarks="Identifiant de la commune à laquelle appartient le point adresse" size="10" type="int4" typeCode="4">
             <parent column="id_com" foreignKey="point_adresse_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="id_parcelle" nullable="true" remarks="Indentifiant de la parcelle à la qu'elle appartient le point adresse" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="id_parcelle" nullable="true" remarks="Identifiant de la parcelle à laquelle appartient le point adresse" size="10" type="int4" typeCode="4">
             <parent column="fid" foreignKey="point_adresse_id_parcelle_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="parcelle"/>
          </column>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="17" name="validation" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="17" name="a_valider" nullable="true" remarks="Si le point d'adresse est à valider ou non" size="1" type="bool" typeCode="-7"/>
          <primaryKey column="id_point" sequenceNumberInPK="1"/>
          <index name="point_adresse_pkey" unique="true">
             <column ascending="true" name="id_point"/>
@@ -204,7 +225,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="type_num" nullable="true" remarks="Type de numérotation de la voie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="true" digits="0" id="5" name="statut_voie_num" nullable="false" remarks="Statut accordé à la voie permettant son verrouillage ou son déverrouillage pour la saisie d’une adresse" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="statut_voie" nullable="false" remarks="Statut accordé à la voie au niveau du plan d’adressage" size="1" type="bool" typeCode="-7"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="sens" nullable="false" remarks="Stocke l’information si la voie à été changé de sens" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="sens_numerotation" nullable="false" remarks="Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="achat_plaque_voie" nullable="false" remarks="Achat de la plaque nécessaire ou non ?" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="nb_point" nullable="true" remarks="Nombre de points adresses rattachés à cette voie" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="createur" nullable="true" remarks="Nom de l’utilisateur qui a créé la voie" size="2147483647" type="text" typeCode="12"/>
@@ -222,6 +243,10 @@
          <index name="voie_geom_idx" unique="false">
             <column ascending="true" name="geom"/>
          </index>
+      </table>
+      <table name="vue_com" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT (c.insee_code)::integer AS insee_code,&#10;    c.commune_nom&#10;   FROM adresse.commune c;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="insee_code" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
    </tables>
 </database>

@@ -2,8 +2,8 @@ commune
 voie
 commune_deleguee
 parcelle
+point_adresse
 document
 appartenir_com
 referencer_com
-point_adresse
 metadata

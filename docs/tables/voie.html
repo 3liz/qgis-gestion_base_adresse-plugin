@@ -230,7 +230,7 @@
                                     <td><p>Statut accordé à la voie au niveau du plan d’adressage</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="sens">sens</span></td>
+                                    <td><span id="sens_numerotation">sens_numerotation</span></td>
                                     <td>bool</td>
                                     <td>1</td>
                                     <td title=''></td>
@@ -244,7 +244,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Stocke l’information si la voie à été changé de sens</p></td>
+                                    <td><p>Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="achat_plaque_voie">achat_plaque_voie</span></td>
@@ -471,25 +471,46 @@
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
                                     <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="453,5,643,128">
-<area shape="rect" id="node2" href="voie.html" target="_top" title="voie" alt="" coords="5,101,381,699">
-<area shape="rect" id="node3" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="425,145,671,380">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="461,5,651,128">
+<area shape="rect" id="node2" href="voie.html" target="_top" title="voie" alt="" coords="5,101,389,699">
+<area shape="rect" id="node3" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="433,145,679,380">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/voie.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="453,199,643,321">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="119,620,268,708">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,5,381,603">
-<area shape="rect" id="node4" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="425,529,671,764">
-<area shape="rect" id="node5" href="parcelle.html" target="_top" title="parcelle" alt="" coords="125,725,261,813">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="461,199,651,321">
+<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="123,620,272,708">
+<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,5,389,603">
+<area shape="rect" id="node4" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="433,529,679,764">
+<area shape="rect" id="node5" href="parcelle.html" target="_top" title="parcelle" alt="" coords="129,725,265,813">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/voie.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="461,5,651,128">
+<area shape="rect" id="node2" href="voie.html" target="_top" title="voie" alt="" coords="5,101,389,699">
+<area shape="rect" id="node3" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="433,145,679,380">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/voie.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="461,199,651,321">
+<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="123,620,272,708">
+<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,5,389,603">
+<area shape="rect" id="node4" href="export_bal.html" target="_top" title="export_bal" alt="" coords="723,532,875,596">
+<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="433,529,679,764">
+<area shape="rect" id="node6" href="parcelle.html" target="_top" title="parcelle" alt="" coords="129,725,265,813">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/voie.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>point_adresse - qgistest Database</title>
+        <title>export_bal - qgistest Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>point_adresse</h1><br />
+                    <h1>export_bal</h1><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -103,31 +103,31 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_point">id_point</span></td>
-                                    <td>serial</td>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_point">id_point</span></td>
+                                    <td>int4</td>
                                     <td>10</td>
+                                    <td title='nullable'>√</td>
                                     <td title=''></td>
-                                    <td title='Automatically updated by the database'>√</td>
-                                    <td>nextval(&#39;adresse.point_adresse_id_point_seq&#39;::regclass)</td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="export_bal.id_point&#39;s name implies that it&#39;s a child of point_adresse.id_point, but it doesn&#39;t reference that column."><a href='export_bal.html'>export_bal</a><span class='relatedKey'>.id_point</span></td>
+                                                <td title="export_bal.id_point&#39;s name implies that it&#39;s a child of point_adresse.id_point, but it doesn&#39;t reference that column."><a href='point_adresse.html'>point_adresse</a><span class='relatedKey'>.id_point</span></td>
                                                 <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Identifiant unique du point adresse</p></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="numero">numero</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title=''></td>
+                                    <td><span id="cle_interop">cle_interop</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
                                     <td title=''></td>
                                     <td>null</td>
                                     <td>
@@ -138,7 +138,58 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Numéro de l’adresse</p></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="uid_adresse">uid_adresse</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="voie_nom">voie_nom</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="numero">numero</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td><span id="suffixe">suffixe</span></td>
@@ -155,10 +206,10 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Extension du numéro (bis, ter, A, B&hellip;)</p></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="adresse_complete">adresse_complete</span></td>
+                                    <td><span id="commune_nom">commune_nom</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -172,10 +223,129 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Concaténation du numéro, de l’extension, de la typologie et du nom de la voie</p></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="code_postal">code_postal</span></td>
+                                    <td><span id="position">position</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="x">x</span></td>
+                                    <td>float8</td>
+                                    <td>17,17</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="y">y</span></td>
+                                    <td>float8</td>
+                                    <td>17,17</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="long">long</span></td>
+                                    <td>float8</td>
+                                    <td>17,17</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="lat">lat</span></td>
+                                    <td>float8</td>
+                                    <td>17,17</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="source">source</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="date_derniere_maj">date_derniere_maj</span></td>
+                                    <td>date</td>
+                                    <td>13</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="code_insee">code_insee</span></td>
                                     <td>bpchar</td>
                                     <td>5</td>
                                     <td title='nullable'>√</td>
@@ -189,298 +359,11 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Code postal auquel appartient de point adresse</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="type_pos">type_pos</span></td>
-                                    <td>text</td>
-                                    <td>2147483647</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Type de positionnement du point adresse</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="achat_plaque_numero">achat_plaque_numero</span></td>
-                                    <td>bool</td>
-                                    <td>1</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>false</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Achat de la plaque nécessaire ou non ?</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="createur">createur</span></td>
-                                    <td>text</td>
-                                    <td>2147483647</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Nom de l’utilisateur qui a créé le point</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="date_creation">date_creation</span></td>
-                                    <td>date</td>
-                                    <td>13</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>now()</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Date et heure à laquelle le point adresse a été créé</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="modificateur">modificateur</span></td>
-                                    <td>text</td>
-                                    <td>2147483647</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Nom de l’utilisateur qui a effectué la dernière modification</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="date_modif">date_modif</span></td>
-                                    <td>date</td>
-                                    <td>13</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>now()</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Date et heure à laquelle la dernière modification sur la fiche du point a été apportée</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="erreur">erreur</span></td>
-                                    <td>bool</td>
-                                    <td>1</td>
-                                    <td title=''></td>
-                                    <td title=''></td>
-                                    <td>false</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Présence d’une erreur ou non</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="commentaire">commentaire</span></td>
-                                    <td>text</td>
-                                    <td>2147483647</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Commentaire</p></td>
-                                </tr>
-                                <tr>
-                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="geom">geom</span></td>
-                                    <td>geometry</td>
-                                    <td>2147483647</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Géométrie de l’objet</p></td>
-                                </tr>
-                                <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_voie">id_voie</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="point_adresse.id_voie references voie.id_voie via point_adresse_id_voie_fkey"><a href='voie.html'>voie</a><span class='relatedKey'>.id_voie</span></td>
-                                                <td class="constraint detail">point_adresse_id_voie_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td><p>Identifiant de la voie à laquelle appartient le point adresse</p></td>
-                                </tr>
-                                <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_commune">id_commune</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="point_adresse.id_commune references commune.id_com via point_adresse_id_commune_fkey"><a href='commune.html'>commune</a><span class='relatedKey'>.id_com</span></td>
-                                                <td class="constraint detail">point_adresse_id_commune_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td><p>Identifiant de la commune à laquelle appartient le point adresse</p></td>
-                                </tr>
-                                <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_parcelle">id_parcelle</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="point_adresse.id_parcelle references parcelle.fid via point_adresse_id_parcelle_fkey"><a href='parcelle.html'>parcelle</a><span class='relatedKey'>.fid</span></td>
-                                                <td class="constraint detail">point_adresse_id_parcelle_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td><p>Identifiant de la parcelle à laquelle appartient le point adresse</p></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="a_valider">a_valider</span></td>
-                                    <td>bool</td>
-                                    <td>1</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>false</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td><p>Si le point d&rsquo;adresse est à valider ou non</p></td>
+                                    <td></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <i class="fa fa-sitemap"></i>
-                            <h3 id="Indexes" class="box-title">Indexes</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
-                                <thead>
-                                <tr>
-                                    <th>Constraint Name</th>
-                                    <th>Type</th>
-                                    <th>Sort</th>
-                                    <th>Column(s)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> point_adresse_pkey</td>
-                                    <td>Primary key</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>id_point</td>
-                                </tr>
-                                <tr>
-                                    <td title='Indexed'>index_com_adr</td>
-                                    <td>Performance</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>id_commune</td>
-                                </tr>
-                                <tr>
-                                    <td title='Indexed'>index_parcelle_adr</td>
-                                    <td>Performance</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>id_parcelle</td>
-                                </tr>
-                                <tr>
-                                    <td title='Indexed'>index_voie_adr</td>
-                                    <td>Performance</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>id_voie</td>
-                                </tr>
-                                <tr>
-                                    <td title='Indexed'>point_adresse_geom_idx</td>
-                                    <td>Performance</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>geom</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div><!-- /.box-body -->
                     </div>
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -496,56 +379,62 @@
                                 <h5>Close relationships within degrees of separation</h5>
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
-                                    <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
                                     <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
                                     <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="271,5,679,603">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="25,448,207,595">
-<area shape="rect" id="node3" href="parcelle.html" target="_top" title="parcelle" alt="" coords="39,612,193,759">
-<area shape="rect" id="node4" href="voie.html" target="_top" title="voie" alt="" coords="5,284,227,431">
+<area shape="rect" id="node1" href="export_bal.html" target="_top" title="export_bal" alt="" coords="5,5,345,491">
 </map>
-                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/point_adresse.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="379,216,570,304">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="25,161,207,308">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,504,227,651">
-<area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="399,5,550,93">
-<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="271,321,679,919">
-<area shape="rect" id="node6" href="parcelle.html" target="_top" title="parcelle" alt="" coords="39,793,193,940">
-<area shape="rect" id="node7" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="379,111,570,199">
-</map>
-                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/point_adresse.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/export_bal.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="export_bal.html" target="_top" title="export_bal" alt="" coords="723,8,937,101">
-<area shape="rect" id="node2" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="271,5,679,603">
-<area shape="rect" id="node3" href="commune.html" target="_top" title="commune" alt="" coords="25,448,207,595">
-<area shape="rect" id="node4" href="parcelle.html" target="_top" title="parcelle" alt="" coords="39,612,193,759">
-<area shape="rect" id="node5" href="voie.html" target="_top" title="voie" alt="" coords="5,284,227,431">
+<area shape="rect" id="node1" href="export_bal.html" target="_top" title="export_bal" alt="" coords="295,5,635,491">
+<area shape="rect" id="node2" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="5,8,251,243">
 </map>
-                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/point_adresse.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/export_bal.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="379,216,570,304">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="25,161,207,308">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="5,504,227,651">
-<area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="399,5,550,93">
-<area shape="rect" id="node5" href="export_bal.html" target="_top" title="export_bal" alt="" coords="723,324,937,417">
-<area shape="rect" id="node6" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="271,321,679,919">
-<area shape="rect" id="node7" href="parcelle.html" target="_top" title="parcelle" alt="" coords="39,793,193,940">
-<area shape="rect" id="node8" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="379,111,570,199">
+<area shape="rect" id="node1" href="export_bal.html" target="_top" title="export_bal" alt="" coords="488,17,828,503">
+<area shape="rect" id="node2" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="199,20,444,255">
+<area shape="rect" id="node3" href="commune.html" target="_top" title="commune" alt="" coords="5,111,155,199">
+<area shape="rect" id="node4" href="parcelle.html" target="_top" title="parcelle" alt="" coords="12,216,148,304">
+<area shape="rect" id="node5" href="voie.html" target="_top" title="voie" alt="" coords="25,5,135,93">
 </map>
-                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/point_adresse.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/export_bal.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-code-o"></i>
+                            <h3 id="ViewDefinition" class="box-title">View Definition</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT p.id_point,&#10;        CASE&#10;            WHEN (p.suffixe IS NOT NULL) THEN concat(c.insee_code, &#39;_&#39;, (v.code_fantoir)::text, &#39;_&#39;, lpad((p.numero)::text, 5, &#39;0&#39;::text), &#39;_&#39;, p.suffixe)&#10;            ELSE concat(c.insee_code, &#39;_&#39;, (v.code_fantoir)::text, &#39;_&#39;, lpad((p.numero)::text, 5, &#39;0&#39;::text))&#10;        END AS cle_interop,&#10;    &#39;&#39;::text AS uid_adresse,&#10;    v.nom AS voie_nom,&#10;    p.numero,&#10;    p.suffixe,&#10;    c.commune_nom,&#10;    &#39;parcelle&#39;::text AS &quot;position&quot;,&#10;    st_x(p.geom) AS x,&#10;    st_y(p.geom) AS y,&#10;    st_x(st_transform(p.geom, 4326)) AS long,&#10;    st_y(st_transform(p.geom, 4326)) AS lat,&#10;    &#39;&#39;::text AS source,&#10;    p.date_modif AS date_derniere_maj,&#10;    c.insee_code AS code_insee&#10;   FROM adresse.commune c,&#10;    adresse.point_adresse p,&#10;    adresse.voie v&#10;  WHERE ((p.id_commune = c.id_com) AND (p.id_voie = v.id_voie));</textarea>
+                            <div style="padding-top: 5px;"><hr></div>
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                    <i class="fa fa-puzzle-piece"></i>
+                                    <h3 class="box-title">Possibly Referenced Tables/Views</h3>
+                                </div>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <ul class="list-unstyled">
+                                        <li><a href="commune.html">commune</a></li>
+                                        <li><a href="point_adresse.html">point_adresse</a></li>
+                                        <li><a href="voie.html">voie</a></li>
+                                    </ul>
+                                </div><!-- /.box-body -->
                             </div>
                         </div><!-- /.box-body -->
                     </div>
