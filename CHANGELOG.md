@@ -1,5 +1,12 @@
 ## CHANGELOG
 
+### 0.2.8 - 29/04/2020
+
+* Rename field sens into sens_numerotation in table voie
+* Adding validation in point_adresse
+* fix many bugs to close the deliverable 1
+* Adding news units tests
+
 ### 0.2.7 - 31/03/2020
 
 * Add test about structure bdd

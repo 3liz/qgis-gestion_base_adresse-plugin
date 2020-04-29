@@ -6,7 +6,7 @@ author=3Liz
 email=info@3liz.com
 about=Gestion de la base adresse avec le module Lizmap
 
-version=0.2.8-beta
+version=0.2.9-beta
 
 tracker=https://github.com/3liz/qgis-gestion_base_adresse-plugin
 repository=https://github.com/3liz/qgis-gestion_base_adresse-plugin
