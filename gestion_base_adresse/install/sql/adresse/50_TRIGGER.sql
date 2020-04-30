@@ -24,6 +24,14 @@ CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.point_adresse FOR EACH R
 CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_createur();
 
 
+-- point_adresse get_commune
+CREATE TRIGGER get_commune BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
+
+
+-- voie get_commune
+CREATE TRIGGER get_commune BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
+
+
 -- point_adresse nb_point
 CREATE TRIGGER nb_point AFTER INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.calcul_point_voie();
 
