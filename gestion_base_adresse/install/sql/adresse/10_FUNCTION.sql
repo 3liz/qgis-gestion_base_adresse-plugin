@@ -140,7 +140,7 @@ BEGIN
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
-   
+
     SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
     WHERE id_voie = idvoie;
@@ -374,7 +374,7 @@ DECLARE
     leid integer;
 BEGIN
     IF (TG_TABLE_NAME = 'voie') THEN
-        INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersect(NEW.geom, c.geom);
+        INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
         RETURN NEW;
     ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
         SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
@@ -417,4 +417,3 @@ $$;
 --
 -- PostgreSQL database dump complete
 --
-
