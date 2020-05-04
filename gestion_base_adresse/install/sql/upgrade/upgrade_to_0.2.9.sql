@@ -28,7 +28,7 @@ CREATE TRIGGER get_commune
     EXECUTE PROCEDURE adresse.update_commune();
 
 CREATE TRIGGER get_commune
-    BEFORE INSERT
+    AFTER INSERT
     ON adresse.voie
     FOR EACH ROW
     EXECUTE PROCEDURE adresse.update_commune();
