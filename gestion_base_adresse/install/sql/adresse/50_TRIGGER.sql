@@ -29,7 +29,7 @@ CREATE TRIGGER get_commune BEFORE INSERT ON adresse.point_adresse FOR EACH ROW E
 
 
 -- voie get_commune
-CREATE TRIGGER get_commune BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
+CREATE TRIGGER get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
 
 
 -- point_adresse nb_point
