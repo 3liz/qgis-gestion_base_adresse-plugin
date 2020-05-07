@@ -140,7 +140,7 @@ BEGIN
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
-   
+
     SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
     WHERE id_voie = idvoie;
@@ -366,6 +366,26 @@ END;
 $$;
 
 
+-- update_commune()
+CREATE FUNCTION adresse.update_commune() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    leid integer;
+BEGIN
+    IF (TG_TABLE_NAME = 'voie') THEN
+        INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
+        RETURN NEW;
+    ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
+        SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
+        NEW.id_commune = leid;
+        RETURN NEW;
+    END IF;
+    RETURN NULL;
+END;
+$$;
+
+
 -- update_full_name()
 CREATE FUNCTION adresse.update_full_name() RETURNS trigger
     LANGUAGE plpgsql
@@ -397,4 +417,3 @@ $$;
 --
 -- PostgreSQL database dump complete
 --
-

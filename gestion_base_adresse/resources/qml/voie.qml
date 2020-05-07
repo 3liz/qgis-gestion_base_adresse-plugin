@@ -1,66 +1,66 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis styleCategories="AllStyleCategories" labelsEnabled="1" hasScaleBasedVisibilityFlag="0" simplifyDrawingHints="1" minScale="1e+08" simplifyAlgorithm="0" simplifyDrawingTol="1" maxScale="0" simplifyMaxScale="1" version="3.4.15-Madeira" simplifyLocal="0" readOnly="0">
+<qgis labelsEnabled="1" version="3.4.15-Madeira" hasScaleBasedVisibilityFlag="0" maxScale="0" simplifyDrawingTol="1" simplifyLocal="0" styleCategories="AllStyleCategories" simplifyMaxScale="1" minScale="1e+08" simplifyDrawingHints="1" readOnly="0" simplifyAlgorithm="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" enableorderby="0" forceraster="0" type="RuleRenderer">
+  <renderer-v2 type="RuleRenderer" enableorderby="0" symbollevels="0" forceraster="0">
     <rules key="{1135c5c2-2c96-4037-ada9-d2d045759c9d}">
-      <rule symbol="0" label="Verrouillée" filter=" &quot;statut_voie_num&quot; " key="{3f8e97a1-ec38-446d-a2b8-4385467d1ef8}"/>
-      <rule symbol="1" label="Déverrouillée" filter="not &quot;statut_voie_num&quot;" key="{c5fc884f-ddfe-43fc-8123-3acf4a83e900}"/>
+      <rule filter=" &quot;statut_voie_num&quot; " label="Verrouillée" symbol="0" key="{3f8e97a1-ec38-446d-a2b8-4385467d1ef8}"/>
+      <rule filter="not &quot;statut_voie_num&quot;" label="Déverrouillée" symbol="1" key="{c5fc884f-ddfe-43fc-8123-3acf4a83e900}"/>
     </rules>
     <symbols>
-      <symbol force_rhr="0" name="0" alpha="1" type="line" clip_to_extent="1">
-        <layer pass="0" class="SimpleLine" locked="0" enabled="1">
-          <prop k="capstyle" v="square"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="0"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="0,0,159,255"/>
-          <prop k="line_style" v="solid"/>
-          <prop k="line_width" v="0.26"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="ring_filter" v="0"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+      <symbol name="0" type="line" force_rhr="0" clip_to_extent="1" alpha="1">
+        <layer class="SimpleLine" pass="0" enabled="1" locked="0">
+          <prop v="square" k="capstyle"/>
+          <prop v="5;2" k="customdash"/>
+          <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+          <prop v="MM" k="customdash_unit"/>
+          <prop v="0" k="draw_inside_polygon"/>
+          <prop v="bevel" k="joinstyle"/>
+          <prop v="0,0,159,255" k="line_color"/>
+          <prop v="solid" k="line_style"/>
+          <prop v="0.26" k="line_width"/>
+          <prop v="MM" k="line_width_unit"/>
+          <prop v="0" k="offset"/>
+          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+          <prop v="MM" k="offset_unit"/>
+          <prop v="0" k="ring_filter"/>
+          <prop v="0" k="use_custom_dash"/>
+          <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option name="name" value="" type="QString"/>
               <Option name="properties"/>
-              <Option value="collection" name="type" type="QString"/>
+              <Option name="type" value="collection" type="QString"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol force_rhr="0" name="1" alpha="1" type="line" clip_to_extent="1">
-        <layer pass="0" class="SimpleLine" locked="0" enabled="1">
-          <prop k="capstyle" v="square"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="0"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="line_color" v="211,0,3,255"/>
-          <prop k="line_style" v="solid"/>
-          <prop k="line_width" v="0.66"/>
-          <prop k="line_width_unit" v="MM"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="ring_filter" v="0"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+      <symbol name="1" type="line" force_rhr="0" clip_to_extent="1" alpha="1">
+        <layer class="SimpleLine" pass="0" enabled="1" locked="0">
+          <prop v="square" k="capstyle"/>
+          <prop v="5;2" k="customdash"/>
+          <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+          <prop v="MM" k="customdash_unit"/>
+          <prop v="0" k="draw_inside_polygon"/>
+          <prop v="bevel" k="joinstyle"/>
+          <prop v="211,0,3,255" k="line_color"/>
+          <prop v="solid" k="line_style"/>
+          <prop v="0.66" k="line_width"/>
+          <prop v="MM" k="line_width_unit"/>
+          <prop v="0" k="offset"/>
+          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+          <prop v="MM" k="offset_unit"/>
+          <prop v="0" k="ring_filter"/>
+          <prop v="0" k="use_custom_dash"/>
+          <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option name="name" value="" type="QString"/>
               <Option name="properties"/>
-              <Option value="collection" name="type" type="QString"/>
+              <Option name="type" value="collection" type="QString"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -68,23 +68,23 @@
     </symbols>
   </renderer-v2>
   <labeling type="rule-based">
-    <rules key="{965d4476-a0b7-4af9-b5aa-4d5d101688d4}">
-      <rule scalemaxdenom="10000" scalemindenom="1" filter="Not  &quot;statut_voie_num&quot; " key="{5bdc4212-035f-4ac2-979d-1339d02cee28}">
+    <rules key="{b9a2d3ff-17c7-4225-bed5-76602dea2b10}">
+      <rule filter="Not  &quot;statut_voie_num&quot; " scalemaxdenom="10000" key="{9fbf9836-44ce-40ce-b37c-ad035ebacc50}" scalemindenom="1">
         <settings>
-          <text-style fontSizeUnit="Point" fontSize="10" fontStrikeout="0" fontSizeMapUnitScale="3x:0,0,0,0,0,0" textOpacity="1" previewBkgrdColor="#ffffff" fontItalic="0" useSubstitutions="0" namedStyle="Regular" fontCapitals="0" multilineHeight="1" textColor="211,0,3,255" fontUnderline="0" fontWordSpacing="0" blendMode="0" fontWeight="50" fieldName="nom_complet" fontFamily="Ubuntu" isExpression="0" fontLetterSpacing="0">
-            <text-buffer bufferOpacity="1" bufferSize="1" bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferSizeUnits="MM" bufferBlendMode="0" bufferDraw="1" bufferColor="255,255,255,255" bufferNoFill="1" bufferJoinStyle="128"/>
-            <background shapeJoinStyle="64" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeRotation="0" shapeOffsetY="0" shapeBlendMode="0" shapeSizeX="0" shapeRadiiUnit="MM" shapeBorderWidth="0" shapeBorderWidthUnit="MM" shapeOffsetUnit="MM" shapeSizeY="0" shapeOpacity="1" shapeRotationType="0" shapeFillColor="255,255,255,255" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeSizeUnit="MM" shapeBorderColor="128,128,128,255" shapeRadiiY="0" shapeType="0" shapeRadiiX="0" shapeSVGFile="" shapeDraw="0" shapeSizeMapUnitScale="3x:0,0,0,0,0,0" shapeSizeType="0" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeOffsetX="0"/>
-            <shadow shadowScale="100" shadowUnder="0" shadowOpacity="0.7" shadowOffsetUnit="MM" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0" shadowRadius="1.5" shadowOffsetAngle="135" shadowOffsetDist="1" shadowOffsetGlobal="1" shadowRadiusUnit="MM" shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowDraw="0" shadowColor="0,0,0,255" shadowRadiusAlphaOnly="0" shadowBlendMode="6"/>
+          <text-style fontSizeUnit="Point" textColor="211,0,3,255" fontStrikeout="0" fontWordSpacing="0" isExpression="0" textOpacity="1" multilineHeight="1" fieldName="nom_complet" fontWeight="50" previewBkgrdColor="#ffffff" namedStyle="Regular" fontSize="10" fontCapitals="0" fontLetterSpacing="0" useSubstitutions="0" fontUnderline="0" fontItalic="0" fontFamily="Ubuntu" fontSizeMapUnitScale="3x:0,0,0,0,0,0" blendMode="0">
+            <text-buffer bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferJoinStyle="128" bufferSize="1" bufferNoFill="1" bufferDraw="1" bufferOpacity="1" bufferBlendMode="0" bufferSizeUnits="MM" bufferColor="255,255,255,255"/>
+            <background shapeSizeType="0" shapeOffsetY="0" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeRotation="0" shapeRadiiY="0" shapeDraw="0" shapeType="0" shapeBorderWidth="0" shapeSVGFile="" shapeSizeUnit="MM" shapeOffsetX="0" shapeBorderWidthUnit="MM" shapeJoinStyle="64" shapeRadiiX="0" shapeSizeX="0" shapeRadiiUnit="MM" shapeBlendMode="0" shapeSizeY="0" shapeSizeMapUnitScale="3x:0,0,0,0,0,0" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeOffsetUnit="MM" shapeOpacity="1" shapeRotationType="0" shapeBorderColor="128,128,128,255" shapeFillColor="255,255,255,255"/>
+            <shadow shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowDraw="0" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0" shadowOffsetUnit="MM" shadowRadiusAlphaOnly="0" shadowScale="100" shadowOffsetDist="1" shadowOpacity="0.7" shadowOffsetGlobal="1" shadowRadiusUnit="MM" shadowOffsetAngle="135" shadowBlendMode="6" shadowUnder="0" shadowRadius="1.5" shadowColor="0,0,0,255"/>
             <substitutions/>
           </text-style>
-          <text-format decimals="3" rightDirectionSymbol=">" wrapChar="" multilineAlign="4294967295" formatNumbers="0" autoWrapLength="0" leftDirectionSymbol="&lt;" reverseDirectionSymbol="0" useMaxLineLengthForAutoWrap="1" addDirectionSymbol="0" placeDirectionSymbol="0" plussign="0"/>
-          <placement xOffset="0" offsetType="0" dist="0" preserveRotation="1" centroidInside="0" priority="5" distUnits="MM" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" distMapUnitScale="3x:0,0,0,0,0,0" repeatDistance="0" quadOffset="4" maxCurvedCharAngleIn="25" maxCurvedCharAngleOut="-25" fitInPolygonOnly="0" repeatDistanceUnits="MM" placement="2" yOffset="0" centroidWhole="0" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" placementFlags="10" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" offsetUnits="MM" rotationAngle="0"/>
-          <rendering scaleMax="0" zIndex="0" mergeLines="0" maxNumLabels="2000" drawLabels="1" fontLimitPixelSize="0" obstacle="1" limitNumLabels="0" fontMinPixelSize="3" labelPerPart="0" displayAll="0" upsidedownLabels="0" scaleVisibility="0" obstacleType="0" scaleMin="0" minFeatureSize="0" fontMaxPixelSize="10000" obstacleFactor="1"/>
+          <text-format decimals="3" placeDirectionSymbol="0" plussign="0" wrapChar="" formatNumbers="0" rightDirectionSymbol=">" useMaxLineLengthForAutoWrap="1" multilineAlign="4294967295" leftDirectionSymbol="&lt;" reverseDirectionSymbol="0" autoWrapLength="0" addDirectionSymbol="0"/>
+          <placement yOffset="0" maxCurvedCharAngleOut="-25" centroidInside="0" repeatDistanceUnits="MM" centroidWhole="0" distUnits="MM" offsetType="0" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" offsetUnits="MM" placementFlags="10" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" placement="2" rotationAngle="0" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" preserveRotation="1" priority="5" repeatDistance="0" distMapUnitScale="3x:0,0,0,0,0,0" dist="0" maxCurvedCharAngleIn="25" xOffset="0" quadOffset="4" fitInPolygonOnly="0"/>
+          <rendering obstacleType="0" fontMaxPixelSize="10000" maxNumLabels="2000" fontMinPixelSize="3" upsidedownLabels="0" zIndex="0" mergeLines="0" drawLabels="1" labelPerPart="0" fontLimitPixelSize="0" obstacleFactor="1" scaleMin="0" scaleVisibility="0" obstacle="1" scaleMax="0" limitNumLabels="0" displayAll="0" minFeatureSize="0"/>
           <dd_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option name="name" value="" type="QString"/>
               <Option name="properties"/>
-              <Option value="collection" name="type" type="QString"/>
+              <Option name="type" value="collection" type="QString"/>
             </Option>
           </dd_properties>
         </settings>
@@ -101,17 +101,17 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
-    <DiagramCategory backgroundAlpha="255" sizeType="MM" minScaleDenominator="0" width="15" rotationOffset="270" sizeScale="3x:0,0,0,0,0,0" barWidth="5" penAlpha="255" penWidth="0" enabled="0" opacity="1" diagramOrientation="Up" backgroundColor="#ffffff" labelPlacementMethod="XHeight" maxScaleDenominator="1e+08" penColor="#000000" lineSizeType="MM" minimumSize="0" height="15" lineSizeScale="3x:0,0,0,0,0,0" scaleBasedVisibility="0" scaleDependency="Area">
+    <DiagramCategory backgroundColor="#ffffff" scaleDependency="Area" minimumSize="0" barWidth="5" penWidth="0" enabled="0" maxScaleDenominator="1e+08" opacity="1" height="15" minScaleDenominator="0" diagramOrientation="Up" sizeScale="3x:0,0,0,0,0,0" labelPlacementMethod="XHeight" rotationOffset="270" backgroundAlpha="255" scaleBasedVisibility="0" lineSizeScale="3x:0,0,0,0,0,0" lineSizeType="MM" width="15" penAlpha="255" sizeType="MM" penColor="#000000">
       <fontProperties style="" description="Ubuntu,11,-1,5,50,0,0,0,0,0"/>
-      <attribute label="" color="#000000" field=""/>
+      <attribute label="" field="" color="#000000"/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings obstacle="0" placement="2" zIndex="0" dist="0" priority="0" showAll="1" linePlacementFlags="18">
+  <DiagramLayerSettings showAll="1" zIndex="0" placement="2" priority="0" dist="0" linePlacementFlags="18" obstacle="0">
     <properties>
       <Option type="Map">
-        <Option value="" name="name" type="QString"/>
+        <Option name="name" value="" type="QString"/>
         <Option name="properties"/>
-        <Option value="collection" name="type" type="QString"/>
+        <Option name="type" value="collection" type="QString"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
@@ -124,8 +124,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -134,8 +134,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -144,8 +144,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -154,8 +154,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -166,10 +166,10 @@
           <Option type="Map">
             <Option name="map" type="List">
               <Option type="Map">
-                <Option value="Classique" name="Classique" type="QString"/>
+                <Option name="Classique" value="Classique" type="QString"/>
               </Option>
               <Option type="Map">
-                <Option value="Metrique" name="Métrique" type="QString"/>
+                <Option name="Métrique" value="Metrique" type="QString"/>
               </Option>
             </Option>
           </Option>
@@ -182,10 +182,10 @@
           <Option type="Map">
             <Option name="map" type="List">
               <Option type="Map">
-                <Option value="true" name="Verrouillée" type="QString"/>
+                <Option name="Verrouillée" value="true" type="QString"/>
               </Option>
               <Option type="Map">
-                <Option value="false" name="Déverrouillée" type="QString"/>
+                <Option name="Déverrouillée" value="false" type="QString"/>
               </Option>
             </Option>
           </Option>
@@ -198,10 +198,10 @@
           <Option type="Map">
             <Option name="map" type="List">
               <Option type="Map">
-                <Option value="true" name="Validée" type="QString"/>
+                <Option name="Validée" value="true" type="QString"/>
               </Option>
               <Option type="Map">
-                <Option value="false" name="En cours de validation" type="QString"/>
+                <Option name="En cours de validation" value="false" type="QString"/>
               </Option>
             </Option>
           </Option>
@@ -209,11 +209,11 @@
       </editWidget>
     </field>
     <field name="sens_numerotation">
-      <editWidget type="TextEdit">
+      <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option name="CheckedState" value="" type="QString"/>
+            <Option name="UncheckedState" value="" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -222,8 +222,8 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option value="" name="CheckedState" type="QString"/>
-            <Option value="" name="UncheckedState" type="QString"/>
+            <Option name="CheckedState" value="" type="QString"/>
+            <Option name="UncheckedState" value="" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -232,12 +232,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="-2147483648" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option name="AllowNull" value="true" type="bool"/>
+            <Option name="Max" value="2147483647" type="int"/>
+            <Option name="Min" value="-2147483648" type="int"/>
+            <Option name="Precision" value="0" type="int"/>
+            <Option name="Step" value="1" type="int"/>
+            <Option name="Style" value="SpinBox" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -246,8 +246,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -256,11 +256,11 @@
       <editWidget type="DateTime">
         <config>
           <Option type="Map">
-            <Option value="true" name="allow_null" type="bool"/>
-            <Option value="true" name="calendar_popup" type="bool"/>
-            <Option value="yyyy-MM-dd" name="display_format" type="QString"/>
-            <Option value="yyyy-MM-dd" name="field_format" type="QString"/>
-            <Option value="false" name="field_iso_format" type="bool"/>
+            <Option name="allow_null" value="true" type="bool"/>
+            <Option name="calendar_popup" value="true" type="bool"/>
+            <Option name="display_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_iso_format" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -269,8 +269,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -279,11 +279,11 @@
       <editWidget type="DateTime">
         <config>
           <Option type="Map">
-            <Option value="true" name="allow_null" type="bool"/>
-            <Option value="true" name="calendar_popup" type="bool"/>
-            <Option value="yyyy-MM-dd" name="display_format" type="QString"/>
-            <Option value="yyyy-MM-dd" name="field_format" type="QString"/>
-            <Option value="false" name="field_iso_format" type="bool"/>
+            <Option name="allow_null" value="true" type="bool"/>
+            <Option name="calendar_popup" value="true" type="bool"/>
+            <Option name="display_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_format" value="yyyy-MM-dd" type="QString"/>
+            <Option name="field_iso_format" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -292,12 +292,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="-2147483648" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option name="AllowNull" value="true" type="bool"/>
+            <Option name="Max" value="2147483647" type="int"/>
+            <Option name="Min" value="-2147483648" type="int"/>
+            <Option name="Precision" value="0" type="int"/>
+            <Option name="Step" value="1" type="int"/>
+            <Option name="Style" value="SpinBox" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -306,12 +306,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="-2147483648" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option name="AllowNull" value="true" type="bool"/>
+            <Option name="Max" value="2147483647" type="int"/>
+            <Option name="Min" value="-2147483648" type="int"/>
+            <Option name="Precision" value="0" type="int"/>
+            <Option name="Step" value="1" type="int"/>
+            <Option name="Style" value="SpinBox" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -320,115 +320,115 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option value="" name="CheckedState" type="QString"/>
-            <Option value="" name="UncheckedState" type="QString"/>
+            <Option name="CheckedState" value="" type="QString"/>
+            <Option name="UncheckedState" value="" type="QString"/>
           </Option>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias index="0" name="Identifiant" field="id_voie"/>
-    <alias index="1" name="Typologie" field="typologie"/>
-    <alias index="2" name="Nom de la voie" field="nom"/>
-    <alias index="3" name="Nom complet" field="nom_complet"/>
-    <alias index="4" name="Type de numérotation" field="type_num"/>
-    <alias index="5" name="Statut" field="statut_voie_num"/>
-    <alias index="6" name="Validation de la voie" field="statut_voie"/>
-    <alias index="7" name="Sens de numérotation inversé ?" field="sens_numerotation"/>
-    <alias index="8" name="La plaque est à acheter" field="achat_plaque_voie"/>
-    <alias index="9" name="Nombre de points liés à cette voie" field="nb_point"/>
-    <alias index="10" name="Créateur de la voie" field="createur"/>
-    <alias index="11" name="Date de création" field="date_creation"/>
-    <alias index="12" name="Modificateur de la voie" field="modificateur"/>
-    <alias index="13" name="Date de modification" field="date_modif"/>
-    <alias index="14" name="Longueur (en m)" field="longueur"/>
-    <alias index="15" name="Code fantoir" field="code_fantoir"/>
-    <alias index="16" name="Délibération de la voie" field="delib"/>
+    <alias name="Identifiant" field="id_voie" index="0"/>
+    <alias name="Typologie" field="typologie" index="1"/>
+    <alias name="Nom de la voie" field="nom" index="2"/>
+    <alias name="Nom complet" field="nom_complet" index="3"/>
+    <alias name="Type de numérotation" field="type_num" index="4"/>
+    <alias name="Statut" field="statut_voie_num" index="5"/>
+    <alias name="Validation de la voie" field="statut_voie" index="6"/>
+    <alias name="Sens de numérotation inversé ?" field="sens_numerotation" index="7"/>
+    <alias name="La plaque est à acheter" field="achat_plaque_voie" index="8"/>
+    <alias name="Nombre de points liés à cette voie" field="nb_point" index="9"/>
+    <alias name="Créateur de la voie" field="createur" index="10"/>
+    <alias name="Date de création" field="date_creation" index="11"/>
+    <alias name="Modificateur de la voie" field="modificateur" index="12"/>
+    <alias name="Date de modification" field="date_modif" index="13"/>
+    <alias name="Longueur (en m)" field="longueur" index="14"/>
+    <alias name="Code fantoir" field="code_fantoir" index="15"/>
+    <alias name="Délibération de la voie" field="delib" index="16"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" expression="" field="id_voie"/>
-    <default applyOnUpdate="0" expression="" field="typologie"/>
-    <default applyOnUpdate="0" expression="" field="nom"/>
-    <default applyOnUpdate="0" expression="" field="nom_complet"/>
-    <default applyOnUpdate="0" expression="" field="type_num"/>
-    <default applyOnUpdate="0" expression="" field="statut_voie_num"/>
-    <default applyOnUpdate="0" expression="" field="statut_voie"/>
-    <default applyOnUpdate="0" expression="" field="sens_numerotation"/>
-    <default applyOnUpdate="0" expression="" field="achat_plaque_voie"/>
-    <default applyOnUpdate="0" expression="" field="nb_point"/>
-    <default applyOnUpdate="0" expression="" field="createur"/>
-    <default applyOnUpdate="0" expression="" field="date_creation"/>
-    <default applyOnUpdate="0" expression="" field="modificateur"/>
-    <default applyOnUpdate="0" expression="" field="date_modif"/>
-    <default applyOnUpdate="0" expression="" field="longueur"/>
-    <default applyOnUpdate="0" expression="" field="code_fantoir"/>
-    <default applyOnUpdate="0" expression="" field="delib"/>
+    <default applyOnUpdate="0" field="id_voie" expression=""/>
+    <default applyOnUpdate="0" field="typologie" expression=""/>
+    <default applyOnUpdate="0" field="nom" expression=""/>
+    <default applyOnUpdate="0" field="nom_complet" expression=""/>
+    <default applyOnUpdate="0" field="type_num" expression=""/>
+    <default applyOnUpdate="0" field="statut_voie_num" expression=""/>
+    <default applyOnUpdate="0" field="statut_voie" expression=""/>
+    <default applyOnUpdate="0" field="sens_numerotation" expression=""/>
+    <default applyOnUpdate="0" field="achat_plaque_voie" expression=""/>
+    <default applyOnUpdate="0" field="nb_point" expression=""/>
+    <default applyOnUpdate="0" field="createur" expression=""/>
+    <default applyOnUpdate="0" field="date_creation" expression=""/>
+    <default applyOnUpdate="0" field="modificateur" expression=""/>
+    <default applyOnUpdate="0" field="date_modif" expression=""/>
+    <default applyOnUpdate="0" field="longueur" expression=""/>
+    <default applyOnUpdate="0" field="code_fantoir" expression=""/>
+    <default applyOnUpdate="0" field="delib" expression=""/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" unique_strength="1" constraints="3" notnull_strength="1" field="id_voie"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="1" notnull_strength="1" field="typologie"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="1" notnull_strength="1" field="nom"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="nom_complet"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="1" notnull_strength="2" field="type_num"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="1" notnull_strength="1" field="statut_voie_num"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="1" notnull_strength="1" field="statut_voie"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="1" notnull_strength="1" field="sens_numerotation"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="1" notnull_strength="1" field="achat_plaque_voie"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="nb_point"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="createur"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="date_creation"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="modificateur"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="date_modif"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="longueur"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="code_fantoir"/>
-    <constraint exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0" field="delib"/>
+    <constraint constraints="3" unique_strength="1" exp_strength="0" field="id_voie" notnull_strength="1"/>
+    <constraint constraints="1" unique_strength="0" exp_strength="0" field="typologie" notnull_strength="1"/>
+    <constraint constraints="1" unique_strength="0" exp_strength="0" field="nom" notnull_strength="1"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="nom_complet" notnull_strength="0"/>
+    <constraint constraints="1" unique_strength="0" exp_strength="0" field="type_num" notnull_strength="2"/>
+    <constraint constraints="1" unique_strength="0" exp_strength="0" field="statut_voie_num" notnull_strength="1"/>
+    <constraint constraints="1" unique_strength="0" exp_strength="0" field="statut_voie" notnull_strength="1"/>
+    <constraint constraints="1" unique_strength="0" exp_strength="0" field="sens_numerotation" notnull_strength="1"/>
+    <constraint constraints="1" unique_strength="0" exp_strength="0" field="achat_plaque_voie" notnull_strength="1"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="nb_point" notnull_strength="0"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="createur" notnull_strength="0"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="date_creation" notnull_strength="0"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="modificateur" notnull_strength="0"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="date_modif" notnull_strength="0"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="longueur" notnull_strength="0"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="code_fantoir" notnull_strength="0"/>
+    <constraint constraints="0" unique_strength="0" exp_strength="0" field="delib" notnull_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" desc="" field="id_voie"/>
-    <constraint exp="" desc="" field="typologie"/>
-    <constraint exp="" desc="" field="nom"/>
-    <constraint exp="" desc="" field="nom_complet"/>
-    <constraint exp="" desc="" field="type_num"/>
-    <constraint exp="" desc="" field="statut_voie_num"/>
-    <constraint exp="" desc="" field="statut_voie"/>
-    <constraint exp="" desc="" field="sens_numerotation"/>
-    <constraint exp="" desc="" field="achat_plaque_voie"/>
-    <constraint exp="" desc="" field="nb_point"/>
-    <constraint exp="" desc="" field="createur"/>
-    <constraint exp="" desc="" field="date_creation"/>
-    <constraint exp="" desc="" field="modificateur"/>
-    <constraint exp="" desc="" field="date_modif"/>
-    <constraint exp="" desc="" field="longueur"/>
-    <constraint exp="" desc="" field="code_fantoir"/>
-    <constraint exp="" desc="" field="delib"/>
+    <constraint field="id_voie" exp="" desc=""/>
+    <constraint field="typologie" exp="" desc=""/>
+    <constraint field="nom" exp="" desc=""/>
+    <constraint field="nom_complet" exp="" desc=""/>
+    <constraint field="type_num" exp="" desc=""/>
+    <constraint field="statut_voie_num" exp="" desc=""/>
+    <constraint field="statut_voie" exp="" desc=""/>
+    <constraint field="sens_numerotation" exp="" desc=""/>
+    <constraint field="achat_plaque_voie" exp="" desc=""/>
+    <constraint field="nb_point" exp="" desc=""/>
+    <constraint field="createur" exp="" desc=""/>
+    <constraint field="date_creation" exp="" desc=""/>
+    <constraint field="modificateur" exp="" desc=""/>
+    <constraint field="date_modif" exp="" desc=""/>
+    <constraint field="longueur" exp="" desc=""/>
+    <constraint field="code_fantoir" exp="" desc=""/>
+    <constraint field="delib" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" sortExpression="" actionWidgetStyle="dropDown">
+  <attributetableconfig actionWidgetStyle="dropDown" sortOrder="0" sortExpression="">
     <columns>
-      <column width="-1" hidden="0" name="id_voie" type="field"/>
-      <column width="-1" hidden="0" name="typologie" type="field"/>
-      <column width="-1" hidden="0" name="nom" type="field"/>
-      <column width="-1" hidden="0" name="nom_complet" type="field"/>
-      <column width="-1" hidden="0" name="type_num" type="field"/>
-      <column width="-1" hidden="0" name="statut_voie_num" type="field"/>
-      <column width="124" hidden="0" name="statut_voie" type="field"/>
-      <column width="-1" hidden="0" name="achat_plaque_voie" type="field"/>
-      <column width="-1" hidden="0" name="nb_point" type="field"/>
-      <column width="-1" hidden="0" name="createur" type="field"/>
-      <column width="-1" hidden="0" name="date_creation" type="field"/>
-      <column width="-1" hidden="0" name="modificateur" type="field"/>
-      <column width="-1" hidden="0" name="date_modif" type="field"/>
-      <column width="-1" hidden="0" name="longueur" type="field"/>
-      <column width="-1" hidden="0" name="code_fantoir" type="field"/>
-      <column width="-1" hidden="0" name="delib" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" hidden="0" name="sens_numerotation" type="field"/>
+      <column name="id_voie" type="field" width="-1" hidden="0"/>
+      <column name="typologie" type="field" width="-1" hidden="0"/>
+      <column name="nom" type="field" width="-1" hidden="0"/>
+      <column name="nom_complet" type="field" width="-1" hidden="0"/>
+      <column name="type_num" type="field" width="-1" hidden="0"/>
+      <column name="statut_voie_num" type="field" width="-1" hidden="0"/>
+      <column name="statut_voie" type="field" width="124" hidden="0"/>
+      <column name="achat_plaque_voie" type="field" width="-1" hidden="0"/>
+      <column name="nb_point" type="field" width="-1" hidden="0"/>
+      <column name="createur" type="field" width="-1" hidden="0"/>
+      <column name="date_creation" type="field" width="-1" hidden="0"/>
+      <column name="modificateur" type="field" width="-1" hidden="0"/>
+      <column name="date_modif" type="field" width="-1" hidden="0"/>
+      <column name="longueur" type="field" width="-1" hidden="0"/>
+      <column name="code_fantoir" type="field" width="-1" hidden="0"/>
+      <column name="delib" type="field" width="-1" hidden="0"/>
+      <column type="actions" width="-1" hidden="1"/>
+      <column name="sens_numerotation" type="field" width="-1" hidden="0"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -458,30 +458,30 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorContainer groupBox="0" visibilityExpressionEnabled="0" name="Voie" visibilityExpression="" showLabel="1" columnCount="1">
-      <attributeEditorContainer groupBox="1" visibilityExpressionEnabled="0" name="Création d'une voie" visibilityExpression="" showLabel="1" columnCount="1">
-        <attributeEditorField index="0" name="id_voie" showLabel="1"/>
-        <attributeEditorField index="1" name="typologie" showLabel="1"/>
-        <attributeEditorField index="2" name="nom" showLabel="1"/>
-        <attributeEditorField index="3" name="nom_complet" showLabel="1"/>
-        <attributeEditorField index="4" name="type_num" showLabel="1"/>
-        <attributeEditorField index="5" name="statut_voie_num" showLabel="1"/>
-        <attributeEditorField index="6" name="statut_voie" showLabel="1"/>
-        <attributeEditorField index="-1" name="sens" showLabel="1"/>
-        <attributeEditorField index="8" name="achat_plaque_voie" showLabel="1"/>
-        <attributeEditorField index="16" name="delib" showLabel="1"/>
-        <attributeEditorField index="9" name="nb_point" showLabel="1"/>
-        <attributeEditorField index="14" name="longueur" showLabel="1"/>
+    <attributeEditorContainer columnCount="1" name="Voie" groupBox="0" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
+      <attributeEditorContainer columnCount="1" name="Création d'une voie" groupBox="1" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
+        <attributeEditorField name="id_voie" showLabel="1" index="0"/>
+        <attributeEditorField name="typologie" showLabel="1" index="1"/>
+        <attributeEditorField name="nom" showLabel="1" index="2"/>
+        <attributeEditorField name="nom_complet" showLabel="1" index="3"/>
+        <attributeEditorField name="type_num" showLabel="1" index="4"/>
+        <attributeEditorField name="statut_voie_num" showLabel="1" index="5"/>
+        <attributeEditorField name="statut_voie" showLabel="1" index="6"/>
+        <attributeEditorField name="sens_numerotation" showLabel="1" index="7"/>
+        <attributeEditorField name="achat_plaque_voie" showLabel="1" index="8"/>
+        <attributeEditorField name="delib" showLabel="1" index="16"/>
+        <attributeEditorField name="nb_point" showLabel="1" index="9"/>
+        <attributeEditorField name="longueur" showLabel="1" index="14"/>
       </attributeEditorContainer>
-      <attributeEditorContainer groupBox="1" visibilityExpressionEnabled="0" name="Commune" visibilityExpression="" showLabel="1" columnCount="1">
-        <attributeEditorField index="-1" name="communes" showLabel="1"/>
-        <attributeEditorField index="-1" name="insee" showLabel="1"/>
+      <attributeEditorContainer columnCount="1" name="Commune" groupBox="1" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
+        <attributeEditorField name="communes" showLabel="1" index="-1"/>
+        <attributeEditorField name="insee" showLabel="1" index="-1"/>
       </attributeEditorContainer>
-      <attributeEditorContainer groupBox="1" visibilityExpressionEnabled="0" name="Utilisateurs" visibilityExpression="" showLabel="1" columnCount="1">
-        <attributeEditorField index="10" name="createur" showLabel="1"/>
-        <attributeEditorField index="11" name="date_creation" showLabel="1"/>
-        <attributeEditorField index="12" name="modificateur" showLabel="1"/>
-        <attributeEditorField index="13" name="date_modif" showLabel="1"/>
+      <attributeEditorContainer columnCount="1" name="Utilisateurs" groupBox="1" showLabel="1" visibilityExpressionEnabled="0" visibilityExpression="">
+        <attributeEditorField name="createur" showLabel="1" index="10"/>
+        <attributeEditorField name="date_creation" showLabel="1" index="11"/>
+        <attributeEditorField name="modificateur" showLabel="1" index="12"/>
+        <attributeEditorField name="date_modif" showLabel="1" index="13"/>
       </attributeEditorContainer>
     </attributeEditorContainer>
   </attributeEditorForm>
@@ -508,36 +508,36 @@ def my_form_open(dialog, layer, feature):
     <field name="typologie" editable="1"/>
   </editable>
   <labelOnTop>
-    <field labelOnTop="0" name="achat_plaque_voie"/>
-    <field labelOnTop="0" name="code_fantoir"/>
-    <field labelOnTop="0" name="communes"/>
-    <field labelOnTop="0" name="createur"/>
-    <field labelOnTop="0" name="date_creation"/>
-    <field labelOnTop="0" name="date_modif"/>
-    <field labelOnTop="0" name="delib"/>
-    <field labelOnTop="0" name="id_voie"/>
-    <field labelOnTop="0" name="insee"/>
-    <field labelOnTop="0" name="longueur"/>
-    <field labelOnTop="0" name="modificateur"/>
-    <field labelOnTop="0" name="nb_point"/>
-    <field labelOnTop="0" name="nom"/>
-    <field labelOnTop="0" name="nom_complet"/>
-    <field labelOnTop="0" name="sens"/>
-    <field labelOnTop="0" name="sens_numerotation"/>
-    <field labelOnTop="0" name="statut_voie"/>
-    <field labelOnTop="0" name="statut_voie_num"/>
-    <field labelOnTop="0" name="type_num"/>
-    <field labelOnTop="0" name="typologie"/>
+    <field name="achat_plaque_voie" labelOnTop="0"/>
+    <field name="code_fantoir" labelOnTop="0"/>
+    <field name="communes" labelOnTop="0"/>
+    <field name="createur" labelOnTop="0"/>
+    <field name="date_creation" labelOnTop="0"/>
+    <field name="date_modif" labelOnTop="0"/>
+    <field name="delib" labelOnTop="0"/>
+    <field name="id_voie" labelOnTop="0"/>
+    <field name="insee" labelOnTop="0"/>
+    <field name="longueur" labelOnTop="0"/>
+    <field name="modificateur" labelOnTop="0"/>
+    <field name="nb_point" labelOnTop="0"/>
+    <field name="nom" labelOnTop="0"/>
+    <field name="nom_complet" labelOnTop="0"/>
+    <field name="sens" labelOnTop="0"/>
+    <field name="sens_numerotation" labelOnTop="0"/>
+    <field name="statut_voie" labelOnTop="0"/>
+    <field name="statut_voie_num" labelOnTop="0"/>
+    <field name="type_num" labelOnTop="0"/>
+    <field name="typologie" labelOnTop="0"/>
   </labelOnTop>
   <widgets>
     <widget name="point_adre_id_voie_voie_61bde_id_voie">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option name="nm-rel" value="" type="QString"/>
       </config>
     </widget>
     <widget name="point_adre_id_voie_voie_77a8b_id_voie">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option name="nm-rel" value="" type="QString"/>
       </config>
     </widget>
   </widgets>
