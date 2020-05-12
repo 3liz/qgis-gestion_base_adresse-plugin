@@ -41,22 +41,28 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         parameter = QgsProcessingParameterString(
             self.INPUT, "Champ qui ne sert à rien !", optional=True
         )
-        parameter.setFlags(parameter.flags() | QgsProcessingParameterDefinition.FlagHidden)
+        parameter.setFlags(
+            parameter.flags() | QgsProcessingParameterDefinition.FlagHidden
+        )
         self.addParameter(parameter)
 
         # OUTPUTS
-        self.addOutput(QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie")))
+
+        self.addOutput(
+            QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
+        )
 
     def processAlgorithm(self, parameters, context, feedback):
+        _ = parameters
         msg = ""
         layers_name = ["commune", "voie", "point_adresse", "parcelle"]
 
         for x in layers_name:
-            layer = context.project().mapLayersByName(x)
-            if layer:
-                for l in layer:
-                    feedback.pushInfo(l.name() + ", qml loaded")
-                    l.loadNamedStyle(resources_path("qml", x + ".qml"))
+            layers = context.project().mapLayersByName(x)
+            if layers:
+                for layer in layers:
+                    feedback.pushInfo(layer.name() + ", qml loaded")
+                    layer.loadNamedStyle(resources_path("qml", x + ".qml"))
                     feedback.pushInfo("Style for " + x + " successfully loaded")
                     msg = msg + " // Style for " + x + " successfully loaded"
 
