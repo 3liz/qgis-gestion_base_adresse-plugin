@@ -95,7 +95,8 @@ CREATE TABLE adresse.document (
     nom_doc text,
     date_doc character(5),
     type_document text,
-    id_commune integer
+    id_commune integer,
+    lien text
 );
 
 

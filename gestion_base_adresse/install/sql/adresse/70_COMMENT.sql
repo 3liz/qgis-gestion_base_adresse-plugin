@@ -88,6 +88,10 @@ COMMENT ON COLUMN adresse.commune.date_ban IS 'Date d’envoi des données dans 
 COMMENT ON COLUMN adresse.commune.geom IS 'Geometrie de l''objet';
 
 
+-- document.lien
+COMMENT ON COLUMN adresse.document.lien IS 'Lien du document ou il est enregister';
+
+
 -- point_adresse.id_point
 COMMENT ON COLUMN adresse.point_adresse.id_point IS 'Identifiant unique du point adresse';
 
