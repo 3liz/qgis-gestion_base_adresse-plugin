@@ -89,7 +89,7 @@ COMMENT ON COLUMN adresse.commune.geom IS 'Geometrie de l''objet';
 
 
 -- document.lien
-COMMENT ON COLUMN adresse.document.lien IS 'Lien du document ou il est enregister';
+COMMENT ON COLUMN adresse.document.lien IS 'Chemin de stockage du document';
 
 
 -- point_adresse.id_point
@@ -255,4 +255,3 @@ COMMENT ON COLUMN adresse.metadata.me_version_date IS 'Date de la version. Ex: 2
 --
 -- PostgreSQL database dump complete
 --
-
