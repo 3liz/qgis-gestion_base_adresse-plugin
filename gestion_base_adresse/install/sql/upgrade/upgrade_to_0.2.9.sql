@@ -32,4 +32,7 @@ CREATE TRIGGER get_commune
     ON adresse.voie
     FOR EACH ROW
     EXECUTE PROCEDURE adresse.update_commune();
+
+ALTER TABLE adresse.document ADD COLUMN lien text;
+COMMENT ON COLUMN adresse.document.lien IS 'Chemin de stockage du document';
 COMMIT;

@@ -88,6 +88,10 @@ COMMENT ON COLUMN adresse.commune.date_ban IS 'Date d’envoi des données dans 
 COMMENT ON COLUMN adresse.commune.geom IS 'Geometrie de l''objet';
 
 
+-- document.lien
+COMMENT ON COLUMN adresse.document.lien IS 'Chemin de stockage du document';
+
+
 -- point_adresse.id_point
 COMMENT ON COLUMN adresse.point_adresse.id_point IS 'Identifiant unique du point adresse';
 
@@ -251,4 +255,3 @@ COMMENT ON COLUMN adresse.metadata.me_version_date IS 'Date de la version. Ex: 2
 --
 -- PostgreSQL database dump complete
 --
-
