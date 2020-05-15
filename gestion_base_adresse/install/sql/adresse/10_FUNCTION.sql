@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
--- Dumped by pg_dump version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
+-- Dumped from database version 9.6.17
+-- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -88,7 +88,7 @@ BEGIN
         IF numb - 2 >0 THEN
             numc =  numb - 2;
         ELSIF numb - 2 <= 0 THEN
-            test = false;
+						test = false;
             FOREACH rec IN ARRAY suff LOOP
                 IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numb AND p.suffixe = rec) IS NULL AND NOT test THEN
                     test = true;
@@ -417,3 +417,4 @@ $$;
 --
 -- PostgreSQL database dump complete
 --
+
