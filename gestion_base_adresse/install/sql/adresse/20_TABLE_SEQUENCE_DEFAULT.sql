@@ -93,7 +93,7 @@ ALTER SEQUENCE adresse.commune_id_com_seq OWNED BY adresse.commune.id_com;
 CREATE TABLE adresse.document (
     id_doc integer NOT NULL,
     nom_doc text,
-    date_doc character(5),
+    date_doc date,
     type_document text,
     id_commune integer,
     lien text
