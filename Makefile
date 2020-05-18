@@ -12,7 +12,14 @@ stop_tests:
 
 tests: start_tests run_tests stop_tests
 
+schemaspy:
+	@cd .docker && ./start.sh
+	@cd .docker && ./install_db.sh
+	@cd .docker &&  ./schemaspy.sh
+	@cd .docker && ./stop.sh
+
 reformat_sql:
 	@cd .docker && ./start.sh
+	@cd .docker && ./install_db.sh
 	@cd .docker && ./reformat_sql_install.sh
 	@cd .docker && ./stop.sh

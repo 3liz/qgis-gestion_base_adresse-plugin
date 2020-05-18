@@ -15,11 +15,10 @@ docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_
 docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_adresse/test/data/install/sql/adresse/70_COMMENT.sql" > /dev/null
 
 echo 'Run migrations'
-docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_adresse/install/sql/upgrade/upgrade_to_0.2.4.sql" > /dev/null
-docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_adresse/install/sql/upgrade/upgrade_to_0.2.5.sql" > /dev/null
-docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_adresse/install/sql/upgrade/upgrade_to_0.2.7.sql" > /dev/null
-docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_adresse/install/sql/upgrade/upgrade_to_0.2.8.sql" > /dev/null
-docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_adresse/install/sql/upgrade/upgrade_to_0.2.9.sql" > /dev/null
+for migration in `ls -v ../gestion_base_adresse/install/sql/upgrade/*.sql`; do
+  echo "${migration}"
+  docker exec qgis bash -c "psql service=adresse -f /tests_directory/gestion_base_adresse/${migration}" > /dev/null;
+  done;
 
 echo 'Generate doc'
 docker exec qgis bash -c "apt-get install -y rename" > /dev/null
