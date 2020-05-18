@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>qgistest Database</title>
+        <title>gis Database</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -46,7 +46,7 @@
                 <nav class="navbar navbar-static-top">
                     <div class="container">
                         <div class="navbar-header">
-                            <a href="index.html" class="navbar-brand"><b>qgistest</b> Database</a>
+                            <a href="index.html" class="navbar-brand"><b>gis</b> Database</a>
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
                         </div>
 
@@ -96,6 +96,141 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td><a href="routines/get_id_voie.html">get_id_voie</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>integer</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/calcul_point_position.html">calcul_point_position</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>boolean</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/update_full_name.html">update_full_name</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/calcul_num_metrique.html">calcul_num_metrique</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>SETOF record</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/calcul_num_adr.html">calcul_num_adr</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>SETOF record</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/calcul_point_voie.html">calcul_point_voie</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/trigger_point_adr.html">trigger_point_adr</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/update_commune.html">update_commune</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/check_num_exist.html">check_num_exist</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>boolean</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/voie_nom_complet.html">voie_nom_complet</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/modif_update.html">modif_update</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/modif_createur.html">modif_createur</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/update_adr_complete.html">update_adr_complete</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/longueur_voie.html">longueur_voie</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/calcul_segment_proche.html">calcul_segment_proche</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>geometry</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
