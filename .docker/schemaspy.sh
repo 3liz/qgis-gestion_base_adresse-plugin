@@ -2,8 +2,13 @@
 
 docker run \
   -v "${PWD}/../docs:/output" \
-  -v "${PWD}/schemaspy.properties:/schemaspy.properties" \
   --network=docker_adress_network \
   etrimaille/docker-schemaspy-pg:latest \
-  -dp /driver \
-  -pfp adresse
+  -t pgsql-mat \
+  -dp /drivers \
+  -host db \
+  -db gis \
+  -u docker \
+  -p docker \
+  -port 5432 \
+  -s adresse

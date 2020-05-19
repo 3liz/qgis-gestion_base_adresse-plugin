@@ -14,6 +14,8 @@ tests: start_tests run_tests stop_tests
 
 schemaspy:
 	@cd .docker && ./start.sh
+	rm -rf docs/
+	mkdir docs/
 	@cd .docker && ./install_db.sh
 	@cd .docker && ./schemaspy.sh
 	@cd .docker && ./stop.sh
