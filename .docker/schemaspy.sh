@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
+export $(grep -v '^#' .env | xargs)
 
 docker run \
   -v "${PWD}/../docs:/output" \
-  -v "${PWD}/schemaspy.properties:/schemaspy.properties" \
-  --network=docker_adress_network \
+  --network=docker_${NETWORK} \
   etrimaille/docker-schemaspy-pg:latest \
-  -dp /driver \
-  -pfp adresse
+  -t pgsql-mat \
+  -dp /drivers \
+  -host db \
+  -db gis \
+  -u docker \
+  -p docker \
+  -port 5432 \
+  -s ${SCHEMA}
