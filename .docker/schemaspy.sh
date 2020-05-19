@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 SCHEMA="adresse"
+NETWORK="plugin_adresse_network"
 
 docker run \
   -v "${PWD}/../docs:/output" \
-  --network=docker_plugin_adresse_network \
+  --network=docker_${NETWORK} \
   etrimaille/docker-schemaspy-pg:latest \
   -t pgsql-mat \
   -dp /drivers \
