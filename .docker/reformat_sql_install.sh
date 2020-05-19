@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-SCHEMA="adresse"
-PLUGIN_NAME="gestion_base_adresse"
+export $(grep -v '^#' .env | xargs)
 
 docker exec qgis bash -c "apt-get install -y rename" > /dev/null
 

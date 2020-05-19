@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-SCHEMA="adresse"
-NETWORK="plugin_adresse_network"
+export $(grep -v '^#' .env | xargs)
 
 docker run \
   -v "${PWD}/../docs:/output" \

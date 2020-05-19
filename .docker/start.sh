@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-PLUGIN_NAME="gestion_base_adresse"
+export $(grep -v '^#' .env | xargs)
 
 docker-compose up -d --force-recreate
 echo "Wait 10 seconds"

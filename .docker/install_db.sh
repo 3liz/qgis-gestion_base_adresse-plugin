@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-SCHEMA="adresse"
-PLUGIN_NAME="gestion_base_adresse"
+export $(grep -v '^#' .env | xargs)
 
 docker cp pg_service.conf qgis:/etc/postgresql-common/
 

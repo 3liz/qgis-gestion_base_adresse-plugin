@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  plugin_adresse_network:
+  qgis_plugin_network:
 
 services:
   db:
@@ -9,7 +9,7 @@ services:
     hostname: db
     container_name: postgis
     networks:
-      plugin_adresse_network:
+      qgis_plugin_network:
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASS=docker
@@ -26,10 +26,10 @@ services:
     image: qgis/qgis:release-3_4
     container_name: qgis
     networks:
-      plugin_adresse_network:
+      qgis_plugin_network:
     volumes:
       # - /tmp/.X11-unix:/tmp/.X11-unix
-      - ../gestion_base_adresse:/tests_directory/gestion_base_adresse
+      - ../${PLUGIN_NAME}:/tests_directory/${PLUGIN_NAME}
     environment:
       # - DISPLAY=unix$DISPLAY
       - DISPLAY=:99

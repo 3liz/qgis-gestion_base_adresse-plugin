@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-SCHEMA="adresse"
-PLUGIN_NAME="gestion_base_adresse"
-INSTALL_VERSION="0.2.3"
+export $(grep -v '^#' .env | xargs)
 
 echo "Installing the service file"
 docker cp pg_service.conf qgis:/etc/postgresql-common/
