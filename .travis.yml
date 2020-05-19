@@ -30,6 +30,15 @@ jobs:
         - ./start.sh
       script:
         - ./install_migrate_generate.sh
+      after_success:
+        - ./schemaspy.sh
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: ${GH_TOKEN}
+        keep_history: true
+        on:
+          branch: master
 
     - stage: Deploy
       if: tag IS present
