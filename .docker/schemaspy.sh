@@ -11,5 +11,5 @@ docker run \
   -u docker \
   -p docker \
   -port 5432 \
-  -debug \
+  # -debug \
   -s adresse
