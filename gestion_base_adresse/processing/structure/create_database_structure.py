@@ -14,10 +14,11 @@ from qgis.core import (
     QgsProcessingException,
 )
 
-from ..processing_tools import fetchDataFromSqlQuery
-
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
-from ...qgis_plugin_tools.tools.database import available_migrations
+from ...qgis_plugin_tools.tools.database import (
+    available_migrations,
+    fetch_data_from_sql_query,
+)
 from ...qgis_plugin_tools.tools.i18n import tr
 from ...qgis_plugin_tools.tools.resources import plugin_test_data_path, plugin_path
 from ...qgis_plugin_tools.tools.version import version
@@ -27,7 +28,7 @@ SCHEMA = "adresse"
 
 class CreateDatabaseStructure(BaseProcessingAlgorithm):
     """
-    Création de la structure sur la base de données
+    Creation of the database structure from scratch.
     """
 
     CONNECTION_NAME = "CONNECTION_NAME"
@@ -120,7 +121,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         """.format(
             SCHEMA
         )
-        _, data, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
+        _, data, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
         if not ok:
             return ok, error_message
 
@@ -148,7 +149,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             feedback.pushInfo(tr("Essai de suppression du schéma {}…").format(SCHEMA))
             sql = "DROP SCHEMA IF EXISTS {} CASCADE;".format(SCHEMA)
 
-            _, _, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
+            _, _, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
             if ok:
                 feedback.pushInfo(tr("Le schéma {} a été supprimé.").format(SCHEMA))
             else:
@@ -202,7 +203,9 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
                     feedback.pushInfo("  Skipped (empty file)")
                     continue
 
-                _, _, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
+                _, _, _, ok, error_message = fetch_data_from_sql_query(
+                    connection_name, sql
+                )
                 if ok:
                     feedback.pushInfo("  Success !")
                 else:
@@ -228,7 +231,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             SCHEMA, metadata_version
         )
 
-        fetchDataFromSqlQuery(connection_name, sql)
+        fetch_data_from_sql_query(connection_name, sql)
         feedback.pushInfo(
             "Version de la base de données '{}'.".format(metadata_version)
         )
