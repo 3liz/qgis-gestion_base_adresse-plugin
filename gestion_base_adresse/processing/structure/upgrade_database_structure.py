@@ -14,9 +14,11 @@ from qgis.core import (
     QgsExpressionContextUtils,
 )
 
-from ..processing_tools import fetchDataFromSqlQuery
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
-from ...qgis_plugin_tools.tools.database import available_migrations
+from ...qgis_plugin_tools.tools.database import (
+    available_migrations,
+    fetch_data_from_sql_query,
+)
 from ...qgis_plugin_tools.tools.i18n import tr
 from ...qgis_plugin_tools.tools.resources import plugin_path
 from ...qgis_plugin_tools.tools.version import format_version_integer, version
@@ -110,7 +112,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         connection_name = self.parameterAsString(
             parameters, self.CONNECTION_NAME, context
         )
-        _, data, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
+        _, data, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
         if not ok:
             return ok, error_message
 
@@ -144,7 +146,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         """.format(
             SCHEMA
         )
-        _, data, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
+        _, data, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
         if not ok:
             raise QgsProcessingException(error_message)
 
@@ -211,7 +213,9 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                     SCHEMA, new_db_version
                 )
 
-                _, _, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
+                _, _, _, ok, error_message = fetch_data_from_sql_query(
+                    connection_name, sql
+                )
                 if not ok:
                     raise QgsProcessingException(error_message)
 
@@ -226,7 +230,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             SCHEMA, plugin_version
         )
 
-        _, _, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
+        _, _, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
         if not ok:
             raise QgsProcessingException(error_message)
 
