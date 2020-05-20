@@ -16,9 +16,10 @@ from qgis.core import (
 
 from ..processing_tools import fetchDataFromSqlQuery
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.database import available_migrations
 from ...qgis_plugin_tools.tools.i18n import tr
-from ...qgis_plugin_tools.tools.resources import metadata_config, plugin_path
-from ...qgis_plugin_tools.tools.version import format_version_integer
+from ...qgis_plugin_tools.tools.resources import plugin_path
+from ...qgis_plugin_tools.tools.version import format_version_integer, version
 
 
 class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
@@ -41,7 +42,9 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         return "adresse_structure"
 
     def shortHelpString(self):
-        return tr("Mise à jour de la base de données suite à une nouvelle version de l'extension.")
+        return tr(
+            "Mise à jour de la base de données suite à une nouvelle version de l'extension."
+        )
 
     def initAlgorithm(self, config):
         # INPUTS
@@ -72,9 +75,12 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             )
         )
         # OUTPUTS
-        # Add output for status (integer) and message (string)
-        self.addOutput(QgsProcessingOutputNumber(self.OUTPUT_STATUS, tr("Output status")))
-        self.addOutput(QgsProcessingOutputString(self.OUTPUT_STRING, tr("Output message")))
+        self.addOutput(
+            QgsProcessingOutputNumber(self.OUTPUT_STATUS, tr("Output status"))
+        )
+        self.addOutput(
+            QgsProcessingOutputString(self.OUTPUT_STRING, tr("Output message"))
+        )
 
     def checkParameterValues(self, parameters, context):
         # Check if runit is checked
@@ -89,9 +95,12 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         if not ok:
             return False, msg
 
-        return super(UpgradeDatabaseStructure, self).checkParameterValues(parameters, context)
+        return super(UpgradeDatabaseStructure, self).checkParameterValues(
+            parameters, context
+        )
 
     def checkSchema(self, parameters, context):
+        _ = context
         sql = """
             SELECT schema_name
             FROM information_schema.schemata
@@ -111,20 +120,17 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         return ok, msg
 
     def processAlgorithm(self, parameters, context, feedback):
-        """
-        Here is where the processing itself takes place.
-        """
-        connection_name = parameters[self.CONNECTION_NAME]
+        connection_name = self.parameterAsString(
+            parameters, self.CONNECTION_NAME, context
+        )
 
         # Drop schema if needed
         runit = self.parameterAsBool(parameters, self.RUNIT, context)
         if not runit:
-            status = 0
             msg = tr("Vous devez cocher cette case pour réaliser la mise à jour !")
-            # raise Exception(msg)
-            return {self.OUTPUT_STATUS: status, self.OUTPUT_STRING: msg}
+            raise QgsProcessingException(msg)
 
-        # get database version
+        # Get database version
         sql = """
             SELECT me_version
             FROM adresse.metadata
@@ -134,7 +140,6 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         """
         _, data, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
         if not ok:
-            feedback.reportError(error_message)
             raise QgsProcessingException(error_message)
 
         db_version = None
@@ -144,12 +149,26 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             error_message = tr("Aucune version trouvée dans la base de données !")
             raise QgsProcessingException(error_message)
 
-        feedback.pushInfo(tr("Version de la base de données") + " = {}".format(db_version))
+        feedback.pushInfo(
+            tr("Version de la base de données") + " = {}".format(db_version)
+        )
 
-        # get plugin version
-        plugin_version = metadata_config()["general"]["version"]
-        plugin_version = plugin_version.replace("-beta", "")
-        feedback.pushInfo(tr("Version du plugin") + " = {}".format(plugin_version))
+        # Get plugin version
+        plugin_version = version()
+        if plugin_version in ["master", "dev"]:
+            migrations = available_migrations(000000)
+            last_migration = migrations[-1]
+            plugin_version = (
+                last_migration.replace("upgrade_to_", "").replace(".sql", "").strip()
+            )
+            feedback.reportError(
+                "Be careful, running the migrations on a development branch!"
+            )
+            feedback.reportError(
+                "Latest available migration is {}".format(plugin_version)
+            )
+        else:
+            feedback.pushInfo(tr("Version du plugin") + " = {}".format(plugin_version))
 
         # Return if nothing to do
         if db_version == plugin_version:
@@ -161,23 +180,8 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                 ),
             }
 
-        # Get all the upgrade SQL files between db versions and plugin version
-        upgrade_dir = os.path.join(plugin_path(), "install/sql/upgrade/")
-        get_files = [
-            f for f in os.listdir(upgrade_dir) if os.path.isfile(os.path.join(upgrade_dir, f))
-        ]
-        files = []
         db_version_integer = format_version_integer(db_version)
-        for f in get_files:
-            k = format_version_integer(f.replace("upgrade_to_", "").replace(".sql", "").strip())
-            if k > db_version_integer:
-                files.append([k, f])
-
-        def getKey(item):
-            return item[0]
-
-        sfiles = sorted(files, key=getKey)
-        sql_files = [s[1] for s in sfiles]
+        sql_files = available_migrations(db_version_integer)
 
         # Loop sql files and run SQL code
         for sf in sql_files:
@@ -189,7 +193,9 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                     continue
 
                 # Add SQL database version in adresse.metadata
-                new_db_version = sf.replace("upgrade_to_", "").replace(".sql", "").strip()
+                new_db_version = (
+                    sf.replace("upgrade_to_", "").replace(".sql", "").strip()
+                )
                 feedback.pushInfo("* NOUVELLE VERSION BDD " + new_db_version)
                 sql += (
                     """
