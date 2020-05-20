@@ -12,7 +12,7 @@ from qgis.core import (
 )
 from qgis.testing import unittest
 
-from ..processing.provider import GestionAdresseProvider
+from ..processing.provider import GestionAdresseProvider as ProcessingProvider
 from ..qgis_plugin_tools.tools.database import available_migrations
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
 
@@ -20,6 +20,9 @@ __copyright__ = "Copyright 2019, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
+
+SCHEMA = "adresse"
+VERSION = "0.2.3"
 
 
 class TestProcessing(unittest.TestCase):
@@ -36,28 +39,28 @@ class TestProcessing(unittest.TestCase):
 
     def test_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
-        VERSION = "0.2.3"
-        provider = GestionAdresseProvider()
+        provider = ProcessingProvider()
         QgsApplication.processingRegistry().addProvider(provider)
 
         feedback = LoggerProcessingFeedBack()
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,
-            "ADDTESTDATA": True,
+            "ADD_TEST_DATA": True,
         }
 
-        os.environ["TEST_DATABASE_INSTALL_ADRESSE"] = VERSION
+        os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())] = VERSION
+        alg = "{}:create_database_structure".format(provider.id())
         try:
-            processing_output = processing.run(
-                "gestion_adresse:create_database_structure", params, feedback=feedback
-            )
+            processing_output = processing.run(alg, params, feedback=feedback)
         except QgsProcessingException as e:
             self.assertTrue(False, e)
-        del os.environ["TEST_DATABASE_INSTALL_ADRESSE"]
+        del os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())]
 
         self.cursor.execute(
-            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
+                SCHEMA
+            )
         )
         records = self.cursor.fetchall()
         result = [r[0] for r in records]
@@ -80,20 +83,21 @@ class TestProcessing(unittest.TestCase):
 
         sql = """
             SELECT me_version
-            FROM adresse.metadata
+            FROM {}.metadata
             WHERE me_status = 1
             ORDER BY me_version_date DESC
             LIMIT 1;
-        """
+        """.format(
+            SCHEMA
+        )
         self.cursor.execute(sql)
         record = self.cursor.fetchone()
         self.assertEqual(VERSION, record[0])
 
         feedback.pushDebugInfo("Update the database")
-        params = {"CONNECTION_NAME": "test", "RUNIT": True}
-        results = processing.run(
-            "gestion_adresse:upgrade_database_structure", params, feedback=feedback
-        )
+        params = {"CONNECTION_NAME": "test", "RUN_MIGRATIONS": True}
+        alg = "{}:upgrade_database_structure".format(provider.id())
+        results = processing.run(alg, params, feedback=feedback)
         self.assertEqual(1, results["OUTPUT_STATUS"], 1)
         self.assertEqual(
             "*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***",
@@ -102,11 +106,13 @@ class TestProcessing(unittest.TestCase):
 
         sql = """
             SELECT me_version
-            FROM adresse.metadata
+            FROM {}.metadata
             WHERE me_status = 1
             ORDER BY me_version_date DESC
             LIMIT 1;
-        """
+        """.format(
+            SCHEMA
+        )
         self.cursor.execute(sql)
         record = self.cursor.fetchone()
 
@@ -118,7 +124,9 @@ class TestProcessing(unittest.TestCase):
         self.assertEqual(metadata_version, record[0])
 
         self.cursor.execute(
-            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
+                SCHEMA
+            )
         )
         records = self.cursor.fetchall()
         result = [r[0] for r in records]
@@ -139,7 +147,7 @@ class TestProcessing(unittest.TestCase):
 
     def test_load_structure_without_migrations(self):
         """Test we can load the PostGIS structure without migrations."""
-        provider = GestionAdresseProvider()
+        provider = ProcessingProvider()
         QgsApplication.processingRegistry().addProvider(provider)
 
         feedback = LoggerProcessingFeedBack()
@@ -154,15 +162,16 @@ class TestProcessing(unittest.TestCase):
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,  # Must be true, for the time in the test.
-            "ADDTESTDATA": True,
+            "ADD_TEST_DATA": True,
         }
 
-        processing.run(
-            "gestion_adresse:create_database_structure", params, feedback=feedback
-        )
+        alg = "{}:create_database_structure".format(provider.id())
+        processing.run(alg, params, feedback=feedback)
 
         self.cursor.execute(
-            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
+                SCHEMA
+            )
         )
         records = self.cursor.fetchall()
         result = [r[0] for r in records]
@@ -188,9 +197,7 @@ class TestProcessing(unittest.TestCase):
         }
 
         with self.assertRaises(QgsProcessingException):
-            processing.run(
-                "gestion_adresse:create_database_structure", params, feedback=feedback
-            )
+            processing.run(alg, params, feedback=feedback)
 
         expected = (
             "Unable to execute algorithm\nLe schéma existe déjà dans la base de données ! Si "
@@ -200,10 +207,9 @@ class TestProcessing(unittest.TestCase):
         self.assertEqual(expected, feedback.last)
 
         feedback.pushDebugInfo("Update the database")
-        params = {"CONNECTION_NAME": "test", "RUNIT": True}
-        results = processing.run(
-            "gestion_adresse:upgrade_database_structure", params, feedback=feedback
-        )
+        params = {"CONNECTION_NAME": "test", "RUN_MIGRATIONS": True}
+        alg = "{}:upgrade_database_structure".format(provider.id())
+        results = processing.run(alg, params, feedback=feedback)
         self.assertEqual(1, results["OUTPUT_STATUS"], 1)
         self.assertEqual(
             " La version de la base de données et du plugin sont les mêmes. Aucune mise-à-jour "

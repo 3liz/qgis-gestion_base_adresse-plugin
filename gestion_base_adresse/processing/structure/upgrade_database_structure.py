@@ -21,11 +21,13 @@ from ...qgis_plugin_tools.tools.i18n import tr
 from ...qgis_plugin_tools.tools.resources import plugin_path
 from ...qgis_plugin_tools.tools.version import format_version_integer, version
 
+SCHEMA = "adresse"
+
 
 class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
 
     CONNECTION_NAME = "CONNECTION_NAME"
-    RUNIT = "RUNIT"
+    RUN_MIGRATIONS = "RUN_MIGRATIONS"
     OUTPUT_STATUS = "OUTPUT_STATUS"
     OUTPUT_STRING = "OUTPUT_STRING"
 
@@ -68,7 +70,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
 
         self.addParameter(
             QgsProcessingParameterBoolean(
-                self.RUNIT,
+                self.RUN_MIGRATIONS,
                 tr("Cocher cette option pour lancer la mise-à-jour."),
                 defaultValue=False,
                 optional=False,
@@ -83,38 +85,40 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         )
 
     def checkParameterValues(self, parameters, context):
-        # Check if runit is checked
-        runit = self.parameterAsBool(parameters, self.RUNIT, context)
-        if not runit:
+        # Check if run migrations is checked
+        run_migrations = self.parameterAsBool(parameters, self.RUN_MIGRATIONS, context)
+        if not run_migrations:
             msg = tr("Vous devez cocher cette case pour réaliser la mise à jour !")
-            ok = False
-            return ok, msg
+            return False, msg
 
         # Check database content
         ok, msg = self.checkSchema(parameters, context)
         if not ok:
             return False, msg
 
-        return super(UpgradeDatabaseStructure, self).checkParameterValues(
-            parameters, context
-        )
+        return super().checkParameterValues(parameters, context)
 
     def checkSchema(self, parameters, context):
         _ = context
         sql = """
             SELECT schema_name
             FROM information_schema.schemata
-            WHERE schema_name = 'adresse';
-        """
-        connection_name = parameters[self.CONNECTION_NAME]
+            WHERE schema_name = '{}';
+        """.format(
+            SCHEMA
+        )
+        connection_name = self.parameterAsString(
+            parameters, self.CONNECTION_NAME, context
+        )
         _, data, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
         if not ok:
             return ok, error_message
+
         ok = False
-        msg = tr("Le schéma adresse n'existe pas dans la base de données !")
+        msg = tr("Le schéma {} n'existe pas dans la base de données !").format(SCHEMA)
         for a in data:
             schema = a[0]
-            if schema == "adresse":
+            if schema == SCHEMA:
                 ok = True
                 msg = ""
         return ok, msg
@@ -125,19 +129,21 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         )
 
         # Drop schema if needed
-        runit = self.parameterAsBool(parameters, self.RUNIT, context)
-        if not runit:
+        run_migrations = self.parameterAsBool(parameters, self.RUN_MIGRATIONS, context)
+        if not run_migrations:
             msg = tr("Vous devez cocher cette case pour réaliser la mise à jour !")
             raise QgsProcessingException(msg)
 
         # Get database version
         sql = """
             SELECT me_version
-            FROM adresse.metadata
+            FROM {}.metadata
             WHERE me_status = 1
             ORDER BY me_version_date DESC
             LIMIT 1;
-        """
+        """.format(
+            SCHEMA
+        )
         _, data, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
         if not ok:
             raise QgsProcessingException(error_message)
@@ -185,7 +191,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
 
         # Loop sql files and run SQL code
         for sf in sql_files:
-            sql_file = os.path.join(plugin_path(), "install/sql/upgrade/%s" % sf)
+            sql_file = os.path.join(plugin_path(), "install/sql/upgrade/{}".format(sf))
             with open(sql_file, "r") as f:
                 sql = f.read()
                 if len(sql.strip()) == 0:
@@ -197,34 +203,31 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                     sf.replace("upgrade_to_", "").replace(".sql", "").strip()
                 )
                 feedback.pushInfo("* NOUVELLE VERSION BDD " + new_db_version)
-                sql += (
-                    """
-                    UPDATE adresse.metadata
+                sql += """
+                    UPDATE {}.metadata
                     SET (me_version, me_version_date)
-                    = ( '%s', now()::timestamp(0) );
-                """
-                    % new_db_version
+                    = ( '{}', now()::timestamp(0) );
+                """.format(
+                    SCHEMA, new_db_version
                 )
 
                 _, _, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
                 if not ok:
-                    feedback.reportError(error_message)
                     raise QgsProcessingException(error_message)
 
                 feedback.pushInfo("* " + sf + " -- OK !")
 
         # Everything is fine, we now update to the plugin version
         sql = """
-            UPDATE adresse.metadata
+            UPDATE {}.metadata
             SET (me_version, me_version_date)
             = ( '{}', now()::timestamp(0) );
         """.format(
-            plugin_version
+            SCHEMA, plugin_version
         )
 
         _, _, _, ok, error_message = fetchDataFromSqlQuery(connection_name, sql)
         if not ok:
-            feedback.reportError(error_message)
             raise QgsProcessingException(error_message)
 
         msg = tr("*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***")
