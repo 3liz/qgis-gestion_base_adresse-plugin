@@ -5,6 +5,8 @@ start_tests:
 run_tests:
 	@echo 'Running tests, containers must be running'
 	@cd .docker && ./exec.sh
+	@echo 'Running flake8'
+	@flake8
 
 stop_tests:
 	@echo 'Stopping/killing containers'

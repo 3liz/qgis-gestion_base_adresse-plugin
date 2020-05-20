@@ -4,21 +4,17 @@ import os
 import psycopg2
 import time
 
+import processing
+
 from qgis.core import (
     QgsApplication,
     QgsProcessingException,
-    Qgis,
 )
 from qgis.testing import unittest
 
-if Qgis.QGIS_VERSION_INT >= 30800:
-    from qgis import processing
-else:
-    import processing
-
 from ..processing.provider import GestionAdresseProvider
+from ..qgis_plugin_tools.tools.database import available_migrations
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
-from ..qgis_plugin_tools.tools.resources import metadata_config
 
 __copyright__ = "Copyright 2019, 3Liz"
 __license__ = "GPL version 3"
@@ -51,14 +47,14 @@ class TestProcessing(unittest.TestCase):
             "ADDTESTDATA": True,
         }
 
-        os.environ["DATABASE_RUN_MIGRATION"] = VERSION
+        os.environ["TEST_DATABASE_INSTALL_ADRESSE"] = VERSION
         try:
             processing_output = processing.run(
                 "gestion_adresse:create_database_structure", params, feedback=feedback
             )
         except QgsProcessingException as e:
             self.assertTrue(False, e)
-        del os.environ["DATABASE_RUN_MIGRATION"]
+        del os.environ["TEST_DATABASE_INSTALL_ADRESSE"]
 
         self.cursor.execute(
             "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
@@ -113,10 +109,13 @@ class TestProcessing(unittest.TestCase):
         """
         self.cursor.execute(sql)
         record = self.cursor.fetchone()
-        metadata = metadata_config()
-        version = metadata["general"]["version"]
-        version = version.replace("-beta", "")
-        self.assertEqual(version, record[0])
+
+        migrations = available_migrations(000000)
+        last_migration = migrations[-1]
+        metadata_version = (
+            last_migration.replace("upgrade_to_", "").replace(".sql", "").strip()
+        )
+        self.assertEqual(metadata_version, record[0])
 
         self.cursor.execute(
             "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
@@ -158,7 +157,9 @@ class TestProcessing(unittest.TestCase):
             "ADDTESTDATA": True,
         }
 
-        processing.run("gestion_adresse:create_database_structure", params, feedback=feedback)
+        processing.run(
+            "gestion_adresse:create_database_structure", params, feedback=feedback
+        )
 
         self.cursor.execute(
             "SELECT table_name FROM information_schema.tables WHERE table_schema = 'adresse'"
@@ -187,7 +188,9 @@ class TestProcessing(unittest.TestCase):
         }
 
         with self.assertRaises(QgsProcessingException):
-            processing.run("gestion_adresse:create_database_structure", params, feedback=feedback)
+            processing.run(
+                "gestion_adresse:create_database_structure", params, feedback=feedback
+            )
 
         expected = (
             "Unable to execute algorithm\nLe schéma existe déjà dans la base de données ! Si "
