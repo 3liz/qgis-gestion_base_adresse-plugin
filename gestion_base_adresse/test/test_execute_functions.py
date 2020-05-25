@@ -133,6 +133,60 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
+        # Test d'ajout des points Pair Avec un ordre spécifique 2, 2bis puis 4 apres inversion du sens de voie
+
+        sql = "TRUNCATE TABLE adresse.point_adresse"
+        self.cursor.execute(sql)
+
+        # Inversion de la voie et sens de numérotation (comme si l'on clique sur le bouton dans la popup)
+
+        sql= ' Select sens_numerotation from adresse.voie Where id_voie = 3;'
+        self.cursor.execute(sql)
+
+        sql = 'UPDATE adresse.voie SET geom = ST_REVERSE(geom), sens_numerotation = NOT sens_numerotation WHERE id_voie = 3;'
+        self.cursor.execute(sql)
+
+        # Premier point, test d'égalité à 2
+        sql = (
+            "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(427937 6922173)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((2, None), self.cursor.fetchone())
+        # Insertion du point
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
+            "ST_geomfromtext('POINT(427937 6922173)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(427937 6922173)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+
+        # Deuxième point on force le 2bis
+        # Insertion du point
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select 2, 'bis', 3,"
+            "ST_geomfromtext('POINT(428035 6922078)', 2154) "
+        )
+        self.cursor.execute(sql)
+
+        # Troisime point placé après le deuxième, test d'égalité à 4
+
+        sql = (
+            "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(428226 6922001)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((4, None), self.cursor.fetchone())
+        # Insertion du point
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
+            "ST_geomfromtext('POINT(428226 6922001)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428226 6922001)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+    
     def test_calcul_num_metrique(self):
         """Test de la fonction calcul_num_metrique."""
         # Suppression des points pour pouvoir tout tester
