@@ -78,7 +78,7 @@ class TestProcessing(unittest.TestCase):
             "referencer_com",
         ]
         self.assertCountEqual(expected, result)
-        expected = "*** LA STRUCTURE adresse A BIEN ÉTÉ CRÉÉE '{}'***".format(VERSION)
+        expected = "*** LA STRUCTURE {} A BIEN ÉTÉ CRÉÉE '{}'***".format(SCHEMA, VERSION)
         self.assertEqual(expected, processing_output["OUTPUT_STRING"])
 
         sql = """
@@ -188,7 +188,7 @@ class TestProcessing(unittest.TestCase):
             "vue_com",
             "export_bal",
         ]
-        self.assertCountEqual(expected, result)
+        self.assertCountEqual(expected, result, result)
 
         feedback.pushDebugInfo("Relaunch the algorithm without override")
         params = {
