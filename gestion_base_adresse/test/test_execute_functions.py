@@ -204,12 +204,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # test avant puis apres Inversion de la voie et sens de numérotation (comme si l'on clique sur le bouton dans la popup)
 
-        sql = "TRUNCATE TABLE adresse.point_adresse"
-        self.cursor.execute(sql)
-
-
-
-        # Premier point, test d'égalité à 1992
+        # Test pair
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
             "'POINT(428252 6921965)', 2154))"
@@ -224,7 +219,43 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual((1962, None), self.cursor.fetchone())
 
-        # Premier point, test d'égalité à 1997
+        # test impair
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1997, None), self.cursor.fetchone())
+
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428369 6922065)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1953, None), self.cursor.fetchone())
+
+        #Inversion
+        sql = "TRUNCATE TABLE adresse.point_adresse"
+        self.cursor.execute(sql)
+
+
+
+        # Test pair
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428252 6921965)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1992, None), self.cursor.fetchone())
+
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428269 6921939)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1962, None), self.cursor.fetchone())
+
+        # test impair
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
             "'POINT(428310 6922058)', 2154))"
