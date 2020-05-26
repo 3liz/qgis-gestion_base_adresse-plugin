@@ -133,7 +133,6 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-
         # Test d'ajout des points Pair Avec un ordre spécifique 2, 2bis puis 4
 
         sql = "TRUNCATE TABLE adresse.point_adresse"
@@ -176,8 +175,6 @@ class TestSqlFunctions(DatabaseTestCase):
             "from adresse.calcul_num_adr(ST_geomfromtext('POINT(427937 6922173)', 2154))"
         )
         self.cursor.execute(sql)
-
-
 
     def test_calcul_num_metrique(self):
         """Test de la fonction calcul_num_metrique."""
