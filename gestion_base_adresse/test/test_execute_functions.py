@@ -200,3 +200,74 @@ class TestSqlFunctions(DatabaseTestCase):
             "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428252 6921965)', 2154))"
         )
         self.cursor.execute(sql)
+
+    def test_inversion_calcul_metrique(self):
+        """ Test avant puis après inversion de la voie et sens de numérotation
+        (comme si l'on clique sur le bouton dans la popup) """
+
+        # Test pair
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428252 6921965)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1992, None), self.cursor.fetchone())
+
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428269 6921939)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1962, None), self.cursor.fetchone())
+
+        # test impair
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1997, None), self.cursor.fetchone())
+
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428369 6922065)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1953, None), self.cursor.fetchone())
+
+        # Inversion
+        sql = (
+            "UPDATE adresse.voie SET geom = ST_REVERSE(geom), sens_numerotation = NOT sens_numerotation "
+            "WHERE id_voie = 3;"
+        )
+        self.cursor.execute(sql)
+
+        # Test pair
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428252 6921965)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((714, None), self.cursor.fetchone())
+
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428269 6921939)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((742, None), self.cursor.fetchone())
+
+        # test impair
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((709, None), self.cursor.fetchone())
+
+        sql = (
+            "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428369 6922065)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((753, None), self.cursor.fetchone())
