@@ -38,7 +38,7 @@ class TestSqlFunctions(DatabaseTestCase):
         # numérotation inversée, donc nombre pair à gauche
 
         # Suppression des points pour pouvoir tout tester
-        sql = "TRUNCATE TABLE adresse.point_adresse"
+        sql = "TRUNCATE TABLE adresse.point_adresse" RESTART IDENTITY
         self.cursor.execute(sql)
 
         # Test ajout point impair
@@ -135,7 +135,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Test d'ajout des points Pair Avec un ordre spécifique 2, 2bis puis 4
 
-        sql = "TRUNCATE TABLE adresse.point_adresse"
+        sql = "TRUNCATE TABLE adresse.point_adresse" RESTART IDENTITY
         self.cursor.execute(sql)
 
         # Premier point, test d'égalité à 2
@@ -179,7 +179,7 @@ class TestSqlFunctions(DatabaseTestCase):
     def test_calcul_num_metrique(self):
         """Test de la fonction calcul_num_metrique."""
         # Suppression des points pour pouvoir tout tester
-        sql = "TRUNCATE TABLE adresse.point_adresse"
+        sql = "TRUNCATE TABLE adresse.point_adresse" RESTART IDENTITY
         self.cursor.execute(sql)
 
         # Test ajout point impair
