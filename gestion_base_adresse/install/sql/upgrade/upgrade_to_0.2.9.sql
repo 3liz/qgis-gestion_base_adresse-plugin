@@ -35,4 +35,7 @@ CREATE TRIGGER get_commune
 
 ALTER TABLE adresse.document ADD COLUMN lien text;
 COMMENT ON COLUMN adresse.document.lien IS 'Chemin de stockage du document';
+
+ALTER TABLE adresse.document ALTER COLUMN date_doc TYPE date USING date_doc::date;
+
 COMMIT;

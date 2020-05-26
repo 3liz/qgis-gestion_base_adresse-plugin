@@ -5,6 +5,10 @@
 
 ![demo](demo.png "demo")
 
+## Tests
+
+Pour lancer l'installation de la base de données en utilisant les migrations, il faut utiliser la variable d'environnement `TEST_DATABASE_INSTALL_ADRESSE` = `0.2.3`.
+
 ### Credits
 
 letter box by Line Icons Pro from the Noun Project

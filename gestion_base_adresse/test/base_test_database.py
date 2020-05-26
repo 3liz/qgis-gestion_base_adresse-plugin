@@ -41,18 +41,22 @@ class DatabaseTestCase(unittest.TestCase):
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,
-            "ADDTESTDATA": True,
+            "ADD_TEST_DATA": True,
         }
         processing.run(
-            "{}:create_database_structure".format(self.provider.id()), params, feedback=None
+            "{}:create_database_structure".format(self.provider.id()),
+            params,
+            feedback=None,
         )
 
         params = {
             "CONNECTION_NAME": "test",
-            "RUNIT": True,
+            "RUN_MIGRATIONS": True,
         }
         processing.run(
-            "{}:upgrade_database_structure".format(self.provider.id()), params, feedback=None
+            "{}:upgrade_database_structure".format(self.provider.id()),
+            params,
+            feedback=None,
         )
 
         super().setUp()
