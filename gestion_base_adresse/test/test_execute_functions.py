@@ -245,12 +245,9 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
 
     def test_multiple_voie_unlock(self):
-<<<<<<< HEAD
-=======
-        """ Test d'ajout de point avec plusieurs voies déverrouillées """
->>>>>>> upstream/master
+        """Test d'ajout de point avec plusieurs voies déverrouillées"""
         # Suppression des points pour pouvoir tout tester
-        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY" 
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
         self.cursor.execute(sql)
 
         sql='UPDATE adresse.voie SET statut_voie_num = true where id_voie = 1'
