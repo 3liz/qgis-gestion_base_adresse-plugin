@@ -201,9 +201,7 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-
     def test_multiple_voie_unlock(self):
-
         # Suppression des points pour pouvoir tout tester
         sql = "TRUNCATE TABLE adresse.point_adresse"
         self.cursor.execute(sql)
