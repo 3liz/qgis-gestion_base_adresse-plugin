@@ -238,7 +238,10 @@ class TestSqlFunctions(DatabaseTestCase):
         self.assertTupleEqual((1953, None), self.cursor.fetchone())
 
         # Inversion
-        sql = "UPDATE adresse.voie SET geom = ST_REVERSE(geom), sens_numerotation = NOT sens_numerotation WHERE id_voie = 3;"
+        sql = (
+            "UPDATE adresse.voie SET geom = ST_REVERSE(geom), sens_numerotation = NOT sens_numerotation "
+            "WHERE id_voie = 3;"
+        )
         self.cursor.execute(sql)
 
         # Test pair
