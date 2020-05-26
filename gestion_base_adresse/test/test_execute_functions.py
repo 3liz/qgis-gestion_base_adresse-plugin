@@ -244,6 +244,64 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
+    def test_multiple_voie_unlock(self):
+        """ Test d'ajout de point avec plusieurs voies déverrouillées """
+        # Suppression des points pour pouvoir tout tester
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY" 
+        self.cursor.execute(sql)
+
+        sql='UPDATE adresse.voie SET statut_voie_num = true where id_voie = 1'
+        self.cursor.execute(sql)
+
+        sql='UPDATE adresse.voie SET statut_voie_num = true where id_voie = 2'
+        self.cursor.execute(sql)
+
+        # Test ajout point impair
+        # Premier point, test d'égalité à 1
+        sql = (
+            "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, None), self.cursor.fetchone())
+        # Insertion du point
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
+            "ST_geomfromtext('POINT(428310 6922058)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Deuxième point placé après le premier, test d'égalité à 3
+        sql = (
+            "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(428106 6922255)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None), self.cursor.fetchone())
+        # Insertion du point
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
+            "ST_geomfromtext('POINT(428106 6922255)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428106 6922255)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Troisième point placé entre les deux premiers, test d'égalité à 1bis
+        sql = (
+            "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(428198 6922157)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, "bis"), self.cursor.fetchone())
+        # Insertion du point
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom) select num, suffixe, 3,"
+            "ST_geomfromtext('POINT(428198 6922157)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428198 6922157)', 2154))"
+        )
+        self.cursor.execute(sql)
+
     def test_inversion_calcul_metrique(self):
         """ Test avant puis après inversion de la voie et sens de numérotation
         (comme si l'on clique sur le bouton dans la popup) """
