@@ -205,9 +205,6 @@ class TestSqlFunctions(DatabaseTestCase):
         # test avant puis apres Inversion de la voie et sens de numérotation
         # (comme si l'on clique sur le bouton dans la popup)
 
-        sql = "TRUNCATE TABLE adresse.point_adresse"
-        self.cursor.execute(sql)
-
         # Test pair
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
