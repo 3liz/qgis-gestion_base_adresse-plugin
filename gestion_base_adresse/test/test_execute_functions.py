@@ -204,6 +204,9 @@ class TestSqlFunctions(DatabaseTestCase):
         # test avant puis apres Inversion de la voie et sens de numérotation
         # (comme si l'on clique sur le bouton dans la popup)
 
+        sql = "TUPDATE adresse.voie SET geom = ST_REVERSE(geom), sens_numerotation = NOT sens_numerotation WHERE id_voie = 3;"
+        self.cursor.execute(sql)
+
         # Test pair
         sql = (
             "select num, suffixe from adresse.calcul_num_metrique(ST_geomfromtext("
