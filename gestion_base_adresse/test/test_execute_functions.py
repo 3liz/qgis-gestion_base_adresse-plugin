@@ -202,7 +202,7 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
 
         # test avant puis apres Inversion de la voie et sens de numérotation
-        #(comme si l'on clique sur le bouton dans la popup)
+        # (comme si l'on clique sur le bouton dans la popup)
 
         # Test pair
         sql = (
