@@ -133,7 +133,6 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-
     def test_calcul_num_metrique(self):
         """Test de la fonction calcul_num_metrique."""
         # Suppression des points pour pouvoir tout tester
@@ -202,7 +201,8 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # test avant puis apres Inversion de la voie et sens de numérotation (comme si l'on clique sur le bouton dans la popup)
+        # test avant puis apres Inversion de la voie et sens de numérotation
+        #(comme si l'on clique sur le bouton dans la popup)
 
         # Test pair
         sql = (
@@ -234,11 +234,9 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual((1953, None), self.cursor.fetchone())
 
-        #Inversion
+        # Inversion
         sql = "TRUNCATE TABLE adresse.point_adresse"
         self.cursor.execute(sql)
-
-
 
         # Test pair
         sql = (
