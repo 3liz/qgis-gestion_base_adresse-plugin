@@ -38,7 +38,7 @@ class TestSqlFunctions(DatabaseTestCase):
         # numérotation inversée, donc nombre pair à gauche
 
         # Suppression des points pour pouvoir tout tester
-        sql = "TRUNCATE TABLE adresse.point_adresse" RESTART IDENTITY
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
         self.cursor.execute(sql)
 
         # Test ajout point impair
