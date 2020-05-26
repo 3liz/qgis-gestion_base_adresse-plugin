@@ -201,6 +201,7 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
+    def test_inversion_calcul_metrique(self):
         # test avant puis apres Inversion de la voie et sens de numérotation
         # (comme si l'on clique sur le bouton dans la popup)
 
