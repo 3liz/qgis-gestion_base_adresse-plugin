@@ -301,8 +301,6 @@ class TestSqlFunctions(DatabaseTestCase):
             "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428198 6922157)', 2154))"
         )
         self.cursor.execute(sql)
-<<<<<<< HEAD
-=======
 
     def test_inversion_calcul_metrique(self):
         """ Test avant puis après inversion de la voie et sens de numérotation
@@ -374,4 +372,3 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((753, None), self.cursor.fetchone())
->>>>>>> upstream/master
