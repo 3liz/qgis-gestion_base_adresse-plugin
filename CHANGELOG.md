@@ -1,5 +1,16 @@
 ## CHANGELOG
 
+### 0.2.9 - 27/05/2020
+
+* Adding multiple news tests
+  * News tests to calculate adress number in defenrent situation
+  * adding test if id_commune exist after insert new point
+* Adding document import
+* Adding triggers to get id commune after insert road or point
+* Update database:
+  * Adding et updating field to the export zip
+  * Update function calcul_num_adr
+
 ### 0.2.8 - 29/04/2020
 
 * Rename field sens into sens_numerotation in table voie
