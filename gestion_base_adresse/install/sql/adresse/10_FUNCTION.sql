@@ -19,7 +19,8 @@ SET row_security = off;
 -- calcul_num_adr(public.geometry)
 CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
     LANGUAGE plpgsql
-    AS $$DECLARE
+    AS $$
+DECLARE
     numa integer;
     numb integer;
     numc integer;
@@ -32,15 +33,15 @@ CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num 
     test boolean;
 BEGIN
 
-    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom)into isleft
-    FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
-    FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
-
+    -- Get idvoie
     SELECT id_voie into idvoie
     FROM( SELECT id_voie, ST_Distance(pgeom, geom) as dist
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+
+    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom ) into isleft
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE AND id_voie=idvoie;
 
     SELECT v.sens_numerotation into sens
     FROM adresse.voie v WHERE v.id_voie = idvoie;
@@ -52,7 +53,7 @@ BEGIN
     WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) >0
         AND
-        adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, pgeom), pgeom) =
+        isleft =
         adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, p1.geom), p1.geom)
     ORDER BY dist LIMIT 1) AS a;
 
@@ -65,7 +66,7 @@ BEGIN
     WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) <0
         AND
-        adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, pgeom), pgeom) =
+        isleft =
         adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, p1.geom), p1.geom)
     ORDER BY dist LIMIT 1) AS b;
 
@@ -88,7 +89,7 @@ BEGIN
         IF numb - 2 >0 THEN
             numc =  numb - 2;
         ELSIF numb - 2 <= 0 THEN
-						test = false;
+            test = false;
             FOREACH rec IN ARRAY suff LOOP
                 IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numb AND p.suffixe = rec) IS NULL AND NOT test THEN
                     test = true;
