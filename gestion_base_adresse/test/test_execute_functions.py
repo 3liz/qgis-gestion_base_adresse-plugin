@@ -378,8 +378,8 @@ class TestSqlFunctions(DatabaseTestCase):
         Présent lors de l'ajout d'un point"""
 
         sql = (
-            "INSERT INTO adresse.point_adresse(id_point, numero, suffixe, id_voie, geom) select 100, num, suffixe, 3,"
-            "ST_geomfromtext('POINT(428310 6922058)', 2154) "
+            "INSERT INTO adresse.point_adresse(id_point, numero, suffixe, id_voie, geom) "
+            "select 100, num, suffixe, 3, ST_geomfromtext('POINT(428310 6922058)', 2154) "
             "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428310 6922058)', 2154))"
         )
         self.cursor.execute(sql)
