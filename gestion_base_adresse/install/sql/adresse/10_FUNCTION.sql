@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
--- Dumped by pg_dump version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
+-- Dumped from database version 9.6.17
+-- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -142,7 +142,7 @@ BEGIN
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
-   
+
     SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
     WHERE id_voie = idvoie;
@@ -419,4 +419,3 @@ $$;
 --
 -- PostgreSQL database dump complete
 --
-
