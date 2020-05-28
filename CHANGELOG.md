@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.0.2 - 28/05/2020
+
+* Test
+
 ### 0.2.9 - 27/05/2020
 
 * Adding multiple news tests
