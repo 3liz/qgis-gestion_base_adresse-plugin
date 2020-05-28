@@ -157,7 +157,7 @@ $$;
 
 
 -- update_adr_complete()
-CREATE FUNCTION adresse.update_adr_complete() RETURNS trigger
+CREATE OR REPLACE FUNCTION adresse.update_adr_complete() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE
