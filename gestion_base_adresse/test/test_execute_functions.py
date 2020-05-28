@@ -250,10 +250,10 @@ class TestSqlFunctions(DatabaseTestCase):
         sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
         self.cursor.execute(sql)
 
-        sql='UPDATE adresse.voie SET statut_voie_num = true where id_voie = 1'
+        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 1'
         self.cursor.execute(sql)
 
-        sql='UPDATE adresse.voie SET statut_voie_num = true where id_voie = 2'
+        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
         self.cursor.execute(sql)
 
         # Test ajout point impair
