@@ -30,15 +30,6 @@ jobs:
         - ./start.sh
       script:
         - ./install_migrate_generate.sh
-#      after_success:
-#        - ./schemaspy.sh
-#      deploy:
-#        provider: pages
-#        skip_cleanup: true
-#        github_token: ${GH_TOKEN}
-#        keep_history: true
-#        on:
-#          branch: master
 
     - stage: Deploy
       if: tag IS present
@@ -60,5 +51,10 @@ jobs:
 
         - provider: script
           script: qgis-plugin-ci release ${TRAVIS_TAG} --github-token ${GH_TOKEN} --create-plugin-repo
+          on:
+            tags: true
+
+        - provider: script
+          script: .github/update_schemaspy.sh
           on:
             tags: true
