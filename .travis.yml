@@ -57,7 +57,7 @@ jobs:
           on:
             tags: true
 
-        - provider: script
-          script: .github/update_schemaspy.sh
-          on:
-            tags: true
+#        - provider: script
+#          script: .github/update_schemaspy.sh
+#          on:
+#            tags: true
