@@ -50,7 +50,7 @@ BEGIN
     FROM(
     SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
     FROM adresse.point_adresse p1, adresse.voie v
-    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) >0
         AND
         isleft =
@@ -63,7 +63,7 @@ BEGIN
     FROM(
     SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
     FROM adresse.point_adresse p1, adresse.voie v
-    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) <0
         AND
         isleft =
@@ -137,10 +137,8 @@ BEGIN
     SELECT v.sens_numerotation into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
 
     SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom) into isleft
-    FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
     FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
-
+    WHERE statut_voie_num IS FALSE AND id_voie = idvoie;
 
     SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
