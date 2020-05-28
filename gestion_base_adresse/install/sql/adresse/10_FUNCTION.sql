@@ -336,6 +336,7 @@ CREATE FUNCTION adresse.update_adr_complete() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE
+    idvoie integer;
     adrvoie text;
 BEGIN
     IF (TG_TABLE_NAME = 'voie') THEN
@@ -347,6 +348,15 @@ BEGIN
         RETURN NEW;
     ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
         IF NEW.numero != OLD.numero OR NEW.suffixe != OLD.suffixe OR NEW.id_voie != OLD.id_voie THEN
+            -- Cas où id_voie est null, calculer un nouvel id_voie
+            IF NEW.id_voie IS NULL THEN
+                SELECT adresse.get_id_voie(NEW.geom) into idvoie;
+                -- Aucune voie dévérouillée trouvée
+                IF idvoie IS NULL THEN
+                    return NULL;
+                END IF;
+                NEW.id_voie = idvoie;
+            END IF;
             SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = NEW.id_voie;
             IF NEW.suffixe IS NOT NULL THEN
                 NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
