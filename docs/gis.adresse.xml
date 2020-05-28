@@ -268,10 +268,7 @@ DECLARE
 BEGIN
 
     -- Get idvoie
-    SELECT id_voie into idvoie
-    FROM( SELECT id_voie, ST_Distance(pgeom, geom) as dist
-    FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+    SELECT adresse.get_id_voie(pgeom) into idvoie;
 
     SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom ) into isleft
     FROM adresse.voie
@@ -284,7 +281,7 @@ BEGIN
     FROM(
     SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
     FROM adresse.point_adresse p1, adresse.voie v
-    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) >0
         AND
         isleft =
@@ -297,7 +294,7 @@ BEGIN
     FROM(
     SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
     FROM adresse.point_adresse p1, adresse.voie v
-    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) <0
         AND
         isleft =
@@ -361,18 +358,15 @@ END;
     test boolean;
     suff text[];
 BEGIN
-    SELECT id_voie into idvoie FROM(
-    SELECT id_voie, ST_Distance(pgeom, geom) as dist
-    FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+
+    -- Get idvoie
+    SELECT adresse.get_id_voie(pgeom) into idvoie;
 
     SELECT v.sens_numerotation into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
 
     SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom) into isleft
-    FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
     FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
-
+    WHERE statut_voie_num IS FALSE AND id_voie = idvoie;
 
     SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
@@ -554,6 +548,7 @@ END;
          <comment/>
          <definition language="PLPGSQL"><![CDATA[
 DECLARE
+    idvoie integer;
     adrvoie text;
 BEGIN
     IF (TG_TABLE_NAME = 'voie') THEN
@@ -564,8 +559,19 @@ BEGIN
         END IF;
         RETURN NEW;
     ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
-        IF NEW.numero != OLD.numero OR NEW.suffixe != OLD.suffixe THEN
-            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = OLD.id_voie;
+        -- Cas des différence
+        IF NEW.numero != OLD.numero OR NEW.suffixe IS DISTINCT FROM OLD.suffixe OR NEW.id_voie IS DISTINCT FROM OLD.id_voie THEN
+            -- Cas où id_voie est null, calculer un nouvel id_voie
+            IF NEW.id_voie IS NULL THEN
+                SELECT adresse.get_id_voie(NEW.geom) into idvoie;
+                -- Aucune voie dévérouillée trouvée
+                IF idvoie IS NULL THEN
+                    return NULL;
+                END IF;
+                NEW.id_voie = idvoie;
+            END IF;
+            -- Récupération nom complet de la voie
+            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = NEW.id_voie;
             IF NEW.suffixe IS NOT NULL THEN
                 NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
             ELSE
