@@ -1,4 +1,4 @@
-"""Base class for tests using a database with data."""
+"""Base class for tests using a database."""
 
 import psycopg2
 import time
@@ -27,6 +27,13 @@ class DatabaseTestCase(unittest.TestCase):
 
     """Base class for tests using a database with data."""
 
+    def __init__(self, methodName="runTest"):
+        super().__init__(methodName)
+        self.cursor = None
+        self.connection = None
+        self.provider = None
+        self.add_data = True
+
     def setUp(self) -> None:
         self.connection = psycopg2.connect(
             user="docker", password="docker", host="db", port="5432", database="gis"
@@ -41,20 +48,10 @@ class DatabaseTestCase(unittest.TestCase):
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,
-            "ADD_TEST_DATA": True,
+            "ADD_TEST_DATA": self.add_data,
         }
         processing.run(
             "{}:create_database_structure".format(self.provider.id()),
-            params,
-            feedback=None,
-        )
-
-        params = {
-            "CONNECTION_NAME": "test",
-            "RUN_MIGRATIONS": True,
-        }
-        processing.run(
-            "{}:upgrade_database_structure".format(self.provider.id()),
             params,
             feedback=None,
         )
@@ -65,3 +62,11 @@ class DatabaseTestCase(unittest.TestCase):
         del self.cursor
         del self.connection
         time.sleep(1)
+        super().tearDown()
+
+
+class DatabaseWithoutDataTestCase(DatabaseTestCase):
+
+    def __init__(self, methodName="runTest"):
+        super().__init__(methodName)
+        self.add_data = False
