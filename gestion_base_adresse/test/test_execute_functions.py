@@ -479,3 +479,38 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Chemin des Cauterets",), self.cursor.fetchone())
+
+    def test_calcul_num_adr_voie_complexe(self):
+        """
+        Test de la numérotation sur une voie complexe
+        La voie 2, Route d'Arromanche présente des virages
+        Le calcul des numéros peut-en être affecté
+        """
+        # Suppression des points pour pouvoir tout tester
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
+        self.cursor.execute(sql)
+
+        # Test ajout point impair
+        # Premier point, test d'égalité à 1
+        sql = (
+            "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(428237 6922087)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, None), self.cursor.fetchone())
+        # Insertion du point
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom) select num, suffixe,"
+            "ST_geomfromtext('POINT(428310 6922058)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428237 6922087)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Test ajout point pair
+        # Premier point, test d'égalité à 2
+        sql = (
+            "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(429148 6921624)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((2, None), self.cursor.fetchone())
