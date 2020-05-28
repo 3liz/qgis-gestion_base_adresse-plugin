@@ -34,10 +34,7 @@ DECLARE
 BEGIN
 
     -- Get idvoie
-    SELECT id_voie into idvoie
-    FROM( SELECT id_voie, ST_Distance(pgeom, geom) as dist
-    FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+    SELECT adresse.get_id_voie(pgeom) into idvoie;
 
     SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom ) into isleft
     FROM adresse.voie
@@ -129,10 +126,9 @@ CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE
     test boolean;
     suff text[];
 BEGIN
-    SELECT id_voie into idvoie FROM(
-    SELECT id_voie, ST_Distance(pgeom, geom) as dist
-    FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+
+    -- Get idvoie
+    SELECT adresse.get_id_voie(pgeom) into idvoie;
 
     SELECT v.sens_numerotation into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
 
