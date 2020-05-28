@@ -435,3 +435,47 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Chemin des Cauterets",), self.cursor.fetchone())
+
+        # Modification de l'id_voie du point en mettant NULL
+        # seul la voie 3 est dévérouillé
+        sql = (
+            "UPDATE adresse.point_adresse SET id_voie = NULL WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "select id_point, numero, suffixe, id_voie from adresse.point_adresse LIMIT 1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, 1, None, 3), self.cursor.fetchone())
+
+        # Vérification du nom complet
+        sql = (
+            "select adresse_complete from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("1 Route d'Arromanches",), self.cursor.fetchone())
+
+        # Dévérouillage de la voie 2
+        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        self.cursor.execute(sql)
+
+        # Modification de l'id_voie du point en mettant NULL
+        # la voie dévérouillée la plus proche est la 2
+        sql = (
+            "UPDATE adresse.point_adresse SET id_voie = NULL WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "select id_point, numero, suffixe, id_voie from adresse.point_adresse LIMIT 1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, 1, None, 2), self.cursor.fetchone())
+
+        # Vérification du nom complet
+        sql = (
+            "select adresse_complete from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("1 Chemin des Cauterets",), self.cursor.fetchone())
