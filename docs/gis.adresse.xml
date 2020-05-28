@@ -84,7 +84,7 @@
       <table name="document" numRows="0" remarks="" schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.document_id_doc_seq'::regclass)" digits="0" id="0" name="id_doc" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nom_doc" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="date_doc" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="date_doc" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="type_document" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="id_commune" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="id_com" foreignKey="document_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
@@ -253,7 +253,8 @@
    <routines>
       <routine dataAccess="MODIFIES" deterministic="false" name="calcul_num_adr" returnType="SETOF record" securityType="INVOKER" type="FUNCTION">
          <comment/>
-         <definition language="PLPGSQL"><![CDATA[DECLARE
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
     numa integer;
     numb integer;
     numc integer;
@@ -266,15 +267,15 @@
     test boolean;
 BEGIN
 
-    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom)into isleft
-    FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
-    FROM adresse.voie
-    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
-
+    -- Get idvoie
     SELECT id_voie into idvoie
     FROM( SELECT id_voie, ST_Distance(pgeom, geom) as dist
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+
+    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom ) into isleft
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE AND id_voie=idvoie;
 
     SELECT v.sens_numerotation into sens
     FROM adresse.voie v WHERE v.id_voie = idvoie;
@@ -286,7 +287,7 @@ BEGIN
     WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) >0
         AND
-        adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, pgeom), pgeom) =
+        isleft =
         adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, p1.geom), p1.geom)
     ORDER BY dist LIMIT 1) AS a;
 
@@ -299,7 +300,7 @@ BEGIN
     WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) <0
         AND
-        adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, pgeom), pgeom) =
+        isleft =
         adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, p1.geom), p1.geom)
     ORDER BY dist LIMIT 1) AS b;
 
@@ -322,7 +323,7 @@ BEGIN
         IF numb - 2 >0 THEN
             numc =  numb - 2;
         ELSIF numb - 2 <= 0 THEN
-						test = false;
+            test = false;
             FOREACH rec IN ARRAY suff LOOP
                 IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numb AND p.suffixe = rec) IS NULL AND NOT test THEN
                     test = true;
