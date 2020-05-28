@@ -1,9 +1,0 @@
-metadata
-referencer_com
-appartenir_com
-document
-point_adresse
-parcelle
-commune_deleguee
-voie
-commune
