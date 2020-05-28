@@ -346,8 +346,8 @@ BEGIN
         END IF;
         RETURN NEW;
     ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
-        IF NEW.numero != OLD.numero OR NEW.suffixe != OLD.suffixe THEN
-            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = OLD.id_voie;
+        IF NEW.numero != OLD.numero OR NEW.suffixe != OLD.suffixe OR NEW.id_voie != OLD.id_voie THEN
+            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = NEW.id_voie;
             IF NEW.suffixe IS NOT NULL THEN
                 NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
             ELSE
