@@ -480,6 +480,62 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Chemin des Cauterets",), self.cursor.fetchone())
 
+        # Modification du suffixe du point
+        sql = (
+            "UPDATE adresse.point_adresse SET suffixe = 'bis' WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "select id_point, numero, suffixe, id_voie from adresse.point_adresse LIMIT 1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, 1, 'bis', 2), self.cursor.fetchone())
+
+        # Vérification du nom complet
+        sql = (
+            "select adresse_complete from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("1 bis Chemin des Cauterets",), self.cursor.fetchone())
+        # Modification du suffixe du point
+        sql = (
+            "UPDATE adresse.point_adresse SET suffixe = 'ter' WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "select id_point, numero, suffixe, id_voie from adresse.point_adresse LIMIT 1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, 1, 'ter', 2), self.cursor.fetchone())
+
+        # Vérification du nom complet
+        sql = (
+            "select adresse_complete from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("1 ter Chemin des Cauterets",), self.cursor.fetchone())
+
+        # Modification du suffixe du point
+        sql = (
+            "UPDATE adresse.point_adresse SET numero = 3, suffixe = NULL WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "select id_point, numero, suffixe, id_voie from adresse.point_adresse LIMIT 1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, 3, None, 2), self.cursor.fetchone())
+
+        # Vérification du nom complet
+        sql = (
+            "select adresse_complete from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("3 Chemin des Cauterets",), self.cursor.fetchone())
+
     def test_calcul_num_adr_voie_complexe(self):
         """
         Test de la numérotation sur une voie complexe
