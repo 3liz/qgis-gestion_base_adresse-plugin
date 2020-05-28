@@ -389,3 +389,49 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertEqual((4,), self.cursor.fetchone())
+
+    def test_update_adr_complete(self):
+        """ Test de la fonction trigger update_adr_complete """
+        # Suppression des points pour pouvoir tout tester
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
+        self.cursor.execute(sql)
+
+        # Ajout d'un point proche de la voie 2 qui n'est pas dévérouillé
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom) "
+            "select num, suffixe, ST_geomfromtext('POINT(429148 6921999)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(429148 6921999)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "select id_point, numero, suffixe, id_voie from adresse.point_adresse LIMIT 1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, 1, None, 3), self.cursor.fetchone())
+
+        # Vérification du nom complet
+        sql = (
+            "select adresse_complete from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("1 Route d'Arromanches",), self.cursor.fetchone())
+
+        # Modification de l'id_voie du point
+        sql = (
+            "UPDATE adresse.point_adresse SET id_voie = 2 WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "select id_point, numero, suffixe, id_voie from adresse.point_adresse LIMIT 1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, 1, None, 2), self.cursor.fetchone())
+
+        # Vérification du nom complet
+        sql = (
+            "select adresse_complete from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual(("1 Chemin des Cauterets",), self.cursor.fetchone())
