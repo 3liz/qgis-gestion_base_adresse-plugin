@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 export $(grep -v '^#' .env | xargs)
 
+chmod 777 -R "${PWD}"/../docs
 docker run \
   -v "${PWD}/../docs:/output" \
   --network=docker_${NETWORK} \
@@ -12,4 +13,5 @@ docker run \
   -u docker \
   -p docker \
   -port 5432 \
+  -debug \
   -s ${SCHEMA}
