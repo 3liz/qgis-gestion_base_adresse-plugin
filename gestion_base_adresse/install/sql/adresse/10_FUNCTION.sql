@@ -224,20 +224,6 @@ END;
 $$;
 
 
--- check_num_exist(integer, text, integer)
-CREATE FUNCTION adresse.check_num_exist(num integer, suff text, idvoie integer) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    IF (SELECT numero FROM adresse.point_adresse WHERE numero = num AND suffixe = suff AND id_voie = idvoie) IS NULL THEN
-        RETURN TRUE;
-    ELSE
-        RETURN FALSE;
-    END IF;
-END;
-$$;
-
-
 -- get_id_voie(public.geometry)
 CREATE FUNCTION adresse.get_id_voie(pgeom public.geometry) RETURNS integer
     LANGUAGE plpgsql
@@ -246,9 +232,13 @@ DECLARE
     idvoie integer;
 BEGIN
     SELECT leid into idvoie FROM(
-    SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist
-    FROM adresse.voie  v
-    WHERE v.statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+        SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist
+        FROM adresse.voie  v, adresse.commune com
+        WHERE v.statut_voie_num IS FALSE
+          AND ST_Intersects(pgeom, com.geom)
+          AND ST_DWithin(v.geom, com.geom, 2000)
+        ORDER BY dist LIMIT 1
+    ) AS d;
 
     RETURN idvoie;
 END;
@@ -302,6 +292,26 @@ END;
 $$;
 
 
+-- num_exists(integer, text, integer)
+CREATE FUNCTION adresse.num_exists(num integer, suff text, idvoie integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF (
+        SELECT numero
+          FROM adresse.point_adresse
+         WHERE numero = num
+           AND suffixe IS NOT DISTINCT FROM suff
+           AND id_voie IS NOT DISTINCT FROM idvoie
+        ) IS NULL THEN
+        RETURN FALSE;
+    ELSE
+        RETURN TRUE;
+    END IF;
+END;
+$$;
+
+
 -- trigger_point_adr()
 CREATE FUNCTION adresse.trigger_point_adr() RETURNS trigger
     LANGUAGE plpgsql
@@ -309,10 +319,19 @@ CREATE FUNCTION adresse.trigger_point_adr() RETURNS trigger
     idvoie integer;
     adrvoie text;
 BEGIN
+    -- Récupération de l'identifiant de la voie dévérouillée la plus proche
     SELECT adresse.get_id_voie(NEW.geom) into idvoie;
 
+    -- Si aucune voie dévérouillée proche mais qu'un identifiant de voie est fourni
+    -- on le garde la voie
+    IF idvoie is NULL AND NEW.id_voie IS NOT NULL THEN
+        idvoie:= NEW.id_voie;
+    END IF;
+
     IF idvoie IS NOT NULL THEN
-        IF (SELECT adresse.check_num_exist(NEW.numero, NEW.suffixe, idvoie)) THEN
+        -- Si l'identifiant de voies est non null
+        IF NOT (SELECT adresse.num_exists(NEW.numero, NEW.suffixe, idvoie)) THEN
+            -- Si l'adresse n'existe pas déjà on enregistre et modififie le nom complet
             NEW.id_voie = idvoie;
             SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = idvoie;
             IF NEW.suffixe IS NOT NULL THEN
@@ -322,10 +341,13 @@ BEGIN
             END IF;
             RETURN NEW;
         ELSE
+            -- Sinon enregistrement impossible
             RETURN NULL;
         END IF;
     ELSE
-        RETURN NULL;
+        -- Sinon on modifie a_valider et on enregistre
+        NEW.a_valider = True;
+        RETURN NEW;
     END IF;
 END;
 $$;
@@ -348,9 +370,16 @@ BEGIN
         RETURN NEW;
     ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
         -- Cas des différence
-        IF NEW.numero != OLD.numero OR NEW.suffixe IS DISTINCT FROM OLD.suffixe OR NEW.id_voie IS DISTINCT FROM OLD.id_voie THEN
+        IF NEW.numero != OLD.numero
+            OR NEW.suffixe IS DISTINCT FROM OLD.suffixe
+            OR NEW.id_voie IS DISTINCT FROM OLD.id_voie
+            OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0
+            OR (NEW.a_valider IS DISTINCT FROM OLD.a_valider AND OLD.a_valider) THEN
+
             -- Cas où id_voie est null, calculer un nouvel id_voie
-            IF NEW.id_voie IS NULL THEN
+            IF NEW.id_voie IS DISTINCT FROM OLD.id_voie
+                OR (NEW.id_voie IS NULL AND OLD.a_valider)
+                OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0 THEN
                 SELECT adresse.get_id_voie(NEW.geom) into idvoie;
                 -- Aucune voie dévérouillée trouvée
                 IF idvoie IS NULL THEN
@@ -358,7 +387,16 @@ BEGIN
                 END IF;
                 NEW.id_voie = idvoie;
             END IF;
-            -- Récupération nom complet de la voie
+
+            -- Vérification que la nouvelle adresse n'existe pas déjà
+            IF (NEW.numero != OLD.numero
+                OR NEW.suffixe IS DISTINCT FROM OLD.suffixe
+                OR NEW.id_voie IS DISTINCT FROM OLD.id_voie)
+                AND (SELECT adresse.num_exists(NEW.numero, NEW.suffixe, NEW.id_voie)) THEN
+                return NULL;
+            END IF;
+
+            -- Modification du nom complet de la voie
             SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = NEW.id_voie;
             IF NEW.suffixe IS NOT NULL THEN
                 NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
