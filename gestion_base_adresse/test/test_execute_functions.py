@@ -57,6 +57,13 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
+        # Check INSERT
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, None, 3), self.cursor.fetchone())
+
         # Deuxième point placé après le premier, test d'égalité à 3
         sql = (
             "select num, suffixe from adresse.calcul_num_adr(ST_geomfromtext("
