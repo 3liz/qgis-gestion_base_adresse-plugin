@@ -424,6 +424,10 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Route d'Arromanches",), self.cursor.fetchone())
 
+        # Dévérouillage de la voie 2
+        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        self.cursor.execute(sql)
+
         # Modification de l'id_voie du point
         sql = (
             "UPDATE adresse.point_adresse SET id_voie = 2 WHERE id_point=1"
@@ -442,6 +446,10 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Chemin des Cauterets",), self.cursor.fetchone())
+
+        # vérouillage de la voie 2
+        sql='UPDATE adresse.voie SET statut_voie_num = true where id_voie = 2'
+        self.cursor.execute(sql)
 
         # Modification de l'id_voie du point en mettant NULL
         # seul la voie 3 est dévérouillé
@@ -662,3 +670,179 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((5, None, None, True), self.cursor.fetchone())
+
+    def test_update_point_adresse(self):
+        """
+        Test d'update
+        """
+        # Suppression des points pour pouvoir tout tester
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
+        self.cursor.execute(sql)
+
+        # Insertion du point 1
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom)"
+            " select 1, NULL, ST_geomfromtext('POINT(428310 6922058)', 2154) "
+        )
+        self.cursor.execute(sql)
+
+        # Insertion du point 2
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom)"
+            " select 3, NULL, ST_geomfromtext('POINT(428300 6922058)', 2154) "
+        )
+        self.cursor.execute(sql)
+
+        # Insertion du point 3
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom)"
+            " select 5, NULL, ST_geomfromtext('POINT(428290 6922058)', 2154) "
+        )
+        self.cursor.execute(sql)
+
+        # Vérification
+        sql = (
+            "select COUNT(id_point) from adresse.point_adresse"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3,), self.cursor.fetchone())
+
+        # Mise à jour du point 2 avec un numéro existant
+        sql = (
+            "UPDATE adresse.point_adresse SET numero=1 "
+            "WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 2, aucun changement
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, 3), self.cursor.fetchone())
+
+        # Mise à jour du point 2 avec une voie NULL et suffixe
+        sql = (
+            "UPDATE adresse.point_adresse SET id_voie=NULL, suffixe='bis' "
+            "WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 2, changement du suffixe uniquement
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, 'bis', 3), self.cursor.fetchone())
+
+        # Mise à jour du point 2 avec suppression du suffixe
+        sql = (
+            "UPDATE adresse.point_adresse SET suffixe=NULL "
+            "WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 2, changement du suffixe
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, 3), self.cursor.fetchone())
+
+        # Dévérouillage de la voie 2
+        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        self.cursor.execute(sql)
+
+        # Déplacement du point 2, à côté de la voie 2
+        sql = (
+            "UPDATE adresse.point_adresse "
+            "SET geom=ST_geomfromtext('POINT(429148 6921999)', 2154) "
+            "WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 2, Changement de voie
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, 2), self.cursor.fetchone())
+
+        # Vérouillage des voies
+        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        self.cursor.execute(sql)
+
+        # Mise à jour du point 2 avec une voie NULL
+        sql = (
+            "UPDATE adresse.point_adresse SET id_voie=NULL, suffixe='bis' "
+            "WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 2, aucun changement
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, 2), self.cursor.fetchone())
+
+        # Mise à jour du point 2 à côté de la voie 3
+        sql = (
+            "UPDATE adresse.point_adresse SET suffixe='bis' "
+            ", geom=ST_geomfromtext('POINT(428300 6922058)', 2154) "
+            "WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 2, aucun changement
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, 2), self.cursor.fetchone())
+
+        # Mise à jour du point 2 modification du suffixe
+        sql = (
+            "UPDATE adresse.point_adresse SET suffixe='bis' "
+            "WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 2, changement du suffixe
+        sql = (
+            "select numero, suffixe, id_voie from adresse.point_adresse WHERE id_point=2"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, 'bis', 2), self.cursor.fetchone())
+
+        # Insertion du point 4 à côté de la voie 2
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom)"
+            " select 3, NULL, ST_geomfromtext('POINT(429149 6921999)', 2154) "
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 4
+        sql = (
+            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=4"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, None, True), self.cursor.fetchone())
+
+        # Dévérouillage de la voie 2
+        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        self.cursor.execute(sql)
+
+        # Valider le point 4
+        sql = (
+            "UPDATE adresse.point_adresse SET a_valider=False "
+            "WHERE id_point=4"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du point 4
+        sql = (
+            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=4"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, 2, False), self.cursor.fetchone())
