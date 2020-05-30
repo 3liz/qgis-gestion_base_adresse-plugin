@@ -565,7 +565,7 @@ class TestSqlFunctions(DatabaseTestCase):
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, geom) select num, suffixe,"
             "ST_geomfromtext('POINT(428310 6922058)', 2154) "
-            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428237 6922087)', 2154))"
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428310 6922058)', 2154))"
         )
         self.cursor.execute(sql)
 
@@ -577,3 +577,88 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((2, None), self.cursor.fetchone())
+
+    def test_insert_point_adresse(self):
+        """
+        Test d'insert
+        """
+        # Suppression des points pour pouvoir tout tester
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
+        self.cursor.execute(sql)
+
+        # Insertion du point 1
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom) select num, suffixe,"
+            "ST_geomfromtext('POINT(428310 6922058)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification
+        sql = (
+            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=1"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1, None, 3, False), self.cursor.fetchone())
+
+        # Insertion d'un point avec un numéro existant
+        # Insertion du point 1
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom)"
+            " select 1, NULL, ST_geomfromtext('POINT(428320 6922058)', 2154) "
+        )
+        self.cursor.execute(sql)
+
+        # Vérification
+        sql = (
+            "select COUNT(id_point) from adresse.point_adresse"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1,), self.cursor.fetchone())
+
+        # Insertion du point 2 sur la voie 2
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, id_voie, geom)"
+            " select num, suffixe, 2, ST_geomfromtext('POINT(428300 6922058)', 2154) "
+            "from adresse.calcul_num_adr(ST_geomfromtext('POINT(428300 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification
+        sql = (
+            "select COUNT(id_point) from adresse.point_adresse"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((2,), self.cursor.fetchone())
+
+        # Vérification du point 2 sur la voie 3
+        sql = (
+            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=3"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3, None, 3, False), self.cursor.fetchone())
+
+        # Vérouillage des voies
+        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        self.cursor.execute(sql)
+
+        # Insertion du point 3
+        sql = (
+            "INSERT INTO adresse.point_adresse(numero, suffixe, geom)"
+            " select 5, NULL, ST_geomfromtext('POINT(428290 6922058)', 2154) "
+        )
+        self.cursor.execute(sql)
+
+        # Vérification
+        sql = (
+            "select COUNT(id_point) from adresse.point_adresse"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((3,), self.cursor.fetchone())
+
+        # Vérification du point 3
+        sql = (
+            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=4"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((5, None, None, True), self.cursor.fetchone())
