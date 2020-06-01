@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 -- calcul_num_adr(public.geometry)
-CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
+CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text, voie integer)
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -107,13 +107,13 @@ BEGIN
         END IF;
     END IF;
 
-    return query SELECT numc, s;
+    return query SELECT numc, s, idvoie;
 END;
 $$;
 
 
 -- calcul_num_metrique(public.geometry)
-CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
+CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text, voie integer)
     LANGUAGE plpgsql
     AS $$DECLARE
     num integer;
@@ -169,7 +169,7 @@ BEGIN
         num = num +2;
     END LOOP;
 
-   RETURN query SELECT numc, res;
+   RETURN query SELECT numc, res, idvoie;
 END;
 $$;
 

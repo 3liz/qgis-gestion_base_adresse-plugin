@@ -1,6 +1,8 @@
 BEGIN;
 
-CREATE OR REPLACE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
+-- calcul_num_adr(public.geometry)
+DROP FUNCTION IF EXISTS adresse.calcul_num_adr(pgeom public.geometry);
+CREATE OR REPLACE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text, voie integer)
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -90,12 +92,14 @@ BEGIN
         END IF;
     END IF;
 
-    return query SELECT numc, s;
+    return query SELECT numc, s, idvoie;
 END;
 $$;
 
 
-CREATE OR REPLACE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
+-- calcul_num_metrique(public.geometry)
+DROP FUNCTION IF EXISTS adresse.calcul_num_metrique(pgeom public.geometry);
+CREATE OR REPLACE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text, voie integer)
     LANGUAGE plpgsql
     AS $$DECLARE
     num integer;
@@ -151,7 +155,7 @@ BEGIN
         num = num +2;
     END LOOP;
 
-   RETURN query SELECT numc, res;
+   RETURN query SELECT numc, res, idvoie;
 END;
 $$;
 
