@@ -9,7 +9,7 @@ setup_git() {
 commit_schemaspy_files() {
   make schemaspy
   git add docs/
-  git commit --message "Update database documentation to version : $TRAVIS_TAG"
+  git commit --message "Update database documentation to version : $TRAVIS_TAG" --message "[skip travis]"
 }
 
 upload_files() {
