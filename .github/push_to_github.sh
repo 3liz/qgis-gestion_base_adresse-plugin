@@ -1,18 +1,15 @@
 #!/bin/sh
 
 setup_git() {
-  git config --global user.email "etrimaille@3liz.com"
+  git config --global user.email "etrimaille@3liz.com" # Email registered in the GitHub account
   git config --global user.name "3Liz bot"
-}
-
-update_schemaspy() {
-  make schemaspy
-}
-
-commit_files() {
   git checkout -b master
+}
+
+commit_schemaspy_files() {
+  make schemaspy
   git add docs/
-  git commit --message "Update schemaspy to version : $TRAVIS_TAG"
+  git commit --message "Update database documentation to version : $TRAVIS_TAG"
 }
 
 upload_files() {
@@ -21,6 +18,5 @@ upload_files() {
 }
 
 setup_git
-update_schemaspy
-commit_files
+commit_schemaspy_files
 upload_files
