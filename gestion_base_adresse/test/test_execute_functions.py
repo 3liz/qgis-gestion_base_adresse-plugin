@@ -191,6 +191,19 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
+        # Vérouillage des voies
+        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        self.cursor.execute(sql)
+
+        # Aucune voie dévérouillée n'est disponible
+        # Aucun numéro d'adresse calculable
+        sql = (
+            "select num, suffixe, voie from adresse.calcul_num_adr(ST_geomfromtext("
+            "'POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((None, None, None), self.cursor.fetchone())
+
     def test_calcul_num_metrique(self):
         """Test de la fonction calcul_num_metrique."""
         # Suppression des points pour pouvoir tout tester
@@ -262,6 +275,19 @@ class TestSqlFunctions(DatabaseTestCase):
             "from adresse.calcul_num_metrique(ST_geomfromtext('POINT(428252 6921965)', 2154))"
         )
         self.cursor.execute(sql)
+
+        # Vérouillage des voies
+        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        self.cursor.execute(sql)
+
+        # Aucune voie dévérouillée n'est disponible
+        # Aucun numéro d'adresse calculable
+        sql = (
+            "select num, suffixe, voie from adresse.calcul_num_metrique(ST_geomfromtext("
+            "'POINT(428310 6922058)', 2154))"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((None, None, None), self.cursor.fetchone())
 
     def test_multiple_voie_unlock(self):
         """Test d'ajout de point avec plusieurs voies déverrouillées"""
