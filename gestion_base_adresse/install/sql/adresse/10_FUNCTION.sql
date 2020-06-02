@@ -36,6 +36,11 @@ BEGIN
     -- Get idvoie
     SELECT adresse.get_id_voie(pgeom) into idvoie;
 
+    -- Aucune voie dévérouillée trouvée
+    IF idvoie IS NULL THEN
+        return query SELECT numc, s, idvoie;
+    END IF;
+
     SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom ) into isleft
     FROM adresse.voie
     WHERE statut_voie_num IS FALSE AND id_voie=idvoie;
@@ -129,6 +134,11 @@ BEGIN
 
     -- Get idvoie
     SELECT adresse.get_id_voie(pgeom) into idvoie;
+
+    -- Aucune voie dévérouillée trouvée
+    IF idvoie IS NULL THEN
+        return query SELECT numc, res, idvoie;
+    END IF;
 
     SELECT v.sens_numerotation into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
 
