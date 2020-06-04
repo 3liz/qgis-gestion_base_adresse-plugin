@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
+-- Dumped by pg_dump version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -88,7 +89,7 @@ COMMENT ON COLUMN adresse.commune.geom IS 'Geometrie de l''objet';
 
 
 -- document.lien
-COMMENT ON COLUMN adresse.document.lien IS 'Chemin de stockage du document';
+COMMENT ON COLUMN adresse.document.lien IS 'Lien du document ou il est enregister';
 
 
 -- point_adresse.id_point
@@ -159,8 +160,8 @@ COMMENT ON COLUMN adresse.point_adresse.id_commune IS 'Identifiant de la commune
 COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcelle à laquelle appartient le point adresse';
 
 
--- point_adresse.a_valider
-COMMENT ON COLUMN adresse.point_adresse.a_valider IS 'Si le point d''adresse est à valider ou non';
+-- point_adresse.valide
+COMMENT ON COLUMN adresse.point_adresse.valide IS 'Si le point d''adresse est à valider ou non';
 
 
 -- voie.id_voie

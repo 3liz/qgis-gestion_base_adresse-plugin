@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
+-- Dumped by pg_dump version 11.6 (Ubuntu 11.6-1.pgdg19.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,11 +12,12 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
 -- calcul_num_adr(public.geometry)
-CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text, voie integer)
+CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -33,16 +34,15 @@ DECLARE
 BEGIN
 
     -- Get idvoie
-    SELECT adresse.get_id_voie(pgeom) into idvoie;
-
-    -- Aucune voie dévérouillée trouvée
-    IF idvoie IS NULL THEN
-        return query SELECT numc, s, idvoie;
-    END IF;
-
-    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom ) into isleft
+    SELECT id_voie into idvoie
+    FROM( SELECT id_voie, ST_Distance(pgeom, geom) as dist
     FROM adresse.voie
-    WHERE statut_voie_num IS FALSE AND id_voie=idvoie;
+    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
+
+    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom)into isleft
+    FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE AND id_voie=idvoie ORDER BY dist) AS d;
 
     SELECT v.sens_numerotation into sens
     FROM adresse.voie v WHERE v.id_voie = idvoie;
@@ -51,7 +51,7 @@ BEGIN
     FROM(
     SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
     FROM adresse.point_adresse p1, adresse.voie v
-    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) >0
         AND
         isleft =
@@ -64,7 +64,7 @@ BEGIN
     FROM(
     SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
     FROM adresse.point_adresse p1, adresse.voie v
-    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND
         (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) <0
         AND
         isleft =
@@ -111,13 +111,13 @@ BEGIN
         END IF;
     END IF;
 
-    return query SELECT numc, s, idvoie;
+    return query SELECT numc, s;
 END;
 $$;
 
 
 -- calcul_num_metrique(public.geometry)
-CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text, voie integer)
+CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text)
     LANGUAGE plpgsql
     AS $$DECLARE
     num integer;
@@ -130,21 +130,19 @@ CREATE FUNCTION adresse.calcul_num_metrique(pgeom public.geometry) RETURNS TABLE
     test boolean;
     suff text[];
 BEGIN
-
-    -- Get idvoie
-    SELECT adresse.get_id_voie(pgeom) into idvoie;
-
-    -- Aucune voie dévérouillée trouvée
-    IF idvoie IS NULL THEN
-        return query SELECT numc, res, idvoie;
-    END IF;
+    SELECT id_voie into idvoie FROM(
+    SELECT id_voie, ST_Distance(pgeom, geom) as dist
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
     SELECT v.sens_numerotation into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
 
     SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom) into isleft
+    FROM( SELECT geom, id_voie, ST_Distance(pgeom, geom) as dist
     FROM adresse.voie
-    WHERE statut_voie_num IS FALSE AND id_voie = idvoie;
+    WHERE statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
+   
     SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
     FROM adresse.voie v
     WHERE id_voie = idvoie;
@@ -178,7 +176,7 @@ BEGIN
         num = num +2;
     END LOOP;
 
-   RETURN query SELECT numc, res, idvoie;
+   RETURN query SELECT numc, res;
 END;
 $$;
 
@@ -233,6 +231,20 @@ END;
 $$;
 
 
+-- check_num_exist(integer, text, integer)
+CREATE FUNCTION adresse.check_num_exist(num integer, suff text, idvoie integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    IF (SELECT numero FROM adresse.point_adresse WHERE numero = num AND suffixe = suff AND id_voie = idvoie) IS NULL THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END;
+$$;
+
+
 -- get_id_voie(public.geometry)
 CREATE FUNCTION adresse.get_id_voie(pgeom public.geometry) RETURNS integer
     LANGUAGE plpgsql
@@ -241,13 +253,9 @@ DECLARE
     idvoie integer;
 BEGIN
     SELECT leid into idvoie FROM(
-        SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist
-        FROM adresse.voie  v, adresse.commune com
-        WHERE v.statut_voie_num IS FALSE
-          AND ST_Intersects(pgeom, com.geom)
-          AND ST_DWithin(v.geom, com.geom, 2000)
-        ORDER BY dist LIMIT 1
-    ) AS d;
+    SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist
+    FROM adresse.voie  v
+    WHERE v.statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;
 
     RETURN idvoie;
 END;
@@ -301,26 +309,6 @@ END;
 $$;
 
 
--- num_exists(integer, text, integer)
-CREATE FUNCTION adresse.num_exists(num integer, suff text, idvoie integer) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-    IF (
-        SELECT numero
-          FROM adresse.point_adresse
-         WHERE numero = num
-           AND suffixe IS NOT DISTINCT FROM suff
-           AND id_voie IS NOT DISTINCT FROM idvoie
-        ) IS NULL THEN
-        RETURN FALSE;
-    ELSE
-        RETURN TRUE;
-    END IF;
-END;
-$$;
-
-
 -- trigger_point_adr()
 CREATE FUNCTION adresse.trigger_point_adr() RETURNS trigger
     LANGUAGE plpgsql
@@ -328,19 +316,10 @@ CREATE FUNCTION adresse.trigger_point_adr() RETURNS trigger
     idvoie integer;
     adrvoie text;
 BEGIN
-    -- Récupération de l'identifiant de la voie dévérouillée la plus proche
     SELECT adresse.get_id_voie(NEW.geom) into idvoie;
 
-    -- Si aucune voie dévérouillée proche mais qu'un identifiant de voie est fourni
-    -- on le garde la voie
-    IF idvoie is NULL AND NEW.id_voie IS NOT NULL THEN
-        idvoie:= NEW.id_voie;
-    END IF;
-
     IF idvoie IS NOT NULL THEN
-        -- Si l'identifiant de voies est non null
-        IF NOT (SELECT adresse.num_exists(NEW.numero, NEW.suffixe, idvoie)) THEN
-            -- Si l'adresse n'existe pas déjà on enregistre et modififie le nom complet
+        IF (SELECT adresse.check_num_exist(NEW.numero, NEW.suffixe, idvoie)) THEN
             NEW.id_voie = idvoie;
             SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = idvoie;
             IF NEW.suffixe IS NOT NULL THEN
@@ -350,13 +329,10 @@ BEGIN
             END IF;
             RETURN NEW;
         ELSE
-            -- Sinon enregistrement impossible
             RETURN NULL;
         END IF;
     ELSE
-        -- Sinon on modifie a_valider et on enregistre
-        NEW.a_valider = True;
-        RETURN NEW;
+        RETURN NULL;
     END IF;
 END;
 $$;
@@ -378,17 +354,9 @@ BEGIN
         END IF;
         RETURN NEW;
     ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
-        -- Cas des différence
-        IF NEW.numero != OLD.numero
-            OR NEW.suffixe IS DISTINCT FROM OLD.suffixe
-            OR NEW.id_voie IS DISTINCT FROM OLD.id_voie
-            OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0
-            OR (NEW.a_valider IS DISTINCT FROM OLD.a_valider AND OLD.a_valider) THEN
-
+        IF NEW.numero != OLD.numero OR NEW.suffixe != OLD.suffixe OR NEW.id_voie != OLD.id_voie THEN
             -- Cas où id_voie est null, calculer un nouvel id_voie
-            IF NEW.id_voie IS DISTINCT FROM OLD.id_voie
-                OR (NEW.id_voie IS NULL AND OLD.a_valider)
-                OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0 THEN
+            IF NEW.id_voie IS NULL THEN
                 SELECT adresse.get_id_voie(NEW.geom) into idvoie;
                 -- Aucune voie dévérouillée trouvée
                 IF idvoie IS NULL THEN
@@ -396,16 +364,6 @@ BEGIN
                 END IF;
                 NEW.id_voie = idvoie;
             END IF;
-
-            -- Vérification que la nouvelle adresse n'existe pas déjà
-            IF (NEW.numero != OLD.numero
-                OR NEW.suffixe IS DISTINCT FROM OLD.suffixe
-                OR NEW.id_voie IS DISTINCT FROM OLD.id_voie)
-                AND (SELECT adresse.num_exists(NEW.numero, NEW.suffixe, NEW.id_voie)) THEN
-                return NULL;
-            END IF;
-
-            -- Modification du nom complet de la voie
             SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = NEW.id_voie;
             IF NEW.suffixe IS NOT NULL THEN
                 NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
