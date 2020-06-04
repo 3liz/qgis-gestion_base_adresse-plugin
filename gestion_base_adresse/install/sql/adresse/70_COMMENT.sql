@@ -160,7 +160,7 @@ COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcel
 
 
 -- point_adresse.valide
-COMMENT ON COLUMN adresse.point_adresse.valide IS 'Si le point d''adresse est à valider ou non';
+COMMENT ON COLUMN adresse.point_adresse.valide IS 'Le point d''adresse est valide ou non';
 
 
 -- voie.id_voie
@@ -254,4 +254,3 @@ COMMENT ON COLUMN adresse.metadata.me_version_date IS 'Date de la version. Ex: 2
 --
 -- PostgreSQL database dump complete
 --
-
