@@ -254,3 +254,4 @@ COMMENT ON COLUMN adresse.metadata.me_version_date IS 'Date de la version. Ex: 2
 --
 -- PostgreSQL database dump complete
 --
+
