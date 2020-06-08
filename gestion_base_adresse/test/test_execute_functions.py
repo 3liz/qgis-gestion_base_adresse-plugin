@@ -682,7 +682,7 @@ class TestSqlFunctions(DatabaseTestCase):
             "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=3"
         )
         self.cursor.execute(sql)
-        self.assertTupleEqual((3, None, 3, False), self.cursor.fetchone())
+        self.assertTupleEqual((3, None, 3, True), self.cursor.fetchone())
 
         # Vérouillage des voies
         sql='UPDATE adresse.voie SET statut_voie_num = true'
