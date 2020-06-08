@@ -131,7 +131,7 @@ CREATE TABLE adresse.point_adresse (
     id_voie integer,
     id_commune integer,
     id_parcelle integer,
-    a_valider boolean DEFAULT false
+    valide boolean DEFAULT true
 );
 
 

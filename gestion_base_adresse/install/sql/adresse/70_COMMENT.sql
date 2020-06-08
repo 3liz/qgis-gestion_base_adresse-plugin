@@ -159,8 +159,8 @@ COMMENT ON COLUMN adresse.point_adresse.id_commune IS 'Identifiant de la commune
 COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcelle à laquelle appartient le point adresse';
 
 
--- point_adresse.a_valider
-COMMENT ON COLUMN adresse.point_adresse.a_valider IS 'Si le point d''adresse est à valider ou non';
+-- point_adresse.valide
+COMMENT ON COLUMN adresse.point_adresse.valide IS 'Le point d''adresse est valide ou non';
 
 
 -- voie.id_voie
