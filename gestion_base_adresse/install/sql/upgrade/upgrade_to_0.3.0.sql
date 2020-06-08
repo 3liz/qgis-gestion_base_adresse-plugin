@@ -309,5 +309,6 @@ $$;
 
 ALTER TABLE adresse.point_adresse RENAME COLUMN a_valider TO valide;
 ALTER TABLE adresse.point_adresse ALTER COLUMN valide SET DEFAULT True;
+COMMENT ON COLUMN adresse.point_adresse.valide IS 'Le point d''adresse est valide ou non';
 
 COMMIT;
