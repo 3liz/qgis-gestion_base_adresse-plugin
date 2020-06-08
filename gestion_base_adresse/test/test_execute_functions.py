@@ -707,7 +707,7 @@ class TestSqlFunctions(DatabaseTestCase):
             "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=4"
         )
         self.cursor.execute(sql)
-        self.assertTupleEqual((5, None, None, True), self.cursor.fetchone())
+        self.assertTupleEqual((5, None, None, False), self.cursor.fetchone())
 
     def test_update_point_adresse(self):
         """
@@ -865,7 +865,7 @@ class TestSqlFunctions(DatabaseTestCase):
             "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=4"
         )
         self.cursor.execute(sql)
-        self.assertTupleEqual((3, None, None, True), self.cursor.fetchone())
+        self.assertTupleEqual((3, None, None, False), self.cursor.fetchone())
 
         # Dévérouillage de la voie 2
         sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
@@ -873,7 +873,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Valider le point 4
         sql = (
-            "UPDATE adresse.point_adresse SET valide=False "
+            "UPDATE adresse.point_adresse SET valide=True "
             "WHERE id_point=4"
         )
         self.cursor.execute(sql)
@@ -883,4 +883,4 @@ class TestSqlFunctions(DatabaseTestCase):
             "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=4"
         )
         self.cursor.execute(sql)
-        self.assertTupleEqual((3, None, 2, False), self.cursor.fetchone())
+        self.assertTupleEqual((3, None, 2, True), self.cursor.fetchone())
