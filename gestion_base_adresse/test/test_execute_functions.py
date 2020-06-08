@@ -645,7 +645,7 @@ class TestSqlFunctions(DatabaseTestCase):
             "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=1"
         )
         self.cursor.execute(sql)
-        self.assertTupleEqual((1, None, 3, False), self.cursor.fetchone())
+        self.assertTupleEqual((1, None, 3, True), self.cursor.fetchone())
 
         # Insertion d'un point avec un numéro existant
         # Insertion du point 1
