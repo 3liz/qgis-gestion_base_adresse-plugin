@@ -642,7 +642,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Vérification
         sql = (
-            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=1"
+            "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=1"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((1, None, 3, False), self.cursor.fetchone())
@@ -679,7 +679,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Vérification du point 2 sur la voie 3
         sql = (
-            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=3"
+            "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=3"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, 3, False), self.cursor.fetchone())
@@ -704,7 +704,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Vérification du point 3
         sql = (
-            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=4"
+            "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=4"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((5, None, None, True), self.cursor.fetchone())
@@ -862,7 +862,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Vérification du point 4
         sql = (
-            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=4"
+            "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=4"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, None, True), self.cursor.fetchone())
@@ -873,14 +873,14 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Valider le point 4
         sql = (
-            "UPDATE adresse.point_adresse SET a_valider=False "
+            "UPDATE adresse.point_adresse SET valide=False "
             "WHERE id_point=4"
         )
         self.cursor.execute(sql)
 
         # Vérification du point 4
         sql = (
-            "select numero, suffixe, id_voie, a_valider from adresse.point_adresse WHERE id_point=4"
+            "select numero, suffixe, id_voie, valide from adresse.point_adresse WHERE id_point=4"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, 2, False), self.cursor.fetchone())
