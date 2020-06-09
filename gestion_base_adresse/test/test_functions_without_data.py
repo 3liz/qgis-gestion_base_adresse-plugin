@@ -14,12 +14,17 @@ class TestSqlFunctions(DatabaseWithoutDataTestCase):
         """ Test the database is provided without data. """
         # Number of tables
         self.cursor.execute(
-            "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'adresse';"
+            "SELECT ST_astext(ST_startPoint(adresse.calcul_segment_proche(st_geomfromtext"
+            "('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
+            " 429141 6920875, 429147 6920926)', 2154), "
+            "St_geomfromtext('POINT(429162 6920851)', 2154)))) "
         )
-        self.assertEqual(11, self.cursor.fetchone()[0])
+        self.assertEqual('POINT(429142 6920823)', self.cursor.fetchone()[0])
 
-        # Number of features
         self.cursor.execute(
-            "SELECT COUNT(*) FROM adresse.commune;"
+            "SELECT ST_astext(ST_startPoint(adresse.calcul_segment_proche(st_geomfromtext"
+            "('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
+            " 429141 6920875, 429147 6920926)', 2154), "
+            "St_geomfromtext('POINT(429125 6920901)', 2154)))) "
         )
-        self.assertEqual(0, self.cursor.fetchone()[0])
+        self.assertEqual('POINT(429141 6920875)', self.cursor.fetchone()[0])
