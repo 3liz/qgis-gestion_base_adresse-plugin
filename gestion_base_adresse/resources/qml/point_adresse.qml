@@ -7,8 +7,8 @@
   </flags>
   <renderer-v2 enableorderby="0" type="RuleRenderer" symbollevels="0" forceraster="0">
     <rules key="{8802a37f-2f4e-4ee5-b4b3-ec519d0efc75}">
-      <rule filter=" &quot;valide&quot; = true and  &quot;erreur&quot; = false" symbol="0" label="Non validé et pas d'erreur" key="{d3c4e791-dbaf-4196-a5cf-9da6b348ed7d}"/>
-      <rule filter=" &quot;valide&quot; = false and  &quot;erreur&quot; = false" symbol="1" label="Validé" key="{0ff3b8c9-610a-4a3f-b0aa-35b6b2e07b22}"/>
+      <rule filter=" &quot;valide&quot; = false and  &quot;erreur&quot; = false" symbol="0" label="Non validé et pas d'erreur" key="{d3c4e791-dbaf-4196-a5cf-9da6b348ed7d}"/>
+      <rule filter=" &quot;valide&quot; = true and  &quot;erreur&quot; = false" symbol="1" label="Validé" key="{0ff3b8c9-610a-4a3f-b0aa-35b6b2e07b22}"/>
       <rule filter=" &quot;erreur&quot; = true" symbol="2" label="Erreur" key="{8c0bf604-1c09-4819-82a4-bcd4ad0abed7}"/>
     </rules>
     <symbols>
@@ -338,8 +338,8 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option value="" name="CheckedState" type="QString"/>
-            <Option value="" name="UncheckedState" type="QString"/>
+            <Option value="1" name="CheckedState" type="QString"/>
+            <Option value="0" name="UncheckedState" type="QString"/>
           </Option>
         </config>
       </editWidget>
@@ -383,7 +383,7 @@
     <default field="id_voie" applyOnUpdate="0" expression=""/>
     <default field="id_commune" applyOnUpdate="0" expression=""/>
     <default field="id_parcelle" applyOnUpdate="0" expression=""/>
-    <default field="valide" applyOnUpdate="0" expression=""/>
+    <default field="valide" applyOnUpdate="0" expression="1"/>
   </defaults>
   <constraints>
     <constraint exp_strength="0" field="id_point" unique_strength="1" constraints="3" notnull_strength="1"/>
@@ -503,8 +503,6 @@ def my_form_open(dialog, layer, feature):
     </attributeEditorContainer>
   </attributeEditorForm>
   <editable>
-    <field editable="1" name="a_valide"/>
-    <field editable="1" name="a_valider"/>
     <field editable="1" name="achat_plaque_numero"/>
     <field editable="1" name="adresse_complete"/>
     <field editable="1" name="code_postal"/>
@@ -530,7 +528,6 @@ def my_form_open(dialog, layer, feature):
     <field editable="0" name="voie_nom_complet"/>
   </editable>
   <labelOnTop>
-    <field labelOnTop="0" name="a_valide"/>
     <field labelOnTop="0" name="a_valider"/>
     <field labelOnTop="0" name="achat_plaque_numero"/>
     <field labelOnTop="0" name="adresse_complete"/>
