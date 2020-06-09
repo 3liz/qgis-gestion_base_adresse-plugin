@@ -10,7 +10,7 @@ __revision__ = "$Format:%H$"
 
 class TestSqlFunctions(DatabaseWithoutDataTestCase):
 
-    def test_to_be_removed_later(self):
+    def test_calcul_segment_proche(self):
         """ Test the database is provided without data. """
         # Number of tables
         self.cursor.execute(
