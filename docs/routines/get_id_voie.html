@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;DECLARE&#10;    idvoie integer;&#10;BEGIN&#10;    SELECT leid into idvoie FROM(&#10;    SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist&#10;    FROM adresse.voie  v&#10;    WHERE v.statut_voie_num IS FALSE ORDER BY dist LIMIT 1) AS d;&#10;&#10;    RETURN idvoie;&#10;END;&#10;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;DECLARE&#10;    idvoie integer;&#10;BEGIN&#10;    SELECT leid into idvoie FROM(&#10;        SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist&#10;        FROM adresse.voie  v, adresse.commune com&#10;        WHERE v.statut_voie_num IS FALSE&#10;          AND ST_Intersects(pgeom, com.geom)&#10;          AND ST_DWithin(v.geom, com.geom, 2000)&#10;        ORDER BY dist LIMIT 1&#10;    ) AS d;&#10;&#10;    RETURN idvoie;&#10;END;&#10;</textarea>
                         </div>
                     </div>
                 </section>

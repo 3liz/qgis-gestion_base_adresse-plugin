@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>check_num_exist</h1><br />
+                    <h1>num_exists</h1><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;BEGIN&#10;    IF (SELECT numero FROM adresse.point_adresse WHERE numero = num AND suffixe = suff AND id_voie = idvoie) IS NULL THEN&#10;        RETURN TRUE;&#10;    ELSE&#10;        RETURN FALSE;&#10;    END IF;&#10;END;&#10;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;BEGIN&#10;    IF (&#10;        SELECT numero&#10;          FROM adresse.point_adresse&#10;         WHERE numero = num&#10;           AND suffixe IS NOT DISTINCT FROM suff&#10;           AND id_voie IS NOT DISTINCT FROM idvoie&#10;        ) IS NULL THEN&#10;        RETURN FALSE;&#10;    ELSE&#10;        RETURN TRUE;&#10;    END IF;&#10;END;&#10;</textarea>
                         </div>
                     </div>
                 </section>
