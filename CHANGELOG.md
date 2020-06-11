@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 0.3.0 - 11/06/2020
+
+* Update Field a_valider, rename into valide
+* Update QML for layers point_adresse and voie
+* Adding tests for SQL function calcul_segment_proche
+
 ### 0.2.9 - 27/05/2020
 
 * Adding multiple news tests
