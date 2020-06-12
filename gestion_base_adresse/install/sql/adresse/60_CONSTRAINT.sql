@@ -74,7 +74,7 @@ ALTER TABLE ONLY adresse.appartenir_com
 
 -- appartenir_com appartenir_com_id_voie_fkey
 ALTER TABLE ONLY adresse.appartenir_com
-    ADD CONSTRAINT appartenir_com_id_voie_fkey FOREIGN KEY (id_voie) REFERENCES adresse.voie(id_voie);
+    ADD CONSTRAINT appartenir_com_id_voie_fkey FOREIGN KEY (id_voie) REFERENCES adresse.voie(id_voie) ON DELETE CASCADE;
 
 
 -- document document_id_commune_fkey
