@@ -893,7 +893,8 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Ajout d'une nouvelle voie
         sql=(
-            "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom) Values(1000, 'Rue', 'du test', 'Classique', "
+            "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom)"
+            " Values(1000, 'Rue', 'du test', 'Classique', "
             "st_geomfromtext('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
             " 429141 6920875, 429147 6920926)', 2154))"
         )
