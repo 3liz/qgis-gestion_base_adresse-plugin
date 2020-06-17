@@ -998,8 +998,8 @@ class TestSqlFunctions(DatabaseTestCase):
 
         # Ajout d'un point
         sql=(
-        "INSERT INTO adresse.point_adresse(id_point, numero, id_voie, geom)"
-        "values(1000, 20, 1000, St_geomfromtext('POINT(429162 6920851)', 2154))"
+            "INSERT INTO adresse.point_adresse(id_point, numero, id_voie, geom)"
+            "values(1000, 20, 1000, St_geomfromtext('POINT(429162 6920851)', 2154))"
         )
         self.cursor.execute(sql)
 
