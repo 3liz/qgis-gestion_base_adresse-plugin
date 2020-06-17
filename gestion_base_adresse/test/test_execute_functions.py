@@ -1049,7 +1049,7 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # Vérification le la suppression du point
+        # Vérification de la suppression du point
         sql = (
             "select id_point from adresse.point_adresse where id_point = 1000"
         )
