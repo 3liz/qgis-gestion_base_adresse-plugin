@@ -1,6 +1,7 @@
 """Tests for load structure with an empty database."""
 
 from .base_test_database import DatabaseTestCase
+import psycopg2
 
 __copyright__ = "Copyright 2019, 3Liz"
 __license__ = "GPL version 3"
@@ -887,6 +888,9 @@ class TestSqlFunctions(DatabaseTestCase):
 
     def test_add_and_delete_road(self):
         """ Test to add and delete Road """
+
+        # Premier test ajout et supression d'une voie
+
         # Ajout d'une nouvelle voie
         sql=(
             "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom) Values(1000, 'Rue', 'du test', 'Classique', "
@@ -914,6 +918,8 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertEqual((None), self.cursor.fetchone())
+
+        # Deuxième test: Ajout, déverrouillage et suppression de voie
 
         # Ajout d'une nouvelle voie
         sql=(
@@ -956,6 +962,9 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertEqual((None), self.cursor.fetchone())
+
+        # Troisième test: Ajout, déverrouillage, ajout d'un point
+        # et test de suppression de voie
 
         # Ajout d'une nouvelle voie
         sql=(
@@ -998,7 +1007,53 @@ class TestSqlFunctions(DatabaseTestCase):
             "SELECT numero From adresse.point_adresse WHERE id_point = 1000"
         )
         self.cursor.execute(sql)
-        self.assertTupleEqual((20,), self.cursor.fetchone())
+        self.assertEqual(20, self.cursor.fetchone()[0])
+
+        sql=(
+            "COMMIT"
+        )
+        self.cursor.execute(sql)
+        # Suppression de la voie
+        sql = (
+            "delete from adresse.voie where id_voie = 1000"
+        )
+        msg = 'La voie ne peut pas être supprimé'
+        with self.assertRaises(psycopg2.IntegrityError, msg=msg):
+            self.cursor.execute(sql)
+
+        sql = (
+            "ROLLBACK"
+        )
+        self.cursor.execute(sql)
+        # Vérification que la suppression de la voie n'a pas marché
+        sql = (
+            "select id_voie from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual(1000, self.cursor.fetchone()[0])
+
+        # Dernier test: suppression du point,
+        # suppression de la voie
+
+        # Vérification de la présence du point
+        sql=(
+            "SELECT numero From adresse.point_adresse WHERE id_point = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual(20, self.cursor.fetchone()[0])
+
+        # Suppression du point
+        sql = (
+            "delete from adresse.point_adresse where id_point = 1000"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification le la suppression du point
+        sql = (
+            "select id_point from adresse.point_adresse where id_point = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual(None, self.cursor.fetchone())
 
         # Suppression de la voie
         sql = (
@@ -1011,4 +1066,4 @@ class TestSqlFunctions(DatabaseTestCase):
             "select id_voie from adresse.voie where id_voie = 1000"
         )
         self.cursor.execute(sql)
-        self.assertEqual((None), self.cursor.fetchone())
+        self.assertEqual(None, self.cursor.fetchone())
