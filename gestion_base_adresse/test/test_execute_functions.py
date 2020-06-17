@@ -884,3 +884,131 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, 2, True), self.cursor.fetchone())
+
+    def test_add_and_delete_road(self):
+        """ Test to add and delete Road """
+        # Ajout d'une nouvelle voie
+        sql=(
+            "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom) Values(1000, 'Rue', 'du test', 'Classique', "
+            "st_geomfromtext('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
+            " 429141 6920875, 429147 6920926)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification de l'existance de la voie
+        sql = (
+            "select id_voie from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1000,), self.cursor.fetchone())
+
+        # Suppression de la voie
+        sql = (
+            "delete from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification de la suppression de la voie
+        sql = (
+            "select id_voie from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual((None), self.cursor.fetchone())
+
+        # Ajout d'une nouvelle voie
+        sql=(
+            "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom) "
+            " Values(1000, 'Rue', 'du test', 'Classique', "
+            "st_geomfromtext('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
+            " 429141 6920875, 429147 6920926)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification de l'existance de la voie
+        sql = (
+            "select id_voie from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1000,), self.cursor.fetchone())
+
+        # Déverrouillage de la voie
+        sql=(
+            "UPDATE adresse.voie SET statut_voie_num = False WHERE id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du déverrouillage de la voie
+        sql=(
+            "SELECT statut_voie_num From adresse.voie WHERE id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((False,), self.cursor.fetchone())
+
+        # Suppression de la voie
+        sql = (
+            "delete from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification de la suppression de la voie
+        sql = (
+            "select id_voie from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual((None), self.cursor.fetchone())
+
+        # Ajout d'une nouvelle voie
+        sql=(
+            "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom) "
+            " Values(1000, 'Rue', 'du test', 'Classique', "
+            "st_geomfromtext('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
+            " 429141 6920875, 429147 6920926)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification de l'existance de la voie
+        sql = (
+            "select id_voie from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((1000,), self.cursor.fetchone())
+
+        # Déverrouillage de la voie
+        sql=(
+            "UPDATE adresse.voie SET statut_voie_num = False WHERE id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification du déverrouillage de la voie
+        sql=(
+            "SELECT statut_voie_num From adresse.voie WHERE id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((False,), self.cursor.fetchone())
+
+        # Ajout d'un point
+        sql=(
+        "INSERT INTO adresse.point_adresse(id_point, numero, id_voie, geom)"
+        "values(1000, 20, 1000, St_geomfromtext('POINT(429162 6920851)', 2154))"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification de l'ajout du point
+        sql=(
+            "SELECT numero From adresse.point_adresse WHERE id_point = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertTupleEqual((20,), self.cursor.fetchone())
+
+        # Suppression de la voie
+        sql = (
+            "delete from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+
+        # Vérification de la suppression de la voie
+        sql = (
+            "select id_voie from adresse.voie where id_voie = 1000"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual((None), self.cursor.fetchone())
