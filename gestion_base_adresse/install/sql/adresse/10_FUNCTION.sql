@@ -359,7 +359,7 @@ BEGIN
             RETURN NULL;
         END IF;
     ELSE
-        -- Sinon on modifie a_valider et on enregistre
+        -- Sinon on modifie valide et on enregistre
         NEW.valide = False;
         RETURN NEW;
     END IF;
