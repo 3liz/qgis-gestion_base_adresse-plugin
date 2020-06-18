@@ -360,7 +360,7 @@ BEGIN
         END IF;
     ELSE
         -- Sinon on modifie a_valider et on enregistre
-        NEW.a_valider = True;
+        NEW.valide = False;
         RETURN NEW;
     END IF;
 END;
@@ -388,11 +388,11 @@ BEGIN
             OR NEW.suffixe IS DISTINCT FROM OLD.suffixe
             OR NEW.id_voie IS DISTINCT FROM OLD.id_voie
             OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0
-            OR (NEW.a_valider IS DISTINCT FROM OLD.a_valider AND OLD.a_valider) THEN
+            OR (NEW.valide IS DISTINCT FROM OLD.valide AND NEW.valide) THEN
 
             -- Cas où id_voie est null, calculer un nouvel id_voie
             IF NEW.id_voie IS DISTINCT FROM OLD.id_voie
-                OR (NEW.id_voie IS NULL AND OLD.a_valider)
+                OR (NEW.id_voie IS NULL AND NEW.valide)
                 OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0 THEN
                 SELECT adresse.get_id_voie(NEW.geom) into idvoie;
                 -- Aucune voie dévérouillée trouvée
@@ -476,4 +476,3 @@ $$;
 --
 -- PostgreSQL database dump complete
 --
-
