@@ -35,6 +35,10 @@ CREATE TRIGGER get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PRO
 CREATE TRIGGER nb_point AFTER INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.calcul_point_voie();
 
 
+-- point_adresse nb_point_delete
+CREATE TRIGGER nb_point_delete AFTER DELETE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.calcul_point_voie();
+
+
 -- voie nom_complet
 CREATE TRIGGER nom_complet BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.voie_nom_complet();
 
