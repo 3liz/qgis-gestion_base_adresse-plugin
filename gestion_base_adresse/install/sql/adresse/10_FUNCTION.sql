@@ -207,8 +207,13 @@ CREATE FUNCTION adresse.calcul_point_voie() RETURNS trigger
 DECLARE
     nb integer;
 BEGIN
-    SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
-    UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
+    IF TG_OP = 'DELETE' THEN
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
+    ELSIF TG_OP = 'INSERT' THEN
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
+    END IF;
 
     RETURN NEW;
 END;
