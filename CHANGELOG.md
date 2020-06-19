@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.4.0 - 19/06/2020
+* Fix bugs
+* Adding tests
+
 ### 0.3.0 - 11/06/2020
 
 * Update Field a_valider, rename into valide
