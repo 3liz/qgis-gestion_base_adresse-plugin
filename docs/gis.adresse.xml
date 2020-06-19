@@ -12,7 +12,7 @@
    <tables>
       <table name="appartenir_com" numRows="0" remarks="" schema="adresse" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_voie" nullable="false" remarks="" size="10" type="int4" typeCode="4">
-            <parent column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="voie"/>
+            <parent column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="true" schema="adresse" table="voie"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_com" nullable="false" remarks="" size="10" type="int4" typeCode="4">
             <parent column="id_com" foreignKey="appartenir_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
@@ -217,7 +217,7 @@
       </table>
       <table name="voie" numRows="0" remarks="" schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.voie_id_voie_seq'::regclass)" digits="0" id="0" name="id_voie" nullable="false" remarks="Identifiant unique de la voie" size="10" type="serial" typeCode="4">
-            <child column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="appartenir_com"/>
+            <child column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="true" schema="adresse" table="appartenir_com"/>
             <child column="id_voie" foreignKey="point_adresse_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="typologie" nullable="false" remarks="Typologie de la voie" size="2147483647" type="text" typeCode="12"/>
@@ -436,8 +436,13 @@ END;
 DECLARE
     nb integer;
 BEGIN
-    SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
-    UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
+    IF TG_OP = 'DELETE' THEN
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
+    ELSIF TG_OP = 'INSERT' THEN
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
+    END IF;
 
     RETURN NEW;
 END;
