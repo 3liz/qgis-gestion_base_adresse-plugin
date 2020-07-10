@@ -15,12 +15,12 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- voie createur_insert
-CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_createur();
-
-
 -- point_adresse createur_insert
 CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.modif_createur();
+
+
+-- voie createur_insert
+CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_createur();
 
 
 -- point_adresse get_commune
@@ -32,7 +32,7 @@ CREATE TRIGGER get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PRO
 
 
 -- point_adresse nb_point
-CREATE TRIGGER nb_point AFTER INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.calcul_point_voie();
+CREATE TRIGGER nb_point AFTER INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.calcul_point_voie();
 
 
 -- point_adresse nb_point_delete
@@ -63,12 +63,12 @@ CREATE TRIGGER trigger_update_name BEFORE UPDATE ON adresse.voie FOR EACH ROW EX
 CREATE TRIGGER update_adr_complete BEFORE UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.update_adr_complete();
 
 
--- voie update_modif_create
-CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
-
-
 -- point_adresse update_modif_create
 CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
+
+
+-- voie update_modif_create
+CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
 
 
 --
