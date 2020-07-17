@@ -63,7 +63,6 @@ CREATE TRIGGER trigger_update_name BEFORE UPDATE ON adresse.voie FOR EACH ROW EX
 CREATE TRIGGER update_adr_complete BEFORE UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.update_adr_complete();
 
 
-
 -- voie update_modif_create
 CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
 
@@ -71,6 +70,8 @@ CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.voie FOR EACH ROW EX
 -- point_adresse update_modif_create
 CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
 
+
 --
 -- PostgreSQL database dump complete
 --
+
