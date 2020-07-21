@@ -1068,3 +1068,43 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
         self.assertEqual(None, self.cursor.fetchone())
+
+    def test_count_number_point(self):
+        """ Test count number of point for a road """
+        # Suppression des points pour pouvoir tout tester
+        sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
+        self.cursor.execute(sql)
+
+        # Disable trigger
+        sql = (
+            "ALTER TABLE adresse.point_adresse "
+            "DISABLE TRIGGER trigger_point_adr"
+        )
+        self.cursor.execute(sql)
+
+        # Adding One point
+        sql=(
+            "INSERT INTO adresse.point_adresse(id_point, numero, geom, valide)"
+            "values(1, 20, St_geomfromtext('POINT(429162 6920851)', 2154), false) "
+        )
+        self.cursor.execute(sql)
+
+        # Set point valide = true
+        sql=(
+            "UPDATE adresse.point_adresse SET valide = true WHERE id_point = 1"
+        )
+        self.cursor.execute(sql)
+
+        # select id_voie from point
+        sql= (
+            "SELECT id_voie FROM adresse.point_adresse WHERE id_point = 1"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual((3,), self.cursor.fetchone())
+
+        # test nb_point = 1
+        sql= (
+            "SELECT nb_point FROM adresse.voie WHERE id_voie = 3"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual((1,), self.cursor.fetchone())
