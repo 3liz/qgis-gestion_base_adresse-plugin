@@ -74,4 +74,3 @@ CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.point_adresse FOR EA
 --
 -- PostgreSQL database dump complete
 --
-

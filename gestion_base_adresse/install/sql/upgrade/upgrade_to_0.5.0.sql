@@ -7,8 +7,8 @@ DECLARE
     nb integer;
 BEGIN
     IF TG_OP = 'DELETE' THEN
-        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
-        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
+      SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
+      UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
     ELSIF TG_OP = 'INSERT'  THEN
       IF NEW.id_voie IS NOT NULL THEN
         SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
@@ -32,9 +32,9 @@ $$;
 
 DROP TRIGGER IF EXISTS nb_point ON adresse.point_adresse;
 CREATE TRIGGER nb_point
-    AFTER INSERT OR UPDATE
-    ON adresse.point_adresse
-    FOR EACH ROW
-    EXECUTE PROCEDURE adresse.calcul_point_voie();
+AFTER INSERT OR UPDATE
+ON adresse.point_adresse
+FOR EACH ROW
+EXECUTE PROCEDURE adresse.calcul_point_voie();
 
 COMMIT;

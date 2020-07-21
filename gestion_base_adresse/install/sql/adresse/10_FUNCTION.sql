@@ -208,8 +208,8 @@ DECLARE
     nb integer;
 BEGIN
     IF TG_OP = 'DELETE' THEN
-        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
-        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
+      SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
+      UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
     ELSIF TG_OP = 'INSERT'  THEN
       IF NEW.id_voie IS NOT NULL THEN
         SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
