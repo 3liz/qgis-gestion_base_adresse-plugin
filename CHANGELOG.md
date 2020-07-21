@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.5.0 - 21/07/2020
+* Update Trigger for calculate number of point by road
+* Adding test for this trigger
+
 ### 0.4.0 - 19/06/2020
 * Fix bugs
 * Adding tests
