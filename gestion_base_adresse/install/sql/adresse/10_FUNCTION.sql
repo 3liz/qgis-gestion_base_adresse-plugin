@@ -275,6 +275,18 @@ END;
 $$;
 
 
+-- get_parcelle()
+CREATE FUNCTION adresse.get_parcelle() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    NEW.id_parcelle = (SELECT p.fid FROM adresse.parcelle p WHERE ST_intersects(NEW.geom, p.geom));
+    RETURN NEW;
+END;
+$$;
+
+
 -- longueur_voie()
 CREATE FUNCTION adresse.longueur_voie() RETURNS trigger
     LANGUAGE plpgsql

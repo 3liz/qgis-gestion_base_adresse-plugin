@@ -1,0 +1,208 @@
+<Layout units="mm" printResolution="300" name="Certificat de numérotation" worldFileMap="{b2fb99e3-b452-4844-bece-ede637bda8a3}">
+ <Snapper snapToItems="1" snapToGrid="0" tolerance="5" snapToGuides="1"/>
+ <Grid resUnits="mm" offsetX="0" resolution="10" offsetY="0" offsetUnits="mm"/>
+ <PageCollection>
+  <symbol type="fill" name="" force_rhr="0" alpha="1" clip_to_extent="1">
+   <layer enabled="1" class="SimpleFill" pass="0" locked="0">
+    <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+    <prop k="color" v="255,255,255,255"/>
+    <prop k="joinstyle" v="miter"/>
+    <prop k="offset" v="0,0"/>
+    <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+    <prop k="offset_unit" v="MM"/>
+    <prop k="outline_color" v="35,35,35,255"/>
+    <prop k="outline_style" v="no"/>
+    <prop k="outline_width" v="0.26"/>
+    <prop k="outline_width_unit" v="MM"/>
+    <prop k="style" v="solid"/>
+    <data_defined_properties>
+     <Option type="Map">
+      <Option type="QString" name="name" value=""/>
+      <Option name="properties"/>
+      <Option type="QString" name="type" value="collection"/>
+     </Option>
+    </data_defined_properties>
+   </layer>
+  </symbol>
+  <LayoutItem positionLock="false" positionOnPage="0,0,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="0" frame="false" blendMode="0" excludeFromExports="0" groupUuid="" frameJoinStyle="miter" type="65638" referencePoint="0" background="true" templateUuid="{183e6535-4dd2-4aa1-87f1-6f7944904506}" uuid="{183e6535-4dd2-4aa1-87f1-6f7944904506}" id="" position="0,0,mm" opacity="1" visibility="1" size="210,297,mm">
+   <FrameColor green="0" blue="0" red="0" alpha="255"/>
+   <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+   <LayoutObject>
+    <dataDefinedProperties>
+     <Option type="Map">
+      <Option type="QString" name="name" value=""/>
+      <Option name="properties"/>
+      <Option type="QString" name="type" value="collection"/>
+     </Option>
+    </dataDefinedProperties>
+    <customproperties/>
+   </LayoutObject>
+  </LayoutItem>
+  <GuideCollection visible="1"/>
+ </PageCollection>
+ <LayoutItem keepLayerSet="false" positionLock="false" positionOnPage="244.828,55.3731,mm" itemRotation="0" mapRotation="0" outlineWidthM="0.3,mm" zValue="10" frame="false" blendMode="0" excludeFromExports="0" groupUuid="" frameJoinStyle="miter" drawCanvasItems="true" followPreset="false" followPresetName="" type="65639" referencePoint="0" background="true" templateUuid="{22b9a967-6014-46a5-ae96-8c47824ec60f}" uuid="{22b9a967-6014-46a5-ae96-8c47824ec60f}" id="" position="244.828,55.3731,mm" opacity="1" visibility="1" size="30.4552,62.9808,mm">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <Extent ymax="6922563.47400932479649782" ymin="6921185.12424899358302355" xmax="428855.05612300348002464" xmin="428188.53701296879444271"/>
+  <LayerSet/>
+  <AtlasMap margin="0.10000000000000001" scalingMode="2" atlasDriven="0"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="144.231,232.03,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="9" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="0" background="false" halign="8" templateUuid="{81d384ef-2ad6-4343-8372-643e5a31d92c}" uuid="{81d384ef-2ad6-4343-8372-643e5a31d92c}" htmlState="0" id="" position="144.231,232.03,mm" opacity="1" visibility="1" size="40.6235,8.72094,mm" marginX="0" labelText="TAMPON / SIGNATURE">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,50,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="26.1628,178.698,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="8" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="0" background="false" halign="8" templateUuid="{cfe3c027-a32a-4950-ac11-944ae9fb3cab}" uuid="{cfe3c027-a32a-4950-ac11-944ae9fb3cab}" htmlState="0" id="" position="26.1628,178.698,mm" opacity="1" visibility="1" size="71.1092,41.2568,mm" marginX="0" labelText="Pour servir et valoir ce que de droit.&#xa;Fait à [% upper( &quot;commune_nom&quot; ) || ', le ' || day(now()) || '/' || month(now()) || '/' || year(now())%]&#xa;&#xa;Le Maire,&#xa;Monsieur / Madame [% &quot;maire&quot; %]">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,50,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="64.0654,134.118,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="7" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="0" background="false" halign="8" templateUuid="{914dc1be-535b-4974-9e1f-8197f47e8ba5}" uuid="{914dc1be-535b-4974-9e1f-8197f47e8ba5}" htmlState="0" id="" position="64.0654,134.118,mm" opacity="1" visibility="1" size="105.993,30.5233,mm" marginX="0" labelText="[% &quot;adresse_complete&quot;%]&#xa;Commune déléguée (dans le cas d’une commune nouvelle)&#xa;[% &quot;code_postal&quot;  || ' - '  ||  upper(&quot;commune_nom&quot;)%]">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,50,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="105.509,110.639,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="6" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="1" background="false" halign="8" templateUuid="{d6f8357a-cdda-4489-b329-eb0f6975b512}" uuid="{d6f8357a-cdda-4489-b329-eb0f6975b512}" htmlState="0" id="" position="105.509,110.639,mm" opacity="1" visibility="1" size="158.692,7.715,mm" marginX="0" labelText="Suite à la modification de l’adressage effectué par le Conseil Municipal, la nouvelle adresse de votre domicile situé sur la parcelle [% &quot;ccosec&quot;  ||  ' / '  ||  &quot;tex&quot; %] est :">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,50,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="105,93.128,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="5" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="1" background="false" halign="4" templateUuid="{c13bd61d-b8f9-4c18-a4db-a28f7a5e0ed4}" uuid="{c13bd61d-b8f9-4c18-a4db-a28f7a5e0ed4}" htmlState="0" id="" position="105,93.128,mm" opacity="1" visibility="1" size="65.743,7.715,mm" marginX="0" labelText="ATTESTE">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,57,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="26.1628,48.1816,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="4" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="0" background="false" halign="1" templateUuid="{c13e535e-43e5-4116-95ab-5cd00b789470}" uuid="{c13e535e-43e5-4116-95ab-5cd00b789470}" htmlState="0" id="" position="26.1628,48.1816,mm" opacity="1" visibility="1" size="52.9965,18.4482,mm" marginX="0" labelText="Mairie de [% upper(&quot;commune_nom&quot;) || '\n' &#xa;|| &quot;adresse_mairie&quot; || '\n'&#xa;|| &quot;code_postal&quot; || '-' || upper(&quot;commune_nom&quot;) %]">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,50,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="35.5546,72.6674,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="4" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="0" background="false" halign="8" templateUuid="{f3434349-9910-4044-8854-610ffc8868a4}" uuid="{f3434349-9910-4044-8854-610ffc8868a4}" htmlState="0" id="" position="35.5546,72.6674,mm" opacity="1" visibility="1" size="65.7425,7.71468,mm" marginX="0" labelText="Le Maire de [% upper(&quot;commune_nom&quot;) %] ">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,50,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="131.858,29.7335,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="2" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="0" background="false" halign="2" templateUuid="{ebf4c08d-3960-4c4e-b5a8-4f59b60db670}" uuid="{ebf4c08d-3960-4c4e-b5a8-4f59b60db670}" htmlState="0" id="" position="131.858,29.7335,mm" opacity="1" visibility="1" size="52.9965,18.4482,mm" marginX="0" labelText="[% &quot;p_nom&quot; ||  '\n' || &#xa;trim(&quot;p_adresse&quot;) || '\n' ||&#xa;&quot;p_adresse2&quot; %]">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,10,-1,5,50,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <LayoutItem positionLock="false" positionOnPage="105,15,mm" itemRotation="0" outlineWidthM="0.3,mm" zValue="1" frame="false" blendMode="0" valign="32" excludeFromExports="0" groupUuid="" marginY="0" frameJoinStyle="miter" type="65641" referencePoint="1" background="false" halign="4" templateUuid="{46e3b042-8fd9-4e03-ab91-89bb59ec04a6}" uuid="{46e3b042-8fd9-4e03-ab91-89bb59ec04a6}" htmlState="0" id="" position="105,15,mm" opacity="1" visibility="1" size="210,7.15558,mm" marginX="0" labelText="ATTESTATION DE MODIFICATION D’ADRESSE">
+  <FrameColor green="0" blue="0" red="0" alpha="255"/>
+  <BackgroundColor green="255" blue="255" red="255" alpha="255"/>
+  <LayoutObject>
+   <dataDefinedProperties>
+    <Option type="Map">
+     <Option type="QString" name="name" value=""/>
+     <Option name="properties"/>
+     <Option type="QString" name="type" value="collection"/>
+    </Option>
+   </dataDefinedProperties>
+   <customproperties/>
+  </LayoutObject>
+  <LabelFont style="" description="Ubuntu,14,-1,5,57,0,0,0,0,0"/>
+  <FontColor green="0" blue="0" red="0" alpha="255"/>
+ </LayoutItem>
+ <customproperties>
+  <property key="atlasRasterFormat" value="png"/>
+ </customproperties>
+ <Atlas featureFilter=" &quot;id_prop&quot; " coverageLayerName="vue_certificat" sortFeatures="1" enabled="1" filenamePattern="'output_'||@atlas_featurenumber" sortAscending="1" coverageLayerSource="service='adresse' sslmode=disable key='id_view' checkPrimaryKeyUnicity='1' table=&quot;adresse&quot;.&quot;vue_certificat&quot; sql=" pageNameExpression="&quot;p_nom&quot;" filterFeatures="1" coverageLayer="vue_certificat_74c1d429_7cb5_41a2_8869_27439f3f2716" coverageLayerProvider="postgres" hideCoverage="0" sortKey=""/>
+</Layout>

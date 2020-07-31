@@ -9,6 +9,7 @@ from qgis.PyQt.QtGui import QIcon
 from .tools.configure_project import ConfigProject
 from .data.load_layers import LoadLayersAlgorithm
 from .data.load_styles import LoadStylesAlgorithm
+from .data.data_parcelle import DataParcelleAlgo
 from .structure.create_database_structure import CreateDatabaseStructure
 from .structure.upgrade_database_structure import UpgradeDatabaseStructure
 
@@ -22,6 +23,7 @@ class GestionAdresseProvider(QgsProcessingProvider):
         self.addAlgorithm(LoadLayersAlgorithm())
         self.addAlgorithm(LoadStylesAlgorithm())
         self.addAlgorithm(ConfigProject())
+        self.addAlgorithm(DataParcelleAlgo())
 
     def id(self):
         return "gestion_adresse"
