@@ -32,6 +32,10 @@ CREATE TRIGGER get_commune BEFORE INSERT ON adresse.point_adresse FOR EACH ROW E
 CREATE TRIGGER get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
 
 
+-- point_adresse get_parcelle
+CREATE TRIGGER get_parcelle BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_parcelle();
+
+
 -- point_adresse nb_point
 CREATE TRIGGER nb_point AFTER INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.calcul_point_voie();
 

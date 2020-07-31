@@ -47,7 +47,10 @@ CREATE TABLE adresse.commune (
     date_dgfip date,
     diffusion_ban character(3),
     date_ban date,
-    geom public.geometry(MultiPolygon,2154)
+    geom public.geometry(MultiPolygon,2154),
+    adresse_mairie text,
+    code_postal text,
+    maire text
 );
 
 
@@ -188,15 +191,15 @@ ALTER SEQUENCE adresse.metadata_id_seq OWNED BY adresse.metadata.id;
 -- parcelle
 CREATE TABLE adresse.parcelle (
     fid integer NOT NULL,
-    id character varying,
+    id text,
     commune character varying,
     prefixe character varying,
     section character varying,
     numero character varying,
     contenance integer,
     arpente boolean,
-    created date,
-    updated date,
+    created date DEFAULT now(),
+    updated date DEFAULT now(),
     geom public.geometry(MultiPolygon,2154)
 );
 
