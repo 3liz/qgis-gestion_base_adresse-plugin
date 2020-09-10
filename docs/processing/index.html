@@ -1,0 +1,361 @@
+
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <title>Gestion des adresses</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <link href="https://3liz.github.io/remarkable.css" rel="stylesheet"/>
+  <link href="../icon.png" rel="icon" type="image/png" >
+ </head>
+ <body>
+ <header class="header-container" style="">
+    <h1>Gestion des adresses</h1>
+ </header>
+ <article>
+ <p><a href="../">Up</a></p>
+<div class="toc"><span class="toctitle">Table of content</span><ul>
+<li><a href="#gestion-des-adresses">Gestion des adresses</a><ul>
+<li><a href="#outils">Outils</a><ul>
+<li><a href="#configuration-du-projet">Configuration du projet</a><ul>
+<li><a href="#parameters">Parameters</a></li>
+<li><a href="#outputs">Outputs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#structure">Structure</a><ul>
+<li><a href="#installation-de-la-structure-sur-la-base-de-donnees">Installation de la structure sur la base de données</a><ul>
+<li><a href="#parameters_1">Parameters</a></li>
+<li><a href="#outputs_1">Outputs</a></li>
+</ul>
+</li>
+<li><a href="#mise-a-jour-de-la-structure-de-la-base">Mise à jour de la structure de la base</a><ul>
+<li><a href="#parameters_2">Parameters</a></li>
+<li><a href="#outputs_2">Outputs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#donnees">Données</a><ul>
+<li><a href="#chargement-des-couches-depuis-la-base">Chargement des couches depuis la base</a><ul>
+<li><a href="#parameters_3">Parameters</a></li>
+<li><a href="#outputs_3">Outputs</a></li>
+</ul>
+</li>
+<li><a href="#chargement-des-styles-depuis-le-dossier-resources">Chargement des styles depuis le dossier resources</a><ul>
+<li><a href="#parameters_4">Parameters</a></li>
+<li><a href="#outputs_4">Outputs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="gestion-des-adresses">Gestion des adresses</h1>
+<h2 id="outils">Outils</h2>
+<h3 id="configuration-du-projet">Configuration du projet</h3>
+<p>La configuration ajoute les variables concernant le nom des couches dans le projet.</p>
+<p><img alt="algo_id" src="./gestion_adresse-config_project.png"></p>
+<h4 id="parameters">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+<th align="center">Required</th>
+<th align="center">Advanced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">ADDRESS_LAYER</td>
+<td align="center">Voirie</td>
+<td align="center">VectorLayer</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">STREET_LAYER</td>
+<td align="center">Point adresse</td>
+<td align="center">VectorLayer</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputs">Outputs</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="structure">Structure</h2>
+<h3 id="installation-de-la-structure-sur-la-base-de-donnees">Installation de la structure sur la base de données</h3>
+<p>Création de la structure de la base données. Vous pouvez aussi charger des données de tests.</p>
+<p><img alt="algo_id" src="./gestion_adresse-create_database_structure.png"></p>
+<h4 id="parameters_1">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+<th align="center">Required</th>
+<th align="center">Advanced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">CONNECTION_NAME</td>
+<td align="center">Connexion PostgreSQL vers la base de données</td>
+<td align="center">String</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OVERRIDE</td>
+<td align="center">Écraser le schéma adresse ? <strong> ATTENTION </strong> Cela supprimera toutes les données !</td>
+<td align="center">Boolean</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">ADD_TEST_DATA</td>
+<td align="center">Ajouter des données de test ?</td>
+<td align="center">Boolean</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputs_1">Outputs</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">OUTPUT_STATUS</td>
+<td align="center">Output status</td>
+<td align="center">Number</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OUTPUT_STRING</td>
+<td align="center">Output message</td>
+<td align="center">String</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="mise-a-jour-de-la-structure-de-la-base">Mise à jour de la structure de la base</h3>
+<p>Mise à jour de la base de données suite à une nouvelle version de l'extension.</p>
+<p><img alt="algo_id" src="./gestion_adresse-upgrade_database_structure.png"></p>
+<h4 id="parameters_2">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+<th align="center">Required</th>
+<th align="center">Advanced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">CONNECTION_NAME</td>
+<td align="center">Connexion PostgreSQL vers la base de données</td>
+<td align="center">String</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">RUN_MIGRATIONS</td>
+<td align="center">Cocher cette option pour lancer la mise-à-jour.</td>
+<td align="center">Boolean</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputs_2">Outputs</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">OUTPUT_STATUS</td>
+<td align="center">Output status</td>
+<td align="center">Number</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OUTPUT_STRING</td>
+<td align="center">Output message</td>
+<td align="center">String</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="donnees">Données</h2>
+<h3 id="chargement-des-couches-depuis-la-base">Chargement des couches depuis la base</h3>
+<p>Charger toutes les couches de la base de données.</p>
+<p><img alt="algo_id" src="./gestion_adresse-load_layers.png"></p>
+<h4 id="parameters_3">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+<th align="center">Required</th>
+<th align="center">Advanced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">DATABASE</td>
+<td align="center">Connexion à la base de données</td>
+<td align="center">String</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">SCHEMA</td>
+<td align="center">Schéma</td>
+<td align="center">String</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputs_3">Outputs</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">OUTPUT</td>
+<td align="center">Couches de sortie</td>
+<td align="center">MultipleLayers</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OUTPUT MSG</td>
+<td align="center">Message de sortie</td>
+<td align="center">String</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="chargement-des-styles-depuis-le-dossier-resources">Chargement des styles depuis le dossier resources</h3>
+<p>Charger les styles pour les différentes couches.</p>
+<p><img alt="algo_id" src="./gestion_adresse-load_styles.png"></p>
+<h4 id="parameters_4">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+<th align="center">Required</th>
+<th align="center">Advanced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">INPUT</td>
+<td align="center">Champ qui ne sert à rien !</td>
+<td align="center">String</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputs_4">Outputs</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">OUTPUT MSG</td>
+<td align="center">Message de sortie</td>
+<td align="center">String</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+  </article>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+   MathJax.Hub.Config({"showProcessingMessages" : false,"messageStyle" : "none","tex2jax": { inlineMath: [ [ "$", "$" ] ] }});
+  </script>
+ </body>
+</html>
