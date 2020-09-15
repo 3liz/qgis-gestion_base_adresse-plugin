@@ -20,15 +20,18 @@ SET row_security = off;
 CREATE VIEW adresse.export_bal AS
  SELECT p.id_point,
         CASE
-            WHEN (p.suffixe IS NOT NULL) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)
-            ELSE concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text))
+            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)
+            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text))
+            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text))
+            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)
+            ELSE NULL::text
         END AS cle_interop,
     ''::text AS uid_adresse,
-    v.nom AS voie_nom,
+    v.nom_complet AS voie_nom,
     p.numero,
     p.suffixe,
     c.commune_nom,
-    'parcelle'::text AS "position",
+    p.type_pos AS "position",
     public.st_x(p.geom) AS x,
     public.st_y(p.geom) AS y,
     public.st_x(public.st_transform(p.geom, 4326)) AS long,
