@@ -1,7 +1,8 @@
 ---
-Title: Véloroutes
+Title: Gestion Adresse
 Favicon: icon.png
 ...
 
-* [User guide](./processing/)
+* [User guide](./user_guide/)
+* [Algorithms descriptions](./processing/)
 * [Database](./database/)
