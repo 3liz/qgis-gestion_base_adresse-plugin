@@ -49,7 +49,8 @@ CREATE VIEW adresse.export_bal AS
 CREATE VIEW adresse.vue_com AS
  SELECT (c.insee_code)::integer AS insee_code,
     c.commune_nom
-   FROM adresse.commune c;
+   FROM adresse.commune c
+  ORDER BY c.commune_nom;
 
 
 --

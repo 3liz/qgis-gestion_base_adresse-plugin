@@ -29,4 +29,12 @@ CREATE OR REPLACE VIEW adresse.export_bal
     adresse.voie v
   WHERE p.id_commune = c.id_com AND p.id_voie = v.id_voie;
 
+DROP VIEW IF EXISTS adresse.vue_com;
+CREATE OR REPLACE VIEW adresse.vue_com
+   AS
+   SELECT c.insee_code::integer AS insee_code,
+      c.commune_nom
+     FROM adresse.commune c
+     ORDER BY c.commune_nom;
+
 COMMIT;
