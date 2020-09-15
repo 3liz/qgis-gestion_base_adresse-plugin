@@ -1,100 +1,100 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyLocal="0" simplifyDrawingHints="0" styleCategories="AllStyleCategories" maxScale="0" simplifyDrawingTol="1" hasScaleBasedVisibilityFlag="0" simplifyAlgorithm="0" simplifyMaxScale="1" labelsEnabled="0" version="3.4.15-Madeira" readOnly="0" minScale="1e+08">
+<qgis simplifyDrawingTol="1" hasScaleBasedVisibilityFlag="0" maxScale="0" labelsEnabled="0" readOnly="0" minScale="1e+08" version="3.4.15-Madeira" simplifyLocal="0" simplifyMaxScale="1" styleCategories="AllStyleCategories" simplifyAlgorithm="0" simplifyDrawingHints="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 enableorderby="0" type="RuleRenderer" symbollevels="0" forceraster="0">
+  <renderer-v2 symbollevels="0" type="RuleRenderer" enableorderby="0" forceraster="0">
     <rules key="{8802a37f-2f4e-4ee5-b4b3-ec519d0efc75}">
-      <rule filter=" &quot;valide&quot; = false and  &quot;erreur&quot; = false" symbol="0" label="Non validé et pas d'erreur" key="{d3c4e791-dbaf-4196-a5cf-9da6b348ed7d}"/>
-      <rule filter=" &quot;valide&quot; = true and  &quot;erreur&quot; = false" symbol="1" label="Validé" key="{0ff3b8c9-610a-4a3f-b0aa-35b6b2e07b22}"/>
-      <rule filter=" &quot;erreur&quot; = true" symbol="2" label="Erreur" key="{8c0bf604-1c09-4819-82a4-bcd4ad0abed7}"/>
+      <rule label="Non validé et pas d'erreur" filter=" &quot;valide&quot; = false and  &quot;erreur&quot; = false" key="{d3c4e791-dbaf-4196-a5cf-9da6b348ed7d}" symbol="0"/>
+      <rule label="Validé" filter=" &quot;valide&quot; = true and  &quot;erreur&quot; = false" key="{0ff3b8c9-610a-4a3f-b0aa-35b6b2e07b22}" symbol="1"/>
+      <rule label="Erreur" filter=" &quot;erreur&quot; = true" key="{8c0bf604-1c09-4819-82a4-bcd4ad0abed7}" symbol="2"/>
     </rules>
     <symbols>
-      <symbol alpha="1" name="0" clip_to_extent="1" type="marker" force_rhr="0">
-        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
-          <prop k="angle" v="0"/>
-          <prop k="color" v="243,173,21,255"/>
-          <prop k="horizontal_anchor_point" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="name" v="circle"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="35,35,35,255"/>
-          <prop k="outline_style" v="solid"/>
-          <prop k="outline_width" v="0"/>
-          <prop k="outline_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="scale_method" v="diameter"/>
-          <prop k="size" v="2"/>
-          <prop k="size_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="size_unit" v="MM"/>
-          <prop k="vertical_anchor_point" v="1"/>
+      <symbol force_rhr="0" type="marker" clip_to_extent="1" name="0" alpha="1">
+        <layer enabled="1" class="SimpleMarker" locked="0" pass="0">
+          <prop v="0" k="angle"/>
+          <prop v="243,173,21,255" k="color"/>
+          <prop v="1" k="horizontal_anchor_point"/>
+          <prop v="bevel" k="joinstyle"/>
+          <prop v="circle" k="name"/>
+          <prop v="0,0" k="offset"/>
+          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+          <prop v="MM" k="offset_unit"/>
+          <prop v="35,35,35,255" k="outline_color"/>
+          <prop v="solid" k="outline_style"/>
+          <prop v="0" k="outline_width"/>
+          <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
+          <prop v="MM" k="outline_width_unit"/>
+          <prop v="diameter" k="scale_method"/>
+          <prop v="2" k="size"/>
+          <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
+          <prop v="MM" k="size_unit"/>
+          <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option type="QString" value="" name="name"/>
               <Option name="properties"/>
-              <Option value="collection" name="type" type="QString"/>
+              <Option type="QString" value="collection" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol alpha="1" name="1" clip_to_extent="1" type="marker" force_rhr="0">
-        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
-          <prop k="angle" v="0"/>
-          <prop k="color" v="176,176,176,255"/>
-          <prop k="horizontal_anchor_point" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="name" v="circle"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="35,35,35,255"/>
-          <prop k="outline_style" v="solid"/>
-          <prop k="outline_width" v="0"/>
-          <prop k="outline_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="scale_method" v="diameter"/>
-          <prop k="size" v="2"/>
-          <prop k="size_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="size_unit" v="MM"/>
-          <prop k="vertical_anchor_point" v="1"/>
+      <symbol force_rhr="0" type="marker" clip_to_extent="1" name="1" alpha="1">
+        <layer enabled="1" class="SimpleMarker" locked="0" pass="0">
+          <prop v="0" k="angle"/>
+          <prop v="176,176,176,255" k="color"/>
+          <prop v="1" k="horizontal_anchor_point"/>
+          <prop v="bevel" k="joinstyle"/>
+          <prop v="circle" k="name"/>
+          <prop v="0,0" k="offset"/>
+          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+          <prop v="MM" k="offset_unit"/>
+          <prop v="35,35,35,255" k="outline_color"/>
+          <prop v="solid" k="outline_style"/>
+          <prop v="0" k="outline_width"/>
+          <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
+          <prop v="MM" k="outline_width_unit"/>
+          <prop v="diameter" k="scale_method"/>
+          <prop v="2" k="size"/>
+          <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
+          <prop v="MM" k="size_unit"/>
+          <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option type="QString" value="" name="name"/>
               <Option name="properties"/>
-              <Option value="collection" name="type" type="QString"/>
+              <Option type="QString" value="collection" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol alpha="1" name="2" clip_to_extent="1" type="marker" force_rhr="0">
-        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
-          <prop k="angle" v="0"/>
-          <prop k="color" v="255,1,30,255"/>
-          <prop k="horizontal_anchor_point" v="1"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="name" v="circle"/>
-          <prop k="offset" v="0,0"/>
-          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="outline_color" v="35,35,35,255"/>
-          <prop k="outline_style" v="solid"/>
-          <prop k="outline_width" v="0"/>
-          <prop k="outline_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="outline_width_unit" v="MM"/>
-          <prop k="scale_method" v="diameter"/>
-          <prop k="size" v="2"/>
-          <prop k="size_map_unit_scale" v="3x:0,0,0,0,0,0"/>
-          <prop k="size_unit" v="MM"/>
-          <prop k="vertical_anchor_point" v="1"/>
+      <symbol force_rhr="0" type="marker" clip_to_extent="1" name="2" alpha="1">
+        <layer enabled="1" class="SimpleMarker" locked="0" pass="0">
+          <prop v="0" k="angle"/>
+          <prop v="255,1,30,255" k="color"/>
+          <prop v="1" k="horizontal_anchor_point"/>
+          <prop v="bevel" k="joinstyle"/>
+          <prop v="circle" k="name"/>
+          <prop v="0,0" k="offset"/>
+          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+          <prop v="MM" k="offset_unit"/>
+          <prop v="35,35,35,255" k="outline_color"/>
+          <prop v="solid" k="outline_style"/>
+          <prop v="0" k="outline_width"/>
+          <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
+          <prop v="MM" k="outline_width_unit"/>
+          <prop v="diameter" k="scale_method"/>
+          <prop v="2" k="size"/>
+          <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
+          <prop v="MM" k="size_unit"/>
+          <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option value="" name="name" type="QString"/>
+              <Option type="QString" value="" name="name"/>
               <Option name="properties"/>
-              <Option value="collection" name="type" type="QString"/>
+              <Option type="QString" value="collection" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -102,8 +102,8 @@
     </symbols>
   </renderer-v2>
   <customproperties>
-    <property value="id_point" key="dualview/previewExpressions"/>
-    <property value="0" key="embeddedWidgets/count"/>
+    <property key="dualview/previewExpressions" value="id_point"/>
+    <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
@@ -111,21 +111,21 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
-    <DiagramCategory backgroundColor="#ffffff" height="15" maxScaleDenominator="1e+08" barWidth="5" opacity="1" sizeType="MM" penColor="#000000" backgroundAlpha="255" enabled="0" diagramOrientation="Up" sizeScale="3x:0,0,0,0,0,0" labelPlacementMethod="XHeight" lineSizeScale="3x:0,0,0,0,0,0" minScaleDenominator="0" lineSizeType="MM" scaleDependency="Area" minimumSize="0" rotationOffset="270" width="15" penAlpha="255" scaleBasedVisibility="0" penWidth="0">
+    <DiagramCategory sizeScale="3x:0,0,0,0,0,0" width="15" scaleBasedVisibility="0" lineSizeType="MM" scaleDependency="Area" height="15" lineSizeScale="3x:0,0,0,0,0,0" penWidth="0" maxScaleDenominator="1e+08" backgroundColor="#ffffff" opacity="1" rotationOffset="270" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" penAlpha="255" minimumSize="0" barWidth="5" enabled="0" labelPlacementMethod="XHeight" penColor="#000000" minScaleDenominator="0">
       <fontProperties description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
-      <attribute color="#000000" field="" label=""/>
+      <attribute label="" field="" color="#000000"/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings priority="0" dist="0" showAll="1" obstacle="0" placement="0" zIndex="0" linePlacementFlags="18">
+  <DiagramLayerSettings dist="0" linePlacementFlags="18" showAll="1" obstacle="0" priority="0" zIndex="0" placement="0">
     <properties>
       <Option type="Map">
-        <Option value="" name="name" type="QString"/>
+        <Option type="QString" value="" name="name"/>
         <Option name="properties"/>
-        <Option value="collection" name="type" type="QString"/>
+        <Option type="QString" value="collection" name="type"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -134,8 +134,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
@@ -144,12 +144,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="-2147483648" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option type="bool" value="true" name="AllowNull"/>
+            <Option type="int" value="2147483647" name="Max"/>
+            <Option type="int" value="-2147483648" name="Min"/>
+            <Option type="int" value="0" name="Precision"/>
+            <Option type="int" value="1" name="Step"/>
+            <Option type="QString" value="SpinBox" name="Style"/>
           </Option>
         </config>
       </editWidget>
@@ -158,33 +158,33 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option value="bis" name="BIS" type="QString"/>
+                <Option type="QString" value="bis" name="BIS"/>
               </Option>
               <Option type="Map">
-                <Option value="ter" name="TER" type="QString"/>
+                <Option type="QString" value="ter" name="TER"/>
               </Option>
               <Option type="Map">
-                <Option value="qua" name="QUARTER" type="QString"/>
+                <Option type="QString" value="qua" name="QUARTER"/>
               </Option>
               <Option type="Map">
-                <Option value="qui" name="QUINQUIENS" type="QString"/>
+                <Option type="QString" value="qui" name="QUINQUIENS"/>
               </Option>
               <Option type="Map">
-                <Option value="a" name="A" type="QString"/>
+                <Option type="QString" value="a" name="A"/>
               </Option>
               <Option type="Map">
-                <Option value="b" name="B" type="QString"/>
+                <Option type="QString" value="b" name="B"/>
               </Option>
               <Option type="Map">
-                <Option value="c" name="C" type="QString"/>
+                <Option type="QString" value="c" name="C"/>
               </Option>
               <Option type="Map">
-                <Option value="d" name="D" type="QString"/>
+                <Option type="QString" value="d" name="D"/>
               </Option>
               <Option type="Map">
-                <Option value="e" name="E" type="QString"/>
+                <Option type="QString" value="e" name="E"/>
               </Option>
             </Option>
           </Option>
@@ -195,8 +195,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
@@ -205,8 +205,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
@@ -215,8 +215,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
@@ -225,8 +225,8 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option value="" name="CheckedState" type="QString"/>
-            <Option value="" name="UncheckedState" type="QString"/>
+            <Option type="QString" value="" name="CheckedState"/>
+            <Option type="QString" value="" name="UncheckedState"/>
           </Option>
         </config>
       </editWidget>
@@ -235,8 +235,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
@@ -245,11 +245,11 @@
       <editWidget type="DateTime">
         <config>
           <Option type="Map">
-            <Option value="true" name="allow_null" type="bool"/>
-            <Option value="true" name="calendar_popup" type="bool"/>
-            <Option value="yyyy-MM-dd" name="display_format" type="QString"/>
-            <Option value="yyyy-MM-dd" name="field_format" type="QString"/>
-            <Option value="false" name="field_iso_format" type="bool"/>
+            <Option type="bool" value="true" name="allow_null"/>
+            <Option type="bool" value="true" name="calendar_popup"/>
+            <Option type="QString" value="yyyy-MM-dd" name="display_format"/>
+            <Option type="QString" value="yyyy-MM-dd" name="field_format"/>
+            <Option type="bool" value="false" name="field_iso_format"/>
           </Option>
         </config>
       </editWidget>
@@ -258,8 +258,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
@@ -268,11 +268,11 @@
       <editWidget type="DateTime">
         <config>
           <Option type="Map">
-            <Option value="true" name="allow_null" type="bool"/>
-            <Option value="true" name="calendar_popup" type="bool"/>
-            <Option value="yyyy-MM-dd" name="display_format" type="QString"/>
-            <Option value="yyyy-MM-dd" name="field_format" type="QString"/>
-            <Option value="false" name="field_iso_format" type="bool"/>
+            <Option type="bool" value="true" name="allow_null"/>
+            <Option type="bool" value="true" name="calendar_popup"/>
+            <Option type="QString" value="yyyy-MM-dd" name="display_format"/>
+            <Option type="QString" value="yyyy-MM-dd" name="field_format"/>
+            <Option type="bool" value="false" name="field_iso_format"/>
           </Option>
         </config>
       </editWidget>
@@ -281,8 +281,8 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option value="" name="CheckedState" type="QString"/>
-            <Option value="" name="UncheckedState" type="QString"/>
+            <Option type="QString" value="" name="CheckedState"/>
+            <Option type="QString" value="" name="UncheckedState"/>
           </Option>
         </config>
       </editWidget>
@@ -291,24 +291,25 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
     </field>
     <field name="id_voie">
-      <editWidget type="RelationReference">
+      <editWidget type="ValueRelation">
         <config>
           <Option type="Map">
-            <Option value="false" name="AllowAddFeatures" type="bool"/>
-            <Option value="false" name="AllowNULL" type="bool"/>
-            <Option value="false" name="MapIdentification" type="bool"/>
-            <Option value="false" name="OrderByValue" type="bool"/>
-            <Option value="false" name="ReadOnly" type="bool"/>
-            <Option value="point_adre_id_voie_voie_77a8b_id_voie" name="Relation" type="QString"/>
-            <Option value="false" name="ShowForm" type="bool"/>
-            <Option value="true" name="ShowOpenFormButton" type="bool"/>
+            <Option type="bool" value="false" name="AllowMulti"/>
+            <Option type="bool" value="false" name="AllowNull"/>
+            <Option type="QString" value="" name="FilterExpression"/>
+            <Option type="QString" value="id_voie" name="Key"/>
+            <Option type="QString" value="voie_15d770a4_c520_416e_890b_39953ac28ae9" name="Layer"/>
+            <Option type="int" value="1" name="NofColumns"/>
+            <Option type="bool" value="false" name="OrderByValue"/>
+            <Option type="bool" value="false" name="UseCompleter"/>
+            <Option type="QString" value="nom_complet" name="Value"/>
           </Option>
         </config>
       </editWidget>
@@ -317,12 +318,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="-2147483648" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option type="bool" value="true" name="AllowNull"/>
+            <Option type="int" value="2147483647" name="Max"/>
+            <Option type="int" value="-2147483648" name="Min"/>
+            <Option type="int" value="0" name="Precision"/>
+            <Option type="int" value="1" name="Step"/>
+            <Option type="QString" value="SpinBox" name="Style"/>
           </Option>
         </config>
       </editWidget>
@@ -338,8 +339,8 @@
       <editWidget type="CheckBox">
         <config>
           <Option type="Map">
-            <Option value="1" name="CheckedState" type="QString"/>
-            <Option value="0" name="UncheckedState" type="QString"/>
+            <Option type="QString" value="1" name="CheckedState"/>
+            <Option type="QString" value="0" name="UncheckedState"/>
           </Option>
         </config>
       </editWidget>
@@ -367,86 +368,86 @@
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default field="id_point" applyOnUpdate="0" expression=""/>
-    <default field="numero" applyOnUpdate="0" expression=""/>
-    <default field="suffixe" applyOnUpdate="0" expression=""/>
-    <default field="adresse_complete" applyOnUpdate="0" expression=""/>
-    <default field="code_postal" applyOnUpdate="0" expression=""/>
-    <default field="type_pos" applyOnUpdate="0" expression=""/>
-    <default field="achat_plaque_numero" applyOnUpdate="0" expression=""/>
-    <default field="createur" applyOnUpdate="0" expression=""/>
-    <default field="date_creation" applyOnUpdate="0" expression=""/>
-    <default field="modificateur" applyOnUpdate="0" expression=""/>
-    <default field="date_modif" applyOnUpdate="0" expression=""/>
-    <default field="erreur" applyOnUpdate="0" expression=""/>
-    <default field="commentaire" applyOnUpdate="0" expression=""/>
-    <default field="id_voie" applyOnUpdate="0" expression=""/>
-    <default field="id_commune" applyOnUpdate="0" expression=""/>
-    <default field="id_parcelle" applyOnUpdate="0" expression=""/>
-    <default field="valide" applyOnUpdate="0" expression="1"/>
+    <default expression="" applyOnUpdate="0" field="id_point"/>
+    <default expression="" applyOnUpdate="0" field="numero"/>
+    <default expression="" applyOnUpdate="0" field="suffixe"/>
+    <default expression="" applyOnUpdate="0" field="adresse_complete"/>
+    <default expression="" applyOnUpdate="0" field="code_postal"/>
+    <default expression="" applyOnUpdate="0" field="type_pos"/>
+    <default expression="" applyOnUpdate="0" field="achat_plaque_numero"/>
+    <default expression="" applyOnUpdate="0" field="createur"/>
+    <default expression="" applyOnUpdate="0" field="date_creation"/>
+    <default expression="" applyOnUpdate="0" field="modificateur"/>
+    <default expression="" applyOnUpdate="0" field="date_modif"/>
+    <default expression="" applyOnUpdate="0" field="erreur"/>
+    <default expression="" applyOnUpdate="0" field="commentaire"/>
+    <default expression="" applyOnUpdate="0" field="id_voie"/>
+    <default expression="" applyOnUpdate="0" field="id_commune"/>
+    <default expression="" applyOnUpdate="0" field="id_parcelle"/>
+    <default expression="1" applyOnUpdate="0" field="valide"/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" field="id_point" unique_strength="1" constraints="3" notnull_strength="1"/>
-    <constraint exp_strength="0" field="numero" unique_strength="0" constraints="1" notnull_strength="1"/>
-    <constraint exp_strength="0" field="suffixe" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="adresse_complete" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="code_postal" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="type_pos" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="achat_plaque_numero" unique_strength="0" constraints="1" notnull_strength="1"/>
-    <constraint exp_strength="0" field="createur" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="date_creation" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="modificateur" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="date_modif" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="erreur" unique_strength="0" constraints="1" notnull_strength="1"/>
-    <constraint exp_strength="0" field="commentaire" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="id_voie" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="id_commune" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="id_parcelle" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint exp_strength="0" field="valide" unique_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="1" constraints="3" field="id_point" notnull_strength="1"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="1" field="numero" notnull_strength="1"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="suffixe" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="adresse_complete" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="code_postal" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="type_pos" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="1" field="achat_plaque_numero" notnull_strength="1"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="createur" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="date_creation" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="modificateur" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="date_modif" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="1" field="erreur" notnull_strength="1"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="commentaire" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="id_voie" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="id_commune" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="id_parcelle" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="0" constraints="0" field="valide" notnull_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" field="id_point" exp=""/>
-    <constraint desc="" field="numero" exp=""/>
-    <constraint desc="" field="suffixe" exp=""/>
-    <constraint desc="" field="adresse_complete" exp=""/>
-    <constraint desc="" field="code_postal" exp=""/>
-    <constraint desc="" field="type_pos" exp=""/>
-    <constraint desc="" field="achat_plaque_numero" exp=""/>
-    <constraint desc="" field="createur" exp=""/>
-    <constraint desc="" field="date_creation" exp=""/>
-    <constraint desc="" field="modificateur" exp=""/>
-    <constraint desc="" field="date_modif" exp=""/>
-    <constraint desc="" field="erreur" exp=""/>
-    <constraint desc="" field="commentaire" exp=""/>
-    <constraint desc="" field="id_voie" exp=""/>
-    <constraint desc="" field="id_commune" exp=""/>
-    <constraint desc="" field="id_parcelle" exp=""/>
-    <constraint desc="" field="valide" exp=""/>
+    <constraint exp="" desc="" field="id_point"/>
+    <constraint exp="" desc="" field="numero"/>
+    <constraint exp="" desc="" field="suffixe"/>
+    <constraint exp="" desc="" field="adresse_complete"/>
+    <constraint exp="" desc="" field="code_postal"/>
+    <constraint exp="" desc="" field="type_pos"/>
+    <constraint exp="" desc="" field="achat_plaque_numero"/>
+    <constraint exp="" desc="" field="createur"/>
+    <constraint exp="" desc="" field="date_creation"/>
+    <constraint exp="" desc="" field="modificateur"/>
+    <constraint exp="" desc="" field="date_modif"/>
+    <constraint exp="" desc="" field="erreur"/>
+    <constraint exp="" desc="" field="commentaire"/>
+    <constraint exp="" desc="" field="id_voie"/>
+    <constraint exp="" desc="" field="id_commune"/>
+    <constraint exp="" desc="" field="id_parcelle"/>
+    <constraint exp="" desc="" field="valide"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
+  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column hidden="0" name="id_point" width="-1" type="field"/>
-      <column hidden="0" name="numero" width="-1" type="field"/>
-      <column hidden="0" name="suffixe" width="-1" type="field"/>
-      <column hidden="0" name="adresse_complete" width="-1" type="field"/>
-      <column hidden="0" name="code_postal" width="-1" type="field"/>
-      <column hidden="0" name="type_pos" width="-1" type="field"/>
-      <column hidden="0" name="achat_plaque_numero" width="-1" type="field"/>
-      <column hidden="0" name="erreur" width="-1" type="field"/>
-      <column hidden="0" name="commentaire" width="-1" type="field"/>
-      <column hidden="0" name="id_voie" width="220" type="field"/>
-      <column hidden="0" name="id_commune" width="-1" type="field"/>
-      <column hidden="1" width="-1" type="actions"/>
-      <column hidden="0" name="id_parcelle" width="-1" type="field"/>
-      <column hidden="0" name="createur" width="-1" type="field"/>
-      <column hidden="0" name="date_creation" width="-1" type="field"/>
-      <column hidden="0" name="modificateur" width="-1" type="field"/>
-      <column hidden="0" name="date_modif" width="-1" type="field"/>
-      <column hidden="0" name="valide" width="-1" type="field"/>
+      <column type="field" hidden="0" width="-1" name="id_point"/>
+      <column type="field" hidden="0" width="-1" name="numero"/>
+      <column type="field" hidden="0" width="-1" name="suffixe"/>
+      <column type="field" hidden="0" width="-1" name="adresse_complete"/>
+      <column type="field" hidden="0" width="-1" name="code_postal"/>
+      <column type="field" hidden="0" width="-1" name="type_pos"/>
+      <column type="field" hidden="0" width="-1" name="achat_plaque_numero"/>
+      <column type="field" hidden="0" width="-1" name="erreur"/>
+      <column type="field" hidden="0" width="-1" name="commentaire"/>
+      <column type="field" hidden="0" width="220" name="id_voie"/>
+      <column type="field" hidden="0" width="-1" name="id_commune"/>
+      <column type="actions" hidden="1" width="-1"/>
+      <column type="field" hidden="0" width="-1" name="id_parcelle"/>
+      <column type="field" hidden="0" width="-1" name="createur"/>
+      <column type="field" hidden="0" width="-1" name="date_creation"/>
+      <column type="field" hidden="0" width="-1" name="modificateur"/>
+      <column type="field" hidden="0" width="-1" name="date_modif"/>
+      <column type="field" hidden="0" width="-1" name="valide"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -476,29 +477,29 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorContainer showLabel="1" visibilityExpression="" name="Point d'adresse" columnCount="1" groupBox="0" visibilityExpressionEnabled="0">
-      <attributeEditorContainer showLabel="1" visibilityExpression="" name="Création du point" columnCount="1" groupBox="1" visibilityExpressionEnabled="0">
-        <attributeEditorField index="0" showLabel="1" name="id_point"/>
-        <attributeEditorField index="1" showLabel="1" name="numero"/>
-        <attributeEditorField index="2" showLabel="1" name="suffixe"/>
-        <attributeEditorField index="13" showLabel="1" name="id_voie"/>
-        <attributeEditorField index="3" showLabel="1" name="adresse_complete"/>
-        <attributeEditorField index="5" showLabel="1" name="type_pos"/>
-        <attributeEditorField index="6" showLabel="1" name="achat_plaque_numero"/>
-        <attributeEditorField index="16" showLabel="1" name="valide"/>
+    <attributeEditorContainer visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1" groupBox="0" name="Point d'adresse" showLabel="1">
+      <attributeEditorContainer visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1" groupBox="1" name="Création du point" showLabel="1">
+        <attributeEditorField index="0" name="id_point" showLabel="1"/>
+        <attributeEditorField index="1" name="numero" showLabel="1"/>
+        <attributeEditorField index="2" name="suffixe" showLabel="1"/>
+        <attributeEditorField index="13" name="id_voie" showLabel="1"/>
+        <attributeEditorField index="3" name="adresse_complete" showLabel="1"/>
+        <attributeEditorField index="5" name="type_pos" showLabel="1"/>
+        <attributeEditorField index="6" name="achat_plaque_numero" showLabel="1"/>
+        <attributeEditorField index="16" name="valide" showLabel="1"/>
       </attributeEditorContainer>
-      <attributeEditorContainer showLabel="1" visibilityExpression="" name="Commune" columnCount="1" groupBox="1" visibilityExpressionEnabled="0">
-        <attributeEditorField index="4" showLabel="1" name="code_postal"/>
+      <attributeEditorContainer visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1" groupBox="1" name="Commune" showLabel="1">
+        <attributeEditorField index="4" name="code_postal" showLabel="1"/>
       </attributeEditorContainer>
-      <attributeEditorContainer showLabel="1" visibilityExpression="" name="Utilisateur" columnCount="1" groupBox="1" visibilityExpressionEnabled="0">
-        <attributeEditorField index="7" showLabel="1" name="createur"/>
-        <attributeEditorField index="8" showLabel="1" name="date_creation"/>
-        <attributeEditorField index="9" showLabel="1" name="modificateur"/>
-        <attributeEditorField index="10" showLabel="1" name="date_modif"/>
+      <attributeEditorContainer visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1" groupBox="1" name="Utilisateur" showLabel="1">
+        <attributeEditorField index="7" name="createur" showLabel="1"/>
+        <attributeEditorField index="8" name="date_creation" showLabel="1"/>
+        <attributeEditorField index="9" name="modificateur" showLabel="1"/>
+        <attributeEditorField index="10" name="date_modif" showLabel="1"/>
       </attributeEditorContainer>
-      <attributeEditorContainer showLabel="1" visibilityExpression="" name="Erreur" columnCount="1" groupBox="1" visibilityExpressionEnabled="0">
-        <attributeEditorField index="11" showLabel="1" name="erreur"/>
-        <attributeEditorField index="12" showLabel="1" name="commentaire"/>
+      <attributeEditorContainer visibilityExpressionEnabled="0" visibilityExpression="" columnCount="1" groupBox="1" name="Erreur" showLabel="1">
+        <attributeEditorField index="11" name="erreur" showLabel="1"/>
+        <attributeEditorField index="12" name="commentaire" showLabel="1"/>
       </attributeEditorContainer>
     </attributeEditorContainer>
   </attributeEditorForm>
