@@ -256,5 +256,8 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
                 else:
                     feedback.pushInfo("La couche " + x + " a pu être chargée")
+                    output_layers.append(result.id())
+
+        msg = "success"
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
