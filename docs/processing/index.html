@@ -38,14 +38,19 @@
 </ul>
 </li>
 <li><a href="#donnees">Données</a><ul>
-<li><a href="#chargement-des-couches-depuis-la-base">Chargement des couches depuis la base</a><ul>
+<li><a href="#mise-en-place-des-donnees-pour-certificat-de-numerotation">Mise en place des données pour certificat de numérotation</a><ul>
 <li><a href="#parameters_3">Parameters</a></li>
 <li><a href="#outputs_3">Outputs</a></li>
 </ul>
 </li>
-<li><a href="#chargement-des-styles-depuis-le-dossier-resources">Chargement des styles depuis le dossier resources</a><ul>
+<li><a href="#chargement-des-couches-depuis-la-base">Chargement des couches depuis la base</a><ul>
 <li><a href="#parameters_4">Parameters</a></li>
 <li><a href="#outputs_4">Outputs</a></li>
+</ul>
+</li>
+<li><a href="#chargement-des-styles-depuis-le-dossier-resources">Chargement des styles depuis le dossier resources</a><ul>
+<li><a href="#parameters_5">Parameters</a></li>
+<li><a href="#outputs_5">Outputs</a></li>
 </ul>
 </li>
 </ul>
@@ -240,9 +245,9 @@
 </table>
 <hr>
 <h2 id="donnees">Données</h2>
-<h3 id="chargement-des-couches-depuis-la-base">Chargement des couches depuis la base</h3>
-<p>Charger toutes les couches de la base de données.</p>
-<p><img alt="algo_id" src="./gestion_adresse-load_layers.png"></p>
+<h3 id="mise-en-place-des-donnees-pour-certificat-de-numerotation">Mise en place des données pour certificat de numérotation</h3>
+<p>Ajout des données parcellaire et création des vues pour les certificats de numérotation.</p>
+<p><img alt="algo_id" src="./gestion_adresse-data_parcelle.png"></p>
 <h4 id="parameters_3">Parameters</h4>
 <table>
 <thead>
@@ -266,7 +271,7 @@
 </tr>
 <tr>
 <td align="center">SCHEMA</td>
-<td align="center">Schéma</td>
+<td align="center">Schéma du cadastre contenant les données des parcelles est propriétaires</td>
 <td align="center">String</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -300,10 +305,70 @@
 </tbody>
 </table>
 <hr>
+<h3 id="chargement-des-couches-depuis-la-base">Chargement des couches depuis la base</h3>
+<p>Charger toutes les couches de la base de données.</p>
+<p><img alt="algo_id" src="./gestion_adresse-load_layers.png"></p>
+<h4 id="parameters_4">Parameters</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+<th align="center">Required</th>
+<th align="center">Advanced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">DATABASE</td>
+<td align="center">Connexion à la base de données</td>
+<td align="center">String</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">SCHEMA</td>
+<td align="center">Schéma</td>
+<td align="center">String</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="outputs_4">Outputs</h4>
+<table>
+<thead>
+<tr>
+<th align="center">ID</th>
+<th align="center">Description</th>
+<th align="center">Type</th>
+<th align="center">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">OUTPUT</td>
+<td align="center">Couches de sortie</td>
+<td align="center">MultipleLayers</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OUTPUT MSG</td>
+<td align="center">Message de sortie</td>
+<td align="center">String</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr>
 <h3 id="chargement-des-styles-depuis-le-dossier-resources">Chargement des styles depuis le dossier resources</h3>
 <p>Charger les styles pour les différentes couches.</p>
 <p><img alt="algo_id" src="./gestion_adresse-load_styles.png"></p>
-<h4 id="parameters_4">Parameters</h4>
+<h4 id="parameters_5">Parameters</h4>
 <table>
 <thead>
 <tr>
@@ -326,7 +391,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="outputs_4">Outputs</h4>
+<h4 id="outputs_5">Outputs</h4>
 <table>
 <thead>
 <tr>

@@ -119,6 +119,20 @@ croix de couleur verte.
 
 ![lizmap_edit](./lizmap_edit.png)
 
+### Fonctionnalité des certificats de numérotation
+
+Pour ajouter cette fonctionnalité il suffit d'utiliser l'algorithme 
+**Mise en place des données pour certificat de numérotation**. Il dispose de 2 paramètres:
+
+* La connexion à la base de données
+* Le schéma de données où sont les données du cadastre
+
+![algo_certif_num](../processing/gestion_adresse-data_parcelle.png)
+
+Une fois utilisé, de nouvelles couches apparaîtrons dans le projet. Il restera donc à enregistrer le projet
+puis ouvrir le plugin Lizmap et cliquer sur le bouton appliquer pour comptabiliser les couches dans la
+config Lizmap.
+
 ___
 
 Voilà maintenant il ne vous reste qu'à configurer votre un projet dans Lizmap web client. Vous pouvez vous 

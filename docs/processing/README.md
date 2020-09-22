@@ -90,6 +90,31 @@ OUTPUT_STRING|Output message|String||
 ## Données
 
 
+### Mise en place des données pour certificat de numérotation
+
+Ajout des données parcellaire et création des vues pour les certificats de numérotation.
+
+![algo_id](./gestion_adresse-data_parcelle.png)
+
+#### Parameters
+
+| ID | Description | Type | Info | Required | Advanced |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+DATABASE|Connexion à la base de données|String||✓||
+SCHEMA|Schéma du cadastre contenant les données des parcelles est propriétaires|String||||
+
+
+#### Outputs
+
+| ID | Description | Type | Info |
+|:-:|:-:|:-:|:-:|
+OUTPUT|Couches de sortie|MultipleLayers||
+OUTPUT MSG|Message de sortie|String||
+
+
+***
+
+
 ### Chargement des couches depuis la base
 
 Charger toutes les couches de la base de données.
