@@ -28,6 +28,7 @@
 <li><a href="#configurer-les-variables-de-projet">Configurer les variables de projet</a></li>
 <li><a href="#configuration-des-proprietes-du-projet">Configuration des propriétés du projet</a></li>
 <li><a href="#configuration-pour-lizmap">Configuration pour Lizmap</a></li>
+<li><a href="#fonctionnalite-des-certificats-de-numerotation">Fonctionnalité des certificats de numérotation</a></li>
 </ul>
 </li>
 </ul>
@@ -99,6 +100,17 @@ les couches auxquelles on permet l'édition. Pour le module Adresse cela concern
 et <code>document</code>. Pour pouvoir ajouter une couche à l'édition il suffit de cliquer sur le bouton représentant une 
 croix de couleur verte.</p>
 <p><img alt="lizmap_edit" src="./lizmap_edit.png"></p>
+<h3 id="fonctionnalite-des-certificats-de-numerotation">Fonctionnalité des certificats de numérotation</h3>
+<p>Pour ajouter cette fonctionnalité il suffit d'utiliser l'algorithme 
+<strong>Mise en place des données pour certificat de numérotation</strong>. Il dispose de 2 paramètres:</p>
+<ul>
+<li>La connexion à la base de données</li>
+<li>Le schéma de données où sont les données du cadastre</li>
+</ul>
+<p><img alt="algo_certif_num" src="../processing/gestion_adresse-data_parcelle.png"></p>
+<p>Une fois utilisé, de nouvelles couches apparaîtrons dans le projet. Il restera donc à enregistrer le projet
+puis ouvrir le plugin Lizmap et cliquer sur le bouton appliquer pour comptabiliser les couches dans la
+config Lizmap.</p>
 <hr>
 <p>Voilà maintenant il ne vous reste qu'à configurer votre un projet dans Lizmap web client. Vous pouvez vous 
 aider de la <a href="https://docs.lizmap.com/next/fr/publish/lizmap_configuration.html">Documentation</a> de Lizmap.</p>
