@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.6.0 - 22/09/2020
+* Adding numbering certificate functionality
+* Adding documentation
+
 ### 0.5.0 - 21/07/2020
 * Update Trigger for calculate number of point by road
 * Adding test for this trigger
