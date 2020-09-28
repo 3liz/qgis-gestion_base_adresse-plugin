@@ -2,6 +2,7 @@
 Title: Gestion des adresses
 Favicon: ../icon.png
 ...
+
 [TOC]
 
 
@@ -96,7 +97,7 @@ En haut à gauche de votre fenêtre QGIS vous trouverez le menu **Projet** dans 
 ![project_properties](./properties_project.png)
 
 Une fois dans la fenêtre **Propriétés du projet** vous irez dans la section **QGIS Server**, puis dans la 
-partie **Capacités WFS** où vous cocherez pour les couches `voie` et `point_adresse` la case de la colonne 
+partie **Capacités WFS** où vous cocherez pour les couches `voie`, `point_adresse` et `document` la case de la colonne 
 **Publié**.
 
 
