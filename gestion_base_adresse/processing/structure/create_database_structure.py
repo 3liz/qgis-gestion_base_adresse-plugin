@@ -12,6 +12,7 @@ from qgis.core import (
     QgsProcessingOutputString,
     QgsExpressionContextUtils,
     QgsProcessingException,
+    QgsProcessingParameterCrs,
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -33,6 +34,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
 
     CONNECTION_NAME = "CONNECTION_NAME"
     OVERRIDE = "OVERRIDE"
+    SRID = 'SRID'
     ADD_TEST_DATA = "ADD_TEST_DATA"
     OUTPUT_STATUS = "OUTPUT_STATUS"
     OUTPUT_STRING = "OUTPUT_STRING"
@@ -85,11 +87,20 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
                 optional=False,
             )
         )
+
+        self.addParameter(
+            QgsProcessingParameterCrs(
+                self.SRID,
+                tr("Système de coordonnée pour vos données ?"),
+                defaultValue='EPSG:2154',
+                optional=False,
+            )
+        )
+
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.ADD_TEST_DATA,
                 tr("Ajouter des données de test ?"),
-                defaultValue=False,
                 optional=False,
             )
         )
@@ -168,6 +179,12 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             # "{}/90_GLOSSARY.sql".format(SCHEMA),
             "99_finalize_database.sql",
         ]
+
+        # Get input srid
+        crs = self.parameterAsCrs(parameters, self.SRID, context)
+        srid = crs.authid().replace('EPSG:', '')
+        feedback.pushInfo('SRID = %s' % srid)
+
         # Add test data
         add_test_data = self.parameterAsBool(parameters, self.ADD_TEST_DATA, context)
         if add_test_data:
@@ -202,6 +219,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
                 if len(sql.strip()) == 0:
                     feedback.pushInfo("  Skipped (empty file)")
                     continue
+                sql = sql.replace('2154', srid)
 
                 _, _, _, ok, error_message = fetch_data_from_sql_query(
                     connection_name, sql
