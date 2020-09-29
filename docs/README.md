@@ -1,6 +1,7 @@
 ---
 Title: Gestion Adresse
 Favicon: icon.png
+Up: True
 ...
 
 * [User guide](./user_guide/)
