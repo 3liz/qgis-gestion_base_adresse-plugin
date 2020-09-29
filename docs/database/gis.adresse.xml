@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="gis" schema="adresse" type="PostgreSQL - 10.14 (Debian 10.14-1.pgdg100+1)">
+   <sequences>
+      <sequence increment="1" name="commune_deleguee_id_com_del_seq" startValue="1"/>
+      <sequence increment="1" name="commune_id_com_seq" startValue="1"/>
+      <sequence increment="1" name="document_id_doc_seq" startValue="1"/>
+      <sequence increment="1" name="metadata_id_seq" startValue="1"/>
+      <sequence increment="1" name="parcelle_fid_seq" startValue="1"/>
+      <sequence increment="1" name="point_adresse_id_point_seq" startValue="1"/>
+      <sequence increment="1" name="voie_id_voie_seq" startValue="1"/>
+   </sequences>
+   <tables>
+      <table name="appartenir_com" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_voie" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="true" schema="adresse" table="voie"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_com" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_com" foreignKey="appartenir_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
+         </column>
+         <primaryKey column="id_voie" sequenceNumberInPK="1"/>
+         <primaryKey column="id_com" sequenceNumberInPK="2"/>
+         <index name="appartenir_com_pkey" unique="true">
+            <column ascending="true" name="id_voie"/>
+            <column ascending="true" name="id_com"/>
+         </index>
+         <index name="index_com_voie" unique="false">
+            <column ascending="true" name="id_com"/>
+         </index>
+         <index name="index_voie_com" unique="false">
+            <column ascending="true" name="id_voie"/>
+         </index>
+      </table>
+      <table name="commune" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.commune_id_com_seq'::regclass)" digits="0" id="0" name="id_com" nullable="false" remarks="Identifiant unique de la commune" size="10" type="serial" typeCode="4">
+            <child column="id_com" foreignKey="appartenir_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="appartenir_com"/>
+            <child column="id_commune" foreignKey="document_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="document"/>
+            <child column="id_commune" foreignKey="point_adresse_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
+            <child column="id_com" foreignKey="referencer_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="referencer_com"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_nom" nullable="true" remarks="Nom de la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="insee_code" nullable="true" remarks="Code INSEE de la commune" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="statut_com" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="intercom" nullable="true" remarks="Intercommunalité dans laquelle la commune se trouve" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="fibre" nullable="true" remarks="Situation de la commune dans le déploiement de la fibre" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="phase_fibre" nullable="true" remarks="Numéro de phase du déploiement de la fibre sur la commune" size="1" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="actif" nullable="true" remarks="Si la commune se fait accompagner par le département" size="3" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="nom_referent" nullable="true" remarks="Nom et Prénom de la personne référente sur le projet d’adressage dans la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="tel_referent" nullable="true" remarks="Numéro de téléphone de la personne référente sur le projet d’adressage dans la commune" size="10" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="mail_referent" nullable="true" remarks="Adresse mail de la personne référente sur le projet d’adressage dans la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="situation" nullable="true" remarks="État d’avancement du projet d’adressage de la commune" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commenter" nullable="true" remarks="Commentaires généraux sur le projet de la commune, l’avancement, le dernier contact, le prochain rendez-vous" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="date_delib" nullable="true" remarks="Date à laquelle la délibération sur les dénominations des voies a été prise." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="diffusion_dgfip" nullable="true" remarks="Les adresses ont-elles été envoyées à la DGFIP ?" size="3" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="date_dgfip" nullable="true" remarks="Date d’envoi des données à la DGFIP." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="diffusion_ban" nullable="true" remarks="Les adresses ont-elles été remontées dans la Base Adresse Nationale ?" size="3" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="date_ban" nullable="true" remarks="Date d’envoi des données dans la BAN." size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="geom" nullable="true" remarks="Geometrie de l'objet" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="adresse_mairie" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="code_postal" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="maire" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_com" sequenceNumberInPK="1"/>
+         <index name="commune_pkey" unique="true">
+            <column ascending="true" name="id_com"/>
+         </index>
+         <index name="commune_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
+      </table>
+      <table name="commune_deleguee" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.commune_deleguee_id_com_del_seq'::regclass)" digits="0" id="0" name="id_com_del" nullable="false" remarks="" size="10" type="serial" typeCode="4">
+            <child column="id_com_deleguee" foreignKey="referencer_com_id_com_deleguee_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="referencer_com"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_deleguee_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="insee_code" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_referent_deleguee" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="tel_referent_deleguee" nullable="true" remarks="" size="10" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="mail_referent_deleguee" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <primaryKey column="id_com_del" sequenceNumberInPK="1"/>
+         <index name="commune_deleguee_pkey" unique="true">
+            <column ascending="true" name="id_com_del"/>
+         </index>
+         <index name="commune_deleguee_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
+      </table>
+      <table name="document" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.document_id_doc_seq'::regclass)" digits="0" id="0" name="id_doc" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nom_doc" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="date_doc" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="type_document" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="id_commune" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_com" foreignKey="document_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="lien" nullable="true" remarks="Chemin de stockage du document" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_doc" sequenceNumberInPK="1"/>
+         <index name="document_pkey" unique="true">
+            <column ascending="true" name="id_doc"/>
+         </index>
+      </table>
+      <table name="export_bal" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT p.id_point,&#10;        CASE&#10;            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)&#10;            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text))&#10;            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text))&#10;            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)&#10;            ELSE NULL::text&#10;        END AS cle_interop,&#10;    ''::text AS uid_adresse,&#10;    v.nom_complet AS voie_nom,&#10;    p.numero,&#10;    p.suffixe,&#10;    c.commune_nom,&#10;    p.type_pos AS &quot;position&quot;,&#10;    st_x(p.geom) AS x,&#10;    st_y(p.geom) AS y,&#10;    st_x(st_transform(p.geom, 4326)) AS long,&#10;    st_y(st_transform(p.geom, 4326)) AS lat,&#10;    ''::text AS source,&#10;    p.date_modif AS date_derniere_maj,&#10;    c.insee_code AS code_insee&#10;   FROM adresse.commune c,&#10;    adresse.point_adresse p,&#10;    adresse.voie v&#10;  WHERE ((p.id_commune = c.id_com) AND (p.id_voie = v.id_voie));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_point" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_point" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cle_interop" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="uid_adresse" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="voie_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="numero" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="suffixe" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="position" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="8" name="x" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="9" name="y" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="10" name="long" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="11" name="lat" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="source" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="date_derniere_maj" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="code_insee" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+      </table>
+      <table name="metadata" numRows="0" remarks="Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C'est utilisé pour les scripts de migration de la structure entre 2 versions." schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.metadata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant de la version" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="me_version" nullable="false" remarks="Version. Ex: 1.0.2" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="me_version_date" nullable="false" remarks="Date de la version. Ex: 2019-06-01" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="me_status" nullable="false" remarks="" size="5" type="int2" typeCode="5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="metadata_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="metadata_me_version_key" unique="true">
+            <column ascending="true" name="me_version"/>
+         </index>
+      </table>
+      <table name="parcelle" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.parcelle_fid_seq'::regclass)" digits="0" id="0" name="fid" nullable="false" remarks="" size="10" type="serial" typeCode="4">
+            <child column="id_parcelle" foreignKey="point_adresse_id_parcelle_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="commune" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="prefixe" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="section" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="numero" nullable="true" remarks="" size="2147483647" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="contenance" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="arpente" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="8" name="created" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="9" name="updated" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <primaryKey column="fid" sequenceNumberInPK="1"/>
+         <index name="parcelle_pkey" unique="true">
+            <column ascending="true" name="fid"/>
+         </index>
+         <index name="parcelle_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
+      </table>
+      <table name="point_adresse" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.point_adresse_id_point_seq'::regclass)" digits="0" id="0" name="id_point" nullable="false" remarks="Identifiant unique du point adresse" size="10" type="serial" typeCode="4">
+            <child column="id_point" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="export_bal"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero" nullable="false" remarks="Numéro de l’adresse" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="suffixe" nullable="true" remarks="Extension du numéro (bis, ter, A, B...)" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="adresse_complete" nullable="true" remarks="Concaténation du numéro, de l’extension, de la typologie et du nom de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="code_postal" nullable="true" remarks="Code postal auquel appartient de point adresse" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="type_pos" nullable="true" remarks="Type de positionnement du point adresse" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="achat_plaque_numero" nullable="false" remarks="Achat de la plaque nécessaire ou non ?" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="createur" nullable="true" remarks="Nom de l’utilisateur qui a créé le point" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="8" name="date_creation" nullable="true" remarks="Date et heure à laquelle le point adresse a été créé" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="modificateur" nullable="true" remarks="Nom de l’utilisateur qui a effectué la dernière modification" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="10" name="date_modif" nullable="true" remarks="Date et heure à laquelle la dernière modification sur la fiche du point a été apportée" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="11" name="erreur" nullable="false" remarks="Présence d’une erreur ou non" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commentaire" nullable="true" remarks="Commentaire" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="geom" nullable="true" remarks="Géométrie de l’objet" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="id_voie" nullable="true" remarks="Identifiant de la voie à laquelle appartient le point adresse" size="10" type="int4" typeCode="4">
+            <parent column="id_voie" foreignKey="point_adresse_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="voie"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="id_commune" nullable="true" remarks="Identifiant de la commune à laquelle appartient le point adresse" size="10" type="int4" typeCode="4">
+            <parent column="id_com" foreignKey="point_adresse_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="id_parcelle" nullable="true" remarks="Identifiant de la parcelle à laquelle appartient le point adresse" size="10" type="int4" typeCode="4">
+            <parent column="fid" foreignKey="point_adresse_id_parcelle_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="parcelle"/>
+         </column>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="17" name="valide" nullable="true" remarks="Le point d'adresse est valide ou non" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="id_point" sequenceNumberInPK="1"/>
+         <index name="point_adresse_pkey" unique="true">
+            <column ascending="true" name="id_point"/>
+         </index>
+         <index name="index_com_adr" unique="false">
+            <column ascending="true" name="id_commune"/>
+         </index>
+         <index name="index_parcelle_adr" unique="false">
+            <column ascending="true" name="id_parcelle"/>
+         </index>
+         <index name="index_voie_adr" unique="false">
+            <column ascending="true" name="id_voie"/>
+         </index>
+         <index name="point_adresse_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
+      </table>
+      <table name="referencer_com" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_com" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_com" foreignKey="referencer_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_com_deleguee" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_com_del" foreignKey="referencer_com_id_com_deleguee_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune_deleguee"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="action" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="date_action" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <primaryKey column="id_com" sequenceNumberInPK="1"/>
+         <primaryKey column="id_com_deleguee" sequenceNumberInPK="2"/>
+         <index name="referencer_com_pkey" unique="true">
+            <column ascending="true" name="id_com"/>
+            <column ascending="true" name="id_com_deleguee"/>
+         </index>
+         <index name="index_com_comdel" unique="false">
+            <column ascending="true" name="id_com"/>
+         </index>
+         <index name="index_comdel_com" unique="false">
+            <column ascending="true" name="id_com_deleguee"/>
+         </index>
+      </table>
+      <table name="voie" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.voie_id_voie_seq'::regclass)" digits="0" id="0" name="id_voie" nullable="false" remarks="Identifiant unique de la voie" size="10" type="serial" typeCode="4">
+            <child column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="true" schema="adresse" table="appartenir_com"/>
+            <child column="id_voie" foreignKey="point_adresse_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="typologie" nullable="false" remarks="Typologie de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom" nullable="false" remarks="Nom de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_complet" nullable="true" remarks="Concaténation de la typologie et du nom de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="type_num" nullable="true" remarks="Type de numérotation de la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="5" name="statut_voie_num" nullable="false" remarks="Statut accordé à la voie permettant son verrouillage ou son déverrouillage pour la saisie d’une adresse" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="statut_voie" nullable="false" remarks="Statut accordé à la voie au niveau du plan d’adressage" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="sens_numerotation" nullable="false" remarks="Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="achat_plaque_voie" nullable="false" remarks="Achat de la plaque nécessaire ou non ?" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="nb_point" nullable="true" remarks="Nombre de points adresses rattachés à cette voie" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="createur" nullable="true" remarks="Nom de l’utilisateur qui a créé la voie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="11" name="date_creation" nullable="true" remarks="Date et heure à laquelle la voie a été créée" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="modificateur" nullable="true" remarks="Nom de l’utilisateur qui a effectué la dernière modification" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="0" id="13" name="date_modif" nullable="true" remarks="Date et heure à laquelle la dernière modification sur la fiche de la voie a été apportéee" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="longueur" nullable="true" remarks="Longueur de la voie en mètres" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="code_fantoir" nullable="true" remarks="Code fantoir pour de la DGFIP" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="delib" nullable="true" remarks="Spécifie si la commune souhaite délibérer sur la voie" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="geom" nullable="true" remarks="Géométrie de l’objet" size="2147483647" type="geometry" typeCode="1111"/>
+         <primaryKey column="id_voie" sequenceNumberInPK="1"/>
+         <index name="voie_pkey" unique="true">
+            <column ascending="true" name="id_voie"/>
+         </index>
+         <index name="voie_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
+      </table>
+      <table name="vue_com" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT (c.insee_code)::integer AS insee_code,&#10;    c.commune_nom&#10;   FROM adresse.commune c&#10;  ORDER BY c.commune_nom;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="insee_code" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="calcul_num_adr" returnType="SETOF record" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    numa integer;
+    numb integer;
+    numc integer;
+    sens boolean;
+    s text;
+    rec text;
+    suff text[];
+    idvoie integer;
+    isleft boolean;
+    test boolean;
+BEGIN
+
+    -- Get idvoie
+    SELECT adresse.get_id_voie(pgeom) into idvoie;
+
+    -- Aucune voie dévérouillée trouvée
+    IF idvoie IS NULL THEN
+        return query SELECT numc, s, idvoie;
+    END IF;
+
+    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom ) into isleft
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE AND id_voie=idvoie;
+
+    SELECT v.sens_numerotation into sens
+    FROM adresse.voie v WHERE v.id_voie = idvoie;
+
+    SELECT numero into numa
+    FROM(
+    SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
+    FROM adresse.point_adresse p1, adresse.voie v
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
+        (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) >0
+        AND
+        isleft =
+        adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, p1.geom), p1.geom)
+    ORDER BY dist LIMIT 1) AS a;
+
+    suff = ARRAY ['bis', 'ter', 'qua', 'qui', 'a', 'b', 'c', 'd', 'e'];
+
+    SELECT numero into numb
+    FROM(
+    SELECT ST_Distance(pgeom, p1.geom) as dist, p1.numero as numero
+    FROM adresse.point_adresse p1, adresse.voie v
+    WHERE statut_voie_num IS FALSE AND p1.id_voie = idvoie AND v.id_voie = idvoie AND
+        (ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, pgeom)) - ST_LineLocatePoint(v.geom, ST_ClosestPoint(v.geom, p1.geom))) <0
+        AND
+        isleft =
+        adresse.calcul_point_position(adresse.calcul_segment_proche(v.geom, p1.geom), p1.geom)
+    ORDER BY dist LIMIT 1) AS b;
+
+    IF numa IS NOT NULL AND numb IS NOT NULL THEN
+        test = false;
+        IF numb - numa > 2 THEN
+         numc = numa+2;
+        ELSE
+            FOREACH rec IN ARRAY suff LOOP
+                IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numa AND p.suffixe = rec) IS NULL AND NOT test THEN
+                    test = true;
+                    numc = numa;
+                    s = rec;
+                END IF;
+            END LOOP;
+        END IF;
+    ELSIF numa IS NOT NULL AND numb IS NULL THEN
+        numc = numa+2;
+    ELSIF numa IS NULL AND numb IS NOT NULL THEN
+        IF numb - 2 >0 THEN
+            numc =  numb - 2;
+        ELSIF numb - 2 <= 0 THEN
+            test = false;
+            FOREACH rec IN ARRAY suff LOOP
+                IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = numb AND p.suffixe = rec) IS NULL AND NOT test THEN
+                    test = true;
+                    numc = numb;
+                    s = rec;
+                END IF;
+            END LOOP;
+        END IF;
+    ELSIF numa IS NULL AND numb IS NULL THEN
+        IF isleft AND NOT sens THEN
+            numc = 1;
+        ELSIF NOT isleft AND NOT sens THEN
+            numc = 2;
+        ELSIF isleft AND sens THEN
+            numc = 2;
+        ELSIF NOT isleft AND sens THEN
+            numc = 1;
+        END IF;
+    END IF;
+
+    return query SELECT numc, s, idvoie;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="calcul_num_metrique" returnType="SETOF record" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[DECLARE
+    num integer;
+    idvoie integer;
+    numc integer;
+    sens boolean;
+    res text;
+    rec text;
+    isleft boolean;
+    test boolean;
+    suff text[];
+BEGIN
+
+    -- Get idvoie
+    SELECT adresse.get_id_voie(pgeom) into idvoie;
+
+    -- Aucune voie dévérouillée trouvée
+    IF idvoie IS NULL THEN
+        return query SELECT numc, res, idvoie;
+    END IF;
+
+    SELECT v.sens_numerotation into sens FROM adresse.voie v WHERE v.id_voie = idvoie;
+
+    SELECT adresse.calcul_point_position(adresse.calcul_segment_proche(geom, pgeom),pgeom) into isleft
+    FROM adresse.voie
+    WHERE statut_voie_num IS FALSE AND id_voie = idvoie;
+
+    SELECT round(ST_Length(v.geom)*ST_LineLocatePoint(v.geom, pgeom))::integer into num
+    FROM adresse.voie v
+    WHERE id_voie = idvoie;
+
+    suff = ARRAY ['bis', 'ter', 'qua', 'qui', 'a', 'b', 'c', 'd', 'e'];
+
+    IF isleft AND num%2 = 0 AND NOT sens THEN
+        num = num +1;
+    ELSIF NOT isleft AND num%2 != 0 AND NOT sens THEN
+        num = num + 1;
+    ELSIF isleft AND num%2 != 0 AND sens THEN
+        num = num +1;
+    ELSIF NOT isleft AND num%2 = 0 AND sens THEN
+        num = num + 1;
+    END IF;
+
+    test = false;
+    WHILE NOT test LOOP
+        IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND numero = num) IS NULL THEN
+            test = true;
+            numc = num;
+        ELSE
+            FOREACH rec IN ARRAY suff LOOP
+                IF (SELECT TRUE FROM adresse.point_adresse p WHERE p.id_voie = idvoie AND p.numero = num AND p.suffixe = rec) IS NULL AND NOT test THEN
+                    test = true;
+                    numc = num;
+                    res = rec;
+                END IF;
+            END LOOP;
+        END IF;
+        num = num +2;
+    END LOOP;
+
+   RETURN query SELECT numc, res, idvoie;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="calcul_point_position" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    a geometry;
+    b geometry;
+BEGIN
+   a = ST_StartPoint(seg);
+   b = ST_EndPoint(seg);
+   RETURN (ST_X(b) - St_X(a))*(ST_Y(pointc) - ST_Y(a))
+    - (ST_Y(b) - ST_Y(a))*(ST_X(pointc) - St_X(a))
+    > 0;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="calcul_point_voie" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    nb integer;
+BEGIN
+    IF TG_OP = 'DELETE' THEN
+      SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
+      UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
+    ELSIF TG_OP = 'INSERT'  THEN
+      IF NEW.id_voie IS NOT NULL THEN
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
+      END IF;
+    ELSIF TG_OP = 'UPDATE' AND NEW.id_voie IS DISTINCT FROM OLD.id_voie THEN
+      IF NEW.id_voie IS NULL THEN
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
+      ELSIF OLD.id_voie IS NULL THEN
+          SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
+          UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
+      ELSE
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = NEW.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = NEW.id_voie;
+        SELECT COUNT(id_point) into nb FROM adresse.point_adresse WHERE id_voie = OLD.id_voie;
+        UPDATE adresse.voie SET nb_point = nb WHERE id_voie = OLD.id_voie;
+      END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="calcul_segment_proche" returnType="geometry" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    lageom geometry;
+BEGIN
+   SELECT endgeom into lageom
+   FROM ( SELECT ST_Distance(ST_MakeLine(St_PointN(ligne, n), St_PointN(ligne, n+1)), pointc) as dist,
+   ST_MakeLine(St_PointN(ligne, n), St_PointN(ligne, n+1)) as endgeom
+   FROM (SELECT generate_series(1, ST_NumPoints(ligne)-1) AS n) AS serie
+   ORDER BY dist LIMIT 1) as finalgeom;
+
+   RETURN lageom;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="get_id_voie" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    idvoie integer;
+BEGIN
+    SELECT leid into idvoie FROM(
+        SELECT v.id_voie as leid, ST_Distance(pgeom, v.geom) as dist
+        FROM adresse.voie  v, adresse.commune com
+        WHERE v.statut_voie_num IS FALSE
+          AND ST_Intersects(pgeom, com.geom)
+          AND ST_DWithin(v.geom, com.geom, 2000)
+        ORDER BY dist LIMIT 1
+    ) AS d;
+
+    RETURN idvoie;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="get_parcelle" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    NEW.id_parcelle = (SELECT p.fid FROM adresse.parcelle p WHERE ST_intersects(NEW.geom, p.geom));
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="longueur_voie" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    NEW.longueur = ST_Length(NEW.geom);
+
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="modif_createur" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    IF NEW.createur IS NULL AND NEW.modificateur IS NOT NULL THEN
+        NEW.createur = NEW.modificateur;
+    ELSIF NEW.createur IS NOT NULL THEN
+        NEW.modificateur = NEW.createur;
+    END IF;
+    NEW.date_creation = NOW();
+    NEW.date_modif = NOW();
+
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="modif_update" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    NEW.createur = OLD.createur;
+    NEW.date_creation = OLD.date_creation;
+    NEW.date_modif = NOW();
+
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="num_exists" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+BEGIN
+    IF (
+        SELECT numero
+          FROM adresse.point_adresse
+         WHERE numero = num
+           AND suffixe IS NOT DISTINCT FROM suff
+           AND id_voie IS NOT DISTINCT FROM idvoie
+        ) IS NULL THEN
+        RETURN FALSE;
+    ELSE
+        RETURN TRUE;
+    END IF;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="trigger_point_adr" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[DECLARE
+    idvoie integer;
+    adrvoie text;
+BEGIN
+    -- Récupération de l'identifiant de la voie dévérouillée la plus proche
+    SELECT adresse.get_id_voie(NEW.geom) into idvoie;
+
+    -- Si aucune voie dévérouillée proche mais qu'un identifiant de voie est fourni
+    -- on le garde la voie
+    IF idvoie is NULL AND NEW.id_voie IS NOT NULL THEN
+        idvoie:= NEW.id_voie;
+    END IF;
+
+    IF idvoie IS NOT NULL THEN
+        -- Si l'identifiant de voies est non null
+        IF NOT (SELECT adresse.num_exists(NEW.numero, NEW.suffixe, idvoie)) THEN
+            -- Si l'adresse n'existe pas déjà on enregistre et modififie le nom complet
+            NEW.id_voie = idvoie;
+            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = idvoie;
+            IF NEW.suffixe IS NOT NULL THEN
+                NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
+            ELSE
+                NEW.adresse_complete = CONCAT(NEW.numero, ' ', adrvoie);
+            END IF;
+            RETURN NEW;
+        ELSE
+            -- Sinon enregistrement impossible
+            RETURN NULL;
+        END IF;
+    ELSE
+        -- Sinon on modifie valide et on enregistre
+        NEW.valide = False;
+        RETURN NEW;
+    END IF;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="update_adr_complete" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    idvoie integer;
+    adrvoie text;
+BEGIN
+    IF (TG_TABLE_NAME = 'voie') THEN
+        IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
+            UPDATE adresse.point_adresse
+            SET adresse_complete = CONCAT(numero, ' ', NEW.typologie, ' ', NEW.nom)
+            WHERE id_voie = OLD.id_voie;
+        END IF;
+        RETURN NEW;
+    ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
+        -- Cas des différence
+        IF NEW.numero != OLD.numero
+            OR NEW.suffixe IS DISTINCT FROM OLD.suffixe
+            OR NEW.id_voie IS DISTINCT FROM OLD.id_voie
+            OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0
+            OR (NEW.valide IS DISTINCT FROM OLD.valide AND NEW.valide) THEN
+
+            -- Cas où id_voie est null, calculer un nouvel id_voie
+            IF NEW.id_voie IS DISTINCT FROM OLD.id_voie
+                OR (NEW.id_voie IS NULL AND NEW.valide)
+                OR ST_DISTANCE(NEW.geom, OLD.geom) > 0.0 THEN
+                SELECT adresse.get_id_voie(NEW.geom) into idvoie;
+                -- Aucune voie dévérouillée trouvée
+                IF idvoie IS NULL THEN
+                    return NULL;
+                END IF;
+                NEW.id_voie = idvoie;
+            END IF;
+
+            -- Vérification que la nouvelle adresse n'existe pas déjà
+            IF (NEW.numero != OLD.numero
+                OR NEW.suffixe IS DISTINCT FROM OLD.suffixe
+                OR NEW.id_voie IS DISTINCT FROM OLD.id_voie)
+                AND (SELECT adresse.num_exists(NEW.numero, NEW.suffixe, NEW.id_voie)) THEN
+                return NULL;
+            END IF;
+
+            -- Modification du nom complet de la voie
+            SELECT nom_complet into adrvoie FROM adresse.voie WHERE id_voie = NEW.id_voie;
+            IF NEW.suffixe IS NOT NULL THEN
+                NEW.adresse_complete = CONCAT(NEW.numero, ' ', NEW.suffixe, ' ', adrvoie);
+            ELSE
+                NEW.adresse_complete = CONCAT(NEW.numero, ' ', adrvoie);
+            END IF;
+        END IF;
+        RETURN NEW;
+    END IF;
+    RETURN NULL;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="update_commune" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    leid integer;
+BEGIN
+    IF (TG_TABLE_NAME = 'voie') THEN
+        INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
+        RETURN NEW;
+    ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
+        SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
+        NEW.id_commune = leid;
+        RETURN NEW;
+    END IF;
+    RETURN NULL;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="update_full_name" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+BEGIN
+    IF NEW.typologie != OLD.typologie OR NEW.nom != OLD.nom THEN
+        NEW.nom_complet:= CONCAT(NEW.typologie, ' ', NEW.nom);
+    END IF;
+
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="voie_nom_complet" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+
+BEGIN
+    NEW.nom_complet = Concat(NEW.typologie, ' ', NEW.nom);
+
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+   </routines>
+</database>

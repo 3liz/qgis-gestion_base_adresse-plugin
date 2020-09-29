@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>gis Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="index.html" class="navbar-brand"><b>gis</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Columns</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 class="box-title">Columns</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="column_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Table</th>
+                                        <th>Type</th>
+                                        <th>Column</th>
+                                        <th>Type</th>
+                                        <th>Size</th>
+                                        <th title='Are nulls allowed?'>Nullable</th>
+                                        <th title='Is column automatically updated?'>Auto</th>
+                                        <th title='Default value'>Default</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var tableData = [
+    {
+        "tableName": "document",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_commune",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "longueur",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Longueur de la voie en mètres<\/p>"
+    },
+    {
+        "tableName": "document",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_doc",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "intercom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Intercommunalité dans laquelle la commune se trouve<\/p>"
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "prefixe",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "statut_voie_num",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": "<p>Statut accordé à la voie permettant son verrouillage ou son déverrouillage pour la saisie d\u2019une adresse<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_point",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "cle_interop",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "suffixe",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "appartenir_com",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_voie",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createur",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de l\u2019utilisateur qui a créé le point<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "phase_fibre",
+        "type": "bpchar",
+        "length": 1,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Numéro de phase du déploiement de la fibre sur la commune<\/p>"
+    },
+    {
+        "tableName": "commune_deleguee",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_com_del",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('adresse.commune_deleguee_id_com_del_seq'::regclass)",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_modif",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>Date et heure à laquelle la dernière modification sur la fiche de la voie a été apportéee<\/p>"
+    },
+    {
+        "tableName": "commune_deleguee",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "tel_referent_deleguee",
+        "type": "bpchar",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_parcelle",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant de la parcelle à laquelle appartient le point adresse<\/p>"
+    },
+    {
+        "tableName": "commune_deleguee",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "insee_code",
+        "type": "bpchar",
+        "length": 5,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "statut_voie",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Statut accordé à la voie au niveau du plan d\u2019adressage<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "sens_numerotation",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "commentaire",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Commentaire<\/p>"
+    },
+    {
+        "tableName": "commune_deleguee",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "mail_referent_deleguee",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "insee_code",
+        "type": "bpchar",
+        "length": 5,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code INSEE de la commune<\/p>"
+    },
+    {
+        "tableName": "document",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "type_document",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "mail_referent",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Adresse mail de la personne référente sur le projet d\u2019adressage dans la commune<\/p>"
+    },
+    {
+        "tableName": "vue_com",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "insee_code",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "updated",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "commune_deleguee",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de la voie<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "createur",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de l\u2019utilisateur qui a créé la voie<\/p>"
+    },
+    {
+        "tableName": "document",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_doc",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "referencer_com",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_action",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "delib",
+        "type": "bool",
+        "length": 1,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Spécifie si la commune souhaite délibérer sur la voie<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diffusion_ban",
+        "type": "bpchar",
+        "length": 3,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Les adresses ont-elles été remontées dans la Base Adresse Nationale ?<\/p>"
+    },
+    {
+        "tableName": "commune_deleguee",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_referent_deleguee",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "typologie",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Typologie de la voie<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "commenter",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Commentaires généraux sur le projet de la commune, l\u2019avancement, le dernier contact, le prochain rendez-vous<\/p>"
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "me_version_date",
+        "type": "date",
+        "length": 13,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Date de la version. Ex: 2019-06-01<\/p>"
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "created",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "maire",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "actif",
+        "type": "bpchar",
+        "length": 3,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Si la commune se fait accompagner par le département<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_voie",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('adresse.voie_id_voie_seq'::regclass)",
+        "comments": "<p>Identifiant unique de la voie<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "achat_plaque_numero",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Achat de la plaque nécessaire ou non ?<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_complet",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Concaténation de la typologie et du nom de la voie<\/p>"
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "me_status",
+        "type": "int2",
+        "length": 5,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Geometrie de l&rsquo;objet<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "erreur",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Présence d\u2019une erreur ou non<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "long",
+        "type": "float8",
+        "length": 17,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "voie_nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "adresse_mairie",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "modificateur",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de l\u2019utilisateur qui a effectué la dernière modification<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "valide",
+        "type": "bool",
+        "length": 1,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "true",
+        "comments": "<p>Le point d&rsquo;adresse est valide ou non<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "type_num",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Type de numérotation de la voie<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "lat",
+        "type": "float8",
+        "length": 17,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "situation",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>État d\u2019avancement du projet d\u2019adressage de la commune<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "modificateur",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de l\u2019utilisateur qui a effectué la dernière modification<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "uid_adresse",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "tel_referent",
+        "type": "bpchar",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Numéro de téléphone de la personne référente sur le projet d\u2019adressage dans la commune<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_com",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('adresse.commune_id_com_seq'::regclass)",
+        "comments": "<p>Identifiant unique de la commune<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "suffixe",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Extension du numéro (bis, ter, A, B&hellip;)<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "fibre",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Situation de la commune dans le déploiement de la fibre<\/p>"
+    },
+    {
+        "tableName": "referencer_com",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_com",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_voie",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant de la voie à laquelle appartient le point adresse<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "commune_nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "numero",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "source",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "type_pos",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Type de positionnement du point adresse<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "commune_nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de la commune<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_dgfip",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Date d\u2019envoi des données à la DGFIP.<\/p>"
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('adresse.metadata_id_seq'::regclass)",
+        "comments": "<p>Identifiant de la version<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_point",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('adresse.point_adresse_id_point_seq'::regclass)",
+        "comments": "<p>Identifiant unique du point adresse<\/p>"
+    },
+    {
+        "tableName": "referencer_com",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "action",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "diffusion_dgfip",
+        "type": "bpchar",
+        "length": 3,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Les adresses ont-elles été envoyées à la DGFIP ?<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "y",
+        "type": "float8",
+        "length": 17,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "vue_com",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "commune_nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "code_postal",
+        "type": "bpchar",
+        "length": 5,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code postal auquel appartient de point adresse<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "code_fantoir",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code fantoir pour de la DGFIP<\/p>"
+    },
+    {
+        "tableName": "appartenir_com",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_com",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_commune",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant de la commune à laquelle appartient le point adresse<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "code_insee",
+        "type": "bpchar",
+        "length": 5,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>fid",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('adresse.parcelle_fid_seq'::regclass)",
+        "comments": ""
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_derniere_maj",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "adresse_complete",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Concaténation du numéro, de l\u2019extension, de la typologie et du nom de la voie<\/p>"
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "arpente",
+        "type": "bool",
+        "length": 1,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "numero",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_referent",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom et Prénom de la personne référente sur le projet d\u2019adressage dans la commune<\/p>"
+    },
+    {
+        "tableName": "referencer_com",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_com_deleguee",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "statut_com",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie de l\u2019objet<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_creation",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>Date et heure à laquelle le point adresse a été créé<\/p>"
+    },
+    {
+        "tableName": "document",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "lien",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Chemin de stockage du document<\/p>"
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_modif",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>Date et heure à laquelle la dernière modification sur la fiche du point a été apportée<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "x",
+        "type": "float8",
+        "length": 17,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "commune",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_ban",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Date d\u2019envoi des données dans la BAN.<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "achat_plaque_voie",
+        "type": "bool",
+        "length": 1,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "false",
+        "comments": "<p>Achat de la plaque nécessaire ou non ?<\/p>"
+    },
+    {
+        "tableName": "export_bal",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "position",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "contenance",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune_deleguee",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "commune_deleguee_nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_delib",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Date à laquelle la délibération sur les dénominations des voies a été prise.<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_creation",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "now()",
+        "comments": "<p>Date et heure à laquelle la voie a été créée<\/p>"
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>me_version",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Version. Ex: 1.0.2<\/p>"
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie de l\u2019objet<\/p>"
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "section",
+        "type": "varchar",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "parcelle",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "point_adresse",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "numero",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Numéro de l\u2019adresse<\/p>"
+    },
+    {
+        "tableName": "commune",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "code_postal",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "voie",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nb_point",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nombre de points adresses rattachés à cette voie<\/p>"
+    },
+    {
+        "tableName": "document",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_doc",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('adresse.document_id_doc_seq'::regclass)",
+        "comments": ""
+    }
+];
+                    var config = {
+                        pagination: true
+                    };
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="column.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>
