@@ -48,6 +48,7 @@ class DatabaseTestCase(unittest.TestCase):
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,
+            "SRID": "EPSG:2154",
             "ADD_TEST_DATA": self.add_data,
         }
         processing.run(

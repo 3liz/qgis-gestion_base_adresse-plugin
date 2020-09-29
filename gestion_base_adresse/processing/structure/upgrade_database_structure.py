@@ -12,6 +12,7 @@ from qgis.core import (
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
     QgsExpressionContextUtils,
+    QgsProcessingParameterCrs,
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -30,6 +31,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
 
     CONNECTION_NAME = "CONNECTION_NAME"
     RUN_MIGRATIONS = "RUN_MIGRATIONS"
+    SRID = 'SRID'
     OUTPUT_STATUS = "OUTPUT_STATUS"
     OUTPUT_STRING = "OUTPUT_STRING"
 
@@ -76,6 +78,14 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                 tr("Cocher cette option pour lancer la mise-à-jour."),
                 defaultValue=False,
                 optional=False,
+            )
+        )
+
+        self.addParameter(
+            QgsProcessingParameterCrs(
+                self.SRID, 'Projection des géométries',
+                defaultValue='EPSG:2154',
+                optional=False
             )
         )
         # OUTPUTS
@@ -191,6 +201,11 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         db_version_integer = format_version_integer(db_version)
         sql_files = available_migrations(db_version_integer)
 
+        # Get input srid
+        crs = self.parameterAsCrs(parameters, self.SRID, context)
+        srid = crs.authid().replace('EPSG:', '')
+        feedback.pushInfo('SRID = {}'.format(srid))
+
         # Loop sql files and run SQL code
         for sf in sql_files:
             sql_file = os.path.join(plugin_path(), "install/sql/upgrade/{}".format(sf))
@@ -199,6 +214,9 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                 if len(sql.strip()) == 0:
                     feedback.pushInfo("* " + sf + " -- NON TRAITÉ (FICHIER VIDE)")
                     continue
+
+                # Replace 2154 by given srid
+                sql = sql.replace('2154', srid)
 
                 # Add SQL database version in adresse.metadata
                 new_db_version = (

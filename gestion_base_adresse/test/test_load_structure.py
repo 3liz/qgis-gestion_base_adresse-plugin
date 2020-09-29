@@ -46,6 +46,7 @@ class TestProcessing(unittest.TestCase):
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,
+            "SRID": "EPSG:2154",
             "ADD_TEST_DATA": True,
         }
 
@@ -95,7 +96,11 @@ class TestProcessing(unittest.TestCase):
         self.assertEqual(VERSION, record[0])
 
         feedback.pushDebugInfo("Update the database")
-        params = {"CONNECTION_NAME": "test", "RUN_MIGRATIONS": True}
+        params = {
+            "CONNECTION_NAME": "test",
+            "RUN_MIGRATIONS": True,
+            "SRID": "EPSG:2154"
+        }
         alg = "{}:upgrade_database_structure".format(provider.id())
         results = processing.run(alg, params, feedback=feedback)
         self.assertEqual(1, results["OUTPUT_STATUS"], 1)
@@ -162,6 +167,7 @@ class TestProcessing(unittest.TestCase):
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,  # Must be true, for the time in the test.
+            "SRID": "EPSG:2154",
             "ADD_TEST_DATA": True,
         }
 
@@ -207,7 +213,11 @@ class TestProcessing(unittest.TestCase):
         self.assertEqual(expected, feedback.last)
 
         feedback.pushDebugInfo("Update the database")
-        params = {"CONNECTION_NAME": "test", "RUN_MIGRATIONS": True}
+        params = {
+            "CONNECTION_NAME": "test",
+            "RUN_MIGRATIONS": True,
+            "SRID": "EPSG:2154"
+        }
         alg = "{}:upgrade_database_structure".format(provider.id())
         results = processing.run(alg, params, feedback=feedback)
         self.assertEqual(1, results["OUTPUT_STATUS"], 1)
@@ -216,3 +226,55 @@ class TestProcessing(unittest.TestCase):
             "n'est nécessaire",
             results["OUTPUT_STRING"],
         )
+
+    def test_load_structure_with_another_SRID(self):
+        """Test we can load the PostGIS structure with another SRID."""
+        provider = ProcessingProvider()
+        QgsApplication.processingRegistry().addProvider(provider)
+
+        feedback = LoggerProcessingFeedBack()
+        self.cursor.execute("SELECT version();")
+        record = self.cursor.fetchone()
+        feedback.pushInfo("PostgreSQL version : {}".format(record[0]))
+
+        self.cursor.execute("SELECT PostGIS_Version();")
+        record = self.cursor.fetchone()
+        feedback.pushInfo("PostGIS version : {}".format(record[0]))
+
+        params = {
+            "CONNECTION_NAME": "test",
+            "OVERRIDE": True,  # Must be true, for the time in the test.
+            "SRID": "EPSG:32620",
+            "ADD_TEST_DATA": False,
+        }
+
+        alg = "{}:create_database_structure".format(provider.id())
+        processing.run(alg, params, feedback=feedback)
+
+        self.cursor.execute(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
+                SCHEMA
+            )
+        )
+        records = self.cursor.fetchall()
+        result = [r[0] for r in records]
+        expected = [
+            "appartenir_com",
+            "commune",
+            "document",
+            "metadata",
+            "point_adresse",
+            "voie",
+            "parcelle",
+            "commune_deleguee",
+            "referencer_com",
+            "vue_com",
+            "export_bal",
+        ]
+        self.assertCountEqual(expected, result, result)
+
+        self.cursor.execute(
+            "SELECT Find_SRID('" + SCHEMA + "', 'voie', 'geom');"
+        )
+        records = self.cursor.fetchone()
+        self.assertEqual(records[0], 32620)
