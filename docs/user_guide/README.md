@@ -1,6 +1,7 @@
 ---
 Title: Gestion des adresses
 Favicon: ../icon.png
+Up: True
 ...
 
 [TOC]
