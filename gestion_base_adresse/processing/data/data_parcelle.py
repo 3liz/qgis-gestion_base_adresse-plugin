@@ -7,6 +7,7 @@ from qgis.core import (
     QgsProcessingParameterString,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
+    QgsProcessingParameterBoolean,
     QgsProcessingContext,
     QgsVectorLayer,
 )
@@ -27,6 +28,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
 
     DATABASE = "DATABASE"
     SCHEMA = "SCHEMA"
+    TRUNCATE_PARCELLE = "TRUNCATE_PARCELLE"
     OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
 
@@ -77,6 +79,13 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         )
         self.addParameter(schema_param)
 
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.TRUNCATE_PARCELLE,
+                tr("Mise à jour de la table parcelle")
+            )
+        )
+
         # OUTPUTS
         self.addOutput(
             QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
@@ -105,35 +114,77 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         msg = ""
         output_layers = []
         layers_name_none = dict()
-        layers_name_none["vue_certificat"] = "id_view"
-        layers_name_none["vue_voie"] = "id_view"
-        layers_name_none["vue_section"] = "id_view"
-        layers_name_none["vue_parcelle"] = "id_view"
+        layers_name_none["v_certificat"] = "id_view"
+        layers_name_none["v_voie"] = "id_view"
+        layers_name_none["v_section"] = "id_view"
+        layers_name_none["v_parcelle"] = "id_view"
 
         # override = self.parameterAsBool(parameters, self.OVERRIDE, context)
         connection = self.parameterAsString(parameters, self.DATABASE, context)
         schema = self.parameterAsString(parameters, self.SCHEMA, context)
-        feedback.pushInfo("## RECUPERATION DES DONNEES PARCELLE ##")
-        feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
+        data_update = self.parameterAsBool(parameters, self.TRUNCATE_PARCELLE, context)
 
-        sql = """
-            INSERT INTO adresse.parcelle(id,commune, prefixe, section, numero, contenance, arpente, geom)
-            SELECT p.idu, p.nomcommune, p1.ccopre, p1.ccosec, p1.dnupla, p.contenance,
-            CASE
-            WHEN p1.ccoarp = 'A' THEN True
-            ELSE False
-            END as arpente,
-            p.geom
-            FROM {}.parcelle_info p, {}.parcelle p1
-            WHERE p.geo_parcelle = p1.parcelle AND p.idu not in(select pa.id from adresse.parcelle pa)
-        """.format(
-            schema, schema
-        )
-        _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
-        if not ok:
-            return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
+        if data_update:
+            feedback.pushInfo("## Mise à jour des données parcelles ##")
+            feedback.pushInfo("## Rend id_parcelle = null dans adresse.point_adresse ##")
+            sql = """
+                UPDATE adresse.point_adresse pa
+                SET id_parcelle = NULL;
+            """
+            _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
+            if not ok:
+                return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
 
-        feedback.pushInfo("## UPDATE TABLE POINT_ADRESSE ##")
+            feedback.pushInfo("""
+                ## Désactivation de la clé étrangère sur adresse.point_adresse pour
+                pouvoir vider la table adresse.parcelle ##
+            """)
+            sql = """
+                ALTER TABLE adresse.point_adresse DROP CONSTRAINT point_adresse_id_parcelle_fkey;
+            """
+            _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
+            if not ok:
+                return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
+
+            feedback.pushInfo("## Vide la table adresse.parcelle ##")
+            sql = """
+                TRUNCATE adresse.parcelle RESTART IDENTITY;
+            """
+            _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
+            if not ok:
+                return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
+
+            feedback.pushInfo("## Réactivation de la clé étrangère sur adresse.point_adresse ##")
+            sql = """
+                ALTER TABLE adresse.point_adresse
+                ADD CONSTRAINT point_adresse_id_parcelle_fkey FOREIGN KEY (id_parcelle)
+                REFERENCES adresse.parcelle (fid);
+            """
+            _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
+            if not ok:
+                return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
+
+            feedback.pushInfo("## Remplissage de la table adresse.parcelle ##")
+            sql = """
+                INSERT INTO adresse.parcelle(id,commune, prefixe, section, numero,
+                    contenance, arpente, geom)
+                SELECT p.idu, p.nomcommune, p1.ccopre, p1.ccosec, p1.dnupla, p.contenance,
+                CASE
+                WHEN p1.ccoarp = 'A' THEN True
+                ELSE False
+                END as arpente,
+                p.geom
+                FROM {}.parcelle_info p, {}.parcelle p1
+                WHERE p.geo_parcelle = p1.parcelle
+                AND p.idu not in(select pa.id from adresse.parcelle pa)
+            """.format(
+                schema, schema
+            )
+            _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
+            if not ok:
+                return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
+
+        feedback.pushInfo("## Mise à jour de id_parcelle dans adresse.point_adresse ##")
         sql = """
             UPDATE adresse.point_adresse pa
             SET id_parcelle = (SELECT p.fid FROM adresse.parcelle p
@@ -143,11 +194,12 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         if not ok:
             return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
 
-        feedback.pushInfo("## CREATION DE LA VUE CERTIFICAT ##")
-        sql = "DROP VIEW IF EXISTS adresse.vue_certificat"
+        feedback.pushInfo("## CREATION DES VUES ##")
+        feedback.pushInfo("## Vue  adresse.v_certificat ##")
+        sql = "DROP VIEW IF EXISTS adresse.v_certificat"
         _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
         sql = """
-            CREATE VIEW adresse.vue_certificat AS
+            CREATE VIEW adresse.v_certificat AS
             SELECT row_number() over (order by c.commune_nom) as id_view,
             pr.proprietaire as id_prop, pa.id_point,
             c.insee_code, c.commune_nom, c.code_postal, c.adresse_mairie, c.maire,
@@ -174,11 +226,11 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         if not ok:
             return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
 
-        feedback.pushInfo("## CREATION DE LA VUE VOIE ##")
-        sql = "DROP VIEW IF EXISTS adresse.vue_voie"
+        feedback.pushInfo("## Vue  adresse.v_voie ##")
+        sql = "DROP VIEW IF EXISTS adresse.v_voie"
         _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
         sql = """
-            CREATE OR REPLACE VIEW adresse.vue_voie
+            CREATE VIEW adresse.v_voie
             AS
             SELECT row_number() OVER (ORDER BY v.nom) AS id_view,
             v.id_voie,
@@ -194,11 +246,11 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         if not ok:
             return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
 
-        feedback.pushInfo("## CREATION DE LA VUE SECTION ##")
-        sql = "DROP VIEW IF EXISTS adresse.vue_section"
+        feedback.pushInfo("## Vue  adresse.v_section ##")
+        sql = "DROP VIEW IF EXISTS adresse.v_section"
         _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
         sql = """
-            CREATE OR REPLACE VIEW adresse.vue_section
+            CREATE VIEW adresse.v_section
             AS
             SELECT row_number() OVER (ORDER BY s.tex) AS id_view,
             concat(c.ccodep, c.ccocom) AS insee,
@@ -215,11 +267,11 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         if not ok:
             return {self.OUTPUT_MSG: error_message, self.OUTPUT: output_layers}
 
-        feedback.pushInfo("## CREATION DE LA VUE PARCELLE ##")
-        sql = "DROP VIEW IF EXISTS adresse.vue_parcelle"
+        feedback.pushInfo("## Vue  adresse.v_parcelle ##")
+        sql = "DROP VIEW IF EXISTS adresse.v_parcelle"
         _, _, _, ok, error_message = fetch_data_from_sql_query(connection, sql)
         sql = """
-            CREATE VIEW adresse.vue_parcelle
+            CREATE VIEW adresse.v_parcelle
             as SELECT row_number() OVER (ORDER BY s.tex) AS id_view,
             concat(c.ccodep, c.ccocom) as insee,
             s.tex as section,
