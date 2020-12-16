@@ -116,52 +116,6 @@ CREATE SEQUENCE adresse.document_id_doc_seq
 ALTER SEQUENCE adresse.document_id_doc_seq OWNED BY adresse.document.id_doc;
 
 
--- point_adresse
-CREATE TABLE adresse.point_adresse (
-    id_point integer NOT NULL,
-    numero integer NOT NULL,
-    suffixe text,
-    adresse_complete text,
-    code_postal character(5),
-    type_pos text,
-    achat_plaque_numero boolean DEFAULT false NOT NULL,
-    createur text,
-    date_creation date DEFAULT now(),
-    modificateur text,
-    date_modif date DEFAULT now(),
-    erreur boolean DEFAULT false NOT NULL,
-    commentaire text,
-    geom public.geometry(Point,2154),
-    id_voie integer,
-    id_commune integer,
-    id_parcelle integer,
-    valide boolean DEFAULT true
-);
-
-
--- voie
-CREATE TABLE adresse.voie (
-    id_voie integer NOT NULL,
-    typologie text NOT NULL,
-    nom text NOT NULL,
-    nom_complet text,
-    type_num text,
-    statut_voie_num boolean DEFAULT true NOT NULL,
-    statut_voie boolean DEFAULT false NOT NULL,
-    sens_numerotation boolean DEFAULT false NOT NULL,
-    achat_plaque_voie boolean DEFAULT false NOT NULL,
-    nb_point integer,
-    createur text,
-    date_creation date DEFAULT now(),
-    modificateur text,
-    date_modif date DEFAULT now(),
-    longueur integer,
-    code_fantoir integer,
-    delib boolean,
-    geom public.geometry(LineString,2154)
-);
-
-
 -- metadata
 CREATE TABLE adresse.metadata (
     id integer NOT NULL,
@@ -217,6 +171,29 @@ CREATE SEQUENCE adresse.parcelle_fid_seq
 ALTER SEQUENCE adresse.parcelle_fid_seq OWNED BY adresse.parcelle.fid;
 
 
+-- point_adresse
+CREATE TABLE adresse.point_adresse (
+    id_point integer NOT NULL,
+    numero integer NOT NULL,
+    suffixe text,
+    adresse_complete text,
+    code_postal character(5),
+    type_pos text,
+    achat_plaque_numero boolean DEFAULT false NOT NULL,
+    createur text,
+    date_creation date DEFAULT now(),
+    modificateur text,
+    date_modif date DEFAULT now(),
+    erreur boolean DEFAULT false NOT NULL,
+    commentaire text,
+    geom public.geometry(Point,2154),
+    id_voie integer,
+    id_commune integer,
+    id_parcelle integer,
+    valide boolean DEFAULT true
+);
+
+
 -- point_adresse_id_point_seq
 CREATE SEQUENCE adresse.point_adresse_id_point_seq
     START WITH 1
@@ -236,6 +213,29 @@ CREATE TABLE adresse.referencer_com (
     id_com_deleguee integer NOT NULL,
     action text,
     date_action date
+);
+
+
+-- voie
+CREATE TABLE adresse.voie (
+    id_voie integer NOT NULL,
+    typologie text NOT NULL,
+    nom text NOT NULL,
+    nom_complet text,
+    type_num text,
+    statut_voie_num boolean DEFAULT true NOT NULL,
+    statut_voie boolean DEFAULT false NOT NULL,
+    sens_numerotation boolean DEFAULT false NOT NULL,
+    achat_plaque_voie boolean DEFAULT false NOT NULL,
+    nb_point integer,
+    createur text,
+    date_creation date DEFAULT now(),
+    modificateur text,
+    date_modif date DEFAULT now(),
+    longueur integer,
+    code_fantoir integer,
+    delib boolean,
+    geom public.geometry(LineString,2154)
 );
 
 
