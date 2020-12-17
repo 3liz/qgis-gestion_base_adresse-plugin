@@ -16,6 +16,14 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- v_commune
+CREATE VIEW adresse.v_commune AS
+ SELECT (c.insee_code)::integer AS insee_code,
+    c.commune_nom
+   FROM adresse.commune c
+  ORDER BY c.commune_nom;
+
+
 -- v_export_bal
 CREATE VIEW adresse.v_export_bal AS
  SELECT p.id_point,
@@ -43,14 +51,6 @@ CREATE VIEW adresse.v_export_bal AS
     adresse.point_adresse p,
     adresse.voie v
   WHERE ((p.id_commune = c.id_com) AND (p.id_voie = v.id_voie));
-
-
--- vue_com
-CREATE VIEW adresse.vue_com AS
- SELECT (c.insee_code)::integer AS insee_code,
-    c.commune_nom
-   FROM adresse.commune c
-  ORDER BY c.commune_nom;
 
 
 --

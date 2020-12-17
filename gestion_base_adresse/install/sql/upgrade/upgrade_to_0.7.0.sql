@@ -29,4 +29,6 @@ CREATE VIEW adresse.v_export_bal AS
     adresse.voie v
   WHERE ((p.id_commune = c.id_com) AND (p.id_voie = v.id_voie));
 
+  ALTER VIEW adresse.vue_com RENAME TO v_commune;
+
 COMMIT;
