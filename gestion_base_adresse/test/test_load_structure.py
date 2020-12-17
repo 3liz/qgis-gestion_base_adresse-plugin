@@ -145,7 +145,7 @@ class TestProcessing(unittest.TestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
-            "vue_com",
+            "v_commune",
             "v_export_bal",
         ]
         self.assertCountEqual(expected, result)
@@ -191,7 +191,7 @@ class TestProcessing(unittest.TestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
-            "vue_com",
+            "v_commune",
             "v_export_bal",
         ]
         self.assertCountEqual(expected, result, result)
@@ -268,7 +268,7 @@ class TestProcessing(unittest.TestCase):
             "parcelle",
             "commune_deleguee",
             "referencer_com",
-            "vue_com",
+            "v_commune",
             "v_export_bal",
         ]
         self.assertCountEqual(expected, result, result)

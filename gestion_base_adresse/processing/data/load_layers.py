@@ -101,7 +101,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         layers_name = ["commune", "voie", "point_adresse", "parcelle"]
         layers_name_none = dict()
         layers_name_none["document"] = ""
-        layers_name_none["vue_com"] = "insee_code"
+        layers_name_none["v_commune"] = "insee_code"
 
         # override = self.parameterAsBool(parameters, self.OVERRIDE, context)
         connection = self.parameterAsString(parameters, self.DATABASE, context)
