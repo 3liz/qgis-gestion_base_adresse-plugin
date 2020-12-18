@@ -20,10 +20,10 @@ digraph "twoDegreesRelationshipsDiagramImplied" {
   ];
   "appartenir_com":"id_com":w -> "commune":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "appartenir_com":"id_voie":w -> "voie":"id_voie.type":e [arrowhead=none dir=back arrowtail=crowodot];
-  "export_bal":"elipses":w -> "point_adresse":"id_point":e [arrowhead=none dir=back arrowtail=crowodot style=dashed];
   "point_adresse":"id_commune":w -> "commune":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "point_adresse":"id_parcelle":w -> "parcelle":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "point_adresse":"id_voie":w -> "voie":"id_voie.type":e [arrowhead=none dir=back arrowtail=crowodot];
+  "v_export_bal":"elipses":w -> "point_adresse":"id_point":e [arrowhead=none dir=back arrowtail=crowodot style=dashed];
   "appartenir_com" [
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
@@ -46,16 +46,6 @@ digraph "twoDegreesRelationshipsDiagramImplied" {
     URL="commune.html"
     target="_top"
     tooltip="commune"
-  ];
-  "export_bal" [
-   label=<
-    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
-      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>export_bal</B></TD><TD ALIGN="RIGHT">[view]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
-    </TABLE>>
-    URL="export_bal.html"
-    target="_top"
-    tooltip="export_bal"
   ];
   "parcelle" [
    label=<
@@ -83,6 +73,16 @@ digraph "twoDegreesRelationshipsDiagramImplied" {
     URL="point_adresse.html"
     target="_top"
     tooltip="point_adresse"
+  ];
+  "v_export_bal" [
+   label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>v_export_bal</B></TD><TD ALIGN="RIGHT">[view]</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
+    </TABLE>>
+    URL="v_export_bal.html"
+    target="_top"
+    tooltip="v_export_bal"
   ];
   "voie" [
    label=<
