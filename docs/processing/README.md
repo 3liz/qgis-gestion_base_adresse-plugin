@@ -49,6 +49,7 @@ Création de la structure de la base données. Vous pouvez aussi charger des don
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
 OVERRIDE|Écraser le schéma adresse ? ** ATTENTION ** Cela supprimera toutes les données !|Boolean||✓|||
+SRID|Système de coordonnée pour vos données ?|Crs||✓||Default: EPSG:2154 <br> |
 ADD_TEST_DATA|Ajouter des données de test ?|Boolean||✓|||
 
 
@@ -75,6 +76,7 @@ Mise à jour de la base de données suite à une nouvelle version de l'extension
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
 RUN_MIGRATIONS|Cocher cette option pour lancer la mise-à-jour.|Boolean||✓|||
+SRID|Projection des géométries|Crs||✓||Default: EPSG:2154 <br> |
 
 
 #### Outputs
@@ -103,6 +105,7 @@ Ajout des données parcellaire et création des vues pour les certificats de num
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 DATABASE|Connexion à la base de données|String||✓|||
 SCHEMA|Schéma du cadastre contenant les données des parcelles est propriétaires|String||||Default: cadastre <br> |
+TRUNCATE_PARCELLE|Mise à jour de la table parcelle|Boolean||✓|||
 
 
 #### Outputs

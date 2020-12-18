@@ -4,9 +4,9 @@
  <head>
   <meta charset="utf-8"/>
   <title>Gestion des adresses</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <link href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
-  <link href="../icon.png" rel="icon" type="image/png" >
+  <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <link type="text/css" href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
+  <link type="image/png" href="../icon.png" rel="icon" >
  </head>
  <body>
  <header class="header-container" style="">
@@ -154,6 +154,15 @@
 <td align="center"></td>
 </tr>
 <tr>
+<td align="center">SRID</td>
+<td align="center">Système de coordonnée pour vos données ?</td>
+<td align="center">Crs</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+<td align="center">Default: EPSG:2154 <br></td>
+</tr>
+<tr>
 <td align="center">ADD_TEST_DATA</td>
 <td align="center">Ajouter des données de test ?</td>
 <td align="center">Boolean</td>
@@ -225,6 +234,15 @@
 <td align="center"></td>
 <td align="center"></td>
 </tr>
+<tr>
+<td align="center">SRID</td>
+<td align="center">Projection des géométries</td>
+<td align="center">Crs</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+<td align="center">Default: EPSG:2154 <br></td>
+</tr>
 </tbody>
 </table>
 <h4 id="outputs_2">Outputs</h4>
@@ -288,6 +306,15 @@
 <td align="center"></td>
 <td align="center"></td>
 <td align="center">Default: cadastre <br></td>
+</tr>
+<tr>
+<td align="center">TRUNCATE_PARCELLE</td>
+<td align="center">Mise à jour de la table parcelle</td>
+<td align="center">Boolean</td>
+<td align="center"></td>
+<td align="center">✓</td>
+<td align="center"></td>
+<td align="center"></td>
 </tr>
 </tbody>
 </table>
