@@ -1,5 +1,15 @@
 ## CHANGELOG
 
+### 0.7.0 - 18/12/2020
+* Update Algorithm data_parcelle.py
+  * Choose if we want load data or not with checkbox
+  * Refactor code
+  * Rename prefix of view `vue_` into `v_`
+* Update view export_bal 
+  * Rename with prefix `v_`
+  * Rename field `date_dernier_maj` to `date_der_maj`
+  * Update tests
+
 ### 0.6.0 - 22/09/2020
 * Adding numbering certificate functionality
 * Adding documentation
