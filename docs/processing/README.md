@@ -1,12 +1,9 @@
 ---
-Title: Gestion des adresses
-Favicon: ../icon.png
-Up: True
-...
+hide:
+  - navigation
+---
 
-[TOC]
-
-# Gestion des adresses
+# Processing
 
 ## Outils
 
