@@ -1,28 +1,16 @@
----
-Title: Gestion des adresses
-Favicon: ../icon.png
-Up: True
-...
-
-[TOC]
-
-
-# Guide d'utilisateur pour la configuration d'un projet Adresse
+# Configuration
 
 Il est nécessaire de suivre les étapes dans l'ordre afin de configurer le projet QGIS avec succès.
-
 
 ## Liste des scripts
 
 Voici les différents scripts présents dans le plugin accessible via la boîte à outils.
 
-![adresse_toolbox](./adresse_toolbox.png)
-
+![adresse_toolbox](./media/adresse_toolbox.png)
 
 ## Structuration de la base de données 
 
-
-### Intallation de la base
+### Installation de la base
 
 Vous allez utiliser ce script principalement lors de la première utilisation du plugin dans un nouveau 
 projet adresse. S'il s'agit d'une nouvelle version du plugin qui impacte la base de données vous utiliserez 
@@ -35,13 +23,12 @@ présent dans l'onglet **Structure** de la [liste des différents scripts du plu
 ![algo_install](../processing/gestion_adresse-create_database_structure.png)
 
 Dans un premier temps vous devez sélectionner votre connexion à la base de données.
-Ensuite vous avez deux cases à cocher qui vous permettent:
+Ensuite vous avez deux cases à cocher qui vous permettent :
  * d'écraser le schéma adresse si vous en possédez déjà un 
  * d'ajouter des données de test fournies par le plugin
 
 Si vous décidez d'écraser le schéma et que vous souhaitez garder vos données, veillez à faire une sauvegarde 
 en amont.
-
 
 ### Mise à jour de la base
 
@@ -52,7 +39,6 @@ utiliser le script **Mise à jour de la structure de la base** pour faire la mis
 
 Script simple d'utilisation il suffit de renseigner la connexion à la base de données puis de cocher la case 
 pour que la mise à jour se lance lors de l'exécution.
-
 
 ## Configuration du Projet QGIS
 
@@ -68,7 +54,6 @@ Pour exécuter ce script correctement il suffit de renseigner la connexion à la
 premier paramètre, puis le schéma qui contient les couches. En l'occurrence ici normalement le schéma 
 s'appelle **adresse**.
 
-
 ### Application des styles
 
 Juste en dessous du script précédent il y a celui qui se nomme **Chargement des styles depuis le dossier resources** 
@@ -77,7 +62,6 @@ qui permet d'appliquer un style ainsi que d'appliquer les paramètres nécessair
 Il ne contient pas de paramètres, il suffit juste de l'exécuter.
 
 ![algo_load_style](../processing/gestion_adresse-load_styles.png)
-
 
 ### Configurer les variables de projet
 
@@ -90,17 +74,15 @@ les voies et les adresses.
 
 Ce script contient 2 paramètres, dans l'un on y met la couche `voie` et dans l'autre on renseigne la couche `point_adresse`.
 
-
 ### Configuration des propriétés du projet
 
 En haut à gauche de votre fenêtre QGIS vous trouverez le menu **Projet** dans lequel vous aurez accès aux **propriétés**.
 
-![project_properties](./properties_project.png)
+![project_properties](./media/properties_project.png)
 
 Une fois dans la fenêtre **Propriétés du projet** vous irez dans la section **QGIS Server**, puis dans la 
 partie **Capacités WFS** où vous cocherez pour les couches `voie`, `point_adresse` et `document` la case de la colonne 
 **Publié**.
-
 
 ### Configuration pour Lizmap
 
@@ -112,19 +94,19 @@ Pour ce qui est des couches, pour celles sans géométrie il n'y a rien à faire
 dans la partie **Légende** il faut cocher les cases **Cochée ?** et **Afficher dans la légende**. 
 Puis pour les couches `point_adresse` et `voie` on coche la case **Popup**.
 
-![lizmap_layers](./lizmap_layer.png)
+![lizmap_layers](./media/lizmap_layer.png)
 
 Pour ce qui est de la configuration de l'édition comme on le voie sur l'image ci-dessous il suffit d'ajouter 
 les couches auxquelles on permet l'édition. Pour le module Adresse cela concerne uniquement `voie`, `point_adresse` 
 et `document`. Pour pouvoir ajouter une couche à l'édition il suffit de cliquer sur le bouton représentant une 
 croix de couleur verte.
 
-![lizmap_edit](./lizmap_edit.png)
+![lizmap_edit](./media/lizmap_edit.png)
 
 ### Fonctionnalité des certificats de numérotation
 
 Pour ajouter cette fonctionnalité il suffit d'utiliser l'algorithme 
-**Mise en place des données pour certificat de numérotation**. Il dispose de 2 paramètres:
+**Mise en place des données pour certificat de numérotation**. Il dispose de 2 paramètres :
 
 * La connexion à la base de données
 * Le schéma de données où sont les données du cadastre
@@ -140,6 +122,4 @@ ___
 Voilà maintenant il ne vous reste qu'à configurer votre un projet dans Lizmap web client. Vous pouvez vous 
 aider de la [Documentation](https://docs.lizmap.com/next/fr/publish/lizmap_configuration.html) de Lizmap.
 
-Vous pouvez ensuite lire la documentation du [Module Adresse](https://github.com/3liz/lizmap-adresse-module).
-
-___
+Vous pouvez ensuite lire la documentation du [module Adresse](./../module-lizmap/user-guide.md).

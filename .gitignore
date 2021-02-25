@@ -1,6 +1,12 @@
 *.py[cod]
 
+# IDEA
 .idea
+
+# MkDocs
+build/
+docs/CHANGELOG.md
+docs/CONTRIBUTING.md
 
 # C extensions
 *.so
@@ -44,4 +50,5 @@ nosetests.xml
 *.pyc
 *.DS_Store
 
+# QGIS-PLugin-CI
 gestion_base_adresse/gestion_base_adresse.zip
