@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation" class="md-skip">
+        <a href="#installation-du-module" class="md-skip">
           Aller au contenu
         </a>
       
@@ -464,9 +464,45 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Installation
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-automatique-avec-composer-et-lizmap-34-ou-plus" class="md-nav__link">
+    Installation automatique avec Composer et lizmap 3.4 ou plus
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-manuelle-dans-lizmap-33-ou-34-sans-composer" class="md-nav__link">
+    Installation manuelle dans lizmap 3.3 ou 3.4 sans Composer
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -556,6 +592,28 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation-automatique-avec-composer-et-lizmap-34-ou-plus" class="md-nav__link">
+    Installation automatique avec Composer et lizmap 3.4 ou plus
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-manuelle-dans-lizmap-33-ou-34-sans-composer" class="md-nav__link">
+    Installation manuelle dans lizmap 3.3 ou 3.4 sans Composer
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -571,12 +629,24 @@
                   </a>
                 
                 
-                <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">#</a></h1>
+                <h1 id="installation-du-module">Installation du module<a class="headerlink" href="#installation-du-module" title="Permanent link">#</a></h1>
+<p>Depuis la version 0.9.1 du module, il est souhaitable de l'installer avec <a href="https://getcomposer.org">Composer</a>,
+le système de paquet pour PHP. Si vous ne pouvez pas, ou si vous utilisez
+lizmap 3.3 ou inférieur, passez à la section sur l'installation manuelle.</p>
+<h2 id="installation-automatique-avec-composer-et-lizmap-34-ou-plus">Installation automatique avec Composer et lizmap 3.4 ou plus<a class="headerlink" href="#installation-automatique-avec-composer-et-lizmap-34-ou-plus" title="Permanent link">#</a></h2>
+<ul>
+<li>dans <code>lizmap/my-packages</code>, créer le fichier <code>composer.json</code> s'il n'existe pas
+  déjà, en copiant le fichier <code>composer.json.dist</code>, qui s'y trouve.</li>
+<li>en ligne de commande, dans le répertoire <code>lizmap/my-packages/</code>, tapez :
+  <code>composer require "lizmap/lizmap-adresse-module"</code></li>
+<li>puis dans le répertoire <code>lizmap/install/</code>, lancer la commande : <code>php installer.php</code></li>
+</ul>
+<h2 id="installation-manuelle-dans-lizmap-33-ou-34-sans-composer">Installation manuelle dans lizmap 3.3 ou 3.4 sans Composer<a class="headerlink" href="#installation-manuelle-dans-lizmap-33-ou-34-sans-composer" title="Permanent link">#</a></h2>
 <ul>
 <li>Récupérer le dossier <code>adresse</code> dans <a href="https://github.com/3liz/lizmap-adresse-module">https://github.com/3liz/lizmap-adresse-module</a></li>
 <li>Dans le répertoire où est installé lizmap, le mettre dans le dossier <code>lizmap/lizmap-module/</code></li>
-<li>Dans le fichier <code>localconfig.ini.php</code> qui se situe dans lizmap/var/config il y a la partie <code>[modules]</code>
-  où il faut y rajouter le niveau d’accès du module : </li>
+<li>Dans le fichier <code>localconfig.ini.php</code> qui se situe dans <code>lizmap/var/config</code> il y a la partie <code>[modules]</code> où
+  il faut y rajouter le niveau d’accès du module :</li>
 <li><code>adresse.access = 2</code></li>
 <li>lancer la commande : <code>php install/installer.php</code></li>
 </ul>
