@@ -32,7 +32,6 @@ ALTER TABLE ONLY adresse.commune_deleguee
 ALTER TABLE ONLY adresse.commune
     ADD CONSTRAINT commune_pkey PRIMARY KEY (id_com);
 
-
 -- document document_pkey
 ALTER TABLE ONLY adresse.document
     ADD CONSTRAINT document_pkey PRIMARY KEY (id_doc);
@@ -71,8 +70,7 @@ ALTER TABLE ONLY adresse.voie
 -- appartenir_com appartenir_com_id_com_fkey
 ALTER TABLE ONLY adresse.appartenir_com
     ADD CONSTRAINT appartenir_com_id_com_fkey FOREIGN KEY (id_com) REFERENCES adresse.commune(id_com);
-
-
+    
 -- appartenir_com appartenir_com_id_voie_fkey
 ALTER TABLE ONLY adresse.appartenir_com
     ADD CONSTRAINT appartenir_com_id_voie_fkey FOREIGN KEY (id_voie) REFERENCES adresse.voie(id_voie) ON DELETE CASCADE;
@@ -81,6 +79,17 @@ ALTER TABLE ONLY adresse.appartenir_com
 -- document document_id_commune_fkey
 ALTER TABLE ONLY adresse.document
     ADD CONSTRAINT document_id_commune_fkey FOREIGN KEY (id_commune) REFERENCES adresse.commune(id_com);
+
+
+-- lieux_dits lieux_dits1_pkey
+ALTER TABLE ONLY adresse.lieux_dits
+    ADD CONSTRAINT lieux_dits1_pkey PRIMARY KEY (id_ld);
+    
+    
+-- lieux_dits lieux_dits_id_com_fkey
+ALTER TABLE ONLY adresse.lieux_dits
+    ADD CONSTRAINT lieux_dits_id_com_fkey FOREIGN KEY (id_com) REFERENCES adresse.commune(id_com);
+
 
 
 -- point_adresse point_adresse_id_commune_fkey
@@ -108,7 +117,10 @@ ALTER TABLE ONLY adresse.referencer_com
     ADD CONSTRAINT referencer_com_id_com_fkey FOREIGN KEY (id_com) REFERENCES adresse.commune(id_com);
 
 
+-- codes_postaux codes_postaux_pkey
+ALTER TABLE ONLY adresse.codes_postaux 
+    ADD CONSTRAINT codes_postaux_pkey PRIMARY KEY (id);
+    
 --
 -- PostgreSQL database dump complete
 --
-
