@@ -7,7 +7,6 @@
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -15,7 +14,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -24,6 +22,13 @@ SET default_with_oids = false;
 CREATE TABLE adresse.appartenir_com (
     id_voie integer NOT NULL,
     id_com integer NOT NULL
+);
+
+-- codes_postaux
+CREATE TABLE adresse.codes_postaux (
+    id bigint NOT NULL,
+    geom public.geometry(MultiPolygon,2154),
+    cp integer
 );
 
 
@@ -50,8 +55,36 @@ CREATE TABLE adresse.commune (
     geom public.geometry(MultiPolygon,2154),
     adresse_mairie text,
     code_postal text,
-    maire text
+    maire text,
+    calvados_ingenierie boolean,
+    filtrage character varying(255),
+    diffusion_sna boolean,
+    date_sna date,
+    courrier_president character varying(255),
+    poste text,
+    nb_locaux integer,
+    osm boolean,
+    pt_hors_parcelle integer,
+    pt_hors_parcelle_valid integer,
+    nb_pt_valide integer,
+    nb_pt_erreur integer,
+    nb_a_verif integer,
+    nb_pt_no_valid integer,
+    pt_total integer,
+    pct_pt_reel_valid integer
 );
+
+
+-- commune_id_com_seq
+CREATE SEQUENCE adresse.commune_id_com_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+-- commune_id_com_seq
+ALTER SEQUENCE adresse.commune_id_com_seq OWNED BY adresse.commune.id_com;
 
 
 -- commune_deleguee
@@ -79,17 +112,6 @@ CREATE SEQUENCE adresse.commune_deleguee_id_com_del_seq
 ALTER SEQUENCE adresse.commune_deleguee_id_com_del_seq OWNED BY adresse.commune_deleguee.id_com_del;
 
 
--- commune_id_com_seq
-CREATE SEQUENCE adresse.commune_id_com_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- commune_id_com_seq
-ALTER SEQUENCE adresse.commune_id_com_seq OWNED BY adresse.commune.id_com;
 
 
 -- document
@@ -114,6 +136,33 @@ CREATE SEQUENCE adresse.document_id_doc_seq
 
 -- document_id_doc_seq
 ALTER SEQUENCE adresse.document_id_doc_seq OWNED BY adresse.document.id_doc;
+
+
+-- adresse.lieux_dits 
+CREATE TABLE adresse.lieux_dits (
+    id_ld integer NOT NULL,
+    geom public.geometry(Point,2154),
+    nom_ld text,
+    numero integer,
+    integration_ban boolean,
+    id_com integer NOT NULL,
+    commune_nom text,
+    date_der_maj date,
+    id_com_del integer,
+    commune_deleguee_nom text
+);
+
+
+-- document_id_doc_seq
+CREATE SEQUENCE adresse.lieux_dits_id_ld_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+-- document_id_doc_seq
+ALTER SEQUENCE adresse.lieux_dits_id_ld_seq OWNED BY adresse.lieux_dits.id_ld;
 
 
 -- metadata
@@ -190,8 +239,17 @@ CREATE TABLE adresse.point_adresse (
     id_voie integer,
     id_commune integer,
     id_parcelle integer,
-    valide boolean DEFAULT true
+    valide boolean DEFAULT true NOT NULL,
+    verif_terrain boolean DEFAULT false NOT NULL,
+    commune_insee character(5),
+    commune_nom text,
+    commune_deleguee_insee character(5),
+    commune_deleguee_nom text,
+    complement_adresse character varying(255),
+    lieudit_complement_nom character varying(255),
+    creation_adresse boolean
 );
+
 
 
 -- point_adresse_id_point_seq
@@ -254,7 +312,6 @@ ALTER SEQUENCE adresse.voie_id_voie_seq OWNED BY adresse.voie.id_voie;
 
 -- commune id_com
 ALTER TABLE ONLY adresse.commune ALTER COLUMN id_com SET DEFAULT nextval('adresse.commune_id_com_seq'::regclass);
-
 
 -- commune_deleguee id_com_del
 ALTER TABLE ONLY adresse.commune_deleguee ALTER COLUMN id_com_del SET DEFAULT nextval('adresse.commune_deleguee_id_com_del_seq'::regclass);
