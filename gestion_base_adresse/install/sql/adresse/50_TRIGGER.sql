@@ -44,8 +44,30 @@ CREATE TRIGGER nb_point AFTER INSERT OR UPDATE ON adresse.point_adresse FOR EACH
 CREATE TRIGGER nb_point_delete AFTER DELETE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.calcul_point_voie();
 
 
+-- point_adresse
+CREATE TRIGGER bilan_pt_com AFTER INSERT OR UPDATE OF geom ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.f_bilan_pt_com();
+
+
+-- point_adresse
+CREATE TRIGGER get_code_postal BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_code_postal();
+
+-- point_adresse
+CREATE TRIGGER get_commune_deleguee BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_commune_deleguee();
+
+
+-- point_adresse
+CREATE TRIGGER get_commune_insee BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_commune_insee();
+
+
+-- point_adresse
+CREATE TRIGGER creation_adresse BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.creation_adresse();
+
+
 -- voie nom_complet
 CREATE TRIGGER nom_complet BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.voie_nom_complet();
+
+-- voie nom_complet_maj
+CREATE TRIGGER nom_complet_maj BEFORE INSERT OR UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.voie_nom_complet_maj();
 
 
 -- voie trigger_longueur
@@ -76,7 +98,13 @@ CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.point_adresse FOR EA
 CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
 
 
+-- commune nb_pts
+CREATE TRIGGER nb_pts AFTER INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.nb_pts_communes();
+
+-- lieux dits
+CREATE TRIGGER infos_lieux_dits BEFORE INSERT OR UPDATE ON adresse.lieux_dits FOR EACH ROW EXECUTE PROCEDURE adresse.lieux_dits();
+
+
 --
 -- PostgreSQL database dump complete
 --
-
