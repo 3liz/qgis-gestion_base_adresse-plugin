@@ -29,7 +29,6 @@ CREATE INDEX commune_geom_idx ON adresse.commune USING gist (geom);
 -- index_com_adr
 CREATE INDEX index_com_adr ON adresse.point_adresse USING btree (id_commune);
 
-
 -- index_com_comdel
 CREATE INDEX index_com_comdel ON adresse.referencer_com USING btree (id_com);
 
@@ -40,6 +39,9 @@ CREATE INDEX index_com_voie ON adresse.appartenir_com USING btree (id_com);
 
 -- index_comdel_com
 CREATE INDEX index_comdel_com ON adresse.referencer_com USING btree (id_com_deleguee);
+
+-- index_lieux_dits1_geom
+CREATE INDEX sidx_lieux_dits1_geom ON adresse.lieux_dits USING gist (geom);
 
 
 -- index_parcelle_adr
@@ -66,7 +68,10 @@ CREATE INDEX point_adresse_geom_idx ON adresse.point_adresse USING gist (geom);
 CREATE INDEX voie_geom_idx ON adresse.voie USING gist (geom);
 
 
+-- codes_postaux_geom_idx
+
+CREATE INDEX sidx_codes_postaux_geom ON adresse.codes_postaux USING gist (geom);
+
 --
 -- PostgreSQL database dump complete
 --
-
