@@ -60,6 +60,7 @@ theme:
   features:
     - navigation.tabs
     - navigation.tabs.sticky
+    - navigation.top
 
 extra:
   social:
