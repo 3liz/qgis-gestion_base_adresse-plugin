@@ -88,9 +88,24 @@ COMMENT ON COLUMN adresse.commune.date_ban IS 'Date d’envoi des données dans 
 COMMENT ON COLUMN adresse.commune.geom IS 'Geometrie de l''objet';
 
 
+-- commune.pt_hors_parcelle 
+COMMENT ON COLUMN adresse.commune.pt_hors_parcelle IS 'nombre de point adresse hors parcelle/commune';
+
+
+-- commune.pt_hors_parcelle_valid
+COMMENT ON COLUMN adresse.commune.pt_hors_parcelle_valid IS 'nombre de point  adresse réellement validés/commune';
+
+
+-- commune.nb_pt_valide
+COMMENT ON COLUMN adresse.commune.nb_pt_valide IS 'nombre de point adresse marqués comme validés par les users/commune';
+
+
+-- commune.nb_pt_erreur
+COMMENT ON COLUMN adresse.commune.nb_pt_erreur IS 'nombre de point adresse en erreur/commune';
+
+
 -- document.lien
 COMMENT ON COLUMN adresse.document.lien IS 'Chemin de stockage du document';
-
 
 -- metadata
 COMMENT ON TABLE adresse.metadata IS 'Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C''est utilisé pour les scripts de migration de la structure entre 2 versions.';
@@ -180,6 +195,19 @@ COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcel
 COMMENT ON COLUMN adresse.point_adresse.valide IS 'Le point d''adresse est valide ou non';
 
 
+-- point_adresse.verif_terrain
+COMMENT ON COLUMN adresse.point_adresse.verif_terrain IS 'la saisie du point adresse nécessite une vérification terrain';
+
+
+-- point_adresse.complement_adresse
+COMMENT ON COLUMN adresse.point_adresse.complement_adresse IS 'En minuculte et sans espace (ex : lesmimosas)';
+
+
+-- point_adresse.lieudit_complement_nom
+COMMENT ON COLUMN adresse.point_adresse.lieudit_complement_nom IS 'Nom du hameau ou lieu-dit local';
+
+
+
 -- voie.id_voie
 COMMENT ON COLUMN adresse.voie.id_voie IS 'Identifiant unique de la voie';
 
@@ -255,4 +283,3 @@ COMMENT ON COLUMN adresse.voie.geom IS 'Géométrie de l’objet';
 --
 -- PostgreSQL database dump complete
 --
-
