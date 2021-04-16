@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.3liz.org/qgis-gestion_base_adresse-plugin/">
       
       <link rel="icon" href="media/icon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.1">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.33e2939f.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.9299cb39.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ef6f36e2.min.css">
@@ -342,9 +342,38 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Accueil
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="." class="md-nav__link md-nav__link--active">
         Accueil
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diagrammes" class="md-nav__link">
+    Diagrammes
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -550,6 +579,21 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diagrammes" class="md-nav__link">
+    Diagrammes
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -566,6 +610,26 @@
                 
                 
                 <h1 id="gestion-dune-base-adresse-avec-qgis-et-lizmap">Gestion d'une base adresse avec QGIS et Lizmap<a class="headerlink" href="#gestion-dune-base-adresse-avec-qgis-et-lizmap" title="Permanent link">#</a></h1>
+<h2 id="diagrammes">Diagrammes<a class="headerlink" href="#diagrammes" title="Permanent link">#</a></h2>
+<p><div class="mermaid">graph TD
+Database_Structure[Création de la structure de la base de données]
+Load_Layers[Chargement des couches]
+Load_Styles[Chargements des styles]
+Config_Project[Configuration du projet]
+
+subgraph QGIS
+Database_Structure --&gt; Load_Layers
+Load_Layers --&gt; Load_Styles
+Load_Layers --&gt; Config_Project
+end</div>
+<div class="mermaid">graph TD
+Lizmap_edit[Edition dans Lizmap]
+Export_doc[Export des documents avec Lizmap]
+
+subgraph Lizmap
+Lizmap_edit
+Export_doc
+end</div></p>
 <p><img alt="Logo" src="media/icon.png" /></p>
 <p>Démo du module web sur <a href="https://demo.lizmap.com/adresse/index.php/view/map/?repository=demo&amp;project=adresse">demo.lizmap.com</a></p>
 <p><img alt="Démo Lizmap" src="media/demo_qgis.png" /></p>
@@ -676,9 +740,11 @@
     <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.d892486b.min.js"></script>
+      <script src="assets/javascripts/bundle.7353b375.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
       
     
   </body>
