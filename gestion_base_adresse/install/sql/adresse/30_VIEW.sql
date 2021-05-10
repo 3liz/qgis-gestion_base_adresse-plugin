@@ -25,6 +25,27 @@ CREATE VIEW adresse.v_commune AS
   ORDER BY c.commune_nom;
 
 
+SET default_tablespace = '';
+
+-- v_controle_voie
+CREATE MATERIALIZED VIEW adresse.v_controle_voie AS
+ SELECT r.id,
+    r.id_voie,
+    r.geom_segment,
+    r.geom_rotate,
+    r.erreur_voie
+   FROM ( SELECT segment_extract.id,
+            segment_extract.id_voie,
+            segment_extract.geom_segment,
+            adresse.line_rotation(segment_extract.geom_segment) AS geom_rotate,
+            ((public.st_linecrossingdirection(adresse.line_rotation(segment_extract.geom_segment), voie.geom) = '-2'::integer) OR (public.st_linecrossingdirection(adresse.line_rotation(segment_extract.geom_segment), voie.geom) = 2) OR (public.st_linecrossingdirection(adresse.line_rotation(segment_extract.geom_segment), voie.geom) = 3) OR (public.st_linecrossingdirection(adresse.line_rotation(segment_extract.geom_segment), voie.geom) = '-3'::integer)) AS erreur_voie
+           FROM adresse.segment_extract('adresse.voie'::character varying, 'voie.id_voie'::character varying, 'voie.geom'::character varying) segment_extract(id, id_voie, geom_segment),
+            adresse.voie
+          WHERE (voie.id_voie = segment_extract.id_voie)) r
+  WHERE (r.erreur_voie = true)
+  WITH NO DATA;
+
+
 -- v_export_bal
 CREATE VIEW adresse.v_export_bal AS
  SELECT ''::text AS uid_adresse,

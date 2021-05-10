@@ -76,7 +76,19 @@ CREATE TABLE adresse.commune (
     courrier_president character varying(255),
     poste text,
     nb_locaux integer,
-    osm boolean
+    osm boolean,
+    pt_hors_parcelle integer,
+    pt_hors_parcelle_valid integer,
+    nb_pt_valide integer,
+    nb_pt_erreur integer,
+    nb_a_verif integer,
+    nb_pt_no_valid integer,
+    pt_total integer,
+    pct_pt_reel_valid integer,
+    voie_non_valid integer,
+    voie_valid integer,
+    pct_voie_valid integer,
+    voie_total integer
 );
 
 
@@ -265,7 +277,9 @@ CREATE TABLE adresse.parcelle (
     arpente boolean,
     created date DEFAULT now(),
     updated date DEFAULT now(),
-    geom public.geometry(MultiPolygon,2154)
+    geom public.geometry(MultiPolygon,2154),
+    nb_pt_adresse integer,
+    date_pt_modif date
 );
 
 
@@ -305,7 +319,13 @@ CREATE TABLE adresse.point_adresse (
     verif_terrain boolean DEFAULT false NOT NULL,
     complement_adresse character varying(255),
     lieudit_complement_nom character varying(255),
-    creation_adresse boolean
+    creation_adresse boolean,
+    c_erreur_dist_voie boolean,
+    c_dist_voie integer,
+    geom_pt_proj public.geometry,
+    geom_segment_prolong public.geometry,
+    cote_voie text,
+    c_erreur_cote_parite text
 );
 
 
@@ -352,7 +372,12 @@ CREATE TABLE adresse.voie (
     delib boolean,
     geom public.geometry(LineString,2154),
     nb_panneaux smallint,
-    nom_complet_maj text
+    nom_complet_maj text,
+    c_erreur_trace boolean,
+    c_repet_nom_voie boolean,
+    c_long_nom boolean,
+    c_repet_num boolean,
+    c_saisie_double boolean
 );
 
 
