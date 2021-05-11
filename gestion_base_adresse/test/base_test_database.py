@@ -33,6 +33,7 @@ class DatabaseTestCase(unittest.TestCase):
         self.connection = None
         self.provider = None
         self.add_data = True
+        self.feedback = None
 
     def setUp(self) -> None:
         self.connection = psycopg2.connect(
@@ -41,7 +42,9 @@ class DatabaseTestCase(unittest.TestCase):
         self.cursor = self.connection.cursor()
 
         self.provider = ProcessingProvider()
-        QgsApplication.processingRegistry().addProvider(self.provider)
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(self.provider.id()):
+            registry.addProvider(self.provider)
 
         self.feedback = LoggerProcessingFeedBack()
 
