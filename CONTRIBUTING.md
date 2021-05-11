@@ -11,7 +11,7 @@ Le code SQL et Python sont couverts par des tests unitaires utilisant Docker.
 [![🎳 Tests](https://github.com/3liz/qgis-gestion_base_adresse-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/3liz/qgis-gestion_base_adresse-plugin/actions/workflows/ci.yml)
 
 ```bash
-pip install -r requirements-dev.txt
+pip install -r requirements/dev.txt
 flake8
 make tests
 make test_migration
@@ -30,6 +30,6 @@ del os.environ['TEST_DATABASE_INSTALL_ADRESSE']  # Disable
 La documentation utilise [MkDocs](https://www.mkdocs.org/) avec [Material](https://squidfunk.github.io/mkdocs-material/) :
 
 ```bash
-pip install -r requirements/requirements-doc.txt
+pip install -r requirements/doc.txt
 mkdocs serve
 ```
