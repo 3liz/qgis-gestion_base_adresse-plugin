@@ -40,7 +40,9 @@ class TestProcessing(unittest.TestCase):
     def test_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
         provider = ProcessingProvider()
-        QgsApplication.processingRegistry().addProvider(provider)
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(provider.id()):
+            registry.addProvider(provider)
 
         feedback = LoggerProcessingFeedBack()
         params = {
@@ -153,7 +155,9 @@ class TestProcessing(unittest.TestCase):
     def test_load_structure_without_migrations(self):
         """Test we can load the PostGIS structure without migrations."""
         provider = ProcessingProvider()
-        QgsApplication.processingRegistry().addProvider(provider)
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(provider.id()):
+            registry.addProvider(provider)
 
         feedback = LoggerProcessingFeedBack()
         self.cursor.execute("SELECT version();")
@@ -230,7 +234,9 @@ class TestProcessing(unittest.TestCase):
     def test_load_structure_with_another_SRID(self):
         """Test we can load the PostGIS structure with another SRID."""
         provider = ProcessingProvider()
-        QgsApplication.processingRegistry().addProvider(provider)
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(provider.id()):
+            registry.addProvider(provider)
 
         feedback = LoggerProcessingFeedBack()
         self.cursor.execute("SELECT version();")
