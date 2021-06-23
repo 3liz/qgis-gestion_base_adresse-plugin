@@ -125,7 +125,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         )
 
     def checkParameterValues(self, parameters, context):
-        if Qgis.QGIS_VERSION_INT >= 314000:
+        if Qgis.QGIS_VERSION_INT >= 31400:
             connection_name = self.parameterAsConnectionName(
                 parameters, self.CONNECTION_NAME, context)
         else:
@@ -184,7 +184,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         return ok, msg
 
     def processAlgorithm(self, parameters, context, feedback):
-        if Qgis.QGIS_VERSION_INT >= 314000:
+        if Qgis.QGIS_VERSION_INT >= 31400:
             connection_name = self.parameterAsConnectionName(
                 parameters, self.CONNECTION_NAME, context)
         else:
