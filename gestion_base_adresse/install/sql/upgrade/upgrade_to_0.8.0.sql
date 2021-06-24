@@ -51,14 +51,22 @@ CREATE FUNCTION adresse.lieux_dits()
 AS $BODY$
 DECLARE
 BEGIN
-    NEW.id_com = (SELECT c.id_com FROM adresse.commune c 
-					  WHERE ST_intersects(NEW.geom, c.geom));
-	NEW.commune_nom = (SELECT c.commune_nom FROM adresse.commune c
-					  WHERE ST_Intersects(NEW.geom, c.geom));
-	NEW.id_com_del = (SELECT d.id_com_del FROM adresse.commune_deleguee d
-					  WHERE ST_intersects(NEW.geom, d.geom));
-	NEW.commune_deleguee_nom = (SELECT d.commune_deleguee_nom FROM adresse.commune_deleguee d
-					  WHERE ST_Intersects(NEW.geom, d.geom));
+    SELECT c.id_com into NEW.id_com
+    FROM adresse.commune c 
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+    SELECT c.commune_nom into NEW.commune_nom 
+    FROM adresse.commune c 
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+	SELECT d.id_com_del into NEW.id_com_del
+    FROM adresse.commune_deleguee d
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+    SELECT  d.commune_deleguee_nom into NEW.commune_deleguee_nom
+    FROM adresse.commune_deleguee d
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
 	NEW.numero = 99999 ;
 	NEW.date_der_maj = NOW();
 RETURN NEW;
@@ -75,7 +83,7 @@ CREATE FUNCTION adresse.get_code_postal()
 AS $BODY$
 DECLARE
 BEGIN
-    NEW.code_postal = (SELECT a.cp FROM adresse.codes_postaux a WHERE ST_intersects(NEW.geom, a.geom));
+    SELECT a.cp into NEW.code_postal FROM adresse.codes_postaux a WHERE ST_intersects(NEW.geom, a.geom);
     RETURN NEW;
 END;
 $BODY$;
@@ -91,10 +99,13 @@ CREATE FUNCTION adresse.get_commune_deleguee()
 AS $BODY$
 DECLARE
 BEGIN
-    NEW.commune_deleguee_nom = (SELECT a.commune_deleguee_nom FROM adresse.commune_deleguee a 
-					   WHERE ST_intersects(NEW.geom, a.geom));
-	NEW.commune_deleguee_insee = (SELECT b.insee_code FROM adresse.commune_deleguee b
-					  WHERE ST_Intersects(NEW.geom, b.geom));					  
+    SELECT a.commune_deleguee_nom into NEW.commune_deleguee_nom
+    FROM adresse.commune_deleguee a 
+	WHERE ST_intersects(NEW.geom, a.geom);
+
+    SELECT a.commune_deleguee_insee into NEW.commune_deleguee_insee
+    FROM adresse.commune_deleguee a 
+	WHERE ST_intersects(NEW.geom, a.geom);			  
 RETURN NEW;
 END;
 $BODY$;
@@ -109,10 +120,13 @@ CREATE FUNCTION adresse.get_commune_insee()
 AS $BODY$
 DECLARE
 BEGIN
-    NEW.commune_insee = (SELECT a.insee_code FROM adresse.commune a 
-					   WHERE ST_intersects(NEW.geom, a.geom));
-	NEW.commune_nom = (SELECT b.commune_nom FROM adresse.commune b
-					  WHERE ST_Intersects(NEW.geom, b.geom));
+    SELECT a.insee_code into NEW.commune_insee
+    FROM adresse.commune a 
+	WHERE ST_intersects(NEW.geom, a.geom);
+
+    SELECT  a.commune_nom into NEW.commune_nom 
+    FROM adresse.commune a 
+	WHERE ST_intersects(NEW.geom, a.geom);
 	
 RETURN NEW;
 END;
@@ -161,7 +175,7 @@ CREATE TABLE adresse.codes_postaux
 (
     id bigint NOT NULL,
     geom geometry(MultiPolygon,2154),
-    cp integer,
+    cp text,
     CONSTRAINT codes_postaux_pkey PRIMARY KEY (id)
 );
 
@@ -172,10 +186,10 @@ CREATE TABLE adresse.codes_postaux
 -- commune
 
 ALTER TABLE adresse.commune
-    ADD COLUMN calvados_ingenierie boolean;
+    ADD COLUMN acc_ingenierie_publique boolean;
 
 ALTER TABLE adresse.commune
-    ADD COLUMN filtrage character varying(255) COLLATE pg_catalog."default";
+    ADD COLUMN key_lizmap_filter character varying(255) COLLATE pg_catalog."default";
 
 ALTER TABLE adresse.commune
     ADD COLUMN diffusion_sna boolean;
@@ -297,24 +311,6 @@ CREATE TABLE adresse.lieux_dits
 --lieux_dits_id_ld_seq
 ALTER SEQUENCE adresse.lieux_dits_id_ld_seq OWNED BY adresse.lieux_dits.id_ld;
 
-
-
-
--- parcelle_fid_seq
-ALTER SEQUENCE adresse.parcelle_fid_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- parcelle_fid_seq
-ALTER SEQUENCE adresse.parcelle_fid_seq OWNED BY adresse.parcelle.fid;
-
-
-
-
 -- point_adresse
 ALTER TABLE adresse.point_adresse
     ALTER COLUMN valide SET NOT NULL;
@@ -416,20 +412,10 @@ ALTER TABLE ONLY adresse.voie ALTER COLUMN id_voie SET DEFAULT nextval('adresse.
 -- Début VIEW
 --
 
--- v_commune
-DROP VIEW IF EXISTS adresse.v_commune;
-CREATE VIEW adresse.v_commune AS
- SELECT (c.insee_code)::integer AS insee_code,
-    c.commune_nom
-   FROM adresse.commune c
-  ORDER BY c.commune_nom;
-
-
-
 
 --v_export_bal
 
-DROP VIEW IF EXISTS adresse.export_bal;
+DROP VIEW IF EXISTS adresse.v_export_bal;
 
 CREATE VIEW adresse.v_export_bal AS
  SELECT ''::text AS uid_adresse,
@@ -453,13 +439,13 @@ CREATE VIEW adresse.v_export_bal AS
     st_y(p.geom) AS y,
     round(st_x(st_transform(p.geom, 4326))::numeric, 10) AS long,
     round(st_y(st_transform(p.geom, 4326))::numeric, 10) AS lat,
-    g.geo_parcelle AS cad_parcelles,
+    g.id AS cad_parcelles,
     c.commune_nom AS source,
     p.date_modif AS date_der_maj
    FROM adresse.commune c,
     adresse.point_adresse p,
     adresse.voie v,
-    cadastre.geo_parcelle g
+    adresse.parcelle g
   WHERE p.id_commune = c.id_com AND st_intersects(g.geom, p.geom) AND p.id_voie = v.id_voie
 UNION
  SELECT ''::text AS uid_adresse,
@@ -514,89 +500,7 @@ UNION
     adresse.voie v
   WHERE p.id_parcelle IS NULL AND p.id_commune = c.id_com AND p.id_voie = v.id_voie;
   
-    ALTER VIEW adresse.vue_com RENAME TO v_commune;
-
-
-
-
-
---v_export_pts
-
-CREATE OR REPLACE VIEW adresse.v_export_pts
- AS
- SELECT pa.commune_insee AS "Code INSEE",
-    pa.commune_nom AS "Commune",
-    pa.commune_deleguee_insee AS "Code INSEE commune déléguée",
-    pa.commune_deleguee_nom AS "Commune déléguée",
-    pa.numero AS "Numéro",
-    pa.suffixe AS "Suffixe",
-    voie.typologie AS "Typologie",
-    voie.nom AS "Nom de la voie",
-    voie.nom_complet AS "Nom complet",
-    pa.adresse_complete AS "Adresse complète",
-    pa.lieudit_complement_nom AS "Lieu-dit",
-    pa.code_postal AS "Code postal",
-    pa.type_pos AS "Position",
-    pa.valide AS "Point validé",
-    pa.achat_plaque_numero AS "Achat de la plaque",
-    pa.commune_nom AS "Source",
-    pa.date_modif AS "Date dernière modification",
-    st_x(pa.geom) AS "X",
-    st_y(pa.geom) AS "Y",
-    st_x(st_transform(pa.geom, 4326)) AS "Longitude",
-    st_y(st_transform(pa.geom, 4326)) AS "Latitude"
-   FROM adresse.point_adresse pa
-     LEFT JOIN adresse.voie ON voie.id_voie = pa.id_voie
-  WHERE pa.commune_insee = '14660'::bpchar
-  ORDER BY voie.nom_complet, pa.numero;
-
-
-
---v_export_voies
-
-
-CREATE OR REPLACE VIEW adresse.v_export_voies
- AS
- SELECT DISTINCT voie.id_voie AS "ID",
-    pa.commune_insee AS "Code INSEE",
-    pa.commune_nom AS "Commune",
-    pa.commune_deleguee_insee AS "Code INSEE Commune déléguée",
-    pa.commune_deleguee_nom AS "Commune déléguée",
-    voie.typologie AS "Typologie",
-    voie.nom AS "Nom de la voie",
-    voie.nom_complet AS "Nom complet",
-    voie.nom_complet_maj AS "Nom complet majuscule",
-    voie.type_num AS "Type numérotation",
-    voie.nb_point AS "Nombre de points",
-    voie.longueur AS "Longueur",
-    voie.date_modif AS "Date dernière modification",
-    voie.achat_plaque_voie AS "Achat du panneau",
-    voie.nb_panneaux AS "Nombre de panneaux"
-   FROM adresse.point_adresse pa
-     LEFT JOIN adresse.voie ON voie.id_voie = pa.id_voie
-     LEFT JOIN adresse.commune ON commune.id_com = pa.id_commune
-  WHERE commune.insee_code = '14660'::bpchar AND st_intersects(commune.geom, pa.geom) OR pa.commune_insee = '14528'::bpchar AND st_within(commune.geom, voie.geom)
-UNION
- SELECT DISTINCT voie.id_voie AS "ID",
-    commune.insee_code AS "Code INSEE",
-    commune.commune_nom AS "Commune",
-    commune_deleguee.insee_code AS "Code INSEE Commune déléguée",
-    commune_deleguee.commune_deleguee_nom AS "Commune déléguée",
-    voie.typologie AS "Typologie",
-    voie.nom AS "Nom de la voie",
-    voie.nom_complet AS "Nom complet",
-    voie.nom_complet_maj AS "Nom complet majuscule",
-    voie.type_num AS "Type numérotation",
-    voie.nb_point AS "Nombre de points",
-    voie.longueur AS "Longueur",
-    voie.date_modif AS "Date dernière modification",
-    voie.achat_plaque_voie AS "Achat du panneau",
-    voie.nb_panneaux AS "Nombre de panneaux"
-   FROM adresse.voie
-     LEFT JOIN adresse.commune ON st_intersects(commune.geom, voie.geom)
-     LEFT JOIN adresse.commune_deleguee ON st_intersects(commune_deleguee.geom, voie.geom)
-  WHERE commune.insee_code = '14660'::bpchar AND (voie.nb_point IS NULL OR voie.nb_point = 0)
-  ORDER BY 9;
+ALTER VIEW IF EXISTS adresse.vue_com RENAME TO v_commune;
 
 
 --
