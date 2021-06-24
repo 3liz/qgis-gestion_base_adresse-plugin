@@ -16,6 +16,15 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- alerte_ddfip_id_seq
+CREATE SEQUENCE adresse.alerte_ddfip_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    MAXVALUE 2147483647
+    CACHE 1;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -24,6 +33,14 @@ SET default_with_oids = false;
 CREATE TABLE adresse.appartenir_com (
     id_voie integer NOT NULL,
     id_com integer NOT NULL
+);
+
+
+-- codes_postaux
+CREATE TABLE adresse.codes_postaux (
+    id bigint NOT NULL,
+    geom public.geometry(MultiPolygon,2154),
+    cp text
 );
 
 
@@ -50,7 +67,15 @@ CREATE TABLE adresse.commune (
     geom public.geometry(MultiPolygon,2154),
     adresse_mairie text,
     code_postal text,
-    maire text
+    maire text,
+    acc_ingenierie_publique boolean,
+    key_lizmap_filter character varying(255),
+    diffusion_sna boolean,
+    date_sna date,
+    courrier_president character varying(255),
+    poste text,
+    nb_locaux integer,
+    osm boolean
 );
 
 
@@ -114,6 +139,91 @@ CREATE SEQUENCE adresse.document_id_doc_seq
 
 -- document_id_doc_seq
 ALTER SEQUENCE adresse.document_id_doc_seq OWNED BY adresse.document.id_doc;
+
+
+-- import_ban
+CREATE TABLE adresse.import_ban (
+    id_ban_position text,
+    id_ban_adresse text,
+    cle_interop text,
+    id_ban_group text,
+    id_fantoir text,
+    numero smallint,
+    suffixe text,
+    nom_voie text,
+    code_postal text,
+    nom_commune text,
+    code_insee text,
+    nom_complementaire text,
+    x double precision,
+    y double precision,
+    lon text,
+    lat text,
+    typ_loc text,
+    source text,
+    date_der_maj text,
+    geom public.geometry(Point,2154)
+);
+
+
+-- import_ban_etat_commune
+CREATE TABLE adresse.import_ban_etat_commune (
+    region smallint,
+    departement smallint,
+    code_commune integer,
+    nom_commune text,
+    population bigint,
+    type_composition text,
+    nb_lieux_dits integer,
+    nb_voies integer,
+    nb_numeros integer,
+    analyse_adressage_nb_adresses_attendues integer,
+    analyse_adressage_ratio integer,
+    analyse_adressage_deficit_adresses smallint
+);
+
+
+-- import_ban_lo
+CREATE TABLE adresse.import_ban_lo (
+    id text,
+    numero text,
+    rep text,
+    nom_voie text,
+    code_postal text,
+    code_insee text,
+    nom_commune text,
+    x text,
+    y text,
+    geom public.geometry(Point,2154)
+);
+
+
+-- lieux_dits
+CREATE TABLE adresse.lieux_dits (
+    id_ld integer NOT NULL,
+    geom public.geometry(Point,2154),
+    nom_ld text,
+    numero integer,
+    integration_ban boolean,
+    id_com integer NOT NULL,
+    commune_nom text,
+    date_der_maj date,
+    id_com_del integer,
+    commune_deleguee_nom text
+);
+
+
+-- lieux_dits_id_ld_seq
+CREATE SEQUENCE adresse.lieux_dits_id_ld_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- lieux_dits_id_ld_seq
+ALTER SEQUENCE adresse.lieux_dits_id_ld_seq OWNED BY adresse.lieux_dits.id_ld;
 
 
 -- metadata
@@ -190,7 +300,11 @@ CREATE TABLE adresse.point_adresse (
     id_voie integer,
     id_commune integer,
     id_parcelle integer,
-    valide boolean DEFAULT true
+    valide boolean DEFAULT true NOT NULL,
+    verif_terrain boolean DEFAULT false NOT NULL,
+    complement_adresse character varying(255),
+    lieudit_complement_nom character varying(255),
+    creation_adresse boolean
 );
 
 
@@ -223,7 +337,7 @@ CREATE TABLE adresse.voie (
     nom text NOT NULL,
     nom_complet text,
     type_num text,
-    statut_voie_num boolean DEFAULT true NOT NULL,
+    statut_voie_num boolean DEFAULT false NOT NULL,
     statut_voie boolean DEFAULT false NOT NULL,
     sens_numerotation boolean DEFAULT false NOT NULL,
     achat_plaque_voie boolean DEFAULT false NOT NULL,
@@ -235,7 +349,9 @@ CREATE TABLE adresse.voie (
     longueur integer,
     code_fantoir integer,
     delib boolean,
-    geom public.geometry(LineString,2154)
+    geom public.geometry(LineString,2154),
+    nb_panneaux smallint,
+    nom_complet_maj text
 );
 
 
@@ -262,6 +378,10 @@ ALTER TABLE ONLY adresse.commune_deleguee ALTER COLUMN id_com_del SET DEFAULT ne
 
 -- document id_doc
 ALTER TABLE ONLY adresse.document ALTER COLUMN id_doc SET DEFAULT nextval('adresse.document_id_doc_seq'::regclass);
+
+
+-- lieux_dits id_ld
+ALTER TABLE ONLY adresse.lieux_dits ALTER COLUMN id_ld SET DEFAULT nextval('adresse.lieux_dits_id_ld_seq'::regclass);
 
 
 -- metadata id

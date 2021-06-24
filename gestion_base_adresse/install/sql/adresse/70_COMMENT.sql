@@ -180,6 +180,18 @@ COMMENT ON COLUMN adresse.point_adresse.id_parcelle IS 'Identifiant de la parcel
 COMMENT ON COLUMN adresse.point_adresse.valide IS 'Le point d''adresse est valide ou non';
 
 
+-- point_adresse.verif_terrain
+COMMENT ON COLUMN adresse.point_adresse.verif_terrain IS 'la saisie du point adresse nécessite une vérification terrain';
+
+
+-- point_adresse.complement_adresse
+COMMENT ON COLUMN adresse.point_adresse.complement_adresse IS 'En minuscule et sans espace (ex : lesmimosas)';
+
+
+-- point_adresse.lieudit_complement_nom
+COMMENT ON COLUMN adresse.point_adresse.lieudit_complement_nom IS 'Nom du hameau ou lieu-dit local';
+
+
 -- voie.id_voie
 COMMENT ON COLUMN adresse.voie.id_voie IS 'Identifiant unique de la voie';
 
