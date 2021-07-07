@@ -24,8 +24,20 @@ CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.point_adresse FOR EACH R
 CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_createur();
 
 
+-- point_adresse creation_adresse
+CREATE TRIGGER creation_adresse BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.creation_adresse();
+
+
+-- v_point_adresse edit_point_adresse_from_view
+CREATE TRIGGER edit_point_adresse_from_view INSTEAD OF INSERT OR DELETE OR UPDATE ON adresse.v_point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.edit_point_adresse();
+
+
+-- point_adresse get_code_postal
+CREATE TRIGGER get_code_postal BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_code_postal();
+
+
 -- point_adresse get_commune
-CREATE TRIGGER get_commune BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
+CREATE TRIGGER get_commune BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
 
 
 -- voie get_commune
@@ -34,6 +46,10 @@ CREATE TRIGGER get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PRO
 
 -- point_adresse get_parcelle
 CREATE TRIGGER get_parcelle BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_parcelle();
+
+
+-- lieux_dits infos_lieux_dits
+CREATE TRIGGER infos_lieux_dits BEFORE INSERT OR UPDATE ON adresse.lieux_dits FOR EACH ROW EXECUTE PROCEDURE adresse.lieux_dits();
 
 
 -- point_adresse nb_point
@@ -46,6 +62,10 @@ CREATE TRIGGER nb_point_delete AFTER DELETE ON adresse.point_adresse FOR EACH RO
 
 -- voie nom_complet
 CREATE TRIGGER nom_complet BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.voie_nom_complet();
+
+
+-- voie nom_complet_maj
+CREATE TRIGGER nom_complet_maj BEFORE INSERT OR UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.voie_nom_complet_maj();
 
 
 -- voie trigger_longueur

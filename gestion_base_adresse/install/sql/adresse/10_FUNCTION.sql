@@ -254,6 +254,65 @@ END;
 $$;
 
 
+-- check_impair(integer)
+CREATE FUNCTION adresse.check_impair(nombre integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+/* Cette fonction retourne true (vrai) si le nombre passé en argument est impair 
+ 
+   Exemple :  SELECT checkimpair(12);
+              false
+*/
+BEGIN
+ return nombre % 2!=0;
+END;
+$$;
+
+
+-- creation_adresse()
+CREATE FUNCTION adresse.creation_adresse() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+
+    NEW.creation_adresse = 'true';
+
+RETURN NEW;
+END;
+$$;
+
+
+-- edit_point_adresse()
+CREATE FUNCTION adresse.edit_point_adresse() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+ IF (TG_OP == 'INSERT') THEN
+    INSERT INTO adresse.point_adresse SELECT NEW.*;
+ ELSEIF (TG_OP = 'UPDATE') THEN
+    UPDATE adresse.point_adresse SET OLD = NEW WHERE id_point = NEW.id_point;
+ ELSEIF (TG_OP = 'DELETE') THEN
+    DELETE FROM adresse.point_adresse WHERE id_point = NEW.id_point;
+ END IF;
+RETURN NEW;
+END;
+$$;
+
+
+-- get_code_postal()
+CREATE FUNCTION adresse.get_code_postal() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    SELECT a.cp into NEW.code_postal FROM adresse.codes_postaux a WHERE ST_intersects(NEW.geom, a.geom);
+    RETURN NEW;
+END;
+$$;
+
+
 -- get_id_voie(public.geometry)
 CREATE FUNCTION adresse.get_id_voie(pgeom public.geometry) RETURNS integer
     LANGUAGE plpgsql
@@ -283,6 +342,35 @@ DECLARE
 BEGIN
     NEW.id_parcelle = (SELECT p.fid FROM adresse.parcelle p WHERE ST_intersects(NEW.geom, p.geom));
     RETURN NEW;
+END;
+$$;
+
+
+-- lieux_dits()
+CREATE FUNCTION adresse.lieux_dits() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    SELECT c.id_com into NEW.id_com
+    FROM adresse.commune c 
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+    SELECT c.commune_nom into NEW.commune_nom 
+    FROM adresse.commune c 
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+	SELECT d.id_com_del into NEW.id_com_del
+    FROM adresse.commune_deleguee d
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+    SELECT  d.commune_deleguee_nom into NEW.commune_deleguee_nom
+    FROM adresse.commune_deleguee d
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+	NEW.numero = 99999 ;
+	NEW.date_der_maj = NOW();
+RETURN NEW;
 END;
 $$;
 
@@ -496,6 +584,18 @@ DECLARE
 BEGIN
     NEW.nom_complet = Concat(NEW.typologie, ' ', NEW.nom);
 
+    RETURN NEW;
+END;
+$$;
+
+
+-- voie_nom_complet_maj()
+CREATE FUNCTION adresse.voie_nom_complet_maj() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    NEW.nom_complet_maj = Translate(Upper(Concat(NEW.typologie, ' ', NEW.nom)), 'ÀÉÈÊËÏÎÔÖÜÛÇ'::text, 'AEEEEIIOOUUC'::text);
     RETURN NEW;
 END;
 $$;
