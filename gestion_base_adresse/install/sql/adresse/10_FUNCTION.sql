@@ -500,8 +500,186 @@ BEGIN
 END;
 $$;
 
+-- voie_nom_complet_maj()
+CREATE FUNCTION adresse.voie_nom_complet_maj() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    NEW.nom_complet_maj = Translate(Upper(Concat(NEW.typologie, ' ', NEW.nom)), 'ÀÉÈÊËÏÎÔÖÜÛÇ'::text, 'AEEEEIIOOUUC'::text);
+    RETURN NEW;
+END;
+$$;
+
+-- nb_pts_communes()
+CREATE FUNCTION adresse.nb_pts_communes() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+	nb_pts integer;
+    
+BEGIN
+  SELECT COUNT(id_point) into nb_pts 
+  FROM adresse.point_adresse p, adresse.commune c 
+	WHERE st_intersects(c.geom,p.geom) AND p.valide = 'true';
+NEW.nb_adresses = nb_pts;
+RETURN NEW;
+END;
+$$;
+
+
+-- lieux_dits
+CREATE FUNCTION adresse.lieux_dits() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    NEW.id_com = (SELECT c.id_com FROM adresse.commune c 
+					  WHERE ST_intersects(NEW.geom, c.geom));
+	NEW.commune_nom = (SELECT c.commune_nom FROM adresse.commune c
+					  WHERE ST_Intersects(NEW.geom, c.geom));
+	NEW.id_com_del = (SELECT d.id_com_del FROM adresse.commune_deleguee d
+					  WHERE ST_intersects(NEW.geom, d.geom));
+	NEW.commune_deleguee_nom = (SELECT d.commune_deleguee_nom FROM adresse.commune_deleguee d
+					  WHERE ST_Intersects(NEW.geom, d.geom));
+	NEW.numero = 99999 ;
+	NEW.date_der_maj = NOW();
+RETURN NEW;
+END;
+$$;
+
+
+
+-- adresse.f_bilan_pt_com
+
+CREATE FUNCTION adresse.f_bilan_pt_com() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+BEGIN 
+IF TG_OP = 'INSERT' or TG_OP = 'UPDATE' THEN
+
+/* Cette requête ci-dessous retourne le nombre de point hors parcelle/commune
+fait le lien avec id_commune et les points adresses dont la référence parcelle est nulle 
+On "coalesce" à 0 les comptes de points pour ne pas avoir de valeurs nulles qui fausseraient le résultat
+*/
+update adresse.commune SET pt_hors_parcelle = coalesce((select count(p.id_commune) from adresse.point_adresse p WHERE commune.id_com = p.id_commune 
+and p.id_parcelle is null group by p.id_commune), 0);
+
+/* Cette requêteretourne le nombre de point hors parcelle validés/commune
+fait le lien entre id_commune de la table commune et id_com des points adresses dont la référence parcelle est nulle et qui sont classés comme validés
+On "coalesce" à 0 les comptes de points pour ne pas avoir de valeurs nulles qui fausseraient le résultat
+*/
+update adresse.commune SET pt_hors_parcelle_valid =  coalesce(( select count(p.id_commune) from adresse.point_adresse p WHERE commune.id_com = p.id_commune 
+and p.id_parcelle is null and p.valide = true group by p.id_commune), 0)  ;
+
+/* Cette requête retourne le nombre de point validés/commune
+fait le lien entre id_commune de la table commune et id_com des points classés comme validés
+On "coalesce" à 0 les comptes de points pour ne pas avoir de valeurs nulles qui fausseraient le résultat
+*/
+update adresse.commune SET nb_pt_valide =  coalesce((SELECT count(p.valide) from adresse.point_adresse p WHERE commune.id_com = p.id_commune
+and p.valide = true group by p.id_commune), 0)  ;
+
+/* Cette requête retourne le nombre de point en erreur/commune
+fait le lien entre id_commune de la table commune et id_com des points classés comme en erreur
+On "coalesce" à 0 les comptes de points pour ne pas avoir de valeurs nulles qui fausseraient le résultat
+*/
+update adresse.commune SET nb_pt_erreur =  coalesce((SELECT count(p.erreur) from adresse.point_adresse p WHERE commune.id_com = p.id_commune
+and p.erreur = true group by p.id_commune), 0)  ;
+
+/* Cette requête retourne le nombre de point à vérifier sur terrain/commune
+fait le lien entre id_commune de la table commune et id_com des points classés comme à vérifier sur terrain
+On "coalesce" à 0 les comptes de points pour ne pas avoir de valeurs nulles qui fausseraient le résultat
+*/
+update adresse.commune SET nb_a_verif  =  coalesce((SELECT count(p.verif_terrain) from adresse.point_adresse p WHERE commune.id_com = p.id_commune
+and p.verif_terrain = true group by p.id_commune), 0)  ;
+
+/* Cette requête retourne le nombre de point non validés/commune
+fait le lien entre id_commune de la table commune et id_com des points non classés comme validés
+On "coalesce" à 0 les comptes de points pour ne pas avoir de valeurs nulles qui fausseraient le résultat
+*/
+update adresse.commune SET nb_pt_no_valid  =  coalesce((SELECT count(p.valide) from adresse.point_adresse p WHERE commune.id_com = p.id_commune
+and p.valide = false group by p.id_commune), 0)  ;
+
+/* Cette requête retourne le nombre de point total/commune
+fait le lien entre id_commune de la table commune et id_com des points 
+On "coalesce" à 0 les comptes de points pour ne pas avoir de valeurs nulles qui fausseraient le résultat
+*/
+update adresse.commune SET pt_total  =  coalesce((SELECT count(p.id_commune) from adresse.point_adresse p WHERE commune.id_com = p.id_commune
+group by p.id_commune), 0)  ;
+
+/* Cette requête retourne le pourcentage de point réellement validés (ni hors parcelle validés, ni en erreur, ni à vérifier, ni à valider) /commune
+fait le calcul de pourcentage suivant : 100 * (points total-(points hors parcelle + points à vérifier + points non valides + points en erreur))/points total
+On passe les valleurs du total des points à NULL si ils ont égal à 0 pour éviter une division par 0 qui provoquerait une erreur 
+*/
+update adresse.commune SET pct_pt_reel_valid  = 100*("pt_total"-("pt_hors_parcelle_valid"+"nb_a_verif"+
+"nb_pt_no_valid"+"nb_pt_erreur"))/NULLIF("pt_total", 0);
+
+END IF;
+RETURN    NEW ; 
+END;
+$$;
+
+-- adresse.get_code_postal
+CREATE FUNCTION adresse.get_code_postal() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+DECLARE
+BEGIN
+    NEW.code_postal = (SELECT a.cp FROM adresse.codes_postaux a WHERE ST_intersects(NEW.geom, a.geom));
+    RETURN NEW;
+END;
+$$;
+
+-- adresse.get_commune_deleguee
+CREATE FUNCTION adresse.get_commune_deleguee() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+    
+DECLARE
+BEGIN
+    NEW.commune_deleguee_nom = (SELECT a.commune_deleguee_nom FROM adresse.commune_deleguee a 
+					   WHERE ST_intersects(NEW.geom, a.geom));
+	NEW.commune_deleguee_insee = (SELECT b.insee_code FROM adresse.commune_deleguee b
+					  WHERE ST_Intersects(NEW.geom, b.geom));					  
+RETURN NEW;
+END;
+$$;
+
+
+-- adresse.get_commune_insee
+CREATE FUNCTION adresse.get_commune_insee() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+DECLARE
+BEGIN
+    NEW.commune_insee = (SELECT a.insee_code FROM adresse.commune a 
+					   WHERE ST_intersects(NEW.geom, a.geom));
+	NEW.commune_nom = (SELECT b.commune_nom FROM adresse.commune b
+					  WHERE ST_Intersects(NEW.geom, b.geom));
+	
+RETURN NEW;
+END;
+$$;
+
+-- adresse.creation_adresse
+CREATE FUNCTION adresse.creation_adresse() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+DECLARE
+BEGIN
+
+    NEW.creation_adresse = 'true';
+
+RETURN NEW;
+END;
+$$;
+
+
 
 --
 -- PostgreSQL database dump complete
 --
-
