@@ -30,6 +30,12 @@ class TestSqlFunctions(DatabaseTestCase):
             "referencer_com",
             "v_commune",
             "v_export_bal",
+            "codes_postaux",
+            "import_ban",
+            "import_ban_etat_commune",
+            "import_ban_lo",
+            "v_point_adresse",
+            "lieux_dits",
         ]
         self.assertCountEqual(expected, result)
 
