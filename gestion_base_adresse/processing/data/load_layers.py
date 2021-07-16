@@ -20,8 +20,6 @@ if Qgis.QGIS_VERSION_INT >= 31400:
         QgsProcessingParameterDatabaseSchema,
         QgsProcessingParameterProviderConnection,
     )
-else:
-    from processing.tools.postgis import uri_from_name
 
 from ...definitions.variables import GESTION_ADRESSE_POINT_ADRESSE, GESTION_ADRESSE_VOIE
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -151,12 +149,9 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
 
         uri = None
-        if Qgis.QGIS_VERSION_INT >= 31000:
-            metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-            connection = metadata.findConnection(connection_name)
-            uri = QgsDataSourceUri(connection.uri())
-        else:
-            uri = uri_from_name(connection)
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection_name)
+        uri = QgsDataSourceUri(connection.uri())
 
         is_host = uri.host() != ""
         if is_host:

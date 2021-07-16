@@ -6,6 +6,7 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
+    Qgis,
     QgsProcessingException,
     QgsProcessingParameterString,
     QgsProcessingParameterBoolean,
@@ -13,12 +14,19 @@ from qgis.core import (
     QgsProcessingOutputString,
     QgsExpressionContextUtils,
     QgsProcessingParameterCrs,
+    QgsProviderConnectionException,
+    QgsProviderRegistry,
 )
 
-from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import QgsProcessingParameterProviderConnection
+
+from .base import (
+    BaseDatabaseAlgorithm,
+)
+
 from ...qgis_plugin_tools.tools.database import (
     available_migrations,
-    fetch_data_from_sql_query,
 )
 from ...qgis_plugin_tools.tools.i18n import tr
 from ...qgis_plugin_tools.tools.resources import plugin_path
@@ -27,7 +35,7 @@ from ...qgis_plugin_tools.tools.version import format_version_integer, version
 SCHEMA = "adresse"
 
 
-class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
+class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
 
     CONNECTION_NAME = "CONNECTION_NAME"
     RUN_MIGRATIONS = "RUN_MIGRATIONS"
@@ -41,12 +49,6 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
     def displayName(self):
         return tr("Mise à jour de la structure de la base")
 
-    def group(self):
-        return tr("Structure")
-
-    def groupId(self):
-        return "adresse_structure"
-
     def shortHelpString(self):
         return tr(
             "Mise à jour de la base de données suite à une nouvelle version de l'extension."
@@ -57,20 +59,35 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         connection_name = QgsExpressionContextUtils.globalScope().variable(
             "adresse_connection_name"
         )
-        db_param_a = QgsProcessingParameterString(
-            self.CONNECTION_NAME,
-            tr("Connexion PostgreSQL vers la base de données"),
-            defaultValue=connection_name,
-            optional=False,
-        )
-        db_param_a.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+        label = tr("Connexion PostgreSQL vers la base de données")
+        tooltip = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.CONNECTION_NAME,
+                label,
+                "postgres",
+                defaultValue=connection_name,
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(
+                self.CONNECTION_NAME,
+                label,
+                defaultValue=connection_name,
+                optional=False,
+            )
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
                 }
-            }
-        )
-        self.addParameter(db_param_a)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         self.addParameter(
             QgsProcessingParameterBoolean(
@@ -97,50 +114,41 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         )
 
     def checkParameterValues(self, parameters, context):
-        # Check if run migrations is checked
-        run_migrations = self.parameterAsBool(parameters, self.RUN_MIGRATIONS, context)
-        if not run_migrations:
-            msg = tr("Vous devez cocher cette case pour réaliser la mise à jour !")
-            return False, msg
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection_name = self.parameterAsConnectionName(
+                parameters, self.CONNECTION_NAME, context)
+        else:
+            connection_name = self.parameterAsString(
+                parameters, self.CONNECTION_NAME, context)
 
-        # Check database content
-        ok, msg = self.checkSchema(parameters, context)
-        if not ok:
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection_name)
+        if not connection:
+            raise QgsProcessingException(tr("La connexion {} n'existe pas").format(connection_name))
+
+        if SCHEMA not in connection.schemas():
+            msg = tr(
+                "Le schéma {} n'existe pas dans la base de données {} ! "
+            ).format(SCHEMA, connection_name)
             return False, msg
 
         return super().checkParameterValues(parameters, context)
 
-    def checkSchema(self, parameters, context):
-        _ = context
-        sql = """
-            SELECT schema_name
-            FROM information_schema.schemata
-            WHERE schema_name = '{}';
-        """.format(
-            SCHEMA
-        )
-        connection_name = self.parameterAsString(
-            parameters, self.CONNECTION_NAME, context
-        )
-        _, data, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
-        if not ok:
-            return ok, error_message
-
-        ok = False
-        msg = tr("Le schéma {} n'existe pas dans la base de données !").format(SCHEMA)
-        for a in data:
-            schema = a[0]
-            if schema == SCHEMA:
-                ok = True
-                msg = ""
-        return ok, msg
-
     def processAlgorithm(self, parameters, context, feedback):
-        connection_name = self.parameterAsString(
-            parameters, self.CONNECTION_NAME, context
-        )
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
 
-        # Drop schema if needed
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection_name = self.parameterAsConnectionName(
+                parameters, self.CONNECTION_NAME, context)
+        else:
+            connection_name = self.parameterAsString(
+                parameters, self.CONNECTION_NAME, context)
+
+        connection = metadata.findConnection(connection_name)
+        if not connection:
+            raise QgsProcessingException(tr("La connexion {} n'existe pas.").format(connection_name))
+
+        # Check if migration was enabled
         run_migrations = self.parameterAsBool(parameters, self.RUN_MIGRATIONS, context)
         if not run_migrations:
             msg = tr("Vous devez cocher cette case pour réaliser la mise à jour !")
@@ -156,9 +164,10 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         """.format(
             SCHEMA
         )
-        _, data, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
-        if not ok:
-            raise QgsProcessingException(error_message)
+        try:
+            data = connection.executeSql(sql)
+        except QgsProviderConnectionException as e:
+            raise QgsProcessingException(str(e))
 
         db_version = None
         for a in data:
@@ -231,11 +240,10 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                     SCHEMA, new_db_version
                 )
 
-                _, _, _, ok, error_message = fetch_data_from_sql_query(
-                    connection_name, sql
-                )
-                if not ok:
-                    raise QgsProcessingException(error_message)
+                try:
+                    connection.executeSql(sql)
+                except QgsProviderConnectionException as e:
+                    raise QgsProcessingException(str(e))
 
                 feedback.pushInfo("* " + sf + " -- OK !")
 
@@ -248,9 +256,10 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             SCHEMA, plugin_version
         )
 
-        _, _, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
-        if not ok:
-            raise QgsProcessingException(error_message)
+        try:
+            connection.executeSql(sql)
+        except QgsProviderConnectionException as e:
+            raise QgsProcessingException(str(e))
 
         msg = tr("*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***")
         feedback.pushInfo(msg)
