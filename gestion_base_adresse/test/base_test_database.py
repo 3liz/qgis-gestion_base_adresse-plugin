@@ -14,7 +14,9 @@ if Qgis.QGIS_VERSION_INT >= 30800:
 else:
     import processing
 
-from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
+from ..qgis_plugin_tools.tools.logger_processing import (
+    LoggerProcessingFeedBack,
+)
 from ..processing.provider import GestionAdresseProvider as ProcessingProvider
 
 __copyright__ = "Copyright 2020, 3Liz"
