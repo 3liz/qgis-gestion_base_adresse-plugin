@@ -23,6 +23,11 @@ ALTER TABLE ONLY adresse.appartenir_com
     ADD CONSTRAINT appartenir_com_pkey PRIMARY KEY (id_voie, id_com);
 
 
+-- codes_postaux codes_postaux_pkey
+ALTER TABLE ONLY adresse.codes_postaux
+    ADD CONSTRAINT codes_postaux_pkey PRIMARY KEY (id);
+
+
 -- commune_deleguee commune_deleguee_pkey
 ALTER TABLE ONLY adresse.commune_deleguee
     ADD CONSTRAINT commune_deleguee_pkey PRIMARY KEY (id_com_del);
@@ -36,6 +41,11 @@ ALTER TABLE ONLY adresse.commune
 -- document document_pkey
 ALTER TABLE ONLY adresse.document
     ADD CONSTRAINT document_pkey PRIMARY KEY (id_doc);
+
+
+-- lieux_dits lieux_dits_pkey
+ALTER TABLE ONLY adresse.lieux_dits
+    ADD CONSTRAINT lieux_dits_pkey PRIMARY KEY (id_ld);
 
 
 -- metadata metadata_me_version_key
@@ -81,6 +91,11 @@ ALTER TABLE ONLY adresse.appartenir_com
 -- document document_id_commune_fkey
 ALTER TABLE ONLY adresse.document
     ADD CONSTRAINT document_id_commune_fkey FOREIGN KEY (id_commune) REFERENCES adresse.commune(id_com);
+
+
+-- lieux_dits lieux_dits_id_com_fkey
+ALTER TABLE ONLY adresse.lieux_dits
+    ADD CONSTRAINT lieux_dits_id_com_fkey FOREIGN KEY (id_com) REFERENCES adresse.commune(id_com);
 
 
 -- point_adresse point_adresse_id_commune_fkey
