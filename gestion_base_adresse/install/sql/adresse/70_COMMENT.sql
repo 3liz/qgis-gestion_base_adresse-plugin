@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 -- commune.id_com
-COMMENT ON COLUMN adresse.commune.id_com IS 'Geometrie de l''objet';
+COMMENT ON COLUMN adresse.commune.id_com IS 'Identifiant unique de la commune';
 
 
 -- commune.commune_nom
@@ -185,7 +185,7 @@ COMMENT ON COLUMN adresse.point_adresse.verif_terrain IS 'la saisie du point adr
 
 
 -- point_adresse.complement_adresse
-COMMENT ON COLUMN adresse.point_adresse.complement_adresse IS 'En minuculte et sans espace (ex : lesmimosas)';
+COMMENT ON COLUMN adresse.point_adresse.complement_adresse IS 'En minuscule et sans espace (ex : lesmimosas)';
 
 
 -- point_adresse.lieudit_complement_nom

@@ -1,6 +1,6 @@
 """Tests for Processing algorithms."""
 
-# import os
+import os
 import psycopg2
 import time
 
@@ -13,7 +13,7 @@ from qgis.core import (
 from qgis.testing import unittest
 
 from ..processing.provider import GestionAdresseProvider as ProcessingProvider
-# from ..qgis_plugin_tools.tools.database import available_migrations
+from ..qgis_plugin_tools.tools.database import available_migrations
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
 
 __copyright__ = "Copyright 2019, 3Liz"
@@ -37,128 +37,127 @@ class TestProcessing(unittest.TestCase):
         del self.connection
         time.sleep(1)
 
-    # Test desable because timeout
-    # Uncomment the following import if you enable the test
-    # def test_load_structure_with_migration(self):
-    #     """Test we can load the PostGIS structure with migrations."""
-    #     provider = ProcessingProvider()
-    #     registry = QgsApplication.processingRegistry()
-    #     if not registry.providerById(provider.id()):
-    #         registry.addProvider(provider)
+    @unittest.skip("Test desable because timeout")
+    def test_load_structure_with_migration(self):
+        """Test we can load the PostGIS structure with migrations."""
+        provider = ProcessingProvider()
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(provider.id()):
+            registry.addProvider(provider)
 
-    #     feedback = LoggerProcessingFeedBack()
-    #     params = {
-    #         "CONNECTION_NAME": "test",
-    #         "OVERRIDE": True,
-    #         "SRID": "EPSG:2154",
-    #         "ADD_TEST_DATA": True,
-    #     }
+        feedback = LoggerProcessingFeedBack()
+        params = {
+            "CONNECTION_NAME": "test",
+            "OVERRIDE": True,
+            "SRID": "EPSG:2154",
+            "ADD_TEST_DATA": True,
+        }
 
-    #     os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())] = VERSION
-    #     alg = "{}:create_database_structure".format(provider.id())
-    #     try:
-    #         processing_output = processing.run(alg, params, feedback=feedback)
-    #     except QgsProcessingException as e:
-    #         self.assertTrue(False, e)
-    #     del os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())]
+        os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())] = VERSION
+        alg = "{}:create_database_structure".format(provider.id())
+        try:
+            processing_output = processing.run(alg, params, feedback=feedback)
+        except QgsProcessingException as e:
+            self.assertTrue(False, e)
+        del os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())]
 
-    #     self.cursor.execute(
-    #         "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
-    #             SCHEMA
-    #         )
-    #     )
-    #     records = self.cursor.fetchall()
-    #     result = [r[0] for r in records]
-    #     # Expected tables in the specific version written above at the beginning of the test.
-    #     # DO NOT CHANGE HERE, change below at the end of the test.
-    #     expected = [
-    #         "appartenir_com",
-    #         "commune",
-    #         "document",
-    #         "metadata",
-    #         "point_adresse",
-    #         "voie",
-    #         "parcelle",
-    #         "commune_deleguee",
-    #         "referencer_com",
-    #     ]
-    #     self.assertCountEqual(expected, result)
-    #     expected = "*** LA STRUCTURE {} A BIEN ÉTÉ CRÉÉE '{}'***".format(SCHEMA, VERSION)
-    #     self.assertEqual(expected, processing_output["OUTPUT_STRING"])
+        self.cursor.execute(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
+                SCHEMA
+            )
+        )
+        records = self.cursor.fetchall()
+        result = [r[0] for r in records]
+        # Expected tables in the specific version written above at the beginning of the test.
+        # DO NOT CHANGE HERE, change below at the end of the test.
+        expected = [
+            "appartenir_com",
+            "commune",
+            "document",
+            "metadata",
+            "point_adresse",
+            "voie",
+            "parcelle",
+            "commune_deleguee",
+            "referencer_com",
+        ]
+        self.assertCountEqual(expected, result)
+        expected = "*** LA STRUCTURE {} A BIEN ÉTÉ CRÉÉE '{}'***".format(SCHEMA, VERSION)
+        self.assertEqual(expected, processing_output["OUTPUT_STRING"])
 
-    #     sql = """
-    #         SELECT me_version
-    #         FROM {}.metadata
-    #         WHERE me_status = 1
-    #         ORDER BY me_version_date DESC
-    #         LIMIT 1;
-    #     """.format(
-    #         SCHEMA
-    #     )
-    #     self.cursor.execute(sql)
-    #     record = self.cursor.fetchone()
-    #     self.assertEqual(VERSION, record[0])
+        sql = """
+            SELECT me_version
+            FROM {}.metadata
+            WHERE me_status = 1
+            ORDER BY me_version_date DESC
+            LIMIT 1;
+        """.format(
+            SCHEMA
+        )
+        self.cursor.execute(sql)
+        record = self.cursor.fetchone()
+        self.assertEqual(VERSION, record[0])
 
-    #     feedback.pushDebugInfo("Update the database")
-    #     params = {
-    #         "CONNECTION_NAME": "test",
-    #         "RUN_MIGRATIONS": True,
-    #         "SRID": "EPSG:2154"
-    #     }
-    #     alg = "{}:upgrade_database_structure".format(provider.id())
-    #     results = processing.run(alg, params, feedback=feedback)
-    #     self.assertEqual(1, results["OUTPUT_STATUS"], 1)
-    #     self.assertEqual(
-    #         "*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***",
-    #         results["OUTPUT_STRING"],
-    #     )
+        feedback.pushDebugInfo("Update the database")
+        params = {
+            "CONNECTION_NAME": "test",
+            "RUN_MIGRATIONS": True,
+            "SRID": "EPSG:2154"
+        }
+        alg = "{}:upgrade_database_structure".format(provider.id())
+        results = processing.run(alg, params, feedback=feedback)
+        self.assertEqual(1, results["OUTPUT_STATUS"], 1)
+        self.assertEqual(
+            "*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***",
+            results["OUTPUT_STRING"],
+        )
 
-        # sql = """
-        #     SELECT me_version
-        #     FROM {}.metadata
-        #     WHERE me_status = 1
-        #     ORDER BY me_version_date DESC
-        #     LIMIT 1;
-        # """.format(
-        #     SCHEMA
-        # )
-        # self.cursor.execute(sql)
-        # record = self.cursor.fetchone()
+        sql = """
+            SELECT me_version
+            FROM {}.metadata
+            WHERE me_status = 1
+            ORDER BY me_version_date DESC
+            LIMIT 1;
+        """.format(
+            SCHEMA
+        )
+        self.cursor.execute(sql)
+        record = self.cursor.fetchone()
 
-        # migrations = available_migrations(000000)
-        # last_migration = migrations[-1]
-        # metadata_version = (
-        #     last_migration.replace("upgrade_to_", "").replace(".sql", "").strip()
-        # )
-        # self.assertEqual(metadata_version, record[0])
+        migrations = available_migrations(000000)
+        last_migration = migrations[-1]
+        metadata_version = (
+            last_migration.replace("upgrade_to_", "").replace(".sql", "").strip()
+        )
+        self.assertEqual(metadata_version, record[0])
 
-        # self.cursor.execute(
-        #     "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
-        #         SCHEMA
-        #     )
-        # )
-        # records = self.cursor.fetchall()
-        # result = [r[0] for r in records]
-        # expected = [
-        #     "appartenir_com",
-        #     "commune",
-        #     "document",
-        #     "metadata",
-        #     "point_adresse",
-        #     "voie",
-        #     "parcelle",
-        #     "commune_deleguee",
-        #     "referencer_com",
-        #     "v_commune",
-        #     "v_export_bal",
-        #     "codes_postaux",
-        #     "import_ban",
-        #     "import_ban_etat_commune",
-        #     "import_ban_lo",
-        #     "v_point_adresse",
-        #     "lieux_dits",
-        # ]
-        # self.assertCountEqual(expected, result)
+        self.cursor.execute(
+            "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
+                SCHEMA
+            )
+        )
+        records = self.cursor.fetchall()
+        result = [r[0] for r in records]
+        expected = [
+            "appartenir_com",
+            "commune",
+            "document",
+            "metadata",
+            "point_adresse",
+            "voie",
+            "parcelle",
+            "commune_deleguee",
+            "referencer_com",
+            "v_commune",
+            "v_export_bal",
+            "codes_postaux",
+            "import_ban",
+            "import_ban_etat_commune",
+            "import_ban_lo",
+            "v_point_adresse",
+            "lieux_dits",
+        ]
+        self.assertCountEqual(expected, result)
 
     def test_load_structure_without_migrations(self):
         """Test we can load the PostGIS structure without migrations."""

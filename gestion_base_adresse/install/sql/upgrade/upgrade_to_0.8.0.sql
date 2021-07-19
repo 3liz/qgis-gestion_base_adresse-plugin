@@ -98,9 +98,7 @@ CREATE FUNCTION adresse.creation_adresse()
 AS $BODY$
 DECLARE
 BEGIN
-
     NEW.creation_adresse = 'true';
-
 RETURN NEW;
 END;
 $BODY$;
@@ -124,6 +122,33 @@ RETURN NEW;
 END;
 $BODY$;
 
+
+DROP FUNCTION IF EXISTS adresse.update_commune() CASCADE;
+-- update_appartenir_com()
+CREATE FUNCTION adresse.update_appartenir_com() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    leid integer;
+BEGIN
+    INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
+    RETURN NEW;
+END;
+$$;
+
+
+-- get_commune()
+CREATE FUNCTION adresse.get_commune() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    leid integer;
+BEGIN
+    SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
+    NEW.id_commune = leid;
+    RETURN NEW;
+END;
+$$;
 
 --
 -- Fin FONCTION
@@ -274,7 +299,7 @@ CREATE TABLE adresse.lieux_dits
     date_der_maj date,
     id_com_del integer,
     commune_deleguee_nom text COLLATE pg_catalog."default",
-    CONSTRAINT lieux_dits1_pkey PRIMARY KEY (id_ld),
+    CONSTRAINT lieux_dits_pkey PRIMARY KEY (id_ld),
     CONSTRAINT lieux_dits_id_com_fkey FOREIGN KEY (id_com)
         REFERENCES adresse.commune (id_com) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -532,12 +557,12 @@ CREATE INDEX sidx_codes_postaux_geom
     ;
 
 
-CREATE INDEX sidx_lieux_dits1_geom
+CREATE INDEX sidx_lieux_dits_geom
     ON adresse.lieux_dits USING gist
     (geom)
     ;
 
-CREATE INDEX sidx_parcelle2_geom
+CREATE INDEX sidx_parcelle_geom
     ON adresse.parcelle USING gist
     (geom)
     ;
@@ -574,13 +599,14 @@ CREATE TRIGGER creation_adresse
     FOR EACH ROW
     EXECUTE PROCEDURE adresse.creation_adresse();
 
+DROP TRIGGER IF EXISTS get_commune ON adresse.point_adresse;
+DROP TRIGGER IF EXISTS point_adresse_get_commune ON adresse.point_adresse;
+CREATE TRIGGER point_adresse_get_commune BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_commune();
 
-DROP TRIGGER get_commune ON adresse.point_adresse;
-CREATE TRIGGER get_commune
-    BEFORE INSERT OR UPDATE 
-    ON adresse.point_adresse
-    FOR EACH ROW 
-    EXECUTE PROCEDURE adresse.update_commune();
+
+DROP TRIGGER IF EXISTS get_commune ON adresse.voie;
+DROP TRIGGER IF EXISTS voie_get_commune ON adresse.voie;
+CREATE TRIGGER voie_get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_appartenir_com();
 
 CREATE TRIGGER nom_complet_maj
     BEFORE INSERT OR UPDATE 
@@ -667,12 +693,6 @@ COMMENT ON COLUMN adresse.commune.date_ban IS 'Date d’envoi des données dans 
 
 -- commune.geom
 COMMENT ON COLUMN adresse.commune.geom IS 'Geometrie de l''objet';
-
--- commune.id_com
-COMMENT ON COLUMN adresse.commune.id_com   IS 'Identifiant unique de la commune';
-
--- commune.id_com
-COMMENT ON COLUMN adresse.commune.id_com   IS 'Geometrie de l''objet';
 
 -- document.lien
 COMMENT ON COLUMN adresse.document.lien IS 'Chemin de stockage du document';
@@ -770,7 +790,7 @@ COMMENT ON COLUMN adresse.point_adresse.verif_terrain IS 'la saisie du point adr
 
 
 -- point_adresse.complement_adresse
-COMMENT ON COLUMN adresse.point_adresse.complement_adresse IS 'En minuculte et sans espace (ex : lesmimosas)';
+COMMENT ON COLUMN adresse.point_adresse.complement_adresse IS 'En minuscule et sans espace (ex : lesmimosas)';
 
 
 -- point_adresse.lieudit_complement_nom

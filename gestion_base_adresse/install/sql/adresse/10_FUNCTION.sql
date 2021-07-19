@@ -275,9 +275,7 @@ CREATE FUNCTION adresse.creation_adresse() RETURNS trigger
     AS $$
 DECLARE
 BEGIN
-
     NEW.creation_adresse = 'true';
-
 RETURN NEW;
 END;
 $$;
@@ -308,6 +306,20 @@ CREATE FUNCTION adresse.get_code_postal() RETURNS trigger
 DECLARE
 BEGIN
     SELECT a.cp into NEW.code_postal FROM adresse.codes_postaux a WHERE ST_intersects(NEW.geom, a.geom);
+    RETURN NEW;
+END;
+$$;
+
+
+-- get_commune()
+CREATE FUNCTION adresse.get_commune() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    leid integer;
+BEGIN
+    SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
+    NEW.id_commune = leid;
     RETURN NEW;
 END;
 $$;
@@ -541,22 +553,15 @@ END;
 $$;
 
 
--- update_commune()
-CREATE FUNCTION adresse.update_commune() RETURNS trigger
+-- update_appartenir_com()
+CREATE FUNCTION adresse.update_appartenir_com() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE
     leid integer;
 BEGIN
-    IF (TG_TABLE_NAME = 'voie') THEN
-        INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
-        RETURN NEW;
-    ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
-        SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
-        NEW.id_commune = leid;
-        RETURN NEW;
-    END IF;
-    RETURN NULL;
+    INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
+    RETURN NEW;
 END;
 $$;
 

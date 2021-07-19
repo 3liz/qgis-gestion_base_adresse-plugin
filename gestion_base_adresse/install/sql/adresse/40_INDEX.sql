@@ -66,12 +66,12 @@ CREATE INDEX point_adresse_geom_idx ON adresse.point_adresse USING gist (geom);
 CREATE INDEX sidx_codes_postaux_geom ON adresse.codes_postaux USING gist (geom);
 
 
--- sidx_lieux_dits1_geom
-CREATE INDEX sidx_lieux_dits1_geom ON adresse.lieux_dits USING gist (geom);
+-- sidx_lieux_dits_geom
+CREATE INDEX sidx_lieux_dits_geom ON adresse.lieux_dits USING gist (geom);
 
 
--- sidx_parcelle2_geom
-CREATE INDEX sidx_parcelle2_geom ON adresse.parcelle USING gist (geom);
+-- sidx_parcelle_geom
+CREATE INDEX sidx_parcelle_geom ON adresse.parcelle USING gist (geom);
 
 
 -- voie_geom_idx

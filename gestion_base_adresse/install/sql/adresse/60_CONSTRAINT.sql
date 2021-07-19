@@ -43,9 +43,9 @@ ALTER TABLE ONLY adresse.document
     ADD CONSTRAINT document_pkey PRIMARY KEY (id_doc);
 
 
--- lieux_dits lieux_dits1_pkey
+-- lieux_dits lieux_dits_pkey
 ALTER TABLE ONLY adresse.lieux_dits
-    ADD CONSTRAINT lieux_dits1_pkey PRIMARY KEY (id_ld);
+    ADD CONSTRAINT lieux_dits_pkey PRIMARY KEY (id_ld);
 
 
 -- metadata metadata_me_version_key

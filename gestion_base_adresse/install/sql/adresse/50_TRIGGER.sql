@@ -36,14 +36,6 @@ CREATE TRIGGER edit_point_adresse_from_view INSTEAD OF INSERT OR DELETE OR UPDAT
 CREATE TRIGGER get_code_postal BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_code_postal();
 
 
--- point_adresse get_commune
-CREATE TRIGGER get_commune BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
-
-
--- voie get_commune
-CREATE TRIGGER get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_commune();
-
-
 -- point_adresse get_parcelle
 CREATE TRIGGER get_parcelle BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_parcelle();
 
@@ -66,6 +58,10 @@ CREATE TRIGGER nom_complet BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUTE PR
 
 -- voie nom_complet_maj
 CREATE TRIGGER nom_complet_maj BEFORE INSERT OR UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.voie_nom_complet_maj();
+
+
+-- point_adresse point_adresse_get_commune
+CREATE TRIGGER point_adresse_get_commune BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_commune();
 
 
 -- voie trigger_longueur
@@ -94,6 +90,10 @@ CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.point_adresse FOR EA
 
 -- voie update_modif_create
 CREATE TRIGGER update_modif_create BEFORE UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.modif_update();
+
+
+-- voie voie_get_commune
+CREATE TRIGGER voie_get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.update_appartenir_com();
 
 
 --
