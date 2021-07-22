@@ -13,6 +13,7 @@ from qgis.core import (
     QgsProcessingContext,
     QgsProviderRegistry,
     QgsVectorLayer,
+    QgsProcessingException,
     QgsExpressionContextUtils,
     QgsProviderConnectionException,
 )
@@ -163,6 +164,10 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
 
         data_update = self.parameterAsBool(parameters, self.TRUNCATE_PARCELLE, context)
 
+        connection = metadata.findConnection(connection_name)
+        if not connection:
+            raise QgsProcessingException(tr("La connexion {} n'existe pas.").format(connection_name))
+
         if data_update:
             feedback.pushInfo("## Mise à jour des données parcelles ##")
             feedback.pushInfo("# Rend id_parcelle = null dans adresse.point_adresse #")
@@ -172,9 +177,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 SET id_parcelle = NULL;
             """
             try:
-                connection = metadata.findConnection(connection_name)
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
             feedback.pushInfo("""
@@ -185,9 +190,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 ALTER TABLE adresse.point_adresse DROP CONSTRAINT point_adresse_id_parcelle_fkey;
             """
             try:
-                connection = metadata.findConnection(connection_name)
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
             feedback.pushInfo("# Vide la table adresse.parcelle #")
@@ -195,9 +200,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 TRUNCATE adresse.parcelle RESTART IDENTITY;
             """
             try:
-                connection = metadata.findConnection(connection_name)
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
             feedback.pushInfo("# Réactivation de la clé étrangère sur adresse.point_adresse #")
@@ -207,9 +212,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 REFERENCES adresse.parcelle (fid);
             """
             try:
-                connection = metadata.findConnection(connection_name)
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
             feedback.pushInfo("# Remplissage de la table adresse.parcelle #")
@@ -229,9 +234,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 schema, schema
             )
             try:
-                connection = metadata.findConnection(connection_name)
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("# Mise à jour de id_parcelle dans adresse.point_adresse #")
@@ -242,9 +247,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             WHERE ST_intersects(pa.geom, p.geom));
         """
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("## CREATION DES VUES ##")
@@ -252,9 +257,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
 
         sql = "DROP VIEW IF EXISTS adresse.v_certificat;"
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         sql = """
@@ -283,17 +288,17 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             schema, schema, schema
         )
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("# Vue  adresse.v_voie #")
         sql = "DROP VIEW IF EXISTS adresse.v_voie;"
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
         sql = """
             DROP VIEW IF EXISTS adresse.v_voie;
@@ -310,17 +315,17 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             WHERE c.id_voie = v.id_voie AND c.id_com = cc.id_com;
         """
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("# Vue  adresse.v_section #")
         sql = "DROP VIEW IF EXISTS adresse.v_section"
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
         sql = """
             CREATE VIEW adresse.v_section
@@ -337,17 +342,17 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             schema, schema
         )
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("## Vue  adresse.v_parcelle ##")
         sql = "DROP VIEW IF EXISTS adresse.v_parcelle"
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
         sql = """
             CREATE VIEW adresse.v_parcelle
@@ -367,9 +372,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             schema, schema, schema
         )
         try:
-            connection = metadata.findConnection(connection_name)
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         connection = metadata.findConnection(connection_name)

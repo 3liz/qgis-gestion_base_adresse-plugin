@@ -167,6 +167,7 @@ class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
         try:
             data = connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             raise QgsProcessingException(str(e))
 
         db_version = None
@@ -243,6 +244,7 @@ class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
                 try:
                     connection.executeSql(sql)
                 except QgsProviderConnectionException as e:
+                    connection.executeSql("ROLLBACK;")
                     raise QgsProcessingException(str(e))
 
                 feedback.pushInfo("* " + sf + " -- OK !")
@@ -259,6 +261,7 @@ class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
         try:
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             raise QgsProcessingException(str(e))
 
         msg = tr("*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***")

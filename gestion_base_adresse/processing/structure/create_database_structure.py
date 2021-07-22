@@ -181,6 +181,7 @@ class CreateDatabaseStructure(BaseDatabaseAlgorithm):
             try:
                 connection.dropSchema(SCHEMA, True)
             except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
                 raise QgsProcessingException(str(e))
 
         # Create full structure
@@ -243,6 +244,7 @@ class CreateDatabaseStructure(BaseDatabaseAlgorithm):
             try:
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
                 raise QgsProcessingException(str(e))
             feedback.pushInfo("  Success !")
 
@@ -269,6 +271,7 @@ class CreateDatabaseStructure(BaseDatabaseAlgorithm):
         try:
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
+            connection.executeSql("ROLLBACK;")
             raise QgsProcessingException(str(e))
 
         feedback.pushInfo("Version de la base de données '{}'.".format(metadata_version))
