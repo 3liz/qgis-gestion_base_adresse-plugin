@@ -37,7 +37,6 @@ class TestProcessing(unittest.TestCase):
         del self.connection
         time.sleep(1)
 
-    @unittest.skip("Test disabled because of timeout")
     def test_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
         provider = ProcessingProvider()
