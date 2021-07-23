@@ -4,15 +4,22 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import (
-    QgsProcessingParameterString,
+    Qgis,
+    QgsDataSourceUri,
+    QgsProcessingContext,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
-    QgsProcessingContext,
+    QgsProcessingParameterString,
+    QgsProviderRegistry,
     QgsVectorLayer,
     QgsExpressionContextUtils,
 )
 
-from processing.tools.postgis import uri_from_name
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import (
+        QgsProcessingParameterDatabaseSchema,
+        QgsProcessingParameterProviderConnection,
+    )
 
 from ...definitions.variables import GESTION_ADRESSE_POINT_ADRESSE, GESTION_ADRESSE_VOIE
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -24,7 +31,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
     Chargement des couches adresse depuis la base de données
     """
 
-    DATABASE = "DATABASE"
+    CONNECTION_NAME = "CONNECTION_NAME"
     SCHEMA = "SCHEMA"
     OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
@@ -46,30 +53,59 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
     def initAlgorithm(self, config):
         # INPUTS
-        db_param = QgsProcessingParameterString(
-            self.DATABASE, tr("Connexion à la base de données")
-        )
-        db_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+        # Database connection parameters
+        label = tr("Connexion PostgreSQL vers la base de données")
+        tooltip = "Base de données de destination"
+        default = QgsExpressionContextUtils.globalScope().variable('adresse_connection_name')
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.CONNECTION_NAME,
+                label,
+                "postgres",
+                optional=False,
+                defaultValue=default
+            )
+        else:
+            param = QgsProcessingParameterString(self.CONNECTION_NAME, label, defaultValue=default)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
                 }
-            }
-        )
-        self.addParameter(db_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
-        schema_param = QgsProcessingParameterString(
-            self.SCHEMA, tr("Schéma"), "adresse", False, True
-        )
-        schema_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
-                    "connection_param": self.DATABASE,
+        label = tr("Schéma")
+        tooltip = 'Nom du schéma des données adresses'
+        default = 'adresse'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterDatabaseSchema(
+                self.SCHEMA,
+                label,
+                self.CONNECTION_NAME,
+                defaultValue=default,
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.SCHEMA, label, default, False, True)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
+                        "connection_param": self.CONNECTION_NAME,
+                    }
                 }
-            }
-        )
-        self.addParameter(schema_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         # OUTPUTS
         self.addOutput(
@@ -103,11 +139,19 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         layers_name_none["document"] = ""
         layers_name_none["v_commune"] = "insee_code"
 
-        # override = self.parameterAsBool(parameters, self.OVERRIDE, context)
-        connection = self.parameterAsString(parameters, self.DATABASE, context)
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
+            schema = self.parameterAsSchema(parameters, self.SCHEMA, context)
+        else:
+            connection_name = self.parameterAsString(parameters, self.CONNECTION_NAME, context)
+            schema = self.parameterAsString(parameters, self.SCHEMA, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
-        uri = uri_from_name(connection)
+
+        uri = None
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection_name)
+        uri = QgsDataSourceUri(connection.uri())
 
         is_host = uri.host() != ""
         if is_host:
@@ -115,7 +159,6 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         else:
             feedback.pushInfo("Connexion établie via le service")
 
-        schema = self.parameterAsString(parameters, self.SCHEMA, context)
         feedback.pushInfo("")
         feedback.pushInfo("## CHARGEMENT DES COUCHES ##")
         for x in layers_name:

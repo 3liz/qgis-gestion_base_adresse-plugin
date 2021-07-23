@@ -40,6 +40,7 @@ class TestProcessing(unittest.TestCase):
     def test_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
         provider = ProcessingProvider()
+
         registry = QgsApplication.processingRegistry()
         if not registry.providerById(provider.id()):
             registry.addProvider(provider)
@@ -52,13 +53,14 @@ class TestProcessing(unittest.TestCase):
             "ADD_TEST_DATA": True,
         }
 
-        os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())] = VERSION
+        os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.upper())] = VERSION
         alg = "{}:create_database_structure".format(provider.id())
         try:
             processing_output = processing.run(alg, params, feedback=feedback)
         except QgsProcessingException as e:
             self.assertTrue(False, e)
-        del os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())]
+        del os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.upper())]
+        self.assertEqual(VERSION, processing_output["DATABASE_VERSION"])
 
         self.cursor.execute(
             "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
@@ -210,9 +212,9 @@ class TestProcessing(unittest.TestCase):
             processing.run(alg, params, feedback=feedback)
 
         expected = (
-            "Unable to execute algorithm\nLe schéma existe déjà dans la base de données ! Si "
-            "vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) "
-            "cocher la case **Écraser**"
+            "Unable to execute algorithm\nLe schéma adresse existe déjà dans la base de données test ! "
+            "Si vous voulez VRAIMENT supprimer et recréer le schéma "
+            "(et supprimer les données) cocher la case **Écraser**"
         )
         self.assertEqual(expected, feedback.last)
 
