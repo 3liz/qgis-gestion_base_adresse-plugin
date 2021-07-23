@@ -1,3 +1,4 @@
+BEGIN;
 --
 -- PostgreSQL database dump
 --
@@ -149,3 +150,5 @@ CREATE VIEW adresse.v_point_adresse AS
 -- PostgreSQL database dump complete
 --
 
+
+COMMIT;

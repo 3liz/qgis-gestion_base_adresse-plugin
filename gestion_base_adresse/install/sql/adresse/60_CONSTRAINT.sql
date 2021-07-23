@@ -1,3 +1,4 @@
+BEGIN;
 --
 -- PostgreSQL database dump
 --
@@ -127,3 +128,5 @@ ALTER TABLE ONLY adresse.referencer_com
 -- PostgreSQL database dump complete
 --
 
+
+COMMIT;

@@ -1,3 +1,4 @@
+BEGIN;
 --
 -- PostgreSQL database dump
 --
@@ -82,3 +83,5 @@ CREATE INDEX voie_geom_idx ON adresse.voie USING gist (geom);
 -- PostgreSQL database dump complete
 --
 
+
+COMMIT;

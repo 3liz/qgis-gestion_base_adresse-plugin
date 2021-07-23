@@ -1,3 +1,4 @@
+BEGIN;
 --
 -- PostgreSQL database dump
 --
@@ -404,3 +405,5 @@ ALTER TABLE ONLY adresse.voie ALTER COLUMN id_voie SET DEFAULT nextval('adresse.
 -- PostgreSQL database dump complete
 --
 
+
+COMMIT;

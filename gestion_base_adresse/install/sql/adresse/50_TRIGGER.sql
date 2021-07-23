@@ -1,3 +1,4 @@
+BEGIN;
 --
 -- PostgreSQL database dump
 --
@@ -100,3 +101,5 @@ CREATE TRIGGER voie_get_commune AFTER INSERT ON adresse.voie FOR EACH ROW EXECUT
 -- PostgreSQL database dump complete
 --
 
+
+COMMIT;

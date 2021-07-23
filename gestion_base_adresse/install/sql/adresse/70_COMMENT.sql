@@ -1,3 +1,4 @@
+BEGIN;
 --
 -- PostgreSQL database dump
 --
@@ -268,3 +269,5 @@ COMMENT ON COLUMN adresse.voie.geom IS 'Géométrie de l’objet';
 -- PostgreSQL database dump complete
 --
 
+
+COMMIT;
