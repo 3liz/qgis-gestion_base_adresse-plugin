@@ -1,5 +1,6 @@
 """Tests for migrations."""
 
+from gestion_base_adresse.processing.structure.create_database_structure import SCHEMA
 import os
 import unittest
 
@@ -37,4 +38,33 @@ class TestMigration(unittest.TestCase):
                     'COMMIT;\n',
                     sql[-1],
                     'The last line in {} must be a COMMIT; on a single line.'.format(migration)
+                )
+
+        sql_files = [
+            "00_initialize_database.sql",
+            "{}/10_FUNCTION.sql".format(SCHEMA),
+            "{}/20_TABLE_SEQUENCE_DEFAULT.sql".format(SCHEMA),
+            "{}/30_VIEW.sql".format(SCHEMA),
+            "{}/40_INDEX.sql".format(SCHEMA),
+            "{}/50_TRIGGER.sql".format(SCHEMA),
+            "{}/60_CONSTRAINT.sql".format(SCHEMA),
+            "{}/70_COMMENT.sql".format(SCHEMA),
+        ]
+
+        for sf in sql_files:
+            with self.subTest(test_file=sf):
+                sql_file = os.path.join(plugin_path(), "install/sql/{}".format(sf))
+
+                with open(sql_file, "r") as f:
+                    sql = f.readlines()
+
+                self.assertEqual(
+                    'BEGIN;\n',
+                    sql[0],
+                    'The first line in {} must be a BEGIN; on a single line.'.format(sf)
+                )
+                self.assertEqual(
+                    'COMMIT;\n',
+                    sql[-1],
+                    'The last line in {} must be a COMMIT; on a single line.'.format(sf)
                 )
