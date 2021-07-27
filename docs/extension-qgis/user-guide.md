@@ -45,7 +45,7 @@ pour que la mise à jour se lance lors de l'exécution.
 ### Récupération des couches nécessaires
 
 Dans l'onglet **Données** de la [liste des différents scripts du plugin](#liste-des-scripts), il y a le 
-script **Chargement des couches depuis la base** qui permet les différentes couches nécessaires dans le 
+script **Chargement des couches depuis la base** qui permet d'importer les différentes couches nécessaires dans le 
 module adresse.
 
 ![algo_load_data](../processing/gestion_adresse-load_layers.png)
@@ -53,6 +53,16 @@ module adresse.
 Pour exécuter ce script correctement il suffit de renseigner la connexion à la base de données dans le 
 premier paramètre, puis le schéma qui contient les couches. En l'occurrence ici normalement le schéma 
 s'appelle **adresse**.
+
+Les couches sont donc présentes dans le projets.
+![project_layers](./media/imported_project_layers.png)
+
+| :warning:  Pour le module adresse présent sur lizmap, les noms des couches sur le projet QGIS ne doivent pas être modifié ! |
+|----------------------------------|
+
+| :memo: Si vous souhaitez un nom plus explicite ou plus adapté pour les couches, vous pourrais dans l'étape [Configuration pour Lizmap](#Configuration-pour-Lizmap) ci-après, modifier le titre des couches.|
+|:--------------|
+
 
 ### Application des styles
 
