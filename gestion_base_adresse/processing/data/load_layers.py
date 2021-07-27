@@ -134,7 +134,11 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
         output_layers = []
-        layers_name = ["commune", "voie", "point_adresse", "parcelle"]
+        layers_name = dict()
+        layers_name["commune"] = ""
+        layers_name['voie'] = ""
+        layers_name["parcelle"] = ""
+        layers_name["v_point_adresse"] = 'id_point'
         layers_name_none = dict()
         layers_name_none["document"] = ""
         layers_name_none["v_commune"] = "insee_code"
@@ -163,16 +167,16 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         feedback.pushInfo("## CHARGEMENT DES COUCHES ##")
         for x in layers_name:
             if not context.project().mapLayersByName(x):
-                result = self.initLayer(context, uri, schema, x, "geom", "")
+                result = self.initLayer(context, uri, schema, x, "geom", '', layers_name[x])
                 if not result:
-                    feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
+                    feedback.pushInfo("La couche " + x + " ne peut pas être chargée 1")
                 else:
                     output_layers.append(result.id())
                     if x == "voie":
                         QgsExpressionContextUtils.setProjectVariable(
                             context.project(), GESTION_ADRESSE_VOIE, result.id()
                         )
-                    elif x == "point_adresse":
+                    elif x == "v_point_adresse":
                         QgsExpressionContextUtils.setProjectVariable(
                             context.project(),
                             GESTION_ADRESSE_POINT_ADRESSE,
