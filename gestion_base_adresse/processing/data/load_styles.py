@@ -55,7 +55,7 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
         msg = ""
-        layers_name = ["commune", "voie", "point_adresse", "parcelle", "document"]
+        layers_name = ["commune", "voie", "v_point_adresse", "parcelle", "document"]
 
         for x in layers_name:
             layers = context.project().mapLayersByName(x)
