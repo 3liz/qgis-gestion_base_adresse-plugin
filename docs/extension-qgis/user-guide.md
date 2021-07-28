@@ -81,7 +81,7 @@ En haut à gauche de votre fenêtre QGIS vous trouverez le menu **Projet** dans 
 ![project_properties](./media/properties_project.png)
 
 Une fois dans la fenêtre **Propriétés du projet** vous irez dans la section **QGIS Server**, puis dans la 
-partie **Capacités WFS** où vous cocherez pour les couches `voie`, `point_adresse` et `document` la case de la colonne 
+partie **Capacités WFS** où vous cocherez pour les couches `voie`, `v_point_adresse` et `document` la case de la colonne 
 **Publié**.
 
 ### Configuration pour Lizmap
@@ -92,12 +92,12 @@ concerne les **Options de carte** ou les **Fonds** vous pouvez configurer selon 
 
 Pour ce qui est des couches, pour celles sans géométrie il n'y a rien à faire alors que celles avec géométrie 
 dans la partie **Légende** il faut cocher les cases **Cochée ?** et **Afficher dans la légende**. 
-Puis pour les couches `point_adresse` et `voie` on coche la case **Popup**.
+Puis pour les couches `v_point_adresse` et `voie` on coche la case **Popup**.
 
 ![lizmap_layers](./media/lizmap_layer.png)
 
 Pour ce qui est de la configuration de l'édition comme on le voie sur l'image ci-dessous il suffit d'ajouter 
-les couches auxquelles on permet l'édition. Pour le module Adresse cela concerne uniquement `voie`, `point_adresse` 
+les couches auxquelles on permet l'édition. Pour le module Adresse cela concerne uniquement `voie`, `v_point_adresse` 
 et `document`. Pour pouvoir ajouter une couche à l'édition il suffit de cliquer sur le bouton représentant une 
 croix de couleur verte.
 
