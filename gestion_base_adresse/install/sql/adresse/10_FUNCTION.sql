@@ -289,11 +289,59 @@ CREATE FUNCTION adresse.edit_point_adresse() RETURNS trigger
 DECLARE
 BEGIN
  IF (TG_OP = 'INSERT') THEN
-    INSERT INTO adresse.point_adresse SELECT NEW.*;
+    INSERT INTO adresse.point_adresse(
+        numero,
+        suffixe,
+        id_voie,
+        adresse_complete,
+        type_pos,
+        achat_plaque_numero,
+        valide,
+        verif_terrain,
+        createur,
+        date_creation,
+        modificateur,
+        date_modif,
+        erreur,
+        commentaire,
+        geom
+    ) VALUES(
+        NEW.numero,
+        NEW.suffixe,
+        NEW.id_voie,
+        NEW.adresse_complete,
+        NEW.type_pos,
+        NEW.achat_plaque_numero,
+        NEW.valide,
+        NEW.verif_terrain,
+        NEW.createur,
+        NEW.date_creation,
+        NEW.modificateur,
+        NEW.date_modif,
+        NEW.erreur,
+        NEW.commentaire,
+        NEW.geom
+    );
  ELSEIF (TG_OP = 'UPDATE') THEN
-    UPDATE adresse.point_adresse SET OLD = NEW WHERE id_point = NEW.id_point;
+    UPDATE adresse.point_adresse SET 
+        numero=NEW.numero,
+        suffixe=NEW.suffixe,
+        id_voie=NEW.id_voie,
+        adresse_complete=NEW.adresse_complete,
+        type_pos=NEW.type_pos,
+        achat_plaque_numero=NEW.achat_plaque_numero,
+        valide=NEW.valide,
+        verif_terrain=NEW.verif_terrain,
+        createur=NEW.createur,
+        date_creation=NEW.date_creation,
+        modificateur=NEW.modificateur,
+        date_modif=NEW.date_modif,
+        erreur=NEW.erreur,
+        commentaire=NEW.commentaire,
+        geom=NEW.geom
+    WHERE id_point = OLD.id_point;
  ELSEIF (TG_OP = 'DELETE') THEN
-    DELETE FROM adresse.point_adresse WHERE id_point = NEW.id_point;
+    DELETE FROM adresse.point_adresse WHERE id_point = OLD.id_point;
  END IF;
 RETURN NEW;
 END;
