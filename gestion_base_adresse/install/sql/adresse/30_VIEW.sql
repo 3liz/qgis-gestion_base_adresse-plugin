@@ -138,12 +138,11 @@ CREATE VIEW adresse.v_point_adresse AS
     p.creation_adresse,
     c.commune_nom,
     c.insee_code,
-    cd.commune_deleguee_nom,
+	  cd.commune_deleguee_nom,
     cd.insee_code AS commune_deleguee_insee
-   FROM adresse.point_adresse p,
-    adresse.commune c,
-    adresse.commune_deleguee cd
-  WHERE (public.st_intersects(c.geom, p.geom) AND public.st_intersects(cd.geom, p.geom));
+   FROM adresse.point_adresse p
+    INNER JOIN adresse.commune c ON st_intersects(c.geom, p.geom)
+	LEFT JOIN adresse.commune_deleguee cd ON st_intersects(cd.geom, p.geom);
 
 
 --
