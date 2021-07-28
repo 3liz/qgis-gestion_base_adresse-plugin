@@ -111,7 +111,7 @@ CREATE FUNCTION adresse.edit_point_adresse()
 AS $BODY$
 DECLARE
 BEGIN
- IF (TG_OP == 'INSERT') THEN
+ IF (TG_OP = 'INSERT') THEN
     INSERT INTO adresse.point_adresse SELECT NEW.*;
  ELSEIF (TG_OP = 'UPDATE') THEN
     UPDATE adresse.point_adresse SET OLD = NEW WHERE id_point = NEW.id_point;
