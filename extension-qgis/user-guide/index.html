@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://docs.3liz.org/qgis-gestion_base_adresse-plugin/extension-qgis/user-guide/">
       
       <link rel="icon" href="../../media/icon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.1.11">
     
     
       
@@ -24,10 +24,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.3754935a.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f1a3b89f.min.css">
         
           
           
@@ -45,6 +45,8 @@
     
     
       
+
+
     
     
   </head>
@@ -166,7 +168,7 @@
 
 
   <li class="md-tabs__item">
-    <a href="../../../" class="md-tabs__link">
+    <a href="../../" class="md-tabs__link">
       docs.3liz.org
     </a>
   </li>
@@ -317,7 +319,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../" class="md-nav__link">
+      <a href="../../" class="md-nav__link">
         docs.3liz.org
       </a>
     </li>
@@ -803,12 +805,38 @@ pour que la mise à jour se lance lors de l'exécution.</p>
 <h2 id="configuration-du-projet-qgis">Configuration du Projet QGIS<a class="headerlink" href="#configuration-du-projet-qgis" title="Permanent link">#</a></h2>
 <h3 id="recuperation-des-couches-necessaires">Récupération des couches nécessaires<a class="headerlink" href="#recuperation-des-couches-necessaires" title="Permanent link">#</a></h3>
 <p>Dans l'onglet <strong>Données</strong> de la <a href="#liste-des-scripts">liste des différents scripts du plugin</a>, il y a le 
-script <strong>Chargement des couches depuis la base</strong> qui permet les différentes couches nécessaires dans le 
+script <strong>Chargement des couches depuis la base</strong> qui permet d'importer les différentes couches nécessaires dans le 
 module adresse.</p>
 <p><img alt="algo_load_data" src="../../processing/gestion_adresse-load_layers.png" /></p>
 <p>Pour exécuter ce script correctement il suffit de renseigner la connexion à la base de données dans le 
 premier paramètre, puis le schéma qui contient les couches. En l'occurrence ici normalement le schéma 
 s'appelle <strong>adresse</strong>.</p>
+<p>Les couches sont donc présentes dans le projets.
+<img alt="project_layers" src="../media/imported_project_layers.png" /></p>
+<table>
+<thead>
+<tr>
+<th>:warning:  Pour le module adresse présent sur lizmap, les noms des couches sur le projet QGIS ne doivent pas être modifié !</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th align="left">:memo: Si vous souhaitez un nom plus explicite ou plus adapté pour les couches, vous pourrais dans l'étape <a href="#Configuration-pour-Lizmap">Configuration pour Lizmap</a> ci-après, modifier le titre des couches.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="application-des-styles">Application des styles<a class="headerlink" href="#application-des-styles" title="Permanent link">#</a></h3>
 <p>Juste en dessous du script précédent il y a celui qui se nomme <strong>Chargement des styles depuis le dossier resources</strong> 
 qui permet d'appliquer un style ainsi que d'appliquer les paramètres nécessaires aux couches ayant une géométrie.</p>
@@ -824,7 +852,7 @@ les voies et les adresses.</p>
 <p>En haut à gauche de votre fenêtre QGIS vous trouverez le menu <strong>Projet</strong> dans lequel vous aurez accès aux <strong>propriétés</strong>.</p>
 <p><img alt="project_properties" src="../media/properties_project.png" /></p>
 <p>Une fois dans la fenêtre <strong>Propriétés du projet</strong> vous irez dans la section <strong>QGIS Server</strong>, puis dans la 
-partie <strong>Capacités WFS</strong> où vous cocherez pour les couches <code>voie</code>, <code>point_adresse</code> et <code>document</code> la case de la colonne 
+partie <strong>Capacités WFS</strong> où vous cocherez pour les couches <code>voie</code>, <code>v_point_adresse</code> et <code>document</code> la case de la colonne 
 <strong>Publié</strong>.</p>
 <h3 id="configuration-pour-lizmap">Configuration pour Lizmap<a class="headerlink" href="#configuration-pour-lizmap" title="Permanent link">#</a></h3>
 <p>Dernière étape pour avoir un projet bien configuré il s'agit de la partie Lizmap. Il faut ouvrir le plugin. 
@@ -832,10 +860,10 @@ Nous, on s'occupera uniquement des sections <strong>Couches</strong> et <strong>
 concerne les <strong>Options de carte</strong> ou les <strong>Fonds</strong> vous pouvez configurer selon vos besoins et envies.</p>
 <p>Pour ce qui est des couches, pour celles sans géométrie il n'y a rien à faire alors que celles avec géométrie 
 dans la partie <strong>Légende</strong> il faut cocher les cases <strong>Cochée ?</strong> et <strong>Afficher dans la légende</strong>. 
-Puis pour les couches <code>point_adresse</code> et <code>voie</code> on coche la case <strong>Popup</strong>.</p>
+Puis pour les couches <code>v_point_adresse</code> et <code>voie</code> on coche la case <strong>Popup</strong>.</p>
 <p><img alt="lizmap_layers" src="../media/lizmap_layer.png" /></p>
 <p>Pour ce qui est de la configuration de l'édition comme on le voie sur l'image ci-dessous il suffit d'ajouter 
-les couches auxquelles on permet l'édition. Pour le module Adresse cela concerne uniquement <code>voie</code>, <code>point_adresse</code> 
+les couches auxquelles on permet l'édition. Pour le module Adresse cela concerne uniquement <code>voie</code>, <code>v_point_adresse</code> 
 et <code>document</code>. Pour pouvoir ajouter une couche à l'édition il suffit de cliquer sur le bouton représentant une 
 croix de couleur verte.</p>
 <p><img alt="lizmap_edit" src="../media/lizmap_edit.png" /></p>
@@ -865,8 +893,9 @@ aider de la <a href="https://docs.lizmap.com/next/fr/publish/lizmap_configuratio
           </div>
         </div>
         
-          <a href="#" class="md-top md-icon" title="Back to top" data-md-component="top" data-md-state="hidden">
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
           </a>
         
       </main>
@@ -876,7 +905,8 @@ aider de la <a href="https://docs.lizmap.com/next/fr/publish/lizmap_configuratio
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../.." class="md-footer__link md-footer__link--prev" rel="prev">
+        
+        <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Précédent: Accueil" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -891,7 +921,8 @@ aider de la <a href="https://docs.lizmap.com/next/fr/publish/lizmap_configuratio
         </a>
       
       
-        <a href="../installation/" class="md-footer__link md-footer__link--next" rel="next">
+        
+        <a href="../installation/" class="md-footer__link md-footer__link--next" aria-label="Suivant: Installation" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
@@ -970,10 +1001,10 @@ aider de la <a href="https://docs.lizmap.com/next/fr/publish/lizmap_configuratio
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ddd52ceb.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       
