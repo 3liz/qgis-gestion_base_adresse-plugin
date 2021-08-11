@@ -42,12 +42,12 @@ class ConfigProject(BaseProcessingAlgorithm):
     def initAlgorithm(self, config):
         self.addParameter(
             QgsProcessingParameterVectorLayer(
-                self.ADDRESS_LAYER, "Voirie", [QgsProcessing.TypeVectorLine],
+                self.STREET_LAYER, "Voirie", [QgsProcessing.TypeVectorLine],
             )
         )
         self.addParameter(
             QgsProcessingParameterVectorLayer(
-                self.STREET_LAYER, "Point adresse", [QgsProcessing.TypeVectorPoint]
+                self.ADDRESS_LAYER, "Point adresse", [QgsProcessing.TypeVectorPoint]
             )
         )
 
