@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.8.0 - 2021-08-24
+* Use the new QGIS Database API
+* QGIS version 3.10 minimum from 0.8.0 of the plugin
+* Upgrade Database structure
+* Adding `BEGIN` and `COMMIT` in sql install file
+
 ## 0.7.0 - 2020-12-18
 
 * Update Algorithm data_parcelle.py
