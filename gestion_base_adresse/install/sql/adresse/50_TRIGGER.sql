@@ -17,6 +17,42 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- point_adresse bilan_pt_com
+CREATE TRIGGER bilan_pt_com AFTER INSERT OR UPDATE OF geom ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.f_bilan_pt_com();
+
+
+-- point_adresse bilan_pt_parcelle
+CREATE TRIGGER bilan_pt_parcelle AFTER INSERT OR UPDATE OF geom ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.f_bilan_pt_parcelle();
+
+
+-- voie bilan_voie_com
+CREATE TRIGGER bilan_voie_com AFTER INSERT OR UPDATE OF geom ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.f_bilan_voie_com();
+
+
+-- point_adresse c_erreur_parite
+CREATE TRIGGER c_erreur_parite BEFORE INSERT OR UPDATE OF geom, numero ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.c_erreur_parite();
+
+
+-- voie controle_commune_repet_nom_voie
+CREATE TRIGGER controle_commune_repet_nom_voie BEFORE INSERT OR UPDATE OF nom ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.f_commune_repet_nom_voie();
+
+
+-- voie controle_longueur_nom
+CREATE TRIGGER controle_longueur_nom BEFORE INSERT OR UPDATE OF nom ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.f_controle_longueur_nom();
+
+
+-- point_adresse controle_point_voie_distant
+CREATE TRIGGER controle_point_voie_distant BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.f_point_voie_distant();
+
+
+-- voie controle_voie_double_saisie
+CREATE TRIGGER controle_voie_double_saisie BEFORE INSERT OR UPDATE ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.f_voie_double_saisie();
+
+
+-- voie controle_voie_erreur_trace
+CREATE TRIGGER controle_voie_erreur_trace BEFORE INSERT OR UPDATE OF geom ON adresse.voie FOR EACH ROW EXECUTE PROCEDURE adresse.f_voie_erreur_trace();
+
+
 -- point_adresse createur_insert
 CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.modif_createur();
 
