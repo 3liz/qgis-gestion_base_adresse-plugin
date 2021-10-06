@@ -1,31 +1,9 @@
 BEGIN;
---
--- PostgreSQL database dump
---
 
--- Dumped from database version 10.15 (Debian 10.15-1.pgdg100+1)
--- Dumped by pg_dump version 10.15 (Debian 10.15-1.pgdg100+1)
+--v_export_bal
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
+DROP VIEW IF EXISTS adresse.v_export_bal;
 
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
--- v_commune
-CREATE VIEW adresse.v_commune AS
- SELECT (c.insee_code)::integer AS insee_code,
-    c.commune_nom
-   FROM adresse.commune c
-  ORDER BY c.commune_nom;
-
-
--- v_export_bal
 CREATE VIEW adresse.v_export_bal AS
  SELECT ''::text AS uid_adresse,
         CASE
@@ -80,44 +58,5 @@ UNION
      LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = ld.id_com_del)))
      LEFT JOIN adresse.commune c ON ((c.id_com = ld.id_com)))
   WHERE (ld.integration_ban = true);
-
-
--- v_point_adresse
-CREATE VIEW adresse.v_point_adresse AS
- SELECT p.id_point,
-    p.numero,
-    p.suffixe,
-    p.adresse_complete,
-    p.code_postal,
-    p.type_pos,
-    p.achat_plaque_numero,
-    p.createur,
-    p.date_creation,
-    p.modificateur,
-    p.date_modif,
-    p.erreur,
-    p.commentaire,
-    p.geom,
-    p.id_voie,
-    p.id_commune,
-    p.id_parcelle,
-    p.valide,
-    p.verif_terrain,
-    p.complement_adresse,
-    p.lieudit_complement_nom,
-    p.creation_adresse,
-    c.commune_nom,
-    c.insee_code,
-    cd.commune_deleguee_nom,
-    cd.insee_code AS commune_deleguee_insee
-   FROM ((adresse.point_adresse p
-     JOIN adresse.commune c ON (public.st_intersects(c.geom, p.geom)))
-     LEFT JOIN adresse.commune_deleguee cd ON (public.st_intersects(cd.geom, p.geom)));
-
-
---
--- PostgreSQL database dump complete
---
-
 
 COMMIT;
