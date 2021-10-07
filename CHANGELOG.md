@@ -2,6 +2,7 @@
 
 ## Unreleased
 * Upgrade join on view v_export_bal
+* Upgrade join on view v_point_adresse
 
 ## 0.8.0 - 2021-08-24
 * Use the new QGIS Database API

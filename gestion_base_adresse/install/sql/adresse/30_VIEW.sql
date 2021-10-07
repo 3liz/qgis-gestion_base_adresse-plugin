@@ -110,9 +110,10 @@ CREATE VIEW adresse.v_point_adresse AS
     c.insee_code,
     cd.commune_deleguee_nom,
     cd.insee_code AS commune_deleguee_insee
-   FROM ((adresse.point_adresse p
-     JOIN adresse.commune c ON (public.st_intersects(c.geom, p.geom)))
-     LEFT JOIN adresse.commune_deleguee cd ON (public.st_intersects(cd.geom, p.geom)));
+   FROM (((adresse.point_adresse p
+     JOIN adresse.commune c ON ((c.id_com = p.id_commune)))
+     LEFT JOIN adresse.referencer_com rc ON ((p.id_commune = rc.id_com)))
+     LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)));
 
 
 --
