@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Unreleased
+* Upgrade join on view v_export_bal
+
 ## 0.8.0 - 2021-08-24
 * Use the new QGIS Database API
 * QGIS version 3.10 minimum from 0.8.0 of the plugin
