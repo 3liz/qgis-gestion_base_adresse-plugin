@@ -207,10 +207,7 @@ CREATE TABLE adresse.lieux_dits (
     numero integer,
     integration_ban boolean,
     id_com integer NOT NULL,
-    commune_nom text,
-    date_der_maj date,
-    id_com_del integer,
-    commune_deleguee_nom text
+    date_der_maj date
 );
 
 

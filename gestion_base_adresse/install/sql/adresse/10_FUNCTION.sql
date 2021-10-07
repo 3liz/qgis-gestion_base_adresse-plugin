@@ -282,6 +282,45 @@ END;
 $$;
 
 
+-- edit_lieux_dits()
+CREATE FUNCTION adresse.edit_lieux_dits() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+ IF (TG_OP = 'INSERT') THEN
+    INSERT INTO adresse.lieux_dits(
+        geom,
+        nom_ld,
+        numero,
+        integration_ban,
+        id_com,
+        date_der_maj
+    ) VALUES(
+        NEW.geom,
+        NEW.nom_ld,
+        NEW.numero,
+        NEW.integration_ban,
+        NEW.id_com,
+        NEW.date_der_maj
+    );
+ ELSEIF (TG_OP = 'UPDATE') THEN
+    UPDATE adresse.lieux_dits SET 
+        geom=NEW.geom,
+        nom_ld=NEW.nom_ld,
+        numero=NEW.numero,
+        integration_ban=NEW.integration_ban,
+        id_com=NEW.id_com,
+        date_der_maj=NEW.date_der_maj
+    WHERE id_ld = OLD.id_ld;
+ ELSEIF (TG_OP = 'DELETE') THEN
+    DELETE FROM adresse.lieux_dits WHERE id_ld = OLD.id_ld;
+ END IF;
+RETURN NEW;
+END;
+$$;
+
+
 -- edit_point_adresse()
 CREATE FUNCTION adresse.edit_point_adresse() RETURNS trigger
     LANGUAGE plpgsql

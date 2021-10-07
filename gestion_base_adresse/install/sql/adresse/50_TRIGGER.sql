@@ -29,6 +29,10 @@ CREATE TRIGGER createur_insert BEFORE INSERT ON adresse.voie FOR EACH ROW EXECUT
 CREATE TRIGGER creation_adresse BEFORE INSERT ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.creation_adresse();
 
 
+-- v_lieux_dits edit_lieux_dits_from_view
+CREATE TRIGGER edit_lieux_dits_from_view INSTEAD OF INSERT OR DELETE OR UPDATE ON adresse.v_lieux_dits FOR EACH ROW EXECUTE PROCEDURE adresse.edit_lieux_dits();
+
+
 -- v_point_adresse edit_point_adresse_from_view
 CREATE TRIGGER edit_point_adresse_from_view INSTEAD OF INSERT OR DELETE OR UPDATE ON adresse.v_point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.edit_point_adresse();
 
