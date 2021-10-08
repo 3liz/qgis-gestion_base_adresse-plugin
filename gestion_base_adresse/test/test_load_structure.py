@@ -157,6 +157,7 @@ class TestProcessing(unittest.TestCase):
             "import_ban_lo",
             "v_point_adresse",
             "lieux_dits",
+            "v_lieux_dits",
         ]
         self.assertCountEqual(expected, result)
 
@@ -211,6 +212,7 @@ class TestProcessing(unittest.TestCase):
             "import_ban_lo",
             "v_point_adresse",
             "lieux_dits",
+            "v_lieux_dits",
         ]
         self.assertCountEqual(expected, result, result)
 
@@ -296,6 +298,7 @@ class TestProcessing(unittest.TestCase):
             "import_ban_lo",
             "v_point_adresse",
             "lieux_dits",
+            "v_lieux_dits",
         ]
         self.assertCountEqual(expected, result, result)
 
