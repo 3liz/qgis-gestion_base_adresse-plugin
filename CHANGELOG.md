@@ -1,10 +1,10 @@
 # CHANGELOG
 
 ## Unreleased
-* Upgrade join on view v_export_bal
-* Upgrade join on view v_point_adresse
-* Remove columns in lieu_dits
-* Create edit view v_lieu_dits
+* Amélioration des jointures sur la vue v_export_bal, meilleure performance
+* Amélioration des jointures sur la vue v_point_adresse, meilleure performance
+* Suppression de champs inutiles sur la table lieux_dits
+* Création d'une vue éditable v_lieux_dits
 
 ## 0.8.0 - 2021-08-24
 * Use the new QGIS Database API
