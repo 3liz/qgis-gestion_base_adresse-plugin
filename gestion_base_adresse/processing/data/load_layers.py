@@ -139,6 +139,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         layers_name['voie'] = ""
         layers_name["parcelle"] = ""
         layers_name["v_point_adresse"] = 'id_point'
+        layers_name["v_lieux_dits"] = 'id_ld'
         layers_name_none = dict()
         layers_name_none["document"] = ""
         layers_name_none["v_commune"] = "insee_code"
