@@ -1,4 +1,6 @@
-# CHANGELOG
+# Changelog
+
+## Unreleased
 
 ## 0.9.0 - 2021-10-11
 
@@ -6,7 +8,7 @@
 * Amélioration des jointures sur la vue v_point_adresse, meilleure performance
 * Suppression de champs inutiles sur la table lieux_dits
 * Création d'une vue éditable v_lieux_dits
-* Modificatiobn du trigger sur lieux_dits permettant de récupérer l'identifiant de la commune
+* Modification du trigger sur lieux_dits permettant de récupérer l'identifiant de la commune
 
 ## 0.8.0 - 2021-08-24
 
