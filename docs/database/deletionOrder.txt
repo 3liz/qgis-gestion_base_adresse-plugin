@@ -1,8 +1,13 @@
 metadata
+import_ban_lo
+import_ban_etat_commune
+import_ban
+codes_postaux
 referencer_com
 appartenir_com
 document
 point_adresse
+lieux_dits
 parcelle
 commune_deleguee
 voie
