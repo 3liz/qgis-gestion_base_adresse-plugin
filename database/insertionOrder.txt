@@ -2,8 +2,13 @@ commune
 voie
 commune_deleguee
 parcelle
+lieux_dits
 point_adresse
 document
 appartenir_com
 referencer_com
+codes_postaux
+import_ban
+import_ban_etat_commune
+import_ban_lo
 metadata

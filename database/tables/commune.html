@@ -120,12 +120,20 @@
                                                 <td class="constraint detail">document_id_commune_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
+                                                <td title="lieux_dits.id_com references commune.id_com via lieux_dits_id_com_fkey"><a href='lieux_dits.html'>lieux_dits</a><span class='relatedKey'>.id_com</span></td>
+                                                <td class="constraint detail">lieux_dits_id_com_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
                                                 <td title="point_adresse.id_commune references commune.id_com via point_adresse_id_commune_fkey"><a href='point_adresse.html'>point_adresse</a><span class='relatedKey'>.id_commune</span></td>
                                                 <td class="constraint detail">point_adresse_id_commune_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="referencer_com.id_com references commune.id_com via referencer_com_id_com_fkey"><a href='referencer_com.html'>referencer_com</a><span class='relatedKey'>.id_com</span></td>
                                                 <td class="constraint detail">referencer_com_id_com_fkey<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="v_lieux_dits.id_com&#39;s name implies that it&#39;s a child of commune.id_com, but it doesn&#39;t reference that column."><a href='v_lieux_dits.html'>v_lieux_dits</a><span class='relatedKey'>.id_com</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -492,6 +500,142 @@
                                     </td>
                                     <td></td>
                                 </tr>
+                                <tr>
+                                    <td><span id="acc_ingenierie_publique">acc_ingenierie_publique</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="key_lizmap_filter">key_lizmap_filter</span></td>
+                                    <td>varchar</td>
+                                    <td>255</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="diffusion_sna">diffusion_sna</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="date_sna">date_sna</span></td>
+                                    <td>date</td>
+                                    <td>13</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="courrier_president">courrier_president</span></td>
+                                    <td>varchar</td>
+                                    <td>255</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="poste">poste</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="nb_locaux">nb_locaux</span></td>
+                                    <td>int4</td>
+                                    <td>10</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="osm">osm</span></td>
+                                    <td>bool</td>
+                                    <td>1</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -553,48 +697,54 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="411,5,617,128">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,283,357,997">
-<area shape="rect" id="node3" href="document.html" target="_top" title="document" alt="" coords="428,145,600,292">
-<area shape="rect" id="node4" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="401,309,627,544">
-<area shape="rect" id="node5" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="411,561,617,708">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="490,5,697,128">
+<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,365,424,1315">
+<area shape="rect" id="node3" href="document.html" target="_top" title="document" alt="" coords="507,145,679,292">
+<area shape="rect" id="node4" href="lieux_dits.html" target="_top" title="lieux_dits" alt="" coords="505,309,681,485">
+<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="468,503,719,737">
+<area shape="rect" id="node6" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="491,755,696,901">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/commune.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="411,257,617,380">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,309,357,1024">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="119,204,244,292">
-<area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="428,397,600,544">
-<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="401,5,627,240">
-<area shape="rect" id="node6" href="parcelle.html" target="_top" title="parcelle" alt="" coords="107,99,255,187">
-<area shape="rect" id="node7" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="411,772,617,919">
-<area shape="rect" id="node8" href="commune_deleguee.html" target="_top" title="commune_deleguee" alt="" coords="63,1041,300,1129">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="490,257,697,380">
+<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,409,424,1359">
+<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="152,245,277,333">
+<area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="507,591,679,737">
+<area shape="rect" id="node5" href="lieux_dits.html" target="_top" title="lieux_dits" alt="" coords="505,397,681,573">
+<area shape="rect" id="node6" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="468,5,719,240">
+<area shape="rect" id="node7" href="parcelle.html" target="_top" title="parcelle" alt="" coords="141,125,289,213">
+<area shape="rect" id="node8" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="491,1012,696,1159">
+<area shape="rect" id="node9" href="commune_deleguee.html" target="_top" title="commune_deleguee" alt="" coords="96,1376,333,1464">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/commune.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="411,5,617,128">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,283,357,997">
-<area shape="rect" id="node3" href="document.html" target="_top" title="document" alt="" coords="428,145,600,292">
-<area shape="rect" id="node4" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="401,309,627,544">
-<area shape="rect" id="node5" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="411,561,617,708">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="490,5,697,128">
+<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,412,424,1361">
+<area shape="rect" id="node3" href="document.html" target="_top" title="document" alt="" coords="507,145,679,292">
+<area shape="rect" id="node4" href="lieux_dits.html" target="_top" title="lieux_dits" alt="" coords="505,309,681,485">
+<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="468,539,719,773">
+<area shape="rect" id="node6" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="491,791,696,937">
+<area shape="rect" id="node7" href="v_lieux_dits.html" target="_top" title="v_lieux_dits" alt="" coords="763,372,1019,495">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/commune.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="411,257,617,380">
-<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,309,357,1024">
-<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="119,204,244,292">
-<area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="428,397,600,544">
-<area shape="rect" id="node5" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="401,5,627,240">
-<area shape="rect" id="node6" href="parcelle.html" target="_top" title="parcelle" alt="" coords="107,99,255,187">
-<area shape="rect" id="node7" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="411,772,617,919">
-<area shape="rect" id="node8" href="commune_deleguee.html" target="_top" title="commune_deleguee" alt="" coords="63,1041,300,1129">
-<area shape="rect" id="node9" href="v_export_bal.html" target="_top" title="v_export_bal" alt="" coords="671,8,851,72">
+<area shape="rect" id="node1" href="appartenir_com.html" target="_top" title="appartenir_com" alt="" coords="490,952,697,1075">
+<area shape="rect" id="node2" href="commune.html" target="_top" title="commune" alt="" coords="5,225,424,1175">
+<area shape="rect" id="node3" href="voie.html" target="_top" title="voie" alt="" coords="152,1297,277,1385">
+<area shape="rect" id="node4" href="document.html" target="_top" title="document" alt="" coords="507,5,679,152">
+<area shape="rect" id="node5" href="lieux_dits.html" target="_top" title="lieux_dits" alt="" coords="505,169,681,345">
+<area shape="rect" id="node6" href="point_adresse.html" target="_top" title="point_adresse" alt="" coords="468,1259,719,1493">
+<area shape="rect" id="node7" href="parcelle.html" target="_top" title="parcelle" alt="" coords="141,1403,289,1491">
+<area shape="rect" id="node8" href="referencer_com.html" target="_top" title="referencer_com" alt="" coords="491,528,696,675">
+<area shape="rect" id="node9" href="commune_deleguee.html" target="_top" title="commune_deleguee" alt="" coords="96,1192,333,1280">
+<area shape="rect" id="node10" href="v_lieux_dits.html" target="_top" title="v_lieux_dits" alt="" coords="763,232,1019,355">
+<area shape="rect" id="node11" href="v_point_adresse.html" target="_top" title="v_point_adresse" alt="" coords="789,1223,993,1287">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/commune.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>

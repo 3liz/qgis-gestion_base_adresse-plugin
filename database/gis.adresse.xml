@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <database name="gis" schema="adresse" type="PostgreSQL - 10.14 (Debian 10.14-1.pgdg100+1)">
    <sequences>
+      <sequence increment="1" name="alerte_ddfip_id_seq" startValue="1"/>
       <sequence increment="1" name="commune_deleguee_id_com_del_seq" startValue="1"/>
       <sequence increment="1" name="commune_id_com_seq" startValue="1"/>
       <sequence increment="1" name="document_id_doc_seq" startValue="1"/>
+      <sequence increment="1" name="lieux_dits_id_ld_seq" startValue="1"/>
       <sequence increment="1" name="metadata_id_seq" startValue="1"/>
       <sequence increment="1" name="parcelle_fid_seq" startValue="1"/>
       <sequence increment="1" name="point_adresse_id_point_seq" startValue="1"/>
@@ -30,12 +32,26 @@
             <column ascending="true" name="id_voie"/>
          </index>
       </table>
+      <table name="codes_postaux" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cp" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="codes_postaux_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="sidx_codes_postaux_geom" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
+      </table>
       <table name="commune" numRows="0" remarks="" schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.commune_id_com_seq'::regclass)" digits="0" id="0" name="id_com" nullable="false" remarks="Identifiant unique de la commune" size="10" type="serial" typeCode="4">
             <child column="id_com" foreignKey="appartenir_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="appartenir_com"/>
             <child column="id_commune" foreignKey="document_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="document"/>
+            <child column="id_com" foreignKey="lieux_dits_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="lieux_dits"/>
             <child column="id_commune" foreignKey="point_adresse_id_commune_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
             <child column="id_com" foreignKey="referencer_com_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="referencer_com"/>
+            <child column="id_com" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="v_lieux_dits"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_nom" nullable="true" remarks="Nom de la commune" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="insee_code" nullable="true" remarks="Code INSEE de la commune" size="5" type="bpchar" typeCode="1"/>
@@ -58,6 +74,14 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="adresse_mairie" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="code_postal" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="maire" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="22" name="acc_ingenierie_publique" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="23" name="key_lizmap_filter" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="24" name="diffusion_sna" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="25" name="date_sna" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="26" name="courrier_president" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="27" name="poste" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="28" name="nb_locaux" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="29" name="osm" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
          <primaryKey column="id_com" sequenceNumberInPK="1"/>
          <index name="commune_pkey" unique="true">
             <column ascending="true" name="id_com"/>
@@ -98,6 +122,74 @@
             <column ascending="true" name="id_doc"/>
          </index>
       </table>
+      <table name="import_ban" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_ban_position" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_ban_adresse" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cle_interop" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="id_ban_group" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="id_fantoir" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="numero" nullable="true" remarks="" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="suffixe" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="nom_voie" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="code_postal" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="nom_commune" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="code_insee" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="nom_complementaire" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="12" name="x" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="13" name="y" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="lon" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="lat" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="typ_loc" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="source" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="date_der_maj" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+      </table>
+      <table name="import_ban_etat_commune" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="region" nullable="true" remarks="" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="departement" nullable="true" remarks="" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="code_commune" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_commune" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="population" nullable="true" remarks="" size="19" type="int8" typeCode="-5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="type_composition" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="nb_lieux_dits" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="nb_voies" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="nb_numeros" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="analyse_adressage_nb_adresses_attendues" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="analyse_adressage_ratio" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="analyse_adressage_deficit_adresses" nullable="true" remarks="" size="5" type="int2" typeCode="5"/>
+      </table>
+      <table name="import_ban_lo" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="rep" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_voie" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="code_postal" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="code_insee" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="nom_commune" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="x" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="y" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+      </table>
+      <table name="lieux_dits" numRows="0" remarks="" schema="adresse" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('adresse.lieux_dits_id_ld_seq'::regclass)" digits="0" id="0" name="id_ld" nullable="false" remarks="" size="10" type="serial" typeCode="4">
+            <child column="id_ld" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="v_lieux_dits"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom_ld" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="numero" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="integration_ban" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_com" nullable="false" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_com" foreignKey="lieux_dits_id_com_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="commune"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="date_der_maj" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <primaryKey column="id_ld" sequenceNumberInPK="1"/>
+         <index name="lieux_dits_pkey" unique="true">
+            <column ascending="true" name="id_ld"/>
+         </index>
+         <index name="sidx_lieux_dits_geom" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
+      </table>
       <table name="metadata" numRows="0" remarks="Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C'est utilisé pour les scripts de migration de la structure entre 2 versions." schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.metadata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant de la version" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="me_version" nullable="false" remarks="Version. Ex: 1.0.2" size="2147483647" type="text" typeCode="12"/>
@@ -132,10 +224,13 @@
          <index name="parcelle_geom_idx" unique="false">
             <column ascending="true" name="geom"/>
          </index>
+         <index name="sidx_parcelle_geom" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
       </table>
       <table name="point_adresse" numRows="0" remarks="" schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.point_adresse_id_point_seq'::regclass)" digits="0" id="0" name="id_point" nullable="false" remarks="Identifiant unique du point adresse" size="10" type="serial" typeCode="4">
-            <child column="id_point" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="v_export_bal"/>
+            <child column="id_point" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="v_point_adresse"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero" nullable="false" remarks="Numéro de l’adresse" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="suffixe" nullable="true" remarks="Extension du numéro (bis, ter, A, B...)" size="2147483647" type="text" typeCode="12"/>
@@ -159,7 +254,11 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="id_parcelle" nullable="true" remarks="Identifiant de la parcelle à laquelle appartient le point adresse" size="10" type="int4" typeCode="4">
             <parent column="fid" foreignKey="point_adresse_id_parcelle_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="parcelle"/>
          </column>
-         <column autoUpdated="false" defaultValue="true" digits="0" id="17" name="valide" nullable="true" remarks="Le point d'adresse est valide ou non" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="17" name="valide" nullable="false" remarks="Le point d'adresse est valide ou non" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="18" name="verif_terrain" nullable="false" remarks="la saisie du point adresse nécessite une vérification terrain" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="complement_adresse" nullable="true" remarks="En minuscule et sans espace (ex : lesmimosas)" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="lieudit_complement_nom" nullable="true" remarks="Nom du hameau ou lieu-dit local" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="creation_adresse" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
          <primaryKey column="id_point" sequenceNumberInPK="1"/>
          <index name="point_adresse_pkey" unique="true">
             <column ascending="true" name="id_point"/>
@@ -203,35 +302,86 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="insee_code" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
-      <table name="v_export_bal" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT p.id_point,&#10;        CASE&#10;            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)&#10;            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text))&#10;            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text))&#10;            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)&#10;            ELSE NULL::text&#10;        END AS cle_interop,&#10;    ''::text AS uid_adresse,&#10;    v.nom_complet AS voie_nom,&#10;    p.numero,&#10;    p.suffixe,&#10;    c.commune_nom,&#10;    p.type_pos AS &quot;position&quot;,&#10;    st_x(p.geom) AS x,&#10;    st_y(p.geom) AS y,&#10;    st_x(st_transform(p.geom, 4326)) AS long,&#10;    st_y(st_transform(p.geom, 4326)) AS lat,&#10;    ''::text AS source,&#10;    p.date_modif AS date_der_maj,&#10;    c.insee_code AS code_insee&#10;   FROM adresse.commune c,&#10;    adresse.point_adresse p,&#10;    adresse.voie v&#10;  WHERE ((p.id_commune = c.id_com) AND (p.id_voie = v.id_voie));">
+      <table name="v_export_bal" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT ''::text AS uid_adresse,&#10;        CASE&#10;            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)&#10;            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text))&#10;            WHEN ((p.suffixe IS NULL) AND (v.code_fantoir IS NOT NULL)) THEN concat(c.insee_code, '_', (v.code_fantoir)::text, '_', lpad((p.numero)::text, 5, '0'::text))&#10;            WHEN ((p.suffixe IS NOT NULL) AND (v.code_fantoir IS NULL)) THEN concat(c.insee_code, '_', 'xxxx', '_', lpad((p.numero)::text, 5, '0'::text), '_', p.suffixe)&#10;            ELSE NULL::text&#10;        END AS cle_interop,&#10;    c.insee_code AS commune_insee,&#10;    c.commune_nom,&#10;    cd.insee_code AS commune_deleguee_insee,&#10;    cd.commune_deleguee_nom,&#10;    v.nom_complet AS voie_nom,&#10;    p.lieudit_complement_nom,&#10;    p.numero,&#10;    p.suffixe,&#10;    p.type_pos AS &quot;position&quot;,&#10;    st_x(p.geom) AS x,&#10;    st_y(p.geom) AS y,&#10;    round((st_x(st_transform(p.geom, 4326)))::numeric, 10) AS long,&#10;    round((st_y(st_transform(p.geom, 4326)))::numeric, 10) AS lat,&#10;    g.id AS cad_parcelles,&#10;    c.commune_nom AS source,&#10;    p.date_modif AS date_der_maj&#10;   FROM (((((adresse.point_adresse p&#10;     LEFT JOIN adresse.commune c ON ((p.id_commune = c.id_com)))&#10;     LEFT JOIN adresse.referencer_com rc ON ((p.id_commune = rc.id_com)))&#10;     LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)))&#10;     LEFT JOIN adresse.voie v ON ((p.id_voie = v.id_voie)))&#10;     LEFT JOIN adresse.parcelle g ON ((p.id_parcelle = g.fid)))&#10;UNION&#10; SELECT ''::text AS uid_adresse,&#10;    concat(c.insee_code, '_', 'xxxx', '_', ld.numero) AS cle_interop,&#10;    c.insee_code AS commune_insee,&#10;    c.commune_nom,&#10;    cd.insee_code AS commune_deleguee_insee,&#10;    cd.commune_deleguee_nom,&#10;    ld.nom_ld AS voie_nom,&#10;    ''::character varying(255) AS lieudit_complement_nom,&#10;    ld.numero,&#10;    ''::text AS suffixe,&#10;    ''::text AS &quot;position&quot;,&#10;    st_x(ld.geom) AS x,&#10;    st_y(ld.geom) AS y,&#10;    round((st_x(st_transform(ld.geom, 4326)))::numeric, 10) AS long,&#10;    round((st_y(st_transform(ld.geom, 4326)))::numeric, 10) AS lat,&#10;    ''::text AS cad_parcelles,&#10;    c.commune_nom AS source,&#10;    ld.date_der_maj&#10;   FROM (((adresse.lieux_dits ld&#10;     LEFT JOIN adresse.commune c ON ((c.id_com = ld.id_com)))&#10;     LEFT JOIN adresse.referencer_com rc ON ((ld.id_com = rc.id_com)))&#10;     LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)))&#10;  WHERE (ld.integration_ban = true);">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="uid_adresse" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cle_interop" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="commune_insee" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="commune_deleguee_insee" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="commune_deleguee_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="voie_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="lieudit_complement_nom" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="numero" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="suffixe" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="position" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="11" name="x" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="12" name="y" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="long" nullable="true" remarks="" size="131089" type="numeric" typeCode="2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="lat" nullable="true" remarks="" size="131089" type="numeric" typeCode="2"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="cad_parcelles" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="source" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="date_der_maj" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+      </table>
+      <table name="v_lieux_dits" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT ld.id_ld,&#10;    ld.geom,&#10;    ld.nom_ld,&#10;    ld.numero,&#10;    ld.integration_ban,&#10;    ld.id_com,&#10;    ld.date_der_maj,&#10;    c.commune_nom,&#10;    c.insee_code,&#10;    cd.commune_deleguee_nom,&#10;    cd.insee_code AS commune_deleguee_insee&#10;   FROM (((adresse.lieux_dits ld&#10;     JOIN adresse.commune c ON ((c.id_com = ld.id_com)))&#10;     LEFT JOIN adresse.referencer_com rc ON ((ld.id_com = rc.id_com)))&#10;     LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_ld" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_ld" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="lieux_dits"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom_ld" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="numero" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="integration_ban" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_com" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_com" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="commune"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="date_der_maj" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="insee_code" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="commune_deleguee_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="commune_deleguee_insee" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+      </table>
+      <table name="v_point_adresse" numRows="0" remarks="" schema="adresse" type="VIEW" viewSql=" SELECT p.id_point,&#10;    p.numero,&#10;    p.suffixe,&#10;    p.adresse_complete,&#10;    p.code_postal,&#10;    p.type_pos,&#10;    p.achat_plaque_numero,&#10;    p.createur,&#10;    p.date_creation,&#10;    p.modificateur,&#10;    p.date_modif,&#10;    p.erreur,&#10;    p.commentaire,&#10;    p.geom,&#10;    p.id_voie,&#10;    p.id_commune,&#10;    p.id_parcelle,&#10;    p.valide,&#10;    p.verif_terrain,&#10;    p.complement_adresse,&#10;    p.lieudit_complement_nom,&#10;    p.creation_adresse,&#10;    c.commune_nom,&#10;    c.insee_code,&#10;    cd.commune_deleguee_nom,&#10;    cd.insee_code AS commune_deleguee_insee&#10;   FROM (((adresse.point_adresse p&#10;     JOIN adresse.commune c ON ((c.id_com = p.id_commune)))&#10;     LEFT JOIN adresse.referencer_com rc ON ((p.id_commune = rc.id_com)))&#10;     LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_point" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="id_point" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cle_interop" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="uid_adresse" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="voie_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="numero" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="suffixe" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="position" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="17" id="8" name="x" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
-         <column autoUpdated="false" defaultValue="null" digits="17" id="9" name="y" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
-         <column autoUpdated="false" defaultValue="null" digits="17" id="10" name="long" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
-         <column autoUpdated="false" defaultValue="null" digits="17" id="11" name="lat" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="source" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="date_der_maj" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="code_insee" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="suffixe" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="adresse_complete" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="code_postal" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="type_pos" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="achat_plaque_numero" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="createur" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="date_creation" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="modificateur" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="date_modif" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="erreur" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="commentaire" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="id_voie" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_voie" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="voie"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="id_commune" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="id_parcelle" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="valide" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="verif_terrain" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="complement_adresse" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="20" name="lieudit_complement_nom" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="21" name="creation_adresse" nullable="true" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="22" name="commune_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="23" name="insee_code" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="24" name="commune_deleguee_nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="25" name="commune_deleguee_insee" nullable="true" remarks="" size="5" type="bpchar" typeCode="1"/>
       </table>
       <table name="voie" numRows="0" remarks="" schema="adresse" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('adresse.voie_id_voie_seq'::regclass)" digits="0" id="0" name="id_voie" nullable="false" remarks="Identifiant unique de la voie" size="10" type="serial" typeCode="4">
             <child column="id_voie" foreignKey="appartenir_com_id_voie_fkey" implied="false" onDeleteCascade="true" schema="adresse" table="appartenir_com"/>
             <child column="id_voie" foreignKey="point_adresse_id_voie_fkey" implied="false" onDeleteCascade="false" schema="adresse" table="point_adresse"/>
+            <child column="id_voie" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="adresse" table="v_point_adresse"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="typologie" nullable="false" remarks="Typologie de la voie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom" nullable="false" remarks="Nom de la voie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_complet" nullable="true" remarks="Concaténation de la typologie et du nom de la voie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="type_num" nullable="true" remarks="Type de numérotation de la voie" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="true" digits="0" id="5" name="statut_voie_num" nullable="false" remarks="Statut accordé à la voie permettant son verrouillage ou son déverrouillage pour la saisie d’une adresse" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="statut_voie_num" nullable="false" remarks="Statut accordé à la voie permettant son verrouillage ou son déverrouillage pour la saisie d’une adresse" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="false" digits="0" id="6" name="statut_voie" nullable="false" remarks="Statut accordé à la voie au niveau du plan d’adressage" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="sens_numerotation" nullable="false" remarks="Si les nombres pairs sont à droite ou à gauche de la voie par rapport au sens de dessin" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="achat_plaque_voie" nullable="false" remarks="Achat de la plaque nécessaire ou non ?" size="1" type="bool" typeCode="-7"/>
@@ -244,6 +394,8 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="code_fantoir" nullable="true" remarks="Code fantoir pour de la DGFIP" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="16" name="delib" nullable="true" remarks="Spécifie si la commune souhaite délibérer sur la voie" size="1" type="bool" typeCode="-7"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="17" name="geom" nullable="true" remarks="Géométrie de l’objet" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="18" name="nb_panneaux" nullable="true" remarks="" size="5" type="int2" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="19" name="nom_complet_maj" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id_voie" sequenceNumberInPK="1"/>
          <index name="voie_pkey" unique="true">
             <column ascending="true" name="id_voie"/>
@@ -482,6 +634,152 @@ BEGIN
 END;
 ]]></definition>
       </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="check_impair" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+/* Cette fonction retourne true (vrai) si le nombre passé en argument est impair 
+ 
+   Exemple :  SELECT checkimpair(12);
+              false
+*/
+BEGIN
+ return nombre % 2!=0;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="creation_adresse" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    NEW.creation_adresse = 'true';
+RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="edit_lieux_dits" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+ IF (TG_OP = 'INSERT') THEN
+    INSERT INTO adresse.lieux_dits(
+        geom,
+        nom_ld,
+        numero,
+        integration_ban,
+        id_com,
+        date_der_maj
+    ) VALUES(
+        NEW.geom,
+        NEW.nom_ld,
+        NEW.numero,
+        NEW.integration_ban,
+        NEW.id_com,
+        NEW.date_der_maj
+    );
+ ELSEIF (TG_OP = 'UPDATE') THEN
+    UPDATE adresse.lieux_dits SET 
+        geom=NEW.geom,
+        nom_ld=NEW.nom_ld,
+        numero=NEW.numero,
+        integration_ban=NEW.integration_ban,
+        id_com=NEW.id_com,
+        date_der_maj=NEW.date_der_maj
+    WHERE id_ld = OLD.id_ld;
+ ELSEIF (TG_OP = 'DELETE') THEN
+    DELETE FROM adresse.lieux_dits WHERE id_ld = OLD.id_ld;
+ END IF;
+RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="edit_point_adresse" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+ IF (TG_OP = 'INSERT') THEN
+    INSERT INTO adresse.point_adresse(
+        numero,
+        suffixe,
+        id_voie,
+        adresse_complete,
+        type_pos,
+        achat_plaque_numero,
+        valide,
+        verif_terrain,
+        createur,
+        date_creation,
+        modificateur,
+        date_modif,
+        erreur,
+        commentaire,
+        geom
+    ) VALUES(
+        NEW.numero,
+        NEW.suffixe,
+        NEW.id_voie,
+        NEW.adresse_complete,
+        NEW.type_pos,
+        NEW.achat_plaque_numero,
+        NEW.valide,
+        NEW.verif_terrain,
+        NEW.createur,
+        NEW.date_creation,
+        NEW.modificateur,
+        NEW.date_modif,
+        NEW.erreur,
+        NEW.commentaire,
+        NEW.geom
+    );
+ ELSEIF (TG_OP = 'UPDATE') THEN
+    UPDATE adresse.point_adresse SET 
+        numero=NEW.numero,
+        suffixe=NEW.suffixe,
+        id_voie=NEW.id_voie,
+        adresse_complete=NEW.adresse_complete,
+        type_pos=NEW.type_pos,
+        achat_plaque_numero=NEW.achat_plaque_numero,
+        valide=NEW.valide,
+        verif_terrain=NEW.verif_terrain,
+        createur=NEW.createur,
+        date_creation=NEW.date_creation,
+        modificateur=NEW.modificateur,
+        date_modif=NEW.date_modif,
+        erreur=NEW.erreur,
+        commentaire=NEW.commentaire,
+        geom=NEW.geom
+    WHERE id_point = OLD.id_point;
+ ELSEIF (TG_OP = 'DELETE') THEN
+    DELETE FROM adresse.point_adresse WHERE id_point = OLD.id_point;
+ END IF;
+RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="get_code_postal" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    SELECT a.cp into NEW.code_postal FROM adresse.codes_postaux a WHERE ST_intersects(NEW.geom, a.geom);
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="get_commune" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+    leid integer;
+BEGIN
+    SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
+    NEW.id_commune = leid;
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="get_id_voie" returnType="integer" securityType="INVOKER" type="FUNCTION">
          <comment/>
          <definition language="PLPGSQL"><![CDATA[
@@ -508,6 +806,33 @@ DECLARE
 BEGIN
     NEW.id_parcelle = (SELECT p.fid FROM adresse.parcelle p WHERE ST_intersects(NEW.geom, p.geom));
     RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="lieux_dits" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    SELECT c.id_com into NEW.id_com
+    FROM adresse.commune c 
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+    SELECT c.commune_nom into NEW.commune_nom 
+    FROM adresse.commune c 
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+	SELECT d.id_com_del into NEW.id_com_del
+    FROM adresse.commune_deleguee d
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+    SELECT  d.commune_deleguee_nom into NEW.commune_deleguee_nom
+    FROM adresse.commune_deleguee d
+	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+
+	NEW.numero = 99999 ;
+	NEW.date_der_maj = NOW();
+RETURN NEW;
 END;
 ]]></definition>
       </routine>
@@ -665,21 +990,14 @@ BEGIN
 END;
 ]]></definition>
       </routine>
-      <routine dataAccess="MODIFIES" deterministic="false" name="update_commune" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+      <routine dataAccess="MODIFIES" deterministic="false" name="update_appartenir_com" returnType="trigger" securityType="INVOKER" type="FUNCTION">
          <comment/>
          <definition language="PLPGSQL"><![CDATA[
 DECLARE
     leid integer;
 BEGIN
-    IF (TG_TABLE_NAME = 'voie') THEN
-        INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
-        RETURN NEW;
-    ELSIF (TG_TABLE_NAME = 'point_adresse') THEN
-        SELECT c.id_com into leid FROM adresse.commune c WHERE st_intersects(New.geom,c.geom);
-        NEW.id_commune = leid;
-        RETURN NEW;
-    END IF;
-    RETURN NULL;
+    INSERT INTO adresse.appartenir_com(id_voie, id_com) SELECT NEW.id_voie, c.id_com from adresse.commune c where ST_intersects(NEW.geom, c.geom);
+    RETURN NEW;
 END;
 ]]></definition>
       </routine>
@@ -703,6 +1021,16 @@ DECLARE
 BEGIN
     NEW.nom_complet = Concat(NEW.typologie, ' ', NEW.nom);
 
+    RETURN NEW;
+END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="voie_nom_complet_maj" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[
+DECLARE
+BEGIN
+    NEW.nom_complet_maj = Translate(Upper(Concat(NEW.typologie, ' ', NEW.nom)), 'ÀÉÈÊËÏÎÔÖÜÛÇ'::text, 'AEEEEIIOOUUC'::text);
     RETURN NEW;
 END;
 ]]></definition>
