@@ -183,7 +183,11 @@ $$;
 CREATE TRIGGER edit_lieux_dits_from_view INSTEAD OF INSERT OR DELETE OR UPDATE ON adresse.v_lieux_dits FOR EACH ROW EXECUTE PROCEDURE adresse.edit_lieux_dits();
 
 
--- lieux_dits()
+-- function edit_com_lieux_dits()
+
+DROP TRIGGER IF EXISTS infos_lieux_dits ON adresse.lieux_dits;
+
+DROP FUNCTION adresse.lieux_dits();
 
 CREATE OR REPLACE FUNCTION adresse.edit_com_lieux_dits() RETURNS trigger
     LANGUAGE plpgsql
@@ -194,15 +198,12 @@ BEGIN
     FROM adresse.commune c 
 	WHERE ST_DWithin(NEW.geom, c.geom, 0.01);
 
-	SELECT d.id_com_del into NEW.id_com_del
-    FROM adresse.commune_deleguee d
-	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
-
 	NEW.numero = 99999 ;
 	NEW.date_der_maj = NOW();
 RETURN NEW;
 END;
 $$;
 
+CREATE TRIGGER infos_lieux_dits BEFORE INSERT OR UPDATE ON adresse.lieux_dits FOR EACH ROW EXECUTE PROCEDURE adresse.edit_com_lieux_dits();
 
 COMMIT;

@@ -426,7 +426,7 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual((753, None), self.cursor.fetchone())
 
-    def test_id_commune(self):
+    def test_id_commune_point_adresse(self):
         """Test si l'id de la commune et
         Présent lors de l'ajout d'un point"""
 
@@ -439,6 +439,22 @@ class TestSqlFunctions(DatabaseTestCase):
 
         sql = (
             "SELECT id_commune FROM adresse.point_adresse WHERE id_point = 100"
+        )
+        self.cursor.execute(sql)
+        self.assertEqual((4,), self.cursor.fetchone())
+
+    def test_id_commune_lieux_dits(self):
+        """Test si l'id de la commune et
+        Présent lors de l'ajout d'un lieu dit"""
+
+        sql = (
+            "INSERT INTO adresse.lieux_dits(id_ld, numero, nom_ld, integration_ban, geom) "
+            "VALUES(100, 2, 'Test lieux dits', false, ST_geomfromtext('POINT(428310 6922058)', 2154));"
+        )
+        self.cursor.execute(sql)
+
+        sql = (
+            "SELECT id_com FROM adresse.lieux_dits WHERE id_ld = 100"
         )
         self.cursor.execute(sql)
         self.assertEqual((4,), self.cursor.fetchone())

@@ -282,6 +282,23 @@ END;
 $$;
 
 
+-- edit_com_lieux_dits()
+CREATE FUNCTION adresse.edit_com_lieux_dits() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+BEGIN
+    SELECT c.id_com into NEW.id_com
+    FROM adresse.commune c 
+	WHERE ST_DWithin(NEW.geom, c.geom, 0.01);
+
+	NEW.numero = 99999 ;
+	NEW.date_der_maj = NOW();
+RETURN NEW;
+END;
+$$;
+
+
 -- edit_lieux_dits()
 CREATE FUNCTION adresse.edit_lieux_dits() RETURNS trigger
     LANGUAGE plpgsql
@@ -442,27 +459,6 @@ DECLARE
 BEGIN
     NEW.id_parcelle = (SELECT p.fid FROM adresse.parcelle p WHERE ST_intersects(NEW.geom, p.geom));
     RETURN NEW;
-END;
-$$;
-
-
--- lieux_dits()
-CREATE FUNCTION adresse.edit_com_lieux_dits() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-DECLARE
-BEGIN
-    SELECT c.id_com into NEW.id_com
-    FROM adresse.commune c 
-	WHERE ST_DWithin(NEW.geom, c.geom, 0.01);
-
-	SELECT d.id_com_del into NEW.id_com_del
-    FROM adresse.commune_deleguee d
-	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
-
-	NEW.numero = 99999 ;
-	NEW.date_der_maj = NOW();
-RETURN NEW;
 END;
 $$;
 
