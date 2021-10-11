@@ -447,24 +447,16 @@ $$;
 
 
 -- lieux_dits()
-CREATE FUNCTION adresse.lieux_dits() RETURNS trigger
+CREATE FUNCTION adresse.edit_com_lieux_dits() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 DECLARE
 BEGIN
     SELECT c.id_com into NEW.id_com
     FROM adresse.commune c 
-	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
-
-    SELECT c.commune_nom into NEW.commune_nom 
-    FROM adresse.commune c 
-	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
+	WHERE ST_DWithin(NEW.geom, c.geom, 0.01);
 
 	SELECT d.id_com_del into NEW.id_com_del
-    FROM adresse.commune_deleguee d
-	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
-
-    SELECT  d.commune_deleguee_nom into NEW.commune_deleguee_nom
     FROM adresse.commune_deleguee d
 	WHERE ST_DWithin(NEW.geom, d.geom, 0.01);
 
