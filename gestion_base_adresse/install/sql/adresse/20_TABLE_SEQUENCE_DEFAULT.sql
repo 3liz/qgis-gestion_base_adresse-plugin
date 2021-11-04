@@ -70,10 +70,10 @@ CREATE TABLE adresse.commune (
     code_postal text,
     maire text,
     acc_ingenierie_publique boolean,
-    key_lizmap_filter character varying(255),
+    key_lizmap_filter text,
     diffusion_sna boolean,
     date_sna date,
-    courrier_president character varying(255),
+    courrier_president text,
     poste text,
     nb_locaux integer,
     osm boolean
@@ -254,10 +254,10 @@ ALTER SEQUENCE adresse.metadata_id_seq OWNED BY adresse.metadata.id;
 CREATE TABLE adresse.parcelle (
     fid integer NOT NULL,
     id text,
-    commune character varying,
-    prefixe character varying,
-    section character varying,
-    numero character varying,
+    commune text,
+    prefixe text,
+    section text,
+    numero text,
     contenance integer,
     arpente boolean,
     created date DEFAULT now(),
@@ -300,8 +300,8 @@ CREATE TABLE adresse.point_adresse (
     id_parcelle integer,
     valide boolean DEFAULT true NOT NULL,
     verif_terrain boolean DEFAULT false NOT NULL,
-    complement_adresse character varying(255),
-    lieudit_complement_nom character varying(255),
+    complement_adresse text,
+    lieudit_complement_nom text,
     creation_adresse boolean
 );
 

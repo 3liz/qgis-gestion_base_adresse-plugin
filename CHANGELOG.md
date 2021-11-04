@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Amélioration de la fonction `get_parcelle` pour qu'elle retourne une valeur unique
+* Modification des type `character varying` en `text`
 
 ## 0.9.0 - 2021-10-11
 
