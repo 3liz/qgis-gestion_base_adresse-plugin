@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Amélioration de la fonction `get_parcelle` pour qu'elle retourne une valeur unique
+
 ## 0.9.0 - 2021-10-11
 
 * Amélioration des jointures sur la vue v_export_bal, meilleure performance

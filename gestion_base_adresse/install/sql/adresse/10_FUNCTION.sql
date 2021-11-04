@@ -457,7 +457,7 @@ CREATE FUNCTION adresse.get_parcelle() RETURNS trigger
     AS $$
 DECLARE
 BEGIN
-    NEW.id_parcelle = (SELECT p.fid FROM adresse.parcelle p WHERE ST_intersects(NEW.geom, p.geom));
+    NEW.id_parcelle = (SELECT p.fid FROM adresse.parcelle p WHERE ST_intersects(NEW.geom, p.geom) LIMIT 1);
     RETURN NEW;
 END;
 $$;
