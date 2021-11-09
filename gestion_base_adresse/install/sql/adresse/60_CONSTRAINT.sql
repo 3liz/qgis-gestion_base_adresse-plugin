@@ -59,6 +59,11 @@ ALTER TABLE ONLY adresse.metadata
     ADD CONSTRAINT metadata_pkey PRIMARY KEY (id);
 
 
+-- parcelle parcelle_id_key
+ALTER TABLE ONLY adresse.parcelle
+    ADD CONSTRAINT parcelle_id_key UNIQUE (id);
+
+
 -- parcelle parcelle_pkey
 ALTER TABLE ONLY adresse.parcelle
     ADD CONSTRAINT parcelle_pkey PRIMARY KEY (fid);
