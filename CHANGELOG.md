@@ -4,6 +4,9 @@
 
 * Amélioration de la fonction `get_parcelle` pour qu'elle retourne une valeur unique
 * Modification des type `character varying` en `text`
+* Ajout de valeur par défaut au booléen avec la contrainte `NOT NULL` sur la table `adresse.point_adresse`
+* Amélioration de l'algorithme d'import des données de la table `adresse.parcelle`
+* Ajout des contraintes `NOT NULL` et `UNIQUE` sur le champ `id` de la table `adresse.parcelle`
 
 ## 0.9.0 - 2021-10-11
 
