@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.0 - 2021-11-10
+
 * Amélioration de la fonction `get_parcelle` pour qu'elle retourne une valeur unique
 * Modification des type `character varying` en `text`
 * Ajout de valeur par défaut au booléen avec la contrainte `NOT NULL` sur la table `adresse.point_adresse`
