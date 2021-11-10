@@ -30,7 +30,8 @@ from ...qgis_plugin_tools.tools.i18n import tr
 
 class DataParcelleAlgo(BaseProcessingAlgorithm):
     """
-    Chargement des couches adresse depuis la base de données
+    Chargement des données pour adresse.parcelle et création des vues
+    pour la gestion des documents
     """
 
     CONNECTION_NAME = "CONNECTION_NAME"
@@ -43,7 +44,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         return "data_parcelle"
 
     def displayName(self):
-        return tr("Mise en place des données pour certificat de numérotation")
+        return tr("Mise en place des données parcellaires pour les certificats de numérotation")
 
     def groupId(self):
         return "adresse_donnees"
@@ -86,9 +87,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             param.tooltip_3liz = tooltip
         self.addParameter(param)
 
-        label = tr("Schéma")
-        tooltip = 'Nom du schéma des données adresses'
-        default = 'adresse'
+        label = tr("Schéma des données du cadastre")
+        tooltip = 'Nom du schéma des données cadastre'
+        default = 'cadastre'
         if Qgis.QGIS_VERSION_INT >= 31400:
             param = QgsProcessingParameterDatabaseSchema(
                 self.SCHEMA,
@@ -182,57 +183,36 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 connection.executeSql("ROLLBACK;")
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
-            feedback.pushInfo("""
-                # Désactivation de la clé étrangère sur adresse.point_adresse pour
-                pouvoir vider la table adresse.parcelle #
-            """)
-            sql = """
-                ALTER TABLE adresse.point_adresse DROP CONSTRAINT point_adresse_id_parcelle_fkey;
-            """
-            try:
-                connection.executeSql(sql)
-            except QgsProviderConnectionException as e:
-                connection.executeSql("ROLLBACK;")
-                return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
-
-            feedback.pushInfo("# Vide la table adresse.parcelle #")
-            sql = """
-                TRUNCATE adresse.parcelle RESTART IDENTITY;
-            """
-            try:
-                connection.executeSql(sql)
-            except QgsProviderConnectionException as e:
-                connection.executeSql("ROLLBACK;")
-                return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
-
-            feedback.pushInfo("# Réactivation de la clé étrangère sur adresse.point_adresse #")
-            sql = """
-                ALTER TABLE adresse.point_adresse
-                ADD CONSTRAINT point_adresse_id_parcelle_fkey FOREIGN KEY (id_parcelle)
-                REFERENCES adresse.parcelle (fid);
-            """
-            try:
-                connection.executeSql(sql)
-            except QgsProviderConnectionException as e:
-                connection.executeSql("ROLLBACK;")
-                return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
-
             feedback.pushInfo("# Remplissage de la table adresse.parcelle #")
             sql = """
                 INSERT INTO adresse.parcelle(id,commune, prefixe, section, numero,
                     contenance, arpente, geom)
-                SELECT p.idu, p.nomcommune, p1.ccopre, p1.ccosec, p1.dnupla, p.contenance,
-                CASE
-                WHEN p1.ccoarp = 'A' THEN True
-                ELSE False
-                END as arpente,
-                p.geom
-                FROM {}.parcelle_info p, {}.parcelle p1
-                WHERE p.geo_parcelle = p1.parcelle
-                AND p.idu not in(select pa.id from adresse.parcelle pa)
-            """.format(
-                schema, schema
-            )
+                    SELECT p.parcelle AS id, pi.nomcommune, p.ccopre, p.ccosec,
+                        p.dnupla, pi.contenance,
+                        CASE WHEN p.ccoarp = 'A' THEN True ELSE False END as arpente,
+                        pi.geom
+                    FROM {}.parcelle_info pi
+                    JOIN {}.parcelle p ON p.parcelle=pi.geo_parcelle
+                ON CONFLICT (id) DO UPDATE SET
+                    commune=EXCLUDED.commune,
+                    prefixe=EXCLUDED.prefixe,
+                    section=EXCLUDED.section,
+                    numero=EXCLUDED.numero,
+                    contenance=EXCLUDED.contenance,
+                    arpente=EXCLUDED.arpente,
+                    geom=EXCLUDED.geom
+            """.format(schema, schema)
+            try:
+                connection.executeSql(sql)
+            except QgsProviderConnectionException as e:
+                connection.executeSql("ROLLBACK;")
+                return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
+
+            feedback.pushInfo("# Suppression des parcelles dans adresse.parcelle qui n'existent plus #")
+            sql = """
+                DELETE FROM adresse.parcelle
+                WHERE id NOT IN (SELECT parcelle FROM {}.parcelle)
+            """.format(schema)
             try:
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:

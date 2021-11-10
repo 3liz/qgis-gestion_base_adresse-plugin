@@ -253,7 +253,7 @@ ALTER SEQUENCE adresse.metadata_id_seq OWNED BY adresse.metadata.id;
 -- parcelle
 CREATE TABLE adresse.parcelle (
     fid integer NOT NULL,
-    id text,
+    id text NOT NULL,
     commune text,
     prefixe text,
     section text,

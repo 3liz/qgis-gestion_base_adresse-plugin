@@ -140,4 +140,10 @@ UNION
      LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)))
   WHERE (ld.integration_ban = true);
 
+-- parcelle parcelle_id_key
+ALTER TABLE ONLY adresse.parcelle
+    ADD CONSTRAINT parcelle_id_key UNIQUE (id);
+
+ALTER TABLE adresse.parcelle ALTER COLUMN id SET NOT NULL;
+
 COMMIT;
