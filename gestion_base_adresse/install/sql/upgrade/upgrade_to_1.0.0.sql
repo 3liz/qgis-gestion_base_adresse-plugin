@@ -146,4 +146,16 @@ ALTER TABLE ONLY adresse.parcelle
 
 ALTER TABLE adresse.parcelle ALTER COLUMN id SET NOT NULL;
 
+ALTER TABLE adresse.point_adresse ALTER COLUMN valide SET DEFAULT true;
+ALTER TABLE adresse.point_adresse ALTER COLUMN valide SET NOT NULL;
+
+ALTER TABLE adresse.point_adresse ALTER COLUMN erreur SET DEFAULT false;
+ALTER TABLE adresse.point_adresse ALTER COLUMN erreur SET NOT NULL;
+
+ALTER TABLE adresse.point_adresse ALTER COLUMN achat_plaque_numero SET DEFAULT false;
+ALTER TABLE adresse.point_adresse ALTER COLUMN achat_plaque_numero SET NOT NULL;
+
+ALTER TABLE adresse.point_adresse ALTER COLUMN verif_terrain SET DEFAULT false;
+ALTER TABLE adresse.point_adresse ALTER COLUMN verif_terrain SET NOT NULL;
+
 COMMIT;
