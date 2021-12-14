@@ -23,8 +23,11 @@ nav:
     - Contribution: contributing.md
     - Base de données: database/index.html
 
+plugins:
+  - search
+  - git-revision-date-localized
+
 markdown_extensions:
-  # - git-revision-date:
   - toc:
       permalink: "#"
   - meta:
@@ -37,6 +40,7 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_div_format
   - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.magiclink:
   - pymdownx.tasklist:
   - pymdownx.snippets:
@@ -62,7 +66,7 @@ theme:
   palette:
     accent: deep-orange
     primary: green
-    scheme: preference
+    scheme: default
   features:
     - navigation.tabs
     - navigation.tabs.sticky
@@ -81,3 +85,6 @@ extra:
 
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/u/3liz
+
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/channel/UCYYW2CTWR_84kB6pt2zCWbQ
