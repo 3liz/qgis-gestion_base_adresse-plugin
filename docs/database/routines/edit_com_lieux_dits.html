@@ -73,7 +73,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>lieux_dits</h1><br />
+                    <h1>edit_com_lieux_dits</h1><br />
                 </section>
                 <!-- Main content -->
                 <section class="content">
@@ -110,7 +110,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;DECLARE&#10;BEGIN&#10;    SELECT c.id_com into NEW.id_com&#10;    FROM adresse.commune c &#10;&#9;WHERE ST_DWithin(NEW.geom, d.geom, 0.01);&#10;&#10;    SELECT c.commune_nom into NEW.commune_nom &#10;    FROM adresse.commune c &#10;&#9;WHERE ST_DWithin(NEW.geom, d.geom, 0.01);&#10;&#10;&#9;SELECT d.id_com_del into NEW.id_com_del&#10;    FROM adresse.commune_deleguee d&#10;&#9;WHERE ST_DWithin(NEW.geom, d.geom, 0.01);&#10;&#10;    SELECT  d.commune_deleguee_nom into NEW.commune_deleguee_nom&#10;    FROM adresse.commune_deleguee d&#10;&#9;WHERE ST_DWithin(NEW.geom, d.geom, 0.01);&#10;&#10;&#9;NEW.numero = 99999 ;&#10;&#9;NEW.date_der_maj = NOW();&#10;RETURN NEW;&#10;END;&#10;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;DECLARE&#10;BEGIN&#10;    SELECT c.id_com into NEW.id_com&#10;    FROM adresse.commune c &#10;&#9;WHERE ST_DWithin(NEW.geom, c.geom, 0.01);&#10;&#10;&#9;NEW.numero = 99999 ;&#10;&#9;NEW.date_der_maj = NOW();&#10;RETURN NEW;&#10;END;&#10;</textarea>
                         </div>
                     </div>
                 </section>
