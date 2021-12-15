@@ -10,6 +10,7 @@ from .tools.configure_project import ConfigProject
 from .data.load_layers import LoadLayersAlgorithm
 from .data.load_styles import LoadStylesAlgorithm
 from .data.data_parcelle import DataParcelleAlgo
+from .data.refresh_view import RefreshViewAlgo
 from .structure.create_database_structure import CreateDatabaseStructure
 from .structure.upgrade_database_structure import UpgradeDatabaseStructure
 
@@ -24,6 +25,7 @@ class GestionAdresseProvider(QgsProcessingProvider):
         self.addAlgorithm(LoadStylesAlgorithm())
         self.addAlgorithm(ConfigProject())
         self.addAlgorithm(DataParcelleAlgo())
+        self.addAlgorithm(RefreshViewAlgo())
 
     def id(self):
         return "gestion_adresse"

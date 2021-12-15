@@ -146,7 +146,6 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         return layer
 
     def processAlgorithm(self, parameters, context, feedback):
-        msg = ""
         output_layers = []
         layers_name_none = dict()
         layers_name_none["v_certificat"] = "id_view"
@@ -181,6 +180,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
                 connection.executeSql("ROLLBACK;")
+                feedback.reportError(str(e))
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
             feedback.pushInfo("# Remplissage de la table adresse.parcelle #")
@@ -206,6 +206,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
                 connection.executeSql("ROLLBACK;")
+                feedback.reportError(str(e))
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
             feedback.pushInfo("# Suppression des parcelles dans adresse.parcelle qui n'existent plus #")
@@ -217,6 +218,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
                 connection.executeSql("ROLLBACK;")
+                feedback.reportError(str(e))
                 return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("# Mise à jour de id_parcelle dans adresse.point_adresse #")
@@ -230,21 +232,28 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
             connection.executeSql("ROLLBACK;")
+            feedback.reportError(str(e))
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("## CREATION DES VUES ##")
         feedback.pushInfo("# Vue  adresse.v_certificat #")
 
-        sql = "DROP VIEW IF EXISTS adresse.v_certificat;"
         try:
+            # Version <= 1.0.0
+            sql = "DROP VIEW IF EXISTS adresse.v_certificat;"
             connection.executeSql(sql)
-        except QgsProviderConnectionException as e:
-            connection.executeSql("ROLLBACK;")
-            return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
+        except QgsProviderConnectionException:
+            # Version > 1.0.0, ticket #142, the view can be materialized
+            sql = "DROP MATERIALIZED VIEW IF EXISTS adresse.v_certificat;"
+            try:
+                connection.executeSql(sql)
+            except QgsProviderConnectionException as e:
+                feedback.pushDebugInfo(sql)
+                feedback.reportError(str(e))
+                return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         sql = """
-        DROP VIEW IF EXISTS adresse.v_certificat;
-            CREATE VIEW adresse.v_certificat AS
+            CREATE MATERIALIZED VIEW adresse.v_certificat AS
             SELECT row_number() over (order by c.commune_nom) as id_view,
             pr.proprietaire as id_prop, pa.id_point,
             c.insee_code, c.commune_nom, c.code_postal, c.adresse_mairie, c.maire,
@@ -264,6 +273,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             JOIN {}.parcelle_info pi ON pi.idu = p.id
             JOIN {}.parcelle pc ON pc.parcelle = pi.geo_parcelle
             JOIN {}.proprietaire pr ON pr.dnupro = pc.dnupro;
+            CREATE UNIQUE INDEX idx_v_certificat ON adresse.v_certificat(id_view);
         """.format(
             schema, schema, schema
         )
@@ -271,15 +281,19 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
             connection.executeSql("ROLLBACK;")
+            feedback.pushDebugInfo(sql)
+            feedback.reportError(str(e))
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
-        feedback.pushInfo("# Vue  adresse.v_voie #")
+        feedback.pushInfo("# Vue adresse.v_voie #")
         sql = "DROP VIEW IF EXISTS adresse.v_voie;"
         try:
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
             connection.executeSql("ROLLBACK;")
+            feedback.reportError(str(e))
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
+
         sql = """
             DROP VIEW IF EXISTS adresse.v_voie;
             CREATE VIEW adresse.v_voie
@@ -298,6 +312,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
             connection.executeSql("ROLLBACK;")
+            feedback.reportError(str(e))
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         feedback.pushInfo("# Vue  adresse.v_section #")
@@ -306,6 +321,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
             connection.executeSql("ROLLBACK;")
+            feedback.reportError(str(e))
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
         sql = """
             CREATE VIEW adresse.v_section
@@ -333,7 +349,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
             connection.executeSql("ROLLBACK;")
+            feedback.reportError(str(e))
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
+
         sql = """
             CREATE VIEW adresse.v_parcelle
             as SELECT row_number() OVER (ORDER BY s.tex) AS id_view,
@@ -355,6 +373,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
             connection.executeSql(sql)
         except QgsProviderConnectionException as e:
             connection.executeSql("ROLLBACK;")
+            feedback.reportError(str(e))
             return {self.OUTPUT_MSG: str(e), self.OUTPUT: output_layers}
 
         connection = metadata.findConnection(connection_name)
@@ -362,7 +381,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
 
         is_host = uri.host() != ""
         if is_host:
-            feedback.pushInfo("Connexion établie via l'hote")
+            feedback.pushInfo("Connexion établie via l'hôte")
         else:
             feedback.pushInfo("Connexion établie via le service")
         feedback.pushInfo("")
