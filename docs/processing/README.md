@@ -18,8 +18,8 @@ La configuration ajoute les variables concernant le nom des couches dans le proj
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-ADDRESS_LAYER|Voirie|VectorLayer||✓||Type: TypeVectorLine <br>|
-STREET_LAYER|Point adresse|VectorLayer||✓||Type: TypeVectorPoint <br>|
+STREET_LAYER|Voirie|VectorLayer||✓||Type: TypeVectorLine <br>|
+ADDRESS_LAYER|Point adresse|VectorLayer||✓||Type: TypeVectorPoint <br>|
 
 
 #### Outputs
@@ -31,7 +31,7 @@ No output
 ***
 
 
-## Structure
+## Structure des données
 
 
 ### Installation de la structure sur la base de données
@@ -44,7 +44,7 @@ Création de la structure de la base données. Vous pouvez aussi charger des don
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
 OVERRIDE|Écraser le schéma adresse ? ** ATTENTION ** Cela supprimera toutes les données !|Boolean||✓|||
 SRID|Système de coordonnée pour vos données ?|Crs||✓||Default: EPSG:2154 <br> |
 ADD_TEST_DATA|Ajouter des données de test ?|Boolean||✓|||
@@ -56,6 +56,7 @@ ADD_TEST_DATA|Ajouter des données de test ?|Boolean||✓|||
 |:-:|:-:|:-:|:-:|
 OUTPUT_STATUS|Output status|Number||
 OUTPUT_STRING|Output message|String||
+DATABASE_VERSION|Database version|String||
 
 
 ***
@@ -71,7 +72,7 @@ Mise à jour de la base de données suite à une nouvelle version de l'extension
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
 RUN_MIGRATIONS|Cocher cette option pour lancer la mise-à-jour.|Boolean||✓|||
 SRID|Projection des géométries|Crs||✓||Default: EPSG:2154 <br> |
 
@@ -90,7 +91,7 @@ OUTPUT_STRING|Output message|String||
 ## Données
 
 
-### Mise en place des données pour certificat de numérotation
+### Mise en place des données parcellaires pour les certificats de numérotation
 
 Ajout des données parcellaire et création des vues pour les certificats de numérotation.
 
@@ -100,8 +101,8 @@ Ajout des données parcellaire et création des vues pour les certificats de num
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-DATABASE|Connexion à la base de données|String||✓|||
-SCHEMA|Schéma du cadastre contenant les données des parcelles est propriétaires|String||||Default: cadastre <br> |
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Base de données de destination|✓|||
+SCHEMA|Schéma des données du cadastre|String|Nom du schéma des données cadastre|||Default: cadastre <br> |
 TRUNCATE_PARCELLE|Mise à jour de la table parcelle|Boolean||✓|||
 
 
@@ -126,8 +127,8 @@ Charger toutes les couches de la base de données.
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-DATABASE|Connexion à la base de données|String||✓|||
-SCHEMA|Schéma|String||||Default: adresse <br> |
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Base de données de destination|✓|||
+SCHEMA|Schéma|String|Nom du schéma des données adresses|||Default: adresse <br> |
 
 
 #### Outputs
@@ -160,6 +161,28 @@ INPUT|Champ qui ne sert à rien !|String|||||
 |:-:|:-:|:-:|:-:|
 OUTPUT MSG|Message de sortie|String||
 
+
+***
+
+
+### Rafraîchissement de la vue adresse.v_certificat
+
+Cet algorithme permet le rafraîchissement de la vue matérialisée adresse.v_certificat.<br>Il faut effectuer cette opération quand il y a des changements dans votre schéma 'cadastre'.<br><br>La vue est créée par l'algorithme 'Mise en place des données parcellaires'.
+
+![algo_id](./gestion_adresse-refresh_view_certificat.png)
+
+#### Parameters
+
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Base de données de vos schémas 'cadastre' et 'adresse'|✓|||
+
+
+#### Outputs
+
+| ID | Description | Type | Info |
+|:-:|:-:|:-:|:-:|
+No output
 
 ***
 
