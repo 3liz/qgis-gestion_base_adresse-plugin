@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.1.0 - 2021-12-15
+
 * Passage en vue matérialisée de la vue `adresse.v_certificat`.
 * Ajout d'un algorithme dans la boite à outil Processing pour provoquer le rafraîchissement de la vue ci-dessus.
 
