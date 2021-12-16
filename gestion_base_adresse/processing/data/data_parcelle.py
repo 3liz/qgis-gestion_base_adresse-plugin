@@ -225,8 +225,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
 
         sql = """
             UPDATE adresse.point_adresse pa
-            SET id_parcelle = (SELECT p.fid FROM adresse.parcelle p
-            WHERE ST_intersects(pa.geom, p.geom));
+            SET id_parcelle = p.fid
+            FROM adresse.parcelle p
+            WHERE ST_Contains(p.geom, pa.geom)
         """
         try:
             connection.executeSql(sql)
@@ -397,6 +398,9 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                     feedback.pushInfo("La couche " + x + " a pu être chargée")
                     output_layers.append(result.id())
 
-        msg = "success"
-
-        return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
+        feedback.pushInfo(
+            "La vue adresse.v_certificat existe désormais dans la base de données. Mais il s'agit "
+            "d'une vue matérialisée. Il faut lancer l'algorithme 'Rafraîchissement de la vue "
+            "adresse.v_certificat' depuis la boîte à outils."
+        )
+        return {self.OUTPUT_MSG: "success", self.OUTPUT: output_layers}
