@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* Simplification du code en enlevant le support de QGIS 3.10
+
 ## 1.1.0 - 2021-12-15
 
 * Passage en vue matérialisée de la vue `adresse.v_certificat`.
