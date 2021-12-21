@@ -6,20 +6,16 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
-    Qgis,
     QgsProcessingException,
-    QgsProcessingParameterString,
     QgsProcessingParameterBoolean,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
     QgsExpressionContextUtils,
     QgsProcessingParameterCrs,
     QgsProviderConnectionException,
+    QgsProcessingParameterProviderConnection,
     QgsProviderRegistry,
 )
-
-if Qgis.QGIS_VERSION_INT >= 31400:
-    from qgis.core import QgsProcessingParameterProviderConnection
 
 from .base import (
     BaseDatabaseAlgorithm,
@@ -55,38 +51,18 @@ class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
         )
 
     def initAlgorithm(self, config):
-        # INPUTS
+        _ = config
         connection_name = QgsExpressionContextUtils.globalScope().variable(
             "adresse_connection_name"
         )
-        label = tr("Connexion PostgreSQL vers la base de données")
-        tooltip = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
-        if Qgis.QGIS_VERSION_INT >= 31400:
-            param = QgsProcessingParameterProviderConnection(
-                self.CONNECTION_NAME,
-                label,
-                "postgres",
-                defaultValue=connection_name,
-                optional=False,
-            )
-        else:
-            param = QgsProcessingParameterString(
-                self.CONNECTION_NAME,
-                label,
-                defaultValue=connection_name,
-                optional=False,
-            )
-            param.setMetadata(
-                {
-                    "widget_wrapper": {
-                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
-                    }
-                }
-            )
-        if Qgis.QGIS_VERSION_INT >= 31600:
-            param.setHelp(tooltip)
-        else:
-            param.tooltip_3liz = tooltip
+        param = QgsProcessingParameterProviderConnection(
+            self.CONNECTION_NAME,
+            "Connexion PostgreSQL vers la base de données",
+            "postgres",
+            defaultValue=connection_name,
+            optional=False,
+        )
+        param.setHelp('Nom de la connexion dans QGIS pour se connecter à la base de données')
         self.addParameter(param)
 
         self.addParameter(
@@ -114,13 +90,7 @@ class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
         )
 
     def checkParameterValues(self, parameters, context):
-        if Qgis.QGIS_VERSION_INT >= 31400:
-            connection_name = self.parameterAsConnectionName(
-                parameters, self.CONNECTION_NAME, context)
-        else:
-            connection_name = self.parameterAsString(
-                parameters, self.CONNECTION_NAME, context)
-
+        connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
         connection = metadata.findConnection(connection_name)
         if not connection:
@@ -136,14 +106,7 @@ class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
 
     def processAlgorithm(self, parameters, context, feedback):
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-
-        if Qgis.QGIS_VERSION_INT >= 31400:
-            connection_name = self.parameterAsConnectionName(
-                parameters, self.CONNECTION_NAME, context)
-        else:
-            connection_name = self.parameterAsString(
-                parameters, self.CONNECTION_NAME, context)
-
+        connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
         connection = metadata.findConnection(connection_name)
         if not connection:
             raise QgsProcessingException(tr("La connexion {} n'existe pas.").format(connection_name))

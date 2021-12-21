@@ -4,9 +4,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import (
-    Qgis,
     QgsDataSourceUri,
-    QgsProcessingParameterString,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
@@ -16,13 +14,9 @@ from qgis.core import (
     QgsProcessingException,
     QgsExpressionContextUtils,
     QgsProviderConnectionException,
+    QgsProcessingParameterDatabaseSchema,
+    QgsProcessingParameterProviderConnection,
 )
-
-if Qgis.QGIS_VERSION_INT >= 31400:
-    from qgis.core import (
-        QgsProcessingParameterDatabaseSchema,
-        QgsProcessingParameterProviderConnection,
-    )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
@@ -59,59 +53,27 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
         )
 
     def initAlgorithm(self, config):
-        # INPUTS
-        # Database connection parameters
-        label = tr("Connexion PostgreSQL vers la base de données")
-        tooltip = "Base de données de destination"
+        _ = config
+
         default = QgsExpressionContextUtils.globalScope().variable('adresse_connection_name')
-        if Qgis.QGIS_VERSION_INT >= 31400:
-            param = QgsProcessingParameterProviderConnection(
-                self.CONNECTION_NAME,
-                label,
-                "postgres",
-                optional=False,
-                defaultValue=default
-            )
-        else:
-            param = QgsProcessingParameterString(self.CONNECTION_NAME, label, defaultValue=default)
-            param.setMetadata(
-                {
-                    "widget_wrapper": {
-                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
-                    }
-                }
-            )
-        if Qgis.QGIS_VERSION_INT >= 31600:
-            param.setHelp(tooltip)
-        else:
-            param.tooltip_3liz = tooltip
+        param = QgsProcessingParameterProviderConnection(
+            self.CONNECTION_NAME,
+            tr("Connexion PostgreSQL vers la base de données"),
+            "postgres",
+            optional=False,
+            defaultValue=default
+        )
+        param.setHelp("Base de données de destination")
         self.addParameter(param)
 
-        label = tr("Schéma des données du cadastre")
-        tooltip = 'Nom du schéma des données cadastre'
-        default = 'cadastre'
-        if Qgis.QGIS_VERSION_INT >= 31400:
-            param = QgsProcessingParameterDatabaseSchema(
-                self.SCHEMA,
-                label,
-                self.CONNECTION_NAME,
-                defaultValue=default,
-                optional=False,
-            )
-        else:
-            param = QgsProcessingParameterString(self.SCHEMA, label, default, False, True)
-            param.setMetadata(
-                {
-                    "widget_wrapper": {
-                        "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
-                        "connection_param": self.CONNECTION_NAME,
-                    }
-                }
-            )
-        if Qgis.QGIS_VERSION_INT >= 31600:
-            param.setHelp(tooltip)
-        else:
-            param.tooltip_3liz = tooltip
+        param = QgsProcessingParameterDatabaseSchema(
+            self.SCHEMA,
+            tr("Schéma des données du cadastre"),
+            self.CONNECTION_NAME,
+            defaultValue='cadastre',
+            optional=False,
+        )
+        param.setHelp('Nom du schéma des données cadastre')
         self.addParameter(param)
 
         self.addParameter(
@@ -155,12 +117,8 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
 
         # override = self.parameterAsBool(parameters, self.OVERRIDE, context)
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-        if Qgis.QGIS_VERSION_INT >= 31400:
-            connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
-            schema = self.parameterAsSchema(parameters, self.SCHEMA, context)
-        else:
-            connection_name = self.parameterAsString(parameters, self.CONNECTION_NAME, context)
-            schema = self.parameterAsString(parameters, self.SCHEMA, context)
+        connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
+        schema = self.parameterAsSchema(parameters, self.SCHEMA, context)
 
         data_update = self.parameterAsBool(parameters, self.TRUNCATE_PARCELLE, context)
 
