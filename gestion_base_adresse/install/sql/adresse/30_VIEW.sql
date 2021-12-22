@@ -54,7 +54,7 @@ CREATE VIEW adresse.v_export_bal AS
    FROM (((((adresse.point_adresse p
      LEFT JOIN adresse.commune c ON ((p.id_commune = c.id_com)))
      LEFT JOIN adresse.referencer_com rc ON ((p.id_commune = rc.id_com)))
-     LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)))
+     LEFT JOIN adresse.commune_deleguee cd ON (((cd.id_com_del = rc.id_com_deleguee) AND public.st_contains(cd.geom, p.geom))))
      LEFT JOIN adresse.voie v ON ((p.id_voie = v.id_voie)))
      LEFT JOIN adresse.parcelle g ON ((p.id_parcelle = g.fid)))
 UNION
@@ -79,7 +79,7 @@ UNION
    FROM (((adresse.lieux_dits ld
      LEFT JOIN adresse.commune c ON ((c.id_com = ld.id_com)))
      LEFT JOIN adresse.referencer_com rc ON ((ld.id_com = rc.id_com)))
-     LEFT JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)))
+     LEFT JOIN adresse.commune_deleguee cd ON (((cd.id_com_del = rc.id_com_deleguee) AND public.st_contains(cd.geom, ld.geom))))
   WHERE (ld.integration_ban = true);
 
 
