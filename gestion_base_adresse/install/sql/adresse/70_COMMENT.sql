@@ -17,6 +17,10 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- FUNCTION reset_referencer_com()
+COMMENT ON FUNCTION adresse.reset_referencer_com() IS 'Permet la réinitialisation de la table adresse.referencer_com en faisant une intersection entre adresse.commune_deleguee et adresse.commune';
+
+
 -- commune.id_com
 COMMENT ON COLUMN adresse.commune.id_com IS 'Identifiant unique de la commune';
 
