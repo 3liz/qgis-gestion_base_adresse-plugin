@@ -22,7 +22,7 @@ présent dans l'onglet **Structure** de la [liste des différents scripts du plu
 
 ![algo_install](../processing/gestion_adresse-create_database_structure.png)
 
-Dans un premier temps vous devez sélectionner votre connexion à la base de données.
+Dans un premier temps, vous devez sélectionner votre connexion à la base de données.
 Ensuite vous avez deux cases à cocher qui vous permettent :
  * d'écraser le schéma adresse si vous en possédez déjà un 
  * d'ajouter des données de test fournies par le plugin
@@ -37,7 +37,7 @@ utiliser le script **Mise à jour de la structure de la base** pour faire la mis
 
 ![algo_upgrade](../processing/gestion_adresse-upgrade_database_structure.png)
 
-Script simple d'utilisation il suffit de renseigner la connexion à la base de données puis de cocher la case 
+Script simple d'utilisation, il suffit de renseigner la connexion à la base de données puis de cocher la case 
 pour que la mise à jour se lance lors de l'exécution.
 
 ## Configuration du Projet QGIS
@@ -54,15 +54,15 @@ Pour exécuter ce script correctement il suffit de renseigner la connexion à la
 premier paramètre, puis le schéma qui contient les couches. En l'occurrence ici normalement le schéma 
 s'appelle **adresse**.
 
-Les couches sont donc présentes dans le projets.
+Les couches sont donc présentes dans le projet.
 ![project_layers](./media/imported_project_layers.png)
 
-| :warning:  Pour le module adresse présent sur lizmap, les noms des couches sur le projet QGIS ne doivent pas être modifié ! |
-|----------------------------------|
+!!! warning
+    Pour le module adresse présent sur Lizmap, les noms des couches sur le projet QGIS ne doivent pas être modifié !
 
-| :memo: Si vous souhaitez un nom plus explicite ou plus adapté pour les couches, vous pourrais dans l'étape [Configuration pour Lizmap](#Configuration-pour-Lizmap) ci-après, modifier le titre des couches.|
-|:--------------|
-
+!!! tip
+    Si vous souhaitez un nom plus explicite ou plus adapté pour les couches, vous pourrez, dans l'étape
+    [Configuration pour Lizmap](#Configuration-pour-Lizmap) ci-après, modifier le titre des couches.|
 
 ### Application des styles
 
@@ -97,7 +97,7 @@ partie **Capacités WFS** où vous cocherez pour les couches `voie`, `v_point_ad
 ### Configuration pour Lizmap
 
 Dernière étape pour avoir un projet bien configuré il s'agit de la partie Lizmap. Il faut ouvrir le plugin. 
-Nous, on s'occupera uniquement des sections **Couches** et **Éditions  de couche**, pour le reste en ce qui 
+Nous, on s'occupera uniquement des sections **Couches** et **Éditions de couche**, pour le reste en ce qui 
 concerne les **Options de carte** ou les **Fonds** vous pouvez configurer selon vos besoins et envies.
 
 Pour ce qui est des couches, pour celles sans géométrie il n'y a rien à faire alors que celles avec géométrie 
