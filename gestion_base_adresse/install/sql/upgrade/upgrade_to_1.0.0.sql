@@ -1,6 +1,6 @@
 BEGIN;
 
--- DROP TRIGGERE point_adresse get_parcelle
+-- DROP TRIGGER point_adresse get_parcelle
 DROP TRIGGER IF EXISTS get_parcelle ON adresse.point_adresse;
 
 -- DROP FUNCTION get_parcelle()
@@ -17,7 +17,7 @@ BEGIN
 END;
 $$;
 
--- CREATE TRIGGERE point_adresse get_parcelle
+-- CREATE TRIGGER point_adresse get_parcelle
 CREATE TRIGGER get_parcelle BEFORE INSERT OR UPDATE ON adresse.point_adresse FOR EACH ROW EXECUTE PROCEDURE adresse.get_parcelle();
 
 -- Drop views to change field type
