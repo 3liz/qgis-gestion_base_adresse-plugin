@@ -42,7 +42,10 @@ gestion des voie et adresse. Il y a :
 
 ![icon_minidock](./media/icon_minidock_export.png) ![minidock](./media/minidock_export.png)
 
-Sur l'image du minidock ci-dessus on aperçoit une case à cocher *** Dernière délibération ***. Cela signifie que l'on a la possibilité, dans l'export SNA, d'y intégrer soit la dernière délibération soit toutes les délibérations de la commune.
+Sur l'image du minidock ci-dessus on aperçoit une case à cocher **Dernière délibération**. Cela signifie
+que l'on a la possibilité, dans l'export SNA, d'y intégrer soit la dernière délibération soit toutes les
+délibérations de la commune.
 
-Voici un exemple d'export BAL.
+Voici un exemple d'export BAL :
+
 ![file_downloaded](./media/donwload_file.png)

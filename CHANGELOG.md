@@ -3,6 +3,9 @@
 ## Unreleased
 
 * Simplification du code en enlevant le support de QGIS 3.10
+* Ajout d'une fonction `adresse.reset_referencer_com()` pour repeupler la table `adresse.referencer_com`
+* Amélioration de la requête lors de l'intersection des parcelles et des adresses, gestion des superpositions
+* Modification de la vue `v_export_bal` pour tenir compte de l'intersection du point avec la commune
 
 ## 1.1.0 - 2021-12-15
 

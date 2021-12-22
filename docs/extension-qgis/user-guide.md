@@ -96,8 +96,8 @@ partie **Capacités WFS** où vous cocherez pour les couches `voie`, `v_point_ad
 
 ### Configuration pour Lizmap
 
-Dernière étape pour avoir un projet bien configuré il s'agit de la partie Lizmap. Il faut ouvrir le plugin. 
-Nous, on s'occupera uniquement des sections **Couches** et **Éditions de couche**, pour le reste en ce qui 
+Dernière étape pour avoir un projet bien configuré, il s'agit de la partie Lizmap. Il faut ouvrir le plugin.
+On s'occupera uniquement des sections **Couches** et **Éditions de couche**, pour le reste en ce qui
 concerne les **Options de carte** ou les **Fonds** vous pouvez configurer selon vos besoins et envies.
 
 Pour ce qui est des couches, pour celles sans géométrie il n'y a rien à faire alors que celles avec géométrie 
