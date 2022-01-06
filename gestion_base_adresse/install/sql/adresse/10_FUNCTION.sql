@@ -17,6 +17,36 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- add_referencer_com()
+CREATE FUNCTION adresse.add_referencer_com() RETURNS void
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+
+DROP INDEX IF EXISTS adresse.idx_tmp_centroide_communes;
+CREATE INDEX idx_tmp_centroide_communes ON adresse.commune_deleguee (ST_PointOnSurface(geom));
+
+INSERT INTO adresse.referencer_com
+SELECT
+	c.id_com AS id_com,
+	cd.id_com_del AS id_com_del,
+	'Ajout automatique en fonction des tables commune_deleguee et commune' AS action,
+	NOW() AS date
+FROM adresse.commune_deleguee cd
+JOIN adresse.commune AS c
+	ON St_Contains(c.geom, ST_PointOnSurface(cd.geom))
+ON CONFLICT ON CONSTRAINT referencer_com_pkey DO NOTHING
+;
+
+DROP INDEX IF EXISTS adresse.idx_tmp_centroide_communes;
+END;
+$$;
+
+
+-- FUNCTION add_referencer_com()
+COMMENT ON FUNCTION adresse.add_referencer_com() IS 'Permet la réinitialisation de la table adresse.referencer_com en faisant une intersection entre adresse.commune_deleguee et adresse.commune';
+
+
 -- calcul_num_adr(public.geometry)
 CREATE FUNCTION adresse.calcul_num_adr(pgeom public.geometry) RETURNS TABLE(num integer, suffixe text, voie integer)
     LANGUAGE plpgsql
@@ -528,34 +558,6 @@ BEGIN
     END IF;
 END;
 $$;
-
-
--- reset_referencer_com()
-CREATE FUNCTION adresse.reset_referencer_com() RETURNS void
-    LANGUAGE plpgsql
-    AS $$
-BEGIN
-
-DROP INDEX IF EXISTS adresse.idx_tmp_centroide_communes;
-CREATE INDEX idx_tmp_centroide_communes ON adresse.commune_deleguee (ST_PointOnSurface(geom));
-TRUNCATE adresse.referencer_com RESTART IDENTITY;
-
-INSERT INTO adresse.referencer_com
-SELECT
-	c.id_com AS id_com,
-	cd.id_com_del AS id_com_del
-FROM adresse.commune_deleguee cd
-JOIN adresse.commune AS c
-	ON St_Contains(c.geom, ST_PointOnSurface(cd.geom))
-;
-
-DROP INDEX IF EXISTS adresse.idx_tmp_centroide_communes;
-END;
-$$;
-
-
--- FUNCTION reset_referencer_com()
-COMMENT ON FUNCTION adresse.reset_referencer_com() IS 'Permet la réinitialisation de la table adresse.referencer_com en faisant une intersection entre adresse.commune_deleguee et adresse.commune';
 
 
 -- trigger_point_adr()
