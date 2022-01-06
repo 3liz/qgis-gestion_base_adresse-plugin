@@ -3,7 +3,7 @@
 ## Unreleased
 
 * Simplification du code en enlevant le support de QGIS 3.10
-* Ajout d'une fonction `adresse.reset_referencer_com()` pour repeupler la table `adresse.referencer_com`
+* Ajout d'une fonction `adresse.add_referencer_com()` pour repeupler la table `adresse.referencer_com` sans effacer des données existantes.
 * Amélioration de la requête lors de l'intersection des parcelles et des adresses, gestion des superpositions
 * Modification de la vue `v_export_bal` pour tenir compte de l'intersection du point avec la commune
 

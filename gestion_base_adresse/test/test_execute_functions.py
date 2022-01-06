@@ -3,10 +3,9 @@
 from .base_test_database import DatabaseTestCase
 import psycopg2
 
-__copyright__ = "Copyright 2019, 3Liz"
+__copyright__ = "Copyright 2021, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
-__revision__ = "$Format:%H$"
 
 
 class TestSqlFunctions(DatabaseTestCase):
@@ -42,7 +41,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
     def test_calcul_num_adr(self):
         """Test de la fonction calcul_num_adr."""
-        # Test du calcul de numero d'adresse de base, la voie déverrouillée pour le test a la
+        # Test du calcul de numéro d'adresse de base, la voie déverrouillée pour le test a la
         # numérotation inversée, donc nombre pair à gauche
 
         # Suppression des points pour pouvoir tout tester
@@ -183,7 +182,7 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # Troisime point placé après le deuxième, test d'égalité à 4
+        # Troisième point placé après le deuxième, test d'égalité à 4
         sql = (
             "select num, suffixe, voie from adresse.calcul_num_adr(ST_geomfromtext("
             "'POINT(427937 6922173)', 2154))"
@@ -199,11 +198,11 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # Vérouillage des voies
-        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        # Verrouillage des voies
+        sql = 'UPDATE adresse.voie SET statut_voie_num = true'
         self.cursor.execute(sql)
 
-        # Aucune voie dévérouillée n'est disponible
+        # Aucune voie déverrouillée n'est disponible
         # Aucun numéro d'adresse calculable
         sql = (
             "select num, suffixe, voie from adresse.calcul_num_adr(ST_geomfromtext("
@@ -284,11 +283,11 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # Vérouillage des voies
-        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        # Verrouillage des voies
+        sql = 'UPDATE adresse.voie SET statut_voie_num = true'
         self.cursor.execute(sql)
 
-        # Aucune voie dévérouillée n'est disponible
+        # Aucune voie déverrouillée n'est disponible
         # Aucun numéro d'adresse calculable
         sql = (
             "select num, suffixe, voie from adresse.calcul_num_metrique(ST_geomfromtext("
@@ -303,10 +302,10 @@ class TestSqlFunctions(DatabaseTestCase):
         sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
         self.cursor.execute(sql)
 
-        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 1'
+        sql = 'UPDATE adresse.voie SET statut_voie_num = false where id_voie = 1'
         self.cursor.execute(sql)
 
-        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        sql = 'UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
         self.cursor.execute(sql)
 
         # Test ajout point impair
@@ -356,7 +355,7 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
 
     def test_inversion_calcul_metrique(self):
-        """ Test avant puis après inversion de la voie et sens de numérotation
+        """ Test avant et après inversion de la voie et sens de numérotation
         (comme si l'on clique sur le bouton dans la popup) """
 
         # Test pair
@@ -465,7 +464,7 @@ class TestSqlFunctions(DatabaseTestCase):
         sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
         self.cursor.execute(sql)
 
-        # Ajout d'un point proche de la voie 2 qui n'est pas dévérouillé
+        # Ajout d'un point proche de la voie 2 qui n'est pas déverrouillé
         sql = (
             "INSERT INTO adresse.point_adresse(numero, suffixe, geom) "
             "select num, suffixe, ST_geomfromtext('POINT(429148 6921999)', 2154) "
@@ -486,8 +485,8 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Route d'Arromanches",), self.cursor.fetchone())
 
-        # Dévérouillage de la voie 2
-        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        # Déverrouillage de la voie 2
+        sql = 'UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
         self.cursor.execute(sql)
 
         # Modification de l'id_voie du point
@@ -509,12 +508,12 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Chemin des Cauterets",), self.cursor.fetchone())
 
-        # vérouillage de la voie 2
-        sql='UPDATE adresse.voie SET statut_voie_num = true where id_voie = 2'
+        # verrouillage de la voie 2
+        sql = 'UPDATE adresse.voie SET statut_voie_num = true where id_voie = 2'
         self.cursor.execute(sql)
 
         # Modification de l'id_voie du point en mettant NULL
-        # seul la voie 3 est dévérouillé
+        # seul la voie 3 est déverrouillé
         sql = (
             "UPDATE adresse.point_adresse SET id_voie = NULL WHERE id_point=1"
         )
@@ -533,12 +532,12 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual(("1 Route d'Arromanches",), self.cursor.fetchone())
 
-        # Dévérouillage de la voie 2
-        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        # Déverrouillage de la voie 2
+        sql = 'UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
         self.cursor.execute(sql)
 
         # Modification de l'id_voie du point en mettant NULL
-        # la voie dévérouillée la plus proche est la 2
+        # la voie déverrouillée la plus proche est la 2
         sql = (
             "UPDATE adresse.point_adresse SET id_voie = NULL WHERE id_point=1"
         )
@@ -617,7 +616,7 @@ class TestSqlFunctions(DatabaseTestCase):
         """
         Test de la numérotation sur une voie complexe
         La voie 2, Route d'Arromanche présente des virages
-        Le calcul des numéros peut-en être affecté
+        Le calcul des numéros peut être affecté
         """
         # Suppression des points pour pouvoir tout tester
         sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
@@ -708,8 +707,8 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, 3, True), self.cursor.fetchone())
 
-        # Vérouillage des voies
-        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        # Verrouillage des voies
+        sql = 'UPDATE adresse.voie SET statut_voie_num = true'
         self.cursor.execute(sql)
 
         # Insertion du point 3
@@ -735,7 +734,7 @@ class TestSqlFunctions(DatabaseTestCase):
 
     def test_update_point_adresse(self):
         """
-        Test d'update
+        Test de mise à jour
         """
         # Suppression des points pour pouvoir tout tester
         sql = "TRUNCATE TABLE adresse.point_adresse RESTART IDENTITY"
@@ -811,8 +810,8 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, 3), self.cursor.fetchone())
 
-        # Dévérouillage de la voie 2
-        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        # Déverrouillage de la voie 2
+        sql = 'UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
         self.cursor.execute(sql)
 
         # Déplacement du point 2, à côté de la voie 2
@@ -830,8 +829,8 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, 2), self.cursor.fetchone())
 
-        # Vérouillage des voies
-        sql='UPDATE adresse.voie SET statut_voie_num = true'
+        # Verrouillage des voies
+        sql = 'UPDATE adresse.voie SET statut_voie_num = true'
         self.cursor.execute(sql)
 
         # Mise à jour du point 2 avec une voie NULL
@@ -891,8 +890,8 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertTupleEqual((3, None, None, False), self.cursor.fetchone())
 
-        # Dévérouillage de la voie 2
-        sql='UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
+        # Déverrouillage de la voie 2
+        sql = 'UPDATE adresse.voie SET statut_voie_num = false where id_voie = 2'
         self.cursor.execute(sql)
 
         # Valider le point 4
@@ -912,10 +911,10 @@ class TestSqlFunctions(DatabaseTestCase):
     def test_add_and_delete_road(self):
         """ Test to add and delete Road """
 
-        # Premier test ajout et supression d'une voie
+        # Premier test ajout et suppression d'une voie
 
         # Ajout d'une nouvelle voie
-        sql=(
+        sql = (
             "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom)"
             " Values(1000, 'Rue', 'du test', 'Classique', "
             "st_geomfromtext('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
@@ -923,7 +922,7 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # Vérification de l'existance de la voie
+        # Vérification de l'existence de la voie
         sql = (
             "select id_voie from adresse.voie where id_voie = 1000"
         )
@@ -941,12 +940,12 @@ class TestSqlFunctions(DatabaseTestCase):
             "select id_voie from adresse.voie where id_voie = 1000"
         )
         self.cursor.execute(sql)
-        self.assertEqual((None), self.cursor.fetchone())
+        self.assertIsNone(self.cursor.fetchone())
 
-        # Deuxième test: Ajout, déverrouillage et suppression de voie
+        # Deuxième test : Ajout, déverrouillage et suppression de voie
 
         # Ajout d'une nouvelle voie
-        sql=(
+        sql = (
             "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom) "
             " Values(1000, 'Rue', 'du test', 'Classique', "
             "st_geomfromtext('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
@@ -954,7 +953,7 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # Vérification de l'existance de la voie
+        # Vérification de l'existence de la voie
         sql = (
             "select id_voie from adresse.voie where id_voie = 1000"
         )
@@ -962,13 +961,13 @@ class TestSqlFunctions(DatabaseTestCase):
         self.assertTupleEqual((1000,), self.cursor.fetchone())
 
         # Déverrouillage de la voie
-        sql=(
+        sql = (
             "UPDATE adresse.voie SET statut_voie_num = False WHERE id_voie = 1000"
         )
         self.cursor.execute(sql)
 
         # Vérification du déverrouillage de la voie
-        sql=(
+        sql = (
             "SELECT statut_voie_num From adresse.voie WHERE id_voie = 1000"
         )
         self.cursor.execute(sql)
@@ -985,13 +984,13 @@ class TestSqlFunctions(DatabaseTestCase):
             "select id_voie from adresse.voie where id_voie = 1000"
         )
         self.cursor.execute(sql)
-        self.assertEqual((None), self.cursor.fetchone())
+        self.assertIsNone(self.cursor.fetchone())
 
-        # Troisième test: Ajout, déverrouillage, ajout d'un point
+        # Troisième test : Ajout, déverrouillage, ajout d'un point
         # et test de suppression de voie
 
         # Ajout d'une nouvelle voie
-        sql=(
+        sql = (
             "INSERT INTO adresse.voie(id_voie, typologie, nom, type_num, geom) "
             " Values(1000, 'Rue', 'du test', 'Classique', "
             "st_geomfromtext('LINESTRING(429172 6920701, 429165 6920737, 429142 6920823,"
@@ -999,7 +998,7 @@ class TestSqlFunctions(DatabaseTestCase):
         )
         self.cursor.execute(sql)
 
-        # Vérification de l'existance de la voie
+        # Vérification de l'existence de la voie
         sql = (
             "select id_voie from adresse.voie where id_voie = 1000"
         )
@@ -1007,33 +1006,33 @@ class TestSqlFunctions(DatabaseTestCase):
         self.assertTupleEqual((1000,), self.cursor.fetchone())
 
         # Déverrouillage de la voie
-        sql=(
+        sql = (
             "UPDATE adresse.voie SET statut_voie_num = False WHERE id_voie = 1000"
         )
         self.cursor.execute(sql)
 
         # Vérification du déverrouillage de la voie
-        sql=(
+        sql = (
             "SELECT statut_voie_num From adresse.voie WHERE id_voie = 1000"
         )
         self.cursor.execute(sql)
         self.assertTupleEqual((False,), self.cursor.fetchone())
 
         # Ajout d'un point
-        sql=(
+        sql = (
             "INSERT INTO adresse.point_adresse(id_point, numero, id_voie, geom)"
             "values(1000, 20, 1000, St_geomfromtext('POINT(429162 6920851)', 2154))"
         )
         self.cursor.execute(sql)
 
         # Vérification de l'ajout du point
-        sql=(
+        sql = (
             "SELECT numero From adresse.point_adresse WHERE id_point = 1000"
         )
         self.cursor.execute(sql)
         self.assertEqual(20, self.cursor.fetchone()[0])
 
-        sql=(
+        sql = (
             "COMMIT"
         )
         self.cursor.execute(sql)
@@ -1056,11 +1055,11 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
         self.assertEqual(1000, self.cursor.fetchone()[0])
 
-        # Dernier test: suppression du point,
+        # Dernier test : suppression du point,
         # suppression de la voie
 
         # Vérification de la présence du point
-        sql=(
+        sql = (
             "SELECT numero From adresse.point_adresse WHERE id_point = 1000"
         )
         self.cursor.execute(sql)
@@ -1106,28 +1105,82 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(sql)
 
         # Adding One point
-        sql=(
+        sql = (
             "INSERT INTO adresse.point_adresse(id_point, numero, geom, valide)"
             "values(1, 20, St_geomfromtext('POINT(429162 6920851)', 2154), false) "
         )
         self.cursor.execute(sql)
 
         # Set point valide = true
-        sql=(
+        sql = (
             "UPDATE adresse.point_adresse SET valide = true WHERE id_point = 1"
         )
         self.cursor.execute(sql)
 
         # select id_voie from point
-        sql= (
+        sql = (
             "SELECT id_voie FROM adresse.point_adresse WHERE id_point = 1"
         )
         self.cursor.execute(sql)
         self.assertEqual((3,), self.cursor.fetchone())
 
         # test nb_point = 1
-        sql= (
+        sql = (
             "SELECT nb_point FROM adresse.voie WHERE id_voie = 3"
         )
         self.cursor.execute(sql)
         self.assertEqual((1,), self.cursor.fetchone())
+
+    def test_add_referencer_com(self):
+        """ Test inserting data in the pivot table referencer_com. """
+        sql = """
+            TRUNCATE TABLE adresse.commune RESTART IDENTITY CASCADE;
+            TRUNCATE TABLE adresse.commune_deleguee RESTART IDENTITY CASCADE;
+        """
+        self.cursor.execute(sql)
+
+        sql = """
+        INSERT INTO adresse.commune (commune_nom, geom)
+        VALUES('A',
+        ST_SetSRID(ST_Multi(ST_MakePolygon(ST_GeomFromText(
+        'LINESTRING(0 0,0 10,10 10,10 0,0 0)'))),2154));
+
+        INSERT INTO
+        adresse.commune_deleguee (commune_deleguee_nom, geom)
+        VALUES('SubA1',
+        ST_SetSRID(ST_Multi(ST_MakePolygon(ST_GeomFromText(
+        'LINESTRING(0 0,0 5,5 5,5 0,0 0)'))),2154));
+
+        INSERT INTO
+        adresse.commune_deleguee (commune_deleguee_nom, geom)
+        VALUES('SubA2',
+        ST_SetSRID(ST_Multi(ST_MakePolygon(ST_GeomFromText(
+        'LINESTRING(5 5,5 10,10 10,10 5,5 5)'))),2154));
+
+        INSERT INTO
+        adresse.commune_deleguee (commune_deleguee_nom, geom)
+        VALUES('OtherSubB',
+        ST_SetSRID(ST_Multi(ST_MakePolygon(ST_GeomFromText(
+        'LINESTRING(0 0,0 -5,-5 -5,-5 0,0 0)'))),2154));
+        """
+        self.cursor.execute(sql)
+
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.commune_deleguee;")
+        self.assertEqual(3, self.cursor.fetchone()[0])
+
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.commune;")
+        self.assertEqual(1, self.cursor.fetchone()[0])
+
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.referencer_com;")
+        self.assertEqual(0, self.cursor.fetchone()[0])
+
+        self.cursor.execute("SELECT adresse.add_referencer_com();")
+
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.referencer_com;")
+        self.assertEqual(2, self.cursor.fetchone()[0])
+
+        self.cursor.execute("SELECT action FROM adresse.referencer_com GROUP BY action;")
+        result = self.cursor.fetchall()
+        self.assertEqual(1, len(result))
+        self.assertEqual(
+            "Ajout automatique en fonction des tables commune_deleguee et commune", result[0][0])
