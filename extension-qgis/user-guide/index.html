@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://docs.3liz.org/qgis-gestion_base_adresse-plugin/extension-qgis/user-guide/">
       
       <link rel="icon" href="../../media/icon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bb3983ee.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2b4465f4.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -816,7 +816,7 @@ le prochain script.</p>
 Pour cette première phase on utilise l'algorithme <strong>Installation de la structure sur la base de données</strong> 
 présent dans l'onglet <strong>Structure</strong> de la <a href="#liste-des-scripts">liste des différents scripts du plugin</a>.</p>
 <p><img alt="algo_install" src="../../processing/gestion_adresse-create_database_structure.png" /></p>
-<p>Dans un premier temps vous devez sélectionner votre connexion à la base de données.
+<p>Dans un premier temps, vous devez sélectionner votre connexion à la base de données.
 Ensuite vous avez deux cases à cocher qui vous permettent :
  * d'écraser le schéma adresse si vous en possédez déjà un 
  * d'ajouter des données de test fournies par le plugin</p>
@@ -826,7 +826,7 @@ en amont.</p>
 <p>Si vous disposez déjà d'une base de données adresse et qu'une nouvelle version est disponible, il faut 
 utiliser le script <strong>Mise à jour de la structure de la base</strong> pour faire la mise à jour.</p>
 <p><img alt="algo_upgrade" src="../../processing/gestion_adresse-upgrade_database_structure.png" /></p>
-<p>Script simple d'utilisation il suffit de renseigner la connexion à la base de données puis de cocher la case 
+<p>Script simple d'utilisation, il suffit de renseigner la connexion à la base de données puis de cocher la case 
 pour que la mise à jour se lance lors de l'exécution.</p>
 <h2 id="configuration-du-projet-qgis">Configuration du Projet QGIS<a class="headerlink" href="#configuration-du-projet-qgis" title="Permanent link">#</a></h2>
 <h3 id="recuperation-des-couches-necessaires">Récupération des couches nécessaires<a class="headerlink" href="#recuperation-des-couches-necessaires" title="Permanent link">#</a></h3>
@@ -837,32 +837,17 @@ module adresse.</p>
 <p>Pour exécuter ce script correctement il suffit de renseigner la connexion à la base de données dans le 
 premier paramètre, puis le schéma qui contient les couches. En l'occurrence ici normalement le schéma 
 s'appelle <strong>adresse</strong>.</p>
-<p>Les couches sont donc présentes dans le projets.
+<p>Les couches sont donc présentes dans le projet.
 <img alt="project_layers" src="../media/imported_project_layers.png" /></p>
-<table>
-<thead>
-<tr>
-<th>:warning:  Pour le module adresse présent sur lizmap, les noms des couches sur le projet QGIS ne doivent pas être modifié !</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th align="left">:memo: Si vous souhaitez un nom plus explicite ou plus adapté pour les couches, vous pourrais dans l'étape <a href="#Configuration-pour-Lizmap">Configuration pour Lizmap</a> ci-après, modifier le titre des couches.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Pour le module adresse présent sur Lizmap, les noms des couches sur le projet QGIS ne doivent pas être modifié !</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Si vous souhaitez un nom plus explicite ou plus adapté pour les couches, vous pourrez, dans l'étape
+<a href="#Configuration-pour-Lizmap">Configuration pour Lizmap</a> ci-après, modifier le titre des couches.|</p>
+</div>
 <h3 id="application-des-styles">Application des styles<a class="headerlink" href="#application-des-styles" title="Permanent link">#</a></h3>
 <p>Juste en dessous du script précédent il y a celui qui se nomme <strong>Chargement des styles depuis le dossier resources</strong> 
 qui permet d'appliquer un style ainsi que d'appliquer les paramètres nécessaires aux couches ayant une géométrie.</p>
@@ -881,8 +866,8 @@ les voies et les adresses.</p>
 partie <strong>Capacités WFS</strong> où vous cocherez pour les couches <code>voie</code>, <code>v_point_adresse</code> et <code>document</code> la case de la colonne 
 <strong>Publié</strong>.</p>
 <h3 id="configuration-pour-lizmap">Configuration pour Lizmap<a class="headerlink" href="#configuration-pour-lizmap" title="Permanent link">#</a></h3>
-<p>Dernière étape pour avoir un projet bien configuré il s'agit de la partie Lizmap. Il faut ouvrir le plugin. 
-Nous, on s'occupera uniquement des sections <strong>Couches</strong> et <strong>Éditions  de couche</strong>, pour le reste en ce qui 
+<p>Dernière étape pour avoir un projet bien configuré, il s'agit de la partie Lizmap. Il faut ouvrir le plugin.
+On s'occupera uniquement des sections <strong>Couches</strong> et <strong>Éditions de couche</strong>, pour le reste en ce qui
 concerne les <strong>Options de carte</strong> ou les <strong>Fonds</strong> vous pouvez configurer selon vos besoins et envies.</p>
 <p>Pour ce qui est des couches, pour celles sans géométrie il n'y a rien à faire alors que celles avec géométrie 
 dans la partie <strong>Légende</strong> il faut cocher les cases <strong>Cochée ?</strong> et <strong>Afficher dans la légende</strong>. 
@@ -914,7 +899,7 @@ aider de la <a href="https://docs.lizmap.com/next/fr/publish/lizmap_configuratio
   <small>
     
       Dernière mise à jour:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 28, 2021</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 22, 2021</span>
       
     
   </small>
@@ -1042,10 +1027,10 @@ aider de la <a href="https://docs.lizmap.com/next/fr/publish/lizmap_configuratio
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "../../assets/javascripts/workers/search.361d90f1.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copier dans le presse-papier", "clipboard.copied": "Copi\u00e9 dans le presse-papier", "search.config.lang": "fr", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Rechercher", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.term.missing": "Non trouv\u00e9", "select.version.title": "S\u00e9lectionner la version"}, "search": "../../assets/javascripts/workers/search.22074ed6.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.289a2a4b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.960e086b.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
       

@@ -2,57 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/CHANGELOG/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/CONTRIBUTING/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/changelog/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/contributing/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/references/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/extension-qgis/installation/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/extension-qgis/user-guide/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/module-lizmap/installation/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/module-lizmap/user-guide/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.3liz.org/qgis-gestion_base_adresse-plugin/processing/</loc>
-         <lastmod>2022-01-05</lastmod>
+         <lastmod>2022-01-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
