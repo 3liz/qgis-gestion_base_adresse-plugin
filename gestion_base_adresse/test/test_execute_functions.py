@@ -1184,3 +1184,53 @@ class TestSqlFunctions(DatabaseTestCase):
         self.assertEqual(1, len(result))
         self.assertEqual(
             "Ajout automatique en fonction des tables commune_deleguee et commune", result[0][0])
+
+    def test_view_v_export_bal_commune_deleguee(self):
+        """Test de la vue v_export_bal avec des communes deleguées."""
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.point_adresse")
+        self.assertEqual(9, self.cursor.fetchone()[0])
+
+        # Avant, sans aucune commune déléguée
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.v_export_bal")
+        self.assertEqual(9, self.cursor.fetchone()[0])
+
+        # Insertion des communes déléguées
+        sql = """
+            INSERT INTO
+            adresse.commune_deleguee (commune_deleguee_nom, geom)
+            VALUES('A Sub commune Commes',
+            ST_SetSRID(ST_GeomFromText(
+            'MultiPolygon (((
+            429200 6922500,429000 6922500,429000 6921000,429200 6921000,429200 6922500)))'
+            ),2154));
+
+            INSERT INTO
+            adresse.commune_deleguee (commune_deleguee_nom, geom)
+            VALUES('B Sub commune Commes',
+            ST_SetSRID(ST_GeomFromText(
+            'MULTIPOLYGON (((
+            429200 6922500,429200 6921000,429500 6921000,429500 6922500,429200 6922500)))'
+            ),2154));
+        """
+        self.cursor.execute(sql)
+
+        self.cursor.execute("SELECT adresse.add_referencer_com();")
+
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.referencer_com;")
+        self.assertEqual(2, self.cursor.fetchone()[0])
+
+        # Après, avec des communes déléguées
+        self.cursor.execute("SELECT COUNT(*) FROM adresse.v_export_bal")
+        self.assertEqual(9, self.cursor.fetchone()[0])
+
+        sql = """
+            SELECT COUNT(*), commune_deleguee_nom
+            FROM adresse.v_export_bal
+            GROUP BY commune_deleguee_nom ORDER BY COUNT;
+        """
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        self.assertEqual(3, len(result))
+        self.assertTupleEqual((1, None), result[0])  # One point is outside of A and B
+        self.assertTupleEqual((3, 'B Sub commune Commes'), result[1])
+        self.assertTupleEqual((5, 'A Sub commune Commes'), result[2])
