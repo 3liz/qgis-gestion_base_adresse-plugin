@@ -1,4 +1,7 @@
+# Python
 *.py[cod]
+.venv
+venv
 
 # IDEA
 .idea
