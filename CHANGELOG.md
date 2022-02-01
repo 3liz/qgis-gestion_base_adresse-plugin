@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.2.0 - 2022-02-01
+
 * Simplification du code en enlevant le support de QGIS 3.10
 * Ajout d'une fonction `adresse.add_referencer_com()` pour repeupler la table `adresse.referencer_com` sans effacer des données existantes.
 * Amélioration de la requête lors de l'intersection des parcelles et des adresses, gestion des superpositions
