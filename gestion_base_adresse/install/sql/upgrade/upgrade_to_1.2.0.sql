@@ -37,8 +37,8 @@ CREATE OR REPLACE VIEW adresse.v_export_bal AS
         END AS cle_interop,
     c.insee_code AS commune_insee,
     c.commune_nom,
-    cd.insee_code AS commune_deleguee_insee,
-    cd.commune_deleguee_nom,
+    cdr.commune_deleguee_insee,
+    cdr.commune_deleguee_nom,
     v.nom_complet AS voie_nom,
     p.lieudit_complement_nom,
     p.numero,
@@ -53,7 +53,16 @@ CREATE OR REPLACE VIEW adresse.v_export_bal AS
     p.date_modif AS date_der_maj
    FROM ((((adresse.point_adresse p
      LEFT JOIN adresse.commune c ON ((p.id_commune = c.id_com)))
-     LEFT JOIN adresse.commune_deleguee cd ON (public.st_contains(cd.geom, p.geom)))
+     LEFT JOIN (
+        SELECT
+            rc.id_com,
+            cd.id_com_del,
+            cd.insee_code AS commune_deleguee_insee,
+            cd.commune_deleguee_nom, cd.geom
+          FROM adresse.referencer_com rc JOIN adresse.commune_deleguee cd
+          ON (cd.id_com_del = rc.id_com_deleguee)
+        ) cdr
+        ON (p.id_commune = cdr.id_com AND public.st_contains(cdr.geom, p.geom)))
      LEFT JOIN adresse.voie v ON ((p.id_voie = v.id_voie)))
      LEFT JOIN adresse.parcelle g ON ((p.id_parcelle = g.fid)))
 UNION
@@ -61,8 +70,8 @@ UNION
     concat(c.insee_code, '_', 'xxxx', '_', ld.numero) AS cle_interop,
     c.insee_code AS commune_insee,
     c.commune_nom,
-    cd.insee_code AS commune_deleguee_insee,
-    cd.commune_deleguee_nom,
+    cdr.commune_deleguee_insee,
+    cdr.commune_deleguee_nom,
     ld.nom_ld AS voie_nom,
     ''::character varying(255) AS lieudit_complement_nom,
     ld.numero,
@@ -77,7 +86,13 @@ UNION
     ld.date_der_maj
    FROM ((adresse.lieux_dits ld
      LEFT JOIN adresse.commune c ON ((c.id_com = ld.id_com)))
-     LEFT JOIN adresse.commune_deleguee cd ON (public.st_contains(cd.geom, ld.geom)))
+     LEFT JOIN ( SELECT rc.id_com,
+            cd.id_com_del,
+            cd.insee_code AS commune_deleguee_insee,
+            cd.commune_deleguee_nom,
+            cd.geom
+           FROM (adresse.referencer_com rc
+             JOIN adresse.commune_deleguee cd ON ((cd.id_com_del = rc.id_com_deleguee)))) cdr ON (((ld.id_com = cdr.id_com) AND public.st_contains(cdr.geom, ld.geom))))
   WHERE (ld.integration_ban = true);
 
 COMMIT;
