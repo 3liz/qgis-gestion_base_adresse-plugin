@@ -269,6 +269,10 @@ COMMENT ON COLUMN adresse.voie.delib IS 'Spécifie si la commune souhaite délib
 COMMENT ON COLUMN adresse.voie.geom IS 'Géométrie de l’objet';
 
 
+-- VIEW v_lieux_dits
+COMMENT ON VIEW adresse.v_lieux_dits IS 'Vue éditable sur les lieux dits';
+
+
 --
 -- PostgreSQL database dump complete
 --

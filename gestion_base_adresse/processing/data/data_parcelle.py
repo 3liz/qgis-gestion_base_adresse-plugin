@@ -149,8 +149,8 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                         p.dnupla, pi.contenance,
                         CASE WHEN p.ccoarp = 'A' THEN True ELSE False END as arpente,
                         pi.geom
-                    FROM {}.parcelle_info pi
-                    JOIN {}.parcelle p ON p.parcelle=pi.geo_parcelle
+                    FROM {schema}.parcelle_info pi
+                    JOIN {schema}.parcelle p ON p.parcelle=pi.geo_parcelle
                 ON CONFLICT (id) DO UPDATE SET
                     commune=EXCLUDED.commune,
                     prefixe=EXCLUDED.prefixe,
@@ -159,7 +159,7 @@ class DataParcelleAlgo(BaseProcessingAlgorithm):
                     contenance=EXCLUDED.contenance,
                     arpente=EXCLUDED.arpente,
                     geom=EXCLUDED.geom
-            """.format(schema, schema)
+            """.format(schema=schema)
             try:
                 connection.executeSql(sql)
             except QgsProviderConnectionException as e:
