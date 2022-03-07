@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.2.1 - 2022-03-07
+
 * Rafraîchissement de la couche lors l'ajout des styles
 * Correction d'une erreur de doublon sur les vues `v_point_adresse` et `v_lieux_dits`
 
