@@ -63,6 +63,7 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
                 for layer in layers:
                     feedback.pushInfo(layer.name() + ", qml loaded")
                     layer.loadNamedStyle(resources_path("qml", x + ".qml"))
+                    layer.triggerRepaint()
                     feedback.pushInfo("Style for " + x + " successfully loaded")
                     msg = msg + " // Style for " + x + " successfully loaded"
 

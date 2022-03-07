@@ -1186,27 +1186,61 @@ class TestSqlFunctions(DatabaseTestCase):
             "Ajout automatique en fonction des tables commune_deleguee et commune", result[0][0])
 
     def test_view_v_export_bal_commune_deleguee(self):
-        """Test de la vue v_export_bal avec des communes deleguées."""
+        """Test de la vue v_export_bal, v_lieux_dits et v_point_adresse avec des communes deleguées."""
+        # Point adresse
         self.cursor.execute("SELECT COUNT(*) FROM adresse.point_adresse")
         self.assertEqual(9, self.cursor.fetchone()[0])
+
+        # Vue éditable point adresse
+        self.cursor.execute("SELECT COUNT(*) AS count FROM adresse.v_point_adresse")
+        self.assertEqual(9, self.cursor.fetchone()[0])
+
+        # Ajout lieu dit
+        sql = """
+            INSERT INTO
+            adresse.lieux_dits (nom_ld, numero, geom)
+            VALUES(
+                'Lieu Dit',
+                2,
+                ST_SetSRID(ST_GeomFromText('Point (429300 6921839)'),2154)
+            );
+        """
+        self.cursor.execute(sql)
+        sql = "SELECT * FROM adresse.lieux_dits;"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        self.assertEqual(1, len(result))
+        self.assertEqual(1, result[0][0])  # id_ld
+        self.assertEqual('Lieu Dit', result[0][2])  # nom_ld
+        self.assertEqual(99999, result[0][3])  # numero, set by trigger
+        self.assertIsNone(result[0][4])  # integration_ban
+        self.assertEqual(4, result[0][5])  # id_com, set by trigger
 
         # Avant, sans aucune commune déléguée
         self.cursor.execute("SELECT COUNT(*) FROM adresse.v_export_bal")
         self.assertEqual(9, self.cursor.fetchone()[0])
 
+        # Vérification des vues éditables
+        self.cursor.execute("SELECT COUNT(*) AS count FROM adresse.v_point_adresse")
+        self.assertEqual(9, self.cursor.fetchone()[0])
+        self.cursor.execute("SELECT COUNT(*) AS count FROM adresse.v_lieux_dits")
+        self.assertEqual(1, self.cursor.fetchone()[0])
+
         # Insertion des communes déléguées
         sql = """
             INSERT INTO
-            adresse.commune_deleguee (commune_deleguee_nom, geom)
+            adresse.commune_deleguee (commune_deleguee_nom, insee_code, geom)
             VALUES('A Sub commune Commes',
+            'AAAAA',
             ST_SetSRID(ST_GeomFromText(
             'MultiPolygon (((
             429200 6922500,429000 6922500,429000 6921000,429200 6921000,429200 6922500)))'
             ),2154));
 
             INSERT INTO
-            adresse.commune_deleguee (commune_deleguee_nom, geom)
+            adresse.commune_deleguee (commune_deleguee_nom, insee_code, geom)
             VALUES('B Sub commune Commes',
+            'BBBBB',
             ST_SetSRID(ST_GeomFromText(
             'MULTIPOLYGON (((
             429200 6922500,429200 6921000,429500 6921000,429500 6922500,429200 6922500)))'
@@ -1223,6 +1257,12 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute("SELECT COUNT(*) FROM adresse.v_export_bal")
         self.assertEqual(9, self.cursor.fetchone()[0])
 
+        # Vérification des vues éditables
+        self.cursor.execute("SELECT COUNT(*) AS count FROM adresse.v_point_adresse")
+        self.assertEqual(9, self.cursor.fetchone()[0])
+        self.cursor.execute("SELECT COUNT(*) AS count FROM adresse.v_lieux_dits")
+        self.assertEqual(1, self.cursor.fetchone()[0])
+
         sql = """
             SELECT COUNT(*), commune_deleguee_nom
             FROM adresse.v_export_bal
@@ -1234,3 +1274,29 @@ class TestSqlFunctions(DatabaseTestCase):
         self.assertTupleEqual((1, None), result[0])  # One point is outside of A and B
         self.assertTupleEqual((3, 'B Sub commune Commes'), result[1])
         self.assertTupleEqual((5, 'A Sub commune Commes'), result[2])
+
+        # Vérification des vues éditables
+        self.cursor.execute("SELECT COUNT(*) AS count FROM adresse.v_point_adresse")
+        self.assertEqual(9, self.cursor.fetchone()[0])
+        self.cursor.execute("SELECT COUNT(*) AS count FROM adresse.v_lieux_dits")
+        self.assertEqual(1, self.cursor.fetchone()[0])
+
+        sql = "SELECT * FROM adresse.v_lieux_dits;"
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        self.assertEqual(1, len(result))
+        self.assertEqual('B Sub commune Commes', result[0][9])  # commune_deleguee_nom
+        self.assertEqual('BBBBB', result[0][10])  # commune_deleguee_insee
+
+        sql = """
+            SELECT commune_deleguee_nom
+            FROM adresse.v_point_adresse
+            GROUP BY (commune_deleguee_nom, commune_deleguee_insee)
+            ORDER BY commune_deleguee_nom;
+        """
+        self.cursor.execute(sql)
+        result = self.cursor.fetchall()
+        self.assertEqual(3, len(result))
+        self.assertEqual('A Sub commune Commes', result[0][0])
+        self.assertEqual('B Sub commune Commes', result[1][0])
+        self.assertIsNone(result[2][0])

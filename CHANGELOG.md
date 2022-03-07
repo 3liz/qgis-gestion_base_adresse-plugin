@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+* Rafraîchissement de la couche lors l'ajout des styles
+* Correction d'une erreur de doublon sur les vues `v_point_adresse` et `v_lieux_dits`
+
 ## 1.2.0 - 2022-02-01
 
 * Simplification du code en enlevant le support de QGIS 3.10
